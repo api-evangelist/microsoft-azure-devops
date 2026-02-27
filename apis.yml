@@ -1,0 +1,136 @@
+name: Azure DevOps
+description: Azure DevOps provides developer services for support teams to plan work, collaborate on code development, and build and deploy applications.
+image: https://azure.microsoft.com/svghandler/devops/
+tags:
+- DevOps
+- CI/CD
+- Version Control
+- Project Management
+- Agile
+created: '2024'
+modified: '2024'
+url: https://dev.azure.com
+specificationVersion: '0.18'
+apis:
+- name: Azure DevOps Services REST API
+  description: REST API for Azure DevOps Services providing programmatic access to work items, builds, releases, repositories, and more.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+  baseURL: https://dev.azure.com/{organization}
+  tags:
+  - REST
+  - API
+  - DevOps
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+  - type: OpenAPI
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  contact:
+  - type: Support
+    url: https://azure.microsoft.com/en-us/support/devops/
+- name: Boards API
+  description: API for managing work items, boards, backlogs, sprints, and queries.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/wit
+  tags:
+  - Work Items
+  - Boards
+  - Agile
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
+- name: Repos API
+  description: API for managing Git repositories, pull requests, commits, and branches.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Git
+  - Repositories
+  - Source Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+- name: Pipelines API
+  description: API for managing build and release pipelines, runs, and artifacts.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/pipelines
+  tags:
+  - CI/CD
+  - Builds
+  - Releases
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/
+- name: Build API
+  description: API for managing build definitions, queuing builds, and accessing build results.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/build
+  tags:
+  - Build
+  - CI
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
+- name: Release API
+  description: API for managing release definitions, deployments, and approvals.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
+  baseURL: https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+  tags:
+  - Release
+  - CD
+  - Deployment
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
+- name: Test Plans API
+  description: API for managing test plans, test suites, test cases, and test runs.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/test/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/test
+  tags:
+  - Testing
+  - QA
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/test/
+- name: Artifacts API
+  description: API for managing packages, feeds, and artifact dependencies.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  baseURL: https://feeds.dev.azure.com/{organization}/_apis/packaging
+  tags:
+  - Packages
+  - Artifacts
+  - Dependencies
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+- name: Graph API
+  description: API for managing users, groups, and memberships.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
+  baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
+  tags:
+  - Users
+  - Groups
+  - Permissions
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
+common:
+- type: Getting Started
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/
+- type: Authentication
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+- type: Rate Limits
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+- type: Status
+  url: https://status.dev.azure.com/
+- type: Terms of Service
+  url: https://azure.microsoft.com/en-us/support/legal/
+- type: Pricing
+  url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+maintainers:
+- name: Microsoft
+  email: azdevops@microsoft.com
+  url: https://azure.microsoft.com/en-us/products/devops/
