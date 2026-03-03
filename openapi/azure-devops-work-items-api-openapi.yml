@@ -1,0 +1,1054 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Work Items API
+  description: >
+    REST API for managing work items, work item types, fields, queries, attachments,
+    and comments in Azure Boards. Enables programmatic access to agile planning
+    and tracking resources across sprints, backlogs, and boards.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Work Item Tracking API
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Work Items
+    description: Operations for managing work items (Bugs, Tasks, User Stories, etc.)
+  - name: Work Item Tracking
+    description: Operations for querying and tracking work items using WIQL
+  - name: Work Item Types
+    description: Operations for work item type definitions and fields
+  - name: Attachments
+    description: Operations for work item attachments
+  - name: Comments
+    description: Operations for work item comments
+paths:
+  /wit/workitems:
+    get:
+      operationId: workItems_list
+      summary: List work items by IDs
+      description: >
+        Returns a list of work items by their IDs. You must provide a comma-separated
+        list of work item IDs. Optionally filter by specific fields, as-of date, or
+        expand relations and links.
+      tags:
+        - Work Items
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: ids
+          in: query
+          required: true
+          description: Comma-separated list of work item IDs (up to 200)
+          schema:
+            type: string
+          example: '1,2,3,4,5'
+        - name: fields
+          in: query
+          required: false
+          description: Comma-separated list of fields to return (e.g., System.Title,System.State)
+          schema:
+            type: string
+        - name: asOf
+          in: query
+          required: false
+          description: Work items as of a specific date and time (ISO 8601 format)
+          schema:
+            type: string
+            format: date-time
+        - name: $expand
+          in: query
+          required: false
+          description: Expand relations, links, or fields in the response
+          schema:
+            type: string
+            enum: [none, relations, links, fields, all]
+      responses:
+        '200':
+          description: List of work items returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of work items returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitems/{type}:
+    post:
+      operationId: workItems_create
+      summary: Create a work item
+      description: >
+        Creates a new work item of the specified type. The request body must be a
+        JSON Patch document describing the fields to set on the new work item.
+        Common types include Bug, Task, User Story, Feature, and Epic.
+      tags:
+        - Work Items
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: type
+          in: path
+          required: true
+          description: Work item type (e.g., Bug, Task, User Story)
+          schema:
+            type: string
+          example: 'Bug'
+        - name: validateOnly
+          in: query
+          required: false
+          description: Validate the fields without saving the work item
+          schema:
+            type: boolean
+        - name: bypassRules
+          in: query
+          required: false
+          description: Do not enforce the work item type rules on this update
+          schema:
+            type: boolean
+        - name: suppressNotifications
+          in: query
+          required: false
+          description: Do not fire any notifications for this change
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        description: JSON Patch document with field operations for the new work item
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            example:
+              - op: add
+                path: /fields/System.Title
+                value: 'Fix login button alignment'
+              - op: add
+                path: /fields/System.Description
+                value: 'The login button is misaligned on mobile screens'
+      responses:
+        '200':
+          description: Work item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitems/{id}:
+    get:
+      operationId: workItems_get
+      summary: Get a work item by ID
+      description: >
+        Returns a single work item by its numeric ID. Optionally filter the fields
+        returned, specify a point-in-time with asOf, or expand relations and links.
+      tags:
+        - Work Items
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the work item
+          schema:
+            type: integer
+          example: 42
+        - name: fields
+          in: query
+          required: false
+          description: Comma-separated list of fields to return
+          schema:
+            type: string
+        - name: asOf
+          in: query
+          required: false
+          description: Work item as of a specific date and time
+          schema:
+            type: string
+            format: date-time
+        - name: $expand
+          in: query
+          required: false
+          description: Expand relations, links, or fields
+          schema:
+            type: string
+            enum: [none, relations, links, fields, all]
+      responses:
+        '200':
+          description: Work item returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: workItems_update
+      summary: Update a work item
+      description: >
+        Updates an existing work item by applying a JSON Patch document. Supports
+        updating fields, adding relations, and modifying links. Use the add, replace,
+        remove, and test operations to make changes.
+      tags:
+        - Work Items
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the work item to update
+          schema:
+            type: integer
+        - name: validateOnly
+          in: query
+          required: false
+          description: Validate fields without saving the work item
+          schema:
+            type: boolean
+        - name: bypassRules
+          in: query
+          required: false
+          description: Do not enforce work item type rules on this update
+          schema:
+            type: boolean
+        - name: suppressNotifications
+          in: query
+          required: false
+          description: Do not fire any notifications for this change
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        description: JSON Patch document with field update operations
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            example:
+              - op: replace
+                path: /fields/System.State
+                value: 'Active'
+              - op: replace
+                path: /fields/System.AssignedTo
+                value: 'user@example.com'
+      responses:
+        '200':
+          description: Work item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: workItems_delete
+      summary: Delete a work item
+      description: >
+        Moves a work item to the recycle bin. The work item can be recovered from
+        the recycle bin or permanently deleted. Deletion requires appropriate permissions.
+      tags:
+        - Work Items
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the work item to delete
+          schema:
+            type: integer
+        - name: destroy
+          in: query
+          required: false
+          description: Permanently delete the work item instead of moving to recycle bin
+          schema:
+            type: boolean
+      responses:
+        '204':
+          description: Work item deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wit/wiql:
+    post:
+      operationId: workItems_queryByWiql
+      summary: Execute a WIQL query
+      description: >
+        Executes a Work Item Query Language (WIQL) query and returns a list of
+        work item references that match the query criteria. WIQL is a SQL-like
+        language specific to Azure DevOps work item querying.
+      tags:
+        - Work Item Tracking
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            maximum: 20000
+        - name: timePrecision
+          in: query
+          required: false
+          description: Whether or not to use time precision
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        description: WIQL query object
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The WIQL query string
+            example:
+              query: "SELECT [System.Id], [System.Title], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] = 'Bug' ORDER BY [System.CreatedDate] DESC"
+      responses:
+        '200':
+          description: Query results returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemQueryResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitemtypes:
+    get:
+      operationId: workItemTypes_list
+      summary: List work item types
+      description: >
+        Returns a list of all work item types defined in the project. Work item types
+        include Bug, Task, User Story, Feature, Epic, and any custom types defined
+        in the process template.
+      tags:
+        - Work Item Types
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of work item types returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitemtypes/{type}:
+    get:
+      operationId: workItemTypes_get
+      summary: Get a work item type
+      description: >
+        Returns detailed information about a specific work item type, including its
+        fields, transitions, states, and rules. The type name is case-sensitive and
+        must match exactly (e.g., 'Bug', 'Task', 'User Story').
+      tags:
+        - Work Item Types
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: type
+          in: path
+          required: true
+          description: Name of the work item type
+          schema:
+            type: string
+          example: 'Bug'
+      responses:
+        '200':
+          description: Work item type returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wit/fields:
+    get:
+      operationId: fields_list
+      summary: List work item fields
+      description: >
+        Returns a list of all work item fields available in the project. Includes
+        both system fields (System.*) and custom fields, with their types,
+        reference names, and whether they are read-only.
+      tags:
+        - Work Item Types
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: $expand
+          in: query
+          required: false
+          description: Include additional details such as allowed values
+          schema:
+            type: string
+            enum: [none, extensionFields, includeDeleted]
+      responses:
+        '200':
+          description: List of fields returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitems/{id}/comments:
+    get:
+      operationId: workItems_listComments
+      summary: Get work item comments
+      description: >
+        Returns all comments for a specific work item, ordered by creation date.
+        Comments are user-authored notes attached to a work item and are separate
+        from the work item's history.
+      tags:
+        - Comments
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the work item
+          schema:
+            type: integer
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of comments to return
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paging
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comments returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalCount:
+                    type: integer
+                  count:
+                    type: integer
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemComment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: workItems_addComment
+      summary: Add a comment to a work item
+      description: >
+        Adds a new comment to a work item. The comment body supports HTML markup.
+        The new comment is appended to the existing list of comments.
+      tags:
+        - Comments
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the work item
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Comment to add to the work item
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: Comment text (HTML supported)
+            example:
+              text: '<p>This bug has been reproduced in the staging environment.</p>'
+      responses:
+        '200':
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemComment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wit/attachments/{id}:
+    get:
+      operationId: attachments_get
+      summary: Get attachment info
+      description: >
+        Returns metadata about an attachment by its GUID identifier. The response
+        includes the attachment URL, file name, size, and creation date. Use the
+        URL in the response to download the actual attachment content.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: id
+          in: path
+          required: true
+          description: GUID of the attachment
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Attachment info returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentReference'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wit/attachments:
+    post:
+      operationId: attachments_upload
+      summary: Upload an attachment
+      description: >
+        Uploads a new attachment and returns the attachment reference including
+        the ID and URL. After uploading, attach the file to a work item using
+        the work item update operation with a relation of type AttachedFile.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: fileName
+          in: query
+          required: true
+          description: Name of the file being uploaded
+          schema:
+            type: string
+        - name: uploadType
+          in: query
+          required: false
+          description: Upload type (simple for files up to 130 MB)
+          schema:
+            type: string
+            enum: [simple, chunked]
+      requestBody:
+        required: true
+        description: File content as binary stream
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Attachment uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentReference'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    WorkItem:
+      type: object
+      description: An Azure DevOps work item (Bug, Task, User Story, etc.)
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the work item
+          example: 42
+        rev:
+          type: integer
+          description: Revision number of the work item (increments on each update)
+          example: 3
+        fields:
+          type: object
+          description: >
+            Dynamic map of field reference names to values. Common fields include
+            System.Title, System.State, System.AssignedTo, System.Description,
+            System.WorkItemType, System.AreaPath, System.IterationPath, etc.
+          additionalProperties: true
+          example:
+            System.Title: 'Fix login button alignment'
+            System.State: 'Active'
+            System.AssignedTo: 'User Name <user@example.com>'
+            System.WorkItemType: 'Bug'
+            System.TeamProject: 'MyProject'
+            System.AreaPath: 'MyProject\\Frontend'
+            System.IterationPath: 'MyProject\\Sprint 5'
+        relations:
+          type: array
+          description: Links and relations to other work items or external resources
+          items:
+            $ref: '#/components/schemas/WorkItemRelation'
+        _links:
+          type: object
+          description: HAL links for navigating related resources
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+        url:
+          type: string
+          format: uri
+          description: URL to access this work item via the REST API
+          example: 'https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42'
+    WorkItemRelation:
+      type: object
+      description: A relation between a work item and another resource
+      properties:
+        rel:
+          type: string
+          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
+          example: 'System.LinkTypes.Hierarchy-Reverse'
+        url:
+          type: string
+          format: uri
+          description: URL of the related resource
+        attributes:
+          type: object
+          description: Additional attributes for the relation (e.g., comment, isLocked)
+          additionalProperties: true
+    WorkItemQueryResult:
+      type: object
+      description: Results from a WIQL query execution
+      properties:
+        queryType:
+          type: string
+          description: Type of query (flat, oneHop, tree)
+          enum: [flat, oneHop, tree]
+        queryResultType:
+          type: string
+          description: Result type (workItem, workItemLink)
+          enum: [workItem, workItemLink]
+        asOf:
+          type: string
+          format: date-time
+          description: Date and time when the query was executed
+        columns:
+          type: array
+          description: Columns returned by the query
+          items:
+            type: object
+            properties:
+              referenceName:
+                type: string
+              name:
+                type: string
+              url:
+                type: string
+                format: uri
+        workItems:
+          type: array
+          description: List of work item references matching the query
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              url:
+                type: string
+                format: uri
+    WorkItemType:
+      type: object
+      description: Definition of a work item type
+      properties:
+        name:
+          type: string
+          description: Display name of the work item type
+          example: 'Bug'
+        referenceName:
+          type: string
+          description: Reference name used in WIQL queries
+          example: 'Microsoft.VSTS.WorkItemTypes.Bug'
+        description:
+          type: string
+          description: Description of the work item type and its intended use
+        color:
+          type: string
+          description: Hex color code for the work item type icon
+          example: 'CC293D'
+        icon:
+          type: object
+          description: Icon information for the work item type
+          properties:
+            id:
+              type: string
+            url:
+              type: string
+              format: uri
+        isDisabled:
+          type: boolean
+          description: Whether the work item type is disabled
+        xmlForm:
+          type: string
+          description: XML definition of the work item type form
+        fields:
+          type: array
+          description: Fields defined for this work item type
+          items:
+            $ref: '#/components/schemas/WorkItemTypeFieldInstance'
+        fieldInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkItemTypeFieldInstance'
+        transitions:
+          type: object
+          description: Map of allowed state transitions
+          additionalProperties:
+            type: array
+            items:
+              type: object
+              properties:
+                to:
+                  type: string
+                actions:
+                  type: array
+                  items:
+                    type: string
+        states:
+          type: array
+          description: Valid states for this work item type
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              color:
+                type: string
+              category:
+                type: string
+        url:
+          type: string
+          format: uri
+    WorkItemTypeFieldInstance:
+      type: object
+      description: A field instance within a work item type
+      properties:
+        fieldName:
+          type: string
+          description: Display name of the field
+        field:
+          type: object
+          properties:
+            name:
+              type: string
+            referenceName:
+              type: string
+            url:
+              type: string
+              format: uri
+        referenceName:
+          type: string
+          description: Reference name (e.g., System.Title)
+        defaultValue:
+          description: Default value for the field
+        allowedValues:
+          type: array
+          items:
+            type: string
+          description: Allowed values for fields with a restricted set of values
+        helpText:
+          type: string
+        alwaysRequired:
+          type: boolean
+        readOnly:
+          type: boolean
+    WorkItemField:
+      type: object
+      description: Definition of a work item field
+      properties:
+        name:
+          type: string
+          description: Display name of the field
+          example: 'Assigned To'
+        referenceName:
+          type: string
+          description: Reference name used in WIQL and API (e.g., System.AssignedTo)
+          example: 'System.AssignedTo'
+        description:
+          type: string
+          description: Description of what the field stores
+        type:
+          type: string
+          description: Data type of the field
+          enum: [string, integer, dateTime, plainText, html, treePath, history, double, guid, boolean, identity, picklistString, picklistInteger, picklistDouble]
+        usage:
+          type: string
+          description: Whether the field is used for work items or work item links
+          enum: [none, workItem, workItemLink, tree, workItemTypeExtension]
+        readOnly:
+          type: boolean
+          description: Whether the field is read-only
+        canSortBy:
+          type: boolean
+          description: Whether work items can be sorted by this field
+        isQueryable:
+          type: boolean
+          description: Whether this field can be used in WIQL queries
+        isIdentity:
+          type: boolean
+          description: Whether this field stores an identity (user) value
+        isPicklist:
+          type: boolean
+          description: Whether this field has a picklist of allowed values
+        isPicklistSuggested:
+          type: boolean
+          description: Whether the picklist values are suggested (non-exclusive)
+        url:
+          type: string
+          format: uri
+    WorkItemComment:
+      type: object
+      description: A comment on a work item
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the comment
+        text:
+          type: string
+          description: Comment text in HTML format
+        workItemId:
+          type: integer
+          description: ID of the work item this comment belongs to
+        version:
+          type: integer
+          description: Version number of the comment
+        createdDate:
+          type: string
+          format: date-time
+          description: Date and time the comment was created
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        modifiedDate:
+          type: string
+          format: date-time
+          description: Date and time the comment was last modified
+        modifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+    AttachmentReference:
+      type: object
+      description: Reference to an uploaded attachment
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: GUID identifier of the attachment
+        url:
+          type: string
+          format: uri
+          description: URL to download or reference the attachment
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user
+        displayName:
+          type: string
+          description: Display name of the user
+          example: 'John Doe'
+        uniqueName:
+          type: string
+          description: Unique name (usually email address)
+          example: 'john.doe@example.com'
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the user's profile image
+        descriptor:
+          type: string
+          description: Subject descriptor for the identity
+    JsonPatchOperation:
+      type: object
+      description: A single operation in a JSON Patch document (RFC 6902)
+      required:
+        - op
+        - path
+      properties:
+        op:
+          type: string
+          description: Operation type
+          enum: [add, remove, replace, move, copy, test]
+        path:
+          type: string
+          description: JSON Pointer path (RFC 6901) to the target location
+          example: '/fields/System.Title'
+        from:
+          type: string
+          description: Source path for move and copy operations
+        value:
+          description: Value to apply (for add, replace, test operations)
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing

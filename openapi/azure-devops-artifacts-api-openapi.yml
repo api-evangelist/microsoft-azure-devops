@@ -1,0 +1,752 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts API
+  description: >
+    REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts.
+    Supports NuGet, npm, Maven, Python, and Universal package formats in private or
+    public feeds. Enables programmatic management of package feeds, discovery of
+    packages and their versions, and lifecycle operations such as deprecating or
+    deleting package versions.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Artifacts API (project-scoped)
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Feeds
+    description: Operations for managing artifact feeds
+  - name: Packages
+    description: Operations for listing and managing packages within feeds
+  - name: Package Versions
+    description: Operations for managing specific package versions
+paths:
+  /packaging/feeds:
+    get:
+      operationId: feeds_list
+      summary: List feeds
+      description: >
+        Returns a list of package feeds accessible within the organization or project.
+        Feeds are the primary containers for packages in Azure Artifacts. A project
+        can have multiple feeds with different visibility and upstream source settings.
+      tags:
+        - Feeds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: feedRole
+          in: query
+          required: false
+          description: Filter feeds by the current user's role
+          schema:
+            type: string
+            enum: [none, reader, contributor, administrator]
+        - name: includeDeletedUpstreams
+          in: query
+          required: false
+          description: Whether to include feeds with deleted upstream sources
+          schema:
+            type: boolean
+        - name: includeUrls
+          in: query
+          required: false
+          description: Whether to include package manager endpoint URLs
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of feeds returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of feeds returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Feed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: feeds_create
+      summary: Create a feed
+      description: >
+        Creates a new artifact feed. You can configure whether the feed allows
+        upstream sources (for fetching public packages), its visibility (project-wide
+        or organization-wide), and whether the feed is public or requires authentication.
+      tags:
+        - Feeds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Feed creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedCreateRequest'
+            example:
+              name: 'my-packages'
+              description: 'Internal NuGet packages feed'
+              upstreamEnabled: true
+              upstreamSources:
+                - id: 'nuget-gallery'
+                  name: 'NuGet Gallery'
+                  upstreamSourceType: public
+                  protocol: nuget
+                  location: 'https://api.nuget.org/v3/index.json'
+              hideDeletedPackageVersions: true
+      responses:
+        '200':
+          description: Feed created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /packaging/feeds/{feedId}:
+    get:
+      operationId: feeds_get
+      summary: Get a feed
+      description: >
+        Returns detailed information about a specific feed, including its configuration,
+        upstream sources, and visibility settings. The feedId can be either the feed
+        GUID or its name.
+      tags:
+        - Feeds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+        - name: includeDeletedUpstreams
+          in: query
+          required: false
+          description: Whether to include deleted upstream sources in the response
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Feed returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: feeds_update
+      summary: Update a feed
+      description: >
+        Updates properties of a feed such as its name, description, upstream sources,
+        and retention policy. Only fields provided in the request body will be changed.
+      tags:
+        - Feeds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+      requestBody:
+        required: true
+        description: Feed properties to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedUpdateRequest'
+      responses:
+        '200':
+          description: Feed updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feed'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: feeds_delete
+      summary: Delete a feed
+      description: >
+        Permanently deletes a feed and all packages it contains. This operation
+        cannot be undone. All packages will be permanently removed from the feed.
+        Consumers of packages from this feed will lose access immediately.
+      tags:
+        - Feeds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+      responses:
+        '204':
+          description: Feed deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /packaging/feeds/{feedId}/packages:
+    get:
+      operationId: packages_list
+      summary: List packages in a feed
+      description: >
+        Returns a list of packages in a specific feed. Supports filtering by
+        package name, protocol type (nuget, npm, maven, pypi, upack), and
+        whether to include deleted packages.
+      tags:
+        - Packages
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+        - name: protocolType
+          in: query
+          required: false
+          description: Filter packages by protocol type
+          schema:
+            type: string
+            enum: [nuget, npm, maven, pypi, upack, cargo, swift]
+        - name: packageNameQuery
+          in: query
+          required: false
+          description: Filter packages whose names contain this string
+          schema:
+            type: string
+        - name: normalizedPackageName
+          in: query
+          required: false
+          description: Exact package name match (normalized form)
+          schema:
+            type: string
+        - name: includeUrls
+          in: query
+          required: false
+          description: Whether to include package manager URLs in the response
+          schema:
+            type: boolean
+        - name: includeAllVersions
+          in: query
+          required: false
+          description: Whether to include all versions or only the latest
+          schema:
+            type: boolean
+        - name: isListed
+          in: query
+          required: false
+          description: Filter by listed status (true=published, false=unlisted)
+          schema:
+            type: boolean
+        - name: getTopPackageVersions
+          in: query
+          required: false
+          description: Whether to include the top versions for each package
+          schema:
+            type: boolean
+        - name: isDeleted
+          in: query
+          required: false
+          description: Whether to include deleted packages
+          schema:
+            type: boolean
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of packages to return
+          schema:
+            type: integer
+        - name: $skip
+          in: query
+          required: false
+          description: Number of packages to skip (for pagination)
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of packages returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Package'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /packaging/feeds/{feedId}/packages/{packageId}:
+    get:
+      operationId: packages_get
+      summary: Get package details
+      description: >
+        Returns detailed information about a specific package, including all versions,
+        its protocol type, and normalized name. The packageId is the GUID assigned
+        to the package, not the package name.
+      tags:
+        - Packages
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+        - name: packageId
+          in: path
+          required: true
+          description: GUID identifier of the package
+          schema:
+            type: string
+            format: uuid
+        - name: includeAllVersions
+          in: query
+          required: false
+          description: Whether to include all versions or only the latest
+          schema:
+            type: boolean
+        - name: includeUrls
+          in: query
+          required: false
+          description: Whether to include package manager URLs
+          schema:
+            type: boolean
+        - name: isListed
+          in: query
+          required: false
+          description: Filter versions by listed status
+          schema:
+            type: boolean
+        - name: isDeleted
+          in: query
+          required: false
+          description: Whether to include deleted versions
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Package details returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /packaging/feeds/{feedId}/packages/{packageId}/versions/{packageVersionId}:
+    delete:
+      operationId: packageVersions_delete
+      summary: Delete a package version
+      description: >
+        Deletes a specific version of a package from the feed. By default this moves
+        the version to the recycle bin. Use the permanentlyDelete parameter to
+        permanently remove it. Once permanently deleted, the version cannot be
+        recovered and the same version number cannot be reused.
+      tags:
+        - Package Versions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/FeedId'
+        - name: packageId
+          in: path
+          required: true
+          description: GUID identifier of the package
+          schema:
+            type: string
+            format: uuid
+        - name: packageVersionId
+          in: path
+          required: true
+          description: GUID identifier of the package version
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Package version deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+    FeedId:
+      name: feedId
+      in: path
+      required: true
+      description: Feed GUID or feed name
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    Feed:
+      type: object
+      description: An Azure Artifacts package feed
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the feed
+        name:
+          type: string
+          description: Display name of the feed
+          example: 'my-packages'
+        description:
+          type: string
+          description: Description of the feed and its contents
+        url:
+          type: string
+          format: uri
+          description: URL to access this feed via the REST API
+        upstreamEnabled:
+          type: boolean
+          description: Whether upstream sources are enabled for this feed
+        upstreamSources:
+          type: array
+          description: Upstream package sources configured for this feed
+          items:
+            $ref: '#/components/schemas/UpstreamSource'
+        hideDeletedPackageVersions:
+          type: boolean
+          description: Whether to hide deleted package versions from package listings
+        defaultViewId:
+          type: string
+          format: uuid
+          description: ID of the default view for this feed
+        views:
+          type: array
+          description: Views defined for this feed (e.g., @local, @prerelease, @release)
+          items:
+            $ref: '#/components/schemas/FeedView'
+        isReadOnly:
+          type: boolean
+          description: Whether the feed is read-only
+        deletedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date the feed was deleted (null if active)
+        project:
+          type: object
+          description: Project this feed belongs to
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    FeedCreateRequest:
+      type: object
+      description: Parameters for creating a new feed
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name for the new feed
+          example: 'my-packages'
+        description:
+          type: string
+          description: Description of the feed
+        upstreamEnabled:
+          type: boolean
+          description: Whether to enable upstream sources
+          default: true
+        upstreamSources:
+          type: array
+          description: Upstream package sources to configure
+          items:
+            $ref: '#/components/schemas/UpstreamSource'
+        hideDeletedPackageVersions:
+          type: boolean
+          description: Whether to hide deleted package versions
+          default: true
+        badgesEnabled:
+          type: boolean
+          description: Whether to enable package badges
+          default: false
+    FeedUpdateRequest:
+      type: object
+      description: Parameters for updating a feed
+      properties:
+        name:
+          type: string
+          description: New name for the feed
+        description:
+          type: string
+          description: Updated description
+        upstreamEnabled:
+          type: boolean
+          description: Whether to enable/disable upstream sources
+        upstreamSources:
+          type: array
+          description: Updated list of upstream sources
+          items:
+            $ref: '#/components/schemas/UpstreamSource'
+        hideDeletedPackageVersions:
+          type: boolean
+          description: Whether to hide deleted versions
+        badgesEnabled:
+          type: boolean
+          description: Whether to enable package badges
+    UpstreamSource:
+      type: object
+      description: An upstream package source configured for a feed
+      properties:
+        id:
+          type: string
+          description: Upstream source identifier
+        name:
+          type: string
+          description: Display name of the upstream source
+          example: 'NuGet Gallery'
+        upstreamSourceType:
+          type: string
+          description: Type of upstream source
+          enum: [public, internal]
+        protocol:
+          type: string
+          description: Package protocol type
+          enum: [nuget, npm, maven, pypi, upack, cargo, swift]
+        location:
+          type: string
+          format: uri
+          description: URL of the upstream package registry
+          example: 'https://api.nuget.org/v3/index.json'
+        status:
+          type: string
+          description: Current status of the upstream source
+          enum: [ok, disabled]
+        deletedDate:
+          type: string
+          format: date-time
+          nullable: true
+    FeedView:
+      type: object
+      description: A view of a feed (e.g., @local, @prerelease, @release)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: View ID
+        name:
+          type: string
+          description: View name (e.g., '@local', '@release')
+          example: '@release'
+        type:
+          type: string
+          description: View type
+          enum: [none, release, implicit]
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    Package:
+      type: object
+      description: A package in an Azure Artifacts feed
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the package
+        name:
+          type: string
+          description: Display name of the package
+          example: 'MyCompany.MyLibrary'
+        normalizedName:
+          type: string
+          description: Normalized (lowercase) version of the package name
+          example: 'mycompany.mylibrary'
+        protocolType:
+          type: string
+          description: Package manager protocol type
+          enum: [nuget, npm, maven, pypi, upack, cargo, swift]
+        versions:
+          type: array
+          description: List of available versions (if requested)
+          items:
+            $ref: '#/components/schemas/PackageVersion'
+        url:
+          type: string
+          format: uri
+          description: URL to access this package via the REST API
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    PackageVersion:
+      type: object
+      description: A specific version of a package
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of this version
+        version:
+          type: string
+          description: Version string (e.g., '1.2.3' or '1.0.0-beta.1')
+          example: '1.2.3'
+        normalizedVersion:
+          type: string
+          description: Normalized version string for comparison
+          example: '1.2.3'
+        isLatest:
+          type: boolean
+          description: Whether this is the latest stable version
+        isListed:
+          type: boolean
+          description: Whether the version is listed (visible in package managers)
+        storageId:
+          type: string
+          description: Storage identifier for the package files
+        views:
+          type: array
+          description: Feed views this version is promoted to
+          items:
+            $ref: '#/components/schemas/FeedView'
+        deletedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date the version was deleted (null if active)
+        publishDate:
+          type: string
+          format: date-time
+          description: Date and time this version was published
+        sourceChain:
+          type: array
+          description: Upstream source chain for packages from upstream sources
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              upstreamSourceType:
+                type: string
+              protocol:
+                type: string
+              location:
+                type: string
+                format: uri
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

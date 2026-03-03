@@ -1,0 +1,849 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Service Hooks API
+  description: >
+    REST API for managing service hook subscriptions, publishers, and consumers
+    in Azure DevOps. Service hooks enable event-driven integrations by delivering
+    notifications to external services (webhooks, Azure Service Bus, Teams, Slack,
+    etc.) when Azure DevOps events occur such as work item changes, build completions,
+    and pull request updates.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://dev.azure.com/{organization}/_apis
+    description: Azure DevOps Service Hooks API (organization-level, no project scope)
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Subscriptions
+    description: Operations for managing service hook subscriptions
+  - name: Publishers
+    description: Operations for listing event publishers and their event types
+  - name: Consumers
+    description: Operations for listing consumers (webhook, service bus, etc.)
+  - name: Notifications
+    description: Operations for sending test notifications
+paths:
+  /hooks/subscriptions:
+    get:
+      operationId: subscriptions_list
+      summary: List subscriptions
+      description: >
+        Returns a list of all service hook subscriptions in the organization.
+        Each subscription specifies an event type, publisher, consumer (webhook endpoint),
+        and filter conditions. Supports optional filtering by publisher and consumer.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: publisherId
+          in: query
+          required: false
+          description: Filter subscriptions by publisher ID (e.g., 'tfs')
+          schema:
+            type: string
+        - name: eventType
+          in: query
+          required: false
+          description: Filter subscriptions by event type (e.g., 'workitem.created')
+          schema:
+            type: string
+        - name: consumerId
+          in: query
+          required: false
+          description: Filter subscriptions by consumer ID (e.g., 'webHooks')
+          schema:
+            type: string
+        - name: consumerActionId
+          in: query
+          required: false
+          description: Filter subscriptions by consumer action ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of subscriptions returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of subscriptions returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Subscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: subscriptions_create
+      summary: Create a subscription
+      description: >
+        Creates a new service hook subscription. The subscription defines which
+        event to listen for (publisher + eventType), filter conditions to narrow
+        the event scope (e.g., a specific project or branch), and the consumer
+        endpoint to deliver the notification to.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Subscription configuration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+            example:
+              publisherId: 'tfs'
+              eventType: 'workitem.created'
+              resourceVersion: '1.0'
+              consumerId: 'webHooks'
+              consumerActionId: 'httpRequest'
+              publisherInputs:
+                projectId: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+                workItemType: 'Bug'
+                areaPath: 'MyProject'
+              consumerInputs:
+                url: 'https://myserver.example.com/webhook'
+                httpHeaders: 'X-Custom-Header: my-value'
+                messagesToSend: 'none'
+                detailedMessagesToSend: 'all'
+                resourceDetailsToSend: 'all'
+      responses:
+        '200':
+          description: Subscription created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /hooks/subscriptions/{subscriptionId}:
+    get:
+      operationId: subscriptions_get
+      summary: Get a subscription
+      description: >
+        Returns detailed information about a specific service hook subscription,
+        including its publisher, event type, consumer configuration, filter inputs,
+        and current status.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: subscriptionId
+          in: path
+          required: true
+          description: GUID of the subscription
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Subscription returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: subscriptions_update
+      summary: Update a subscription
+      description: >
+        Updates properties of an existing service hook subscription such as
+        the consumer endpoint URL, filter conditions, or resource detail settings.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: subscriptionId
+          in: path
+          required: true
+          description: GUID of the subscription to update
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        description: Updated subscription properties
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+      responses:
+        '200':
+          description: Subscription updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: subscriptions_delete
+      summary: Delete a subscription
+      description: >
+        Permanently deletes a service hook subscription. After deletion, the
+        consumer endpoint will no longer receive notifications for the configured
+        event type.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: subscriptionId
+          in: path
+          required: true
+          description: GUID of the subscription to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Subscription deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /hooks/publishers:
+    get:
+      operationId: publishers_list
+      summary: List publishers
+      description: >
+        Returns a list of all available publishers (event sources) that can be
+        subscribed to. The primary publisher for Azure DevOps events is 'tfs'.
+        Each publisher defines what event types it can produce.
+      tags:
+        - Publishers
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of publishers returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Publisher'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /hooks/publishers/{publisherId}/eventTypes:
+    get:
+      operationId: publishers_listEventTypes
+      summary: List event types for a publisher
+      description: >
+        Returns all event types defined by a specific publisher. Each event type
+        includes its ID, name, description, and the input parameters that can be
+        used to filter notifications.
+      tags:
+        - Publishers
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: publisherId
+          in: path
+          required: true
+          description: Publisher identifier (e.g., 'tfs')
+          schema:
+            type: string
+          example: 'tfs'
+      responses:
+        '200':
+          description: List of event types returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /hooks/consumers:
+    get:
+      operationId: consumers_list
+      summary: List consumers
+      description: >
+        Returns a list of all available consumers that can receive service hook
+        notifications. Consumers include webhooks (httpRequest), Azure Service Bus,
+        Azure Storage, Microsoft Teams, and other integration targets.
+      tags:
+        - Consumers
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of consumers returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /hooks/testnotifications:
+    post:
+      operationId: notifications_sendTest
+      summary: Send a test notification
+      description: >
+        Sends a test notification to verify that a service hook subscription is
+        correctly configured and the consumer endpoint is reachable. Returns the
+        result of the delivery attempt including HTTP status code and response body.
+      tags:
+        - Notifications
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: useRealData
+          in: query
+          required: false
+          description: Whether to use real event data or synthetic test data
+          schema:
+            type: boolean
+      requestBody:
+        required: true
+        description: Subscription configuration to test
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+            example:
+              publisherId: 'tfs'
+              eventType: 'workitem.created'
+              resourceVersion: '1.0'
+              consumerId: 'webHooks'
+              consumerActionId: 'httpRequest'
+              publisherInputs:
+                projectId: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+              consumerInputs:
+                url: 'https://myserver.example.com/webhook'
+      responses:
+        '200':
+          description: Test notification sent, result returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    Subscription:
+      type: object
+      description: A service hook subscription that delivers event notifications to a consumer
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the subscription
+        status:
+          type: string
+          description: Current health status of the subscription
+          enum: [enabled, onProbation, disabledByUser, disabledBySystem, disabledByInactiveIdentity]
+        publisherId:
+          type: string
+          description: Identifier of the publisher (event source)
+          example: 'tfs'
+        eventType:
+          type: string
+          description: Type of event this subscription listens for
+          example: 'workitem.created'
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema
+          example: '1.0'
+        consumerId:
+          type: string
+          description: Identifier of the consumer (notification target)
+          example: 'webHooks'
+        consumerActionId:
+          type: string
+          description: Identifier of the specific consumer action
+          example: 'httpRequest'
+        publisherInputs:
+          type: object
+          description: Filter inputs for the event publisher (project ID, event conditions)
+          additionalProperties:
+            type: string
+          example:
+            projectId: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+            workItemType: 'Bug'
+            areaPath: 'MyProject'
+        consumerInputs:
+          type: object
+          description: Configuration inputs for the consumer (URL, headers, auth)
+          additionalProperties:
+            type: string
+          example:
+            url: 'https://myserver.example.com/webhook'
+            resourceDetailsToSend: 'all'
+        modifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        modifiedDate:
+          type: string
+          format: date-time
+          description: Date and time the subscription was last modified
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        createdDate:
+          type: string
+          format: date-time
+          description: Date and time the subscription was created
+        url:
+          type: string
+          format: uri
+          description: URL to access this subscription via the REST API
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+        - publisherId
+        - eventType
+        - consumerId
+        - consumerActionId
+        - publisherInputs
+        - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: 'tfs'
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: 'workitem.created'
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: 'webHooks'
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: 'httpRequest'
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
+    Publisher:
+      type: object
+      description: An event publisher (source) that can produce service hook events
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the publisher
+          example: 'tfs'
+        name:
+          type: string
+          description: Display name of the publisher
+          example: 'Azure DevOps'
+        description:
+          type: string
+          description: Description of the publisher and the events it produces
+        supportedEvents:
+          type: array
+          description: List of event types this publisher supports
+          items:
+            $ref: '#/components/schemas/EventTypeReference'
+        inputs:
+          type: array
+          description: Input parameters for filtering publisher events
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    EventType:
+      type: object
+      description: An event type that a publisher can produce
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the event type
+          example: 'workitem.created'
+        name:
+          type: string
+          description: Display name of the event type
+          example: 'Work item created'
+        description:
+          type: string
+          description: Detailed description of when this event fires
+        publisherId:
+          type: string
+          description: ID of the publisher that produces this event
+        supportedResourceVersions:
+          type: array
+          description: Supported versions of the event resource schema
+          items:
+            type: string
+        fields:
+          type: object
+          description: Fields available in the event payload
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              fieldType:
+                type: string
+              isFilterable:
+                type: boolean
+              isQueryable:
+                type: boolean
+    EventTypeReference:
+      type: object
+      description: Minimal reference to an event type
+      properties:
+        id:
+          type: string
+          description: Event type identifier
+        name:
+          type: string
+          description: Event type display name
+    Consumer:
+      type: object
+      description: A consumer that can receive service hook notifications
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the consumer
+          example: 'webHooks'
+        name:
+          type: string
+          description: Display name of the consumer
+          example: 'Web Hooks'
+        description:
+          type: string
+          description: Description of this consumer type
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the consumer's icon
+        informationUrl:
+          type: string
+          format: uri
+          description: Documentation URL for this consumer
+        actions:
+          type: array
+          description: Available actions for this consumer
+          items:
+            $ref: '#/components/schemas/ConsumerAction'
+        inputs:
+          type: array
+          description: Configuration inputs for this consumer
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    ConsumerAction:
+      type: object
+      description: An action available in a consumer
+      properties:
+        id:
+          type: string
+          description: Action identifier
+          example: 'httpRequest'
+        name:
+          type: string
+          description: Action display name
+          example: 'Send a generic HTTP request with a JSON payload'
+        description:
+          type: string
+          description: Description of what this action does
+        consumerId:
+          type: string
+          description: Parent consumer ID
+        inputs:
+          type: array
+          description: Input parameters required for this action
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    InputDescriptor:
+      type: object
+      description: Descriptor for a configurable input parameter
+      properties:
+        id:
+          type: string
+          description: Input identifier
+        name:
+          type: string
+          description: Display name
+        description:
+          type: string
+          description: Help text
+        inputMode:
+          type: string
+          description: How the input is presented in UI
+          enum: [none, textBox, passwordBox, combo, radioButtons, checkBox, textArea]
+        isConfidential:
+          type: boolean
+          description: Whether the value is treated as a secret
+        isRequired:
+          type: boolean
+          description: Whether this input is required
+        values:
+          type: object
+          description: Allowed values for combo/radio inputs
+          properties:
+            defaultValue:
+              type: string
+            possibleValues:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  displayValue:
+                    type: string
+        validation:
+          type: object
+          description: Validation rules for this input
+          properties:
+            dataType:
+              type: string
+              enum: [none, string, number, boolean, guid, uri]
+            isRequired:
+              type: boolean
+            pattern:
+              type: string
+              description: Regex pattern for validation
+            patternMismatchErrorMessage:
+              type: string
+            minLength:
+              type: integer
+            maxLength:
+              type: integer
+    NotificationResult:
+      type: object
+      description: Result of a test notification delivery attempt
+      properties:
+        id:
+          type: integer
+          description: Notification ID
+        subscriptionId:
+          type: string
+          format: uuid
+          description: ID of the subscription used for the test
+        result:
+          type: string
+          description: Delivery result status
+          enum: [pending, processing, requestInProgress, delivered, dequeued, abandoned, error, filteredBySubscriber]
+        status:
+          type: string
+          description: HTTP status description from the consumer
+        createdDate:
+          type: string
+          format: date-time
+        modifiedDate:
+          type: string
+          format: date-time
+        details:
+          type: object
+          description: Detailed delivery attempt information
+          properties:
+            errorMessage:
+              type: string
+            errorDetail:
+              type: string
+            deliveryAttempts:
+              type: array
+              items:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  status:
+                    type: string
+                  requestData:
+                    type: object
+                    properties:
+                      headers:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      body:
+                        type: string
+                  responseData:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                      headers:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      body:
+                        type: string
+                  startTime:
+                    type: string
+                    format: date-time
+                  endTime:
+                    type: string
+                    format: date-time
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: 'John Doe'
+        uniqueName:
+          type: string
+          example: 'john.doe@example.com'
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

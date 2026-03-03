@@ -1,0 +1,1166 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Builds API
+  description: >
+    REST API for managing build definitions (pipelines), queuing builds, monitoring
+    build status, accessing build logs, timelines, and artifacts. Supports the full
+    lifecycle of continuous integration builds in Azure DevOps.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Build API
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Builds
+    description: Operations for managing and queuing builds
+  - name: Build Definitions
+    description: Operations for managing build pipeline definitions
+  - name: Build Artifacts
+    description: Operations for accessing build artifacts
+  - name: Build Logs
+    description: Operations for accessing build logs and timelines
+paths:
+  /build/builds:
+    get:
+      operationId: builds_list
+      summary: List builds
+      description: >
+        Returns a list of builds for the project. Supports filtering by definition,
+        build number, status, result, and branch. Results can be paginated using
+        continuationToken.
+      tags:
+        - Builds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitions
+          in: query
+          required: false
+          description: Comma-separated list of definition IDs to filter builds
+          schema:
+            type: string
+        - name: buildNumber
+          in: query
+          required: false
+          description: Filter builds by build number
+          schema:
+            type: string
+        - name: statusFilter
+          in: query
+          required: false
+          description: Filter builds by status
+          schema:
+            type: string
+            enum: [none, inProgress, completed, cancelling, postponed, notStarted, all]
+        - name: resultFilter
+          in: query
+          required: false
+          description: Filter builds by result
+          schema:
+            type: string
+            enum: [none, succeeded, partiallySucceeded, failed, canceled]
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of builds to return
+          schema:
+            type: integer
+            maximum: 5000
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+        - name: branchName
+          in: query
+          required: false
+          description: Filter builds by branch name
+          schema:
+            type: string
+        - name: reasonFilter
+          in: query
+          required: false
+          description: Filter builds by trigger reason
+          schema:
+            type: string
+            enum: [none, manual, individualCI, batchedCI, schedule, userCreated, validateShelveset, checkInShelveset, pullRequest, buildCompletion, resourceTrigger, triggered, all]
+        - name: requestedFor
+          in: query
+          required: false
+          description: Filter builds requested by a specific user (email or descriptor)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of builds returned successfully
+          headers:
+            x-ms-continuationtoken:
+              description: Continuation token for paging through results
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of builds in this response
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Build'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: builds_queue
+      summary: Queue a new build
+      description: >
+        Queues a new build by specifying the build definition and optional parameters
+        such as source branch, build parameters, and demands. The build will be
+        scheduled and executed based on agent availability.
+      tags:
+        - Builds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: ignoreWarnings
+          in: query
+          required: false
+          description: Ignore warnings when queuing the build
+          schema:
+            type: boolean
+        - name: checkInTicket
+          in: query
+          required: false
+          description: Check-in ticket for gated check-in builds
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Build queue request with definition and optional overrides
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildQueueRequest'
+            example:
+              definition:
+                id: 5
+              sourceBranch: 'refs/heads/main'
+              parameters: '{"system.debug":"false"}'
+      responses:
+        '200':
+          description: Build queued successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /build/builds/{buildId}:
+    get:
+      operationId: builds_get
+      summary: Get a build
+      description: >
+        Returns detailed information about a specific build, including its status,
+        result, timing, source information, and links to logs and artifacts.
+      tags:
+        - Builds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: buildId
+          in: path
+          required: true
+          description: Numeric ID of the build
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Build returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: builds_delete
+      summary: Delete a build
+      description: >
+        Deletes a build record and its associated data, including logs and artifacts.
+        This operation cannot be undone. The build must not be in progress to be deleted.
+      tags:
+        - Builds
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: buildId
+          in: path
+          required: true
+          description: Numeric ID of the build to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Build deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /build/builds/{buildId}/logs:
+    get:
+      operationId: builds_getLogs
+      summary: Get build logs
+      description: >
+        Returns the list of log entries for a build. Each log entry corresponds to
+        a step or phase in the build pipeline. Use the log ID to retrieve the
+        content of a specific log.
+      tags:
+        - Build Logs
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: buildId
+          in: path
+          required: true
+          description: Numeric ID of the build
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Build logs returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BuildLog'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /build/builds/{buildId}/timeline:
+    get:
+      operationId: builds_getTimeline
+      summary: Get build timeline
+      description: >
+        Returns the detailed timeline for a build, showing all phases, jobs, tasks,
+        and their individual statuses, start times, and durations. Useful for
+        understanding which steps in the pipeline passed or failed.
+      tags:
+        - Build Logs
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: buildId
+          in: path
+          required: true
+          description: Numeric ID of the build
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Build timeline returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /build/builds/{buildId}/artifacts:
+    get:
+      operationId: builds_listArtifacts
+      summary: List build artifacts
+      description: >
+        Returns a list of artifacts published by a specific build. Artifacts can
+        be downloaded individually and include their name, type, and download URL.
+      tags:
+        - Build Artifacts
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: buildId
+          in: path
+          required: true
+          description: Numeric ID of the build
+          schema:
+            type: integer
+        - name: artifactName
+          in: query
+          required: false
+          description: Filter by a specific artifact name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Build artifacts returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BuildArtifact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /build/definitions:
+    get:
+      operationId: definitions_list
+      summary: List build definitions
+      description: >
+        Returns a list of build definitions (pipelines) in the project. Supports
+        filtering by name and path, and returns summary information for each definition.
+      tags:
+        - Build Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: name
+          in: query
+          required: false
+          description: Filter definitions by name (supports wildcards with *)
+          schema:
+            type: string
+        - name: path
+          in: query
+          required: false
+          description: Filter definitions by folder path
+          schema:
+            type: string
+        - name: builtAfter
+          in: query
+          required: false
+          description: Return definitions that were built after this date
+          schema:
+            type: string
+            format: date-time
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of definitions to return
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of build definitions returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BuildDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: definitions_create
+      summary: Create a build definition
+      description: >
+        Creates a new build definition (pipeline) in the project. The definition
+        specifies the build steps, triggers, variables, and agent requirements.
+      tags:
+        - Build Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionToCloneId
+          in: query
+          required: false
+          description: ID of an existing definition to clone
+          schema:
+            type: integer
+        - name: definitionToCloneRevision
+          in: query
+          required: false
+          description: Revision number of the definition to clone
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Build definition to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildDefinitionCreateRequest'
+      responses:
+        '200':
+          description: Build definition created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /build/definitions/{definitionId}:
+    get:
+      operationId: definitions_get
+      summary: Get a build definition
+      description: >
+        Returns detailed information about a specific build definition, including
+        all steps, triggers, variables, and configuration. You can also request
+        a specific revision of the definition.
+      tags:
+        - Build Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the build definition
+          schema:
+            type: integer
+        - name: revision
+          in: query
+          required: false
+          description: Specific revision number to retrieve
+          schema:
+            type: integer
+        - name: minMetricsTime
+          in: query
+          required: false
+          description: Minimum date for including build metrics
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Build definition returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: definitions_update
+      summary: Update a build definition
+      description: >
+        Replaces an existing build definition with the provided definition. The
+        revision number in the body must match the current revision to prevent
+        concurrent modification conflicts.
+      tags:
+        - Build Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the build definition to update
+          schema:
+            type: integer
+        - name: secretsSourceDefinitionId
+          in: query
+          required: false
+          description: ID of the definition to clone secrets from
+          schema:
+            type: integer
+        - name: secretsSourceDefinitionRevision
+          in: query
+          required: false
+          description: Revision number to clone secrets from
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Updated build definition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildDefinition'
+      responses:
+        '200':
+          description: Build definition updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: definitions_delete
+      summary: Delete a build definition
+      description: >
+        Deletes a build definition. All associated builds must be deleted first,
+        or you must specify deleteBuilds=true to cascade delete all associated builds.
+      tags:
+        - Build Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the build definition to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Build definition deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    Build:
+      type: object
+      description: An Azure DevOps build instance
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the build
+          example: 1234
+        buildNumber:
+          type: string
+          description: The build number assigned at queue time
+          example: '20240315.1'
+        buildNumberRevision:
+          type: integer
+          description: Revision of the build number if duplicates exist
+        status:
+          type: string
+          description: Current status of the build
+          enum: [none, inProgress, completed, cancelling, postponed, notStarted, all]
+          example: 'completed'
+        result:
+          type: string
+          description: Final result of a completed build
+          enum: [none, succeeded, partiallySucceeded, failed, canceled]
+          example: 'succeeded'
+        queueTime:
+          type: string
+          format: date-time
+          description: Date and time the build was queued
+        startTime:
+          type: string
+          format: date-time
+          description: Date and time the build started executing
+        finishTime:
+          type: string
+          format: date-time
+          description: Date and time the build finished
+        url:
+          type: string
+          format: uri
+          description: URL to access this build via the REST API
+        definition:
+          $ref: '#/components/schemas/BuildDefinitionReference'
+        buildNumberRevisions:
+          type: integer
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        sourceBranch:
+          type: string
+          description: Branch that triggered the build (e.g., refs/heads/main)
+          example: 'refs/heads/main'
+        sourceVersion:
+          type: string
+          description: Commit ID or changeset number used for the build
+          example: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+        requestedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        requestedFor:
+          $ref: '#/components/schemas/IdentityRef'
+        reason:
+          type: string
+          description: Reason the build was triggered
+          enum: [none, manual, individualCI, batchedCI, schedule, userCreated, validateShelveset, checkInShelveset, pullRequest, buildCompletion, resourceTrigger, triggered, all]
+        priority:
+          type: string
+          description: Build queue priority
+          enum: [low, belowNormal, normal, aboveNormal, high]
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+        logs:
+          type: object
+          description: Reference to the build logs container
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+            url:
+              type: string
+              format: uri
+        retainedByRelease:
+          type: boolean
+          description: Whether this build is retained by a release
+        triggeredByBuild:
+          type: object
+          nullable: true
+          description: The build that triggered this build (for completion triggers)
+          properties:
+            id:
+              type: integer
+            buildNumber:
+              type: string
+            url:
+              type: string
+              format: uri
+            definition:
+              $ref: '#/components/schemas/BuildDefinitionReference'
+            project:
+              $ref: '#/components/schemas/TeamProjectReference'
+    BuildQueueRequest:
+      type: object
+      description: Request to queue a new build
+      required:
+        - definition
+      properties:
+        definition:
+          type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              description: ID of the build definition to queue
+        sourceBranch:
+          type: string
+          description: Override the source branch for this build
+          example: 'refs/heads/feature/my-feature'
+        sourceVersion:
+          type: string
+          description: Override the source version (commit ID) for this build
+        parameters:
+          type: string
+          description: JSON-serialized key-value pairs of build parameters to override
+          example: '{"system.debug":"false","BuildConfiguration":"Release"}'
+        demands:
+          type: array
+          description: Agent demands for this build
+          items:
+            type: string
+        priority:
+          type: string
+          description: Queue priority for this build
+          enum: [low, belowNormal, normal, aboveNormal, high]
+        queue:
+          type: object
+          description: Agent queue override
+          properties:
+            id:
+              type: integer
+    BuildDefinition:
+      type: object
+      description: A build pipeline definition in Azure DevOps
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the definition
+          example: 5
+        name:
+          type: string
+          description: Display name of the build definition
+          example: 'CI-Pipeline'
+        path:
+          type: string
+          description: Folder path for organizing definitions
+          example: '\MyFolder'
+        type:
+          type: string
+          description: Type of build definition
+          enum: [xaml, build]
+        revision:
+          type: integer
+          description: Current revision number of the definition
+        quality:
+          type: string
+          description: Quality of the definition
+          enum: [definition, draft]
+        authoredBy:
+          $ref: '#/components/schemas/IdentityRef'
+        queue:
+          type: object
+          description: Default agent queue for this definition
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            pool:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                isHosted:
+                  type: boolean
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        url:
+          type: string
+          format: uri
+        uri:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        queueStatus:
+          type: string
+          description: Whether new builds can be queued against this definition
+          enum: [enabled, paused, disabled]
+        variables:
+          type: object
+          description: Map of variable names to variable definitions
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              allowOverride:
+                type: boolean
+              isSecret:
+                type: boolean
+        triggers:
+          type: array
+          description: Triggers that automatically start this build
+          items:
+            type: object
+            properties:
+              triggerType:
+                type: string
+                enum: [none, continuousIntegration, batchedContinuousIntegration, schedule, gatedCheckIn, buildCompletion, pullRequest]
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+        process:
+          type: object
+          description: Build process definition (YAML or designer)
+          properties:
+            yamlFilename:
+              type: string
+              description: Path to the YAML pipeline file
+            type:
+              type: integer
+              description: '1 = designer, 2 = YAML'
+    BuildDefinitionCreateRequest:
+      type: object
+      description: Request to create a new build definition
+      required:
+        - name
+        - repository
+        - process
+        - queue
+      properties:
+        name:
+          type: string
+          description: Display name of the build definition
+        path:
+          type: string
+          description: Folder path for the definition
+          default: '\'
+        type:
+          type: string
+          enum: [xaml, build]
+          default: 'build'
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+        process:
+          type: object
+          description: Build process configuration
+          properties:
+            yamlFilename:
+              type: string
+            type:
+              type: integer
+        queue:
+          type: object
+          properties:
+            id:
+              type: integer
+        variables:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+        triggers:
+          type: array
+          items:
+            type: object
+    BuildDefinitionReference:
+      type: object
+      description: Reference to a build definition (minimal representation)
+      properties:
+        id:
+          type: integer
+          description: Definition ID
+        name:
+          type: string
+          description: Definition name
+        path:
+          type: string
+          description: Folder path of the definition
+        url:
+          type: string
+          format: uri
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+    BuildLog:
+      type: object
+      description: Metadata about a single build log
+      properties:
+        id:
+          type: integer
+          description: Log entry ID
+        type:
+          type: string
+          description: Storage type of the log
+        url:
+          type: string
+          format: uri
+          description: URL to retrieve the log content
+        createdOn:
+          type: string
+          format: date-time
+        lastChangedOn:
+          type: string
+          format: date-time
+        lineCount:
+          type: integer
+          description: Number of log lines
+    BuildArtifact:
+      type: object
+      description: An artifact published by a build
+      properties:
+        id:
+          type: integer
+          description: Artifact ID
+        name:
+          type: string
+          description: Name of the artifact (e.g., 'drop', 'packages')
+          example: 'drop'
+        resource:
+          type: object
+          description: Resource details for downloading the artifact
+          properties:
+            type:
+              type: string
+              description: Type of artifact storage (e.g., Container, FilePath, VersionControl)
+            url:
+              type: string
+              format: uri
+              description: URL to download the artifact
+            downloadUrl:
+              type: string
+              format: uri
+              description: Direct download URL
+            properties:
+              type: object
+              additionalProperties: true
+        source:
+          type: string
+          description: Source of the artifact
+    BuildRepository:
+      type: object
+      description: Repository configuration for a build
+      properties:
+        id:
+          type: string
+          description: Repository ID (GUID for Git, name for TFVC)
+        name:
+          type: string
+          description: Repository name
+        type:
+          type: string
+          description: Repository type
+          enum: [TfsGit, TfsVersionControl, GitHub, Bitbucket, GitHubEnterprise]
+        url:
+          type: string
+          format: uri
+          description: URL of the repository
+        defaultBranch:
+          type: string
+          description: Default branch for this repository
+          example: 'refs/heads/main'
+        checkoutSubmodules:
+          type: boolean
+          description: Whether to checkout Git submodules
+        clean:
+          type: string
+          description: Whether to clean the working directory before each build
+          enum: ['true', 'false', null]
+        properties:
+          type: object
+          additionalProperties: true
+    Timeline:
+      type: object
+      description: Build timeline showing all records (phases, jobs, tasks)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Timeline ID
+        changeId:
+          type: integer
+          description: Change ID for real-time timeline updates
+        lastChangedBy:
+          type: string
+          format: uuid
+        lastChangedOn:
+          type: string
+          format: date-time
+        records:
+          type: array
+          description: List of timeline records (phases, jobs, tasks)
+          items:
+            $ref: '#/components/schemas/TimelineRecord'
+        url:
+          type: string
+          format: uri
+    TimelineRecord:
+      type: object
+      description: A single record in the build timeline
+      properties:
+        id:
+          type: string
+          format: uuid
+        parentId:
+          type: string
+          format: uuid
+          description: ID of the parent record (e.g., job's parent is a stage)
+        type:
+          type: string
+          description: Record type (Phase, Job, Task, Checkpoint)
+        name:
+          type: string
+          description: Display name of the record
+        startTime:
+          type: string
+          format: date-time
+        finishTime:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum: [pending, inProgress, completed]
+        result:
+          type: string
+          enum: [succeeded, succeededWithIssues, failed, canceled, skipped, abandoned]
+        resultCode:
+          type: string
+        changeId:
+          type: integer
+        lastModified:
+          type: string
+          format: date-time
+        workerName:
+          type: string
+          description: Name of the agent that executed this record
+        order:
+          type: integer
+          description: Display order within the parent
+        errorCount:
+          type: integer
+          description: Number of errors in this record
+        warningCount:
+          type: integer
+          description: Number of warnings in this record
+        url:
+          type: string
+          format: uri
+        log:
+          type: object
+          description: Log reference for this record
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+            url:
+              type: string
+              format: uri
+        issues:
+          type: array
+          description: Issues (errors/warnings) encountered in this record
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [error, warning]
+              category:
+                type: string
+              message:
+                type: string
+              data:
+                type: object
+                additionalProperties: true
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Project ID
+        name:
+          type: string
+          description: Project name
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum: [deleting, new, wellFormed, createPending, all, unchanged, deleted]
+        visibility:
+          type: string
+          enum: [private, public]
+        revision:
+          type: integer
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: 'John Doe'
+        uniqueName:
+          type: string
+          example: 'john.doe@example.com'
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

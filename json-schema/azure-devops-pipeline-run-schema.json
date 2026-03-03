@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/runs/get",
+  "title": "Azure DevOps Pipeline Run",
+  "description": "Schema for an Azure DevOps pipeline run as returned by the Pipelines REST API. A pipeline run represents a single execution of a YAML pipeline, triggered manually or by a CI/CD event. The run tracks state (inProgress, completed), result (succeeded, failed, canceled), timing, and the resources and parameters used.",
+  "type": "object",
+  "required": ["id", "name", "state", "pipeline", "url"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier for this pipeline run. Assigned sequentially within the project.",
+      "minimum": 1,
+      "examples": [1001, 2345]
+    },
+    "name": {
+      "type": "string",
+      "description": "Auto-generated run name, typically the build number format defined in the pipeline YAML (e.g., $(Date:yyyyMMdd).$(Rev:r)). Can be overridden by the pipeline's name property.",
+      "examples": ["20240315.1", "main-20240315-1001"]
+    },
+    "state": {
+      "type": "string",
+      "description": "Current execution state of the pipeline run.",
+      "enum": ["unknown", "inProgress", "canceling", "completed"],
+      "examples": ["completed", "inProgress"]
+    },
+    "result": {
+      "type": ["string", "null"],
+      "description": "Final result of a completed run. Null when the run is not yet completed (state is inProgress or canceling).",
+      "enum": ["unknown", "succeeded", "failed", "canceled", null],
+      "examples": ["succeeded", "failed"]
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when the run was created (queued).",
+      "examples": ["2024-03-15T10:00:00Z"]
+    },
+    "finishedDate": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when the run finished. Null if the run has not yet completed.",
+      "examples": ["2024-03-15T10:15:00Z", null]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "REST API URL for accessing this run directly.",
+      "examples": ["https://dev.azure.com/myorg/myproject/_apis/pipelines/15/runs/1001"]
+    },
+    "pipeline": {
+      "type": "object",
+      "description": "Reference to the pipeline definition this run belongs to.",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Pipeline definition ID.",
+          "examples": [15]
+        },
+        "name": {
+          "type": "string",
+          "description": "Pipeline definition name.",
+          "examples": ["CI Pipeline", "Deploy to Production"]
+        },
+        "folder": {
+          "type": "string",
+          "description": "Folder path where the pipeline definition is organized.",
+          "examples": ["\\CI", "\\Production"]
+        },
+        "revision": {
+          "type": "integer",
+          "description": "Revision number of the pipeline definition used for this run.",
+          "minimum": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "REST API URL for the pipeline definition.",
+          "examples": ["https://dev.azure.com/myorg/myproject/_apis/pipelines/15"]
+        },
+        "_links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "$ref": "#/$defs/HalLink"
+            },
+            "web": {
+              "$ref": "#/$defs/HalLink"
+            }
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resources consumed by this pipeline run, such as repository checkout versions and upstream pipeline dependencies.",
+      "properties": {
+        "repositories": {
+          "type": "object",
+          "description": "Repository resources used in this run, keyed by repository alias (e.g., 'self' for the pipeline's own repo).",
+          "additionalProperties": {
+            "$ref": "#/$defs/RepositoryResource"
+          }
+        },
+        "pipelines": {
+          "type": "object",
+          "description": "Pipeline resources from upstream pipelines used as inputs, keyed by pipeline alias.",
+          "additionalProperties": {
+            "$ref": "#/$defs/PipelineResource"
+          }
+        },
+        "builds": {
+          "type": "object",
+          "description": "Build resources used in this run, keyed by resource alias.",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string",
+                "description": "Build number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": ["object", "null"],
+      "description": "Variables used in this run. Includes both pipeline-defined variables and any overrides specified when triggering the run. Secret variable values are not returned.",
+      "additionalProperties": {
+        "$ref": "#/$defs/Variable"
+      }
+    },
+    "templateParameters": {
+      "type": ["object", "null"],
+      "description": "Template parameters passed to the YAML pipeline for this run. Parameters are defined with `parameters:` in the pipeline YAML and allow type-safe overrides at queue time.",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Parameter value (serialized as string)"
+      },
+      "examples": [
+        {
+          "environment": "production",
+          "deployRegion": "eastus",
+          "runTests": "true"
+        }
+      ]
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL links for related resources (web view, pipeline definition, artifacts).",
+      "properties": {
+        "self": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "web": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "pipeline": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "pipeline.web": {
+          "$ref": "#/$defs/HalLink"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/HalLink"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "RepositoryResource": {
+      "type": "object",
+      "description": "A repository resource used in a pipeline run",
+      "properties": {
+        "refName": {
+          "type": ["string", "null"],
+          "description": "The Git ref (branch or tag) checked out for this run.",
+          "examples": ["refs/heads/main", "refs/heads/feature/login", "refs/tags/v1.2.3"]
+        },
+        "version": {
+          "type": ["string", "null"],
+          "description": "The specific commit SHA checked out for this run.",
+          "examples": ["a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"]
+        },
+        "repository": {
+          "type": "object",
+          "description": "Repository details",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Repository GUID"
+            },
+            "name": {
+              "type": "string",
+              "description": "Repository name"
+            },
+            "type": {
+              "type": "string",
+              "description": "Repository type",
+              "enum": ["unknown", "azureReposGit", "gitHub", "azureReposGitHyphenated"]
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    },
+    "PipelineResource": {
+      "type": "object",
+      "description": "A pipeline resource from an upstream pipeline run",
+      "properties": {
+        "pipeline": {
+          "type": "object",
+          "description": "Reference to the upstream pipeline",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "folder": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "version": {
+          "type": ["string", "null"],
+          "description": "Build number of the upstream pipeline run used"
+        }
+      }
+    },
+    "Variable": {
+      "type": "object",
+      "description": "A pipeline variable value",
+      "properties": {
+        "value": {
+          "type": ["string", "null"],
+          "description": "The variable value. Null for secret variables (values are redacted in API responses)."
+        },
+        "isSecret": {
+          "type": "boolean",
+          "description": "Whether this variable is marked as secret. Secret variables are not returned in API responses.",
+          "default": false
+        }
+      }
+    },
+    "HalLink": {
+      "type": "object",
+      "description": "A HAL hypertext link",
+      "required": ["href"],
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL target of the link"
+        }
+      }
+    }
+  }
+}

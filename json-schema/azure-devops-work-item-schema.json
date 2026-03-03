@@ -1,0 +1,403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/get-work-item",
+  "title": "Azure DevOps Work Item",
+  "description": "Schema for an Azure DevOps work item resource as returned by the Work Item Tracking REST API. Work items represent units of work such as Bugs, Tasks, User Stories, Features, and Epics in Azure Boards.",
+  "type": "object",
+  "required": ["id", "rev", "fields", "url"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier assigned to the work item. Immutable once created.",
+      "minimum": 1,
+      "examples": [42, 1001]
+    },
+    "rev": {
+      "type": "integer",
+      "description": "Revision number of the work item. Increments by 1 on every update. Used for optimistic concurrency control.",
+      "minimum": 1,
+      "examples": [1, 7]
+    },
+    "fields": {
+      "type": "object",
+      "description": "Dynamic map of field reference names to their values. System fields use the 'System.' prefix; Microsoft Visual Studio Team System (VSTS) fields use the 'Microsoft.VSTS.' prefix. Custom fields use a project-specific namespace.",
+      "properties": {
+        "System.Id": {
+          "type": "integer",
+          "description": "Duplicate of the top-level id field. Read-only.",
+          "minimum": 1
+        },
+        "System.WorkItemType": {
+          "type": "string",
+          "description": "The type of work item (Bug, Task, User Story, Feature, Epic, etc.)",
+          "examples": ["Bug", "Task", "User Story", "Feature", "Epic", "Test Case"]
+        },
+        "System.State": {
+          "type": "string",
+          "description": "Current state of the work item. Valid values depend on the work item type and process template (e.g., Agile, Scrum, CMMI).",
+          "examples": ["New", "Active", "Resolved", "Closed", "Removed", "In Progress", "Done"]
+        },
+        "System.Reason": {
+          "type": "string",
+          "description": "Reason for the current state (sub-state of State). Values depend on the state transition.",
+          "examples": ["New", "Implementation started", "Completed", "Won't Fix"]
+        },
+        "System.Title": {
+          "type": "string",
+          "description": "Short title or name of the work item. Required when creating a work item.",
+          "minLength": 1,
+          "maxLength": 255,
+          "examples": ["Fix login button alignment on mobile", "Implement OAuth 2.0 login flow"]
+        },
+        "System.Description": {
+          "type": ["string", "null"],
+          "description": "Detailed description of the work item in HTML format.",
+          "examples": ["<p>The login button is misaligned on screens narrower than 768px.</p>"]
+        },
+        "System.AssignedTo": {
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "Display name and email in format 'Display Name <email>'",
+              "examples": ["John Doe <john.doe@example.com>"]
+            },
+            {
+              "type": "object",
+              "description": "Identity reference object",
+              "properties": {
+                "displayName": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "uniqueName": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "User the work item is assigned to. Null if unassigned."
+        },
+        "System.CreatedBy": {
+          "type": ["object", "string"],
+          "description": "User who created the work item. Read-only.",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueName": {
+              "type": "string"
+            }
+          }
+        },
+        "System.CreatedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time the work item was created. Read-only.",
+          "examples": ["2024-03-15T10:30:00Z"]
+        },
+        "System.ChangedBy": {
+          "type": ["object", "string"],
+          "description": "User who last changed the work item. Read-only.",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueName": {
+              "type": "string"
+            }
+          }
+        },
+        "System.ChangedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time the work item was last changed. Read-only.",
+          "examples": ["2024-03-16T14:22:00Z"]
+        },
+        "System.TeamProject": {
+          "type": "string",
+          "description": "Name of the project this work item belongs to. Read-only.",
+          "examples": ["MyProject"]
+        },
+        "System.AreaId": {
+          "type": "integer",
+          "description": "ID of the area node. Read-only."
+        },
+        "System.AreaPath": {
+          "type": "string",
+          "description": "Area path for categorizing work items into functional areas. Uses backslash separator.",
+          "examples": ["MyProject\\Frontend\\Authentication"]
+        },
+        "System.IterationId": {
+          "type": "integer",
+          "description": "ID of the iteration node. Read-only."
+        },
+        "System.IterationPath": {
+          "type": "string",
+          "description": "Iteration path (sprint) the work item is planned for. Uses backslash separator.",
+          "examples": ["MyProject\\Sprint 5", "MyProject\\Release 1\\Sprint 3"]
+        },
+        "System.Tags": {
+          "type": ["string", "null"],
+          "description": "Semicolon-delimited list of tags associated with this work item.",
+          "examples": ["frontend; bug; P1", "performance; backend"]
+        },
+        "System.BoardColumn": {
+          "type": ["string", "null"],
+          "description": "Current column on the board (Kanban). Read-only.",
+          "examples": ["Active", "In Progress", "Done"]
+        },
+        "System.BoardLane": {
+          "type": ["string", "null"],
+          "description": "Current swimlane on the board. Read-only."
+        },
+        "System.History": {
+          "type": ["string", "null"],
+          "description": "The last history comment added to the work item. Writing to this field adds a discussion comment."
+        },
+        "System.ResolvedBy": {
+          "type": ["object", "string", "null"],
+          "description": "User who resolved the work item."
+        },
+        "System.ResolvedDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Date the work item was resolved."
+        },
+        "System.ResolvedReason": {
+          "type": ["string", "null"],
+          "description": "Reason the work item was resolved."
+        },
+        "System.ClosedBy": {
+          "type": ["object", "string", "null"],
+          "description": "User who closed the work item."
+        },
+        "System.ClosedDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "Date the work item was closed."
+        },
+        "System.CommentCount": {
+          "type": "integer",
+          "description": "Number of comments on the work item. Read-only.",
+          "minimum": 0
+        },
+        "System.ExternalLinkCount": {
+          "type": "integer",
+          "description": "Number of external links attached to the work item. Read-only.",
+          "minimum": 0
+        },
+        "System.HyperLinkCount": {
+          "type": "integer",
+          "description": "Number of hyperlinks on the work item. Read-only.",
+          "minimum": 0
+        },
+        "System.AttachedFileCount": {
+          "type": "integer",
+          "description": "Number of files attached to the work item. Read-only.",
+          "minimum": 0
+        },
+        "System.RelatedLinkCount": {
+          "type": "integer",
+          "description": "Number of related work item links. Read-only.",
+          "minimum": 0
+        },
+        "System.NodeName": {
+          "type": "string",
+          "description": "Node name (last segment of AreaPath). Read-only."
+        },
+        "Microsoft.VSTS.Common.Priority": {
+          "type": ["integer", "null"],
+          "description": "Priority of the work item (1=highest, 4=lowest). Common field in most process templates.",
+          "minimum": 1,
+          "maximum": 4,
+          "examples": [1, 2, 3, 4]
+        },
+        "Microsoft.VSTS.Common.Severity": {
+          "type": ["string", "null"],
+          "description": "Severity level for Bug work items.",
+          "examples": ["1 - Critical", "2 - High", "3 - Medium", "4 - Low"]
+        },
+        "Microsoft.VSTS.Common.StoryPoints": {
+          "type": ["number", "null"],
+          "description": "Story points estimate for User Story work items (Agile process template).",
+          "minimum": 0,
+          "examples": [1, 2, 3, 5, 8, 13]
+        },
+        "Microsoft.VSTS.Scheduling.Effort": {
+          "type": ["number", "null"],
+          "description": "Effort estimate in points or hours (Scrum process template).",
+          "minimum": 0
+        },
+        "Microsoft.VSTS.Scheduling.RemainingWork": {
+          "type": ["number", "null"],
+          "description": "Remaining work estimate in hours for Task work items.",
+          "minimum": 0
+        },
+        "Microsoft.VSTS.Scheduling.OriginalEstimate": {
+          "type": ["number", "null"],
+          "description": "Original work estimate in hours.",
+          "minimum": 0
+        },
+        "Microsoft.VSTS.Scheduling.CompletedWork": {
+          "type": ["number", "null"],
+          "description": "Completed work in hours.",
+          "minimum": 0
+        },
+        "Microsoft.VSTS.Common.AcceptanceCriteria": {
+          "type": ["string", "null"],
+          "description": "Acceptance criteria for a User Story or Feature in HTML format."
+        },
+        "Microsoft.VSTS.Common.ReproSteps": {
+          "type": ["string", "null"],
+          "description": "Steps to reproduce the bug in HTML format."
+        },
+        "Microsoft.VSTS.Build.FoundIn": {
+          "type": ["string", "null"],
+          "description": "Build number or version where the bug was found."
+        },
+        "Microsoft.VSTS.Build.IntegrationBuild": {
+          "type": ["string", "null"],
+          "description": "Build number where the fix was integrated."
+        }
+      },
+      "additionalProperties": true
+    },
+    "relations": {
+      "type": ["array", "null"],
+      "description": "List of relations linking this work item to other work items or external resources (e.g., attached files, hyperlinks, version control changesets).",
+      "items": {
+        "$ref": "#/$defs/WorkItemRelation"
+      }
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL (Hypertext Application Language) links to related resources for this work item.",
+      "properties": {
+        "self": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "workItemUpdates": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "workItemRevisions": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "workItemComments": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "html": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "workItemType": {
+          "$ref": "#/$defs/HalLink"
+        },
+        "fields": {
+          "$ref": "#/$defs/HalLink"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/HalLink"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "REST API URL for accessing this work item directly.",
+      "examples": ["https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42"]
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "WorkItemRelation": {
+      "type": "object",
+      "description": "A relation (link) from this work item to another resource or work item.",
+      "required": ["rel", "url"],
+      "properties": {
+        "rel": {
+          "type": "string",
+          "description": "Relation type identifier. Common values: System.LinkTypes.Hierarchy-Forward (parent-child), System.LinkTypes.Hierarchy-Reverse (child-parent), System.LinkTypes.Related, System.LinkTypes.Dependency-Forward, AttachedFile, Hyperlink, ArtifactLink.",
+          "examples": [
+            "System.LinkTypes.Hierarchy-Reverse",
+            "System.LinkTypes.Related",
+            "System.LinkTypes.Dependency-Forward",
+            "AttachedFile",
+            "Hyperlink",
+            "ArtifactLink"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the related resource. For work item links, this is the REST API URL of the related work item.",
+          "examples": ["https://dev.azure.com/myorg/myproject/_apis/wit/workItems/43"]
+        },
+        "attributes": {
+          "type": ["object", "null"],
+          "description": "Additional attributes for this relation.",
+          "properties": {
+            "comment": {
+              "type": ["string", "null"],
+              "description": "Comment explaining the nature of the relation."
+            },
+            "isLocked": {
+              "type": "boolean",
+              "description": "Whether this relation is locked and cannot be removed."
+            },
+            "name": {
+              "type": ["string", "null"],
+              "description": "Display name for the relation type (e.g., 'Parent', 'Child', 'Related')."
+            },
+            "id": {
+              "type": "integer",
+              "description": "ID for attachment relations."
+            },
+            "resourceSize": {
+              "type": "integer",
+              "description": "File size in bytes for attachment relations."
+            },
+            "resourceCreatedDate": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Creation date for attachment relations."
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "HalLink": {
+      "type": "object",
+      "description": "A HAL hypertext link",
+      "required": ["href"],
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL target of the link"
+        }
+      }
+    }
+  }
+}

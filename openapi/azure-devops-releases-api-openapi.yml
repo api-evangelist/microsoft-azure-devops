@@ -1,0 +1,1170 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Releases API
+  description: >
+    REST API for managing release definitions and deployments in Azure Pipelines.
+    Provides programmatic control over continuous delivery pipelines, including
+    creating and managing release definitions, triggering releases, managing
+    deployment approvals, and tracking deployment status across environments.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://vsrm.dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Release Management API
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Releases
+    description: Operations for managing release instances
+  - name: Release Definitions
+    description: Operations for managing release pipeline definitions
+  - name: Deployments
+    description: Operations for managing and monitoring deployments to environments
+paths:
+  /release/releases:
+    get:
+      operationId: releases_list
+      summary: List releases
+      description: >
+        Returns a list of releases in the project. Supports filtering by definition,
+        status, environment name, and date ranges. Results are paginated using
+        continuationToken.
+      tags:
+        - Releases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: query
+          required: false
+          description: Filter releases by release definition ID
+          schema:
+            type: integer
+        - name: definitionEnvironmentId
+          in: query
+          required: false
+          description: Filter releases by definition environment ID
+          schema:
+            type: integer
+        - name: searchText
+          in: query
+          required: false
+          description: Search by release name
+          schema:
+            type: string
+        - name: createdBy
+          in: query
+          required: false
+          description: Filter releases created by a specific user (descriptor)
+          schema:
+            type: string
+        - name: statusFilter
+          in: query
+          required: false
+          description: Filter by release status
+          schema:
+            type: string
+            enum: [undefined, draft, active, abandoned]
+        - name: environmentStatusFilter
+          in: query
+          required: false
+          description: Filter by environment status
+          schema:
+            type: integer
+        - name: minCreatedTime
+          in: query
+          required: false
+          description: Returns releases created after this date
+          schema:
+            type: string
+            format: date-time
+        - name: maxCreatedTime
+          in: query
+          required: false
+          description: Returns releases created before this date
+          schema:
+            type: string
+            format: date-time
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of releases to return
+          schema:
+            type: integer
+            maximum: 5000
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: integer
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional release details
+          schema:
+            type: string
+            enum: [none, environments, artifacts, approvals, all]
+      responses:
+        '200':
+          description: List of releases returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Release'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: releases_create
+      summary: Create a release
+      description: >
+        Creates a new release based on a release definition. You can specify which
+        artifacts to use, add a description, override variables, and optionally
+        save as a draft before deployment.
+      tags:
+        - Releases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Release creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReleaseCreateRequest'
+            example:
+              definitionId: 3
+              description: 'Deploying version 1.2.3 to production'
+              artifacts:
+                - alias: '_MyBuild'
+                  instanceReference:
+                    id: '1234'
+                    name: '20240315.1'
+              isDraft: false
+              manualEnvironments: []
+      responses:
+        '200':
+          description: Release created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Release'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /release/releases/{releaseId}:
+    get:
+      operationId: releases_get
+      summary: Get a release
+      description: >
+        Returns detailed information about a specific release, including all
+        environments, deployment status, artifacts used, and approval history.
+      tags:
+        - Releases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: releaseId
+          in: path
+          required: true
+          description: Numeric ID of the release
+          schema:
+            type: integer
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional release details
+          schema:
+            type: string
+            enum: [none, environments, artifacts, approvals, all]
+        - name: approvalFilters
+          in: query
+          required: false
+          description: Filter type for approval details
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Release returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Release'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: releases_update
+      summary: Update a release
+      description: >
+        Updates a release, such as changing its status from draft to active,
+        updating the description, or modifying environment configurations.
+      tags:
+        - Releases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: releaseId
+          in: path
+          required: true
+          description: Numeric ID of the release to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Updated release object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Release'
+      responses:
+        '200':
+          description: Release updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Release'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /release/definitions:
+    get:
+      operationId: releaseDefinitions_list
+      summary: List release definitions
+      description: >
+        Returns a list of release definitions in the project. Supports filtering
+        by name and path. Definitions represent the release pipeline template
+        including environments, artifacts, approval gates, and deployment steps.
+      tags:
+        - Release Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: searchText
+          in: query
+          required: false
+          description: Filter definitions by name (supports wildcards)
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional definition details
+          schema:
+            type: string
+            enum: [environments, artifacts, none, lastRelease, tags, triggers, variables]
+        - name: artifactType
+          in: query
+          required: false
+          description: Filter definitions by artifact type
+          schema:
+            type: string
+            enum: [build, jenkins, github, nuget, team, externaltfsbuild, git, tfvc]
+        - name: artifactSourceId
+          in: query
+          required: false
+          description: Filter definitions by artifact source ID
+          schema:
+            type: string
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of definitions to return
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paged results
+          schema:
+            type: string
+        - name: queryOrder
+          in: query
+          required: false
+          description: Results ordering
+          schema:
+            type: string
+            enum: [none, idAscending, idDescending, nameAscending, nameDescending, lastModifiedAscending, lastModifiedDescending]
+        - name: path
+          in: query
+          required: false
+          description: Filter definitions by folder path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of release definitions returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReleaseDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: releaseDefinitions_create
+      summary: Create a release definition
+      description: >
+        Creates a new release definition specifying environments, artifacts,
+        triggers, variables, and deployment steps. The definition serves as
+        the template for future release instances.
+      tags:
+        - Release Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Release definition to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReleaseDefinition'
+      responses:
+        '200':
+          description: Release definition created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleaseDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /release/definitions/{definitionId}:
+    get:
+      operationId: releaseDefinitions_get
+      summary: Get a release definition
+      description: >
+        Returns detailed information about a specific release definition,
+        including all environments, artifact sources, triggers, approvals,
+        and deployment steps.
+      tags:
+        - Release Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the release definition
+          schema:
+            type: integer
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional definition details
+          schema:
+            type: string
+        - name: propertyFilters
+          in: query
+          required: false
+          description: Comma-separated list of properties to include
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Release definition returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleaseDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: releaseDefinitions_update
+      summary: Update a release definition
+      description: >
+        Replaces an existing release definition with the provided definition.
+        The revision number in the body must match the current revision to
+        prevent concurrent modification conflicts.
+      tags:
+        - Release Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the release definition to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Updated release definition
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReleaseDefinition'
+      responses:
+        '200':
+          description: Release definition updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleaseDefinition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: releaseDefinitions_delete
+      summary: Delete a release definition
+      description: >
+        Deletes a release definition. All associated releases must be deleted or
+        abandoned first. This operation cannot be undone.
+      tags:
+        - Release Definitions
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: path
+          required: true
+          description: Numeric ID of the release definition to delete
+          schema:
+            type: integer
+        - name: comment
+          in: query
+          required: false
+          description: Comment explaining why the definition is being deleted
+          schema:
+            type: string
+        - name: forceDelete
+          in: query
+          required: false
+          description: Force delete even if there are associated releases
+          schema:
+            type: boolean
+      responses:
+        '204':
+          description: Release definition deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /release/deployments:
+    get:
+      operationId: deployments_list
+      summary: List deployments
+      description: >
+        Returns a list of deployments across all release definitions and environments
+        in the project. Supports filtering by definition, environment, and deployment
+        status. Useful for auditing and monitoring deployment activity.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: definitionId
+          in: query
+          required: false
+          description: Filter deployments by release definition ID
+          schema:
+            type: integer
+        - name: definitionEnvironmentId
+          in: query
+          required: false
+          description: Filter deployments by environment ID within the definition
+          schema:
+            type: integer
+        - name: createdBy
+          in: query
+          required: false
+          description: Filter deployments triggered by a specific user
+          schema:
+            type: string
+        - name: minModifiedTime
+          in: query
+          required: false
+          description: Returns deployments modified after this date
+          schema:
+            type: string
+            format: date-time
+        - name: maxModifiedTime
+          in: query
+          required: false
+          description: Returns deployments modified before this date
+          schema:
+            type: string
+            format: date-time
+        - name: deploymentStatus
+          in: query
+          required: false
+          description: Filter by deployment status
+          schema:
+            type: string
+            enum: [undefined, notDeployed, inProgress, succeeded, partiallySucceeded, failed, all]
+        - name: operationStatus
+          in: query
+          required: false
+          description: Filter by operation status
+          schema:
+            type: string
+            enum: [undefined, queued, scheduled, pending, approved, rejected, deferred, queuedForAgent, phaseInProgress, phaseSucceeded, phasePartiallySucceeded, phaseFailed, canceled, phaseCanceled, manualInterventionPending, queued, all]
+        - name: latestAttemptsOnly
+          in: query
+          required: false
+          description: Return only the latest deployment attempt for each environment
+          schema:
+            type: boolean
+        - name: queryOrder
+          in: query
+          required: false
+          description: Sort order for results
+          schema:
+            type: string
+            enum: [descending, ascending]
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of deployments to return
+          schema:
+            type: integer
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: integer
+        - name: projectName
+          in: query
+          required: false
+          description: Project name filter
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of deployments returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    Release:
+      type: object
+      description: An Azure DevOps release instance
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the release
+          example: 42
+        name:
+          type: string
+          description: Auto-generated release name
+          example: 'Release-42'
+        status:
+          type: string
+          description: Current status of the release
+          enum: [undefined, draft, active, abandoned]
+        createdOn:
+          type: string
+          format: date-time
+          description: Date and time the release was created
+        modifiedOn:
+          type: string
+          format: date-time
+          description: Date and time the release was last modified
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        modifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        createdFor:
+          $ref: '#/components/schemas/IdentityRef'
+        description:
+          type: string
+          description: Optional description for this release
+        releaseDefinition:
+          $ref: '#/components/schemas/ReleaseDefinitionShallowReference'
+        releaseDefinitionRevision:
+          type: integer
+          description: Revision of the release definition used for this release
+        reason:
+          type: string
+          description: Reason the release was created
+          enum: [none, manual, continuousIntegration, schedule, pullRequest]
+        environments:
+          type: array
+          description: Environments in this release with their deployment status
+          items:
+            $ref: '#/components/schemas/ReleaseEnvironment'
+        artifacts:
+          type: array
+          description: Artifacts used in this release
+          items:
+            $ref: '#/components/schemas/Artifact'
+        variables:
+          type: object
+          description: Release-level variable overrides
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        keepForever:
+          type: boolean
+          description: Whether to retain this release indefinitely
+        logsContainerUrl:
+          type: string
+          format: uri
+          description: URL to the logs container for this release
+        url:
+          type: string
+          format: uri
+          description: URL to access this release via the REST API
+        _links:
+          type: object
+          description: HAL links for related resources
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+        tags:
+          type: array
+          description: Tags associated with this release
+          items:
+            type: string
+    ReleaseCreateRequest:
+      type: object
+      description: Request to create a new release
+      required:
+        - definitionId
+      properties:
+        definitionId:
+          type: integer
+          description: ID of the release definition to create the release from
+        description:
+          type: string
+          description: Optional description for the release
+        artifacts:
+          type: array
+          description: Artifact versions to use in the release
+          items:
+            type: object
+            properties:
+              alias:
+                type: string
+                description: Artifact alias as defined in the release definition
+              instanceReference:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Build ID or artifact version ID
+                  name:
+                    type: string
+                    description: Build number or version string
+        isDraft:
+          type: boolean
+          description: Whether to create the release as a draft (not deployed automatically)
+          default: false
+        manualEnvironments:
+          type: array
+          description: Environments to skip automatic deployment (requires manual trigger)
+          items:
+            type: string
+        variables:
+          type: object
+          description: Release-level variable overrides
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+        properties:
+          type: object
+          description: Additional release properties
+          additionalProperties: true
+    ReleaseDefinition:
+      type: object
+      description: A release pipeline definition
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the definition
+        name:
+          type: string
+          description: Display name of the release definition
+          example: 'Production Deployment'
+        path:
+          type: string
+          description: Folder path for the definition
+          example: '\Production'
+        description:
+          type: string
+          description: Description of the release definition
+        revision:
+          type: integer
+          description: Current revision number
+        createdOn:
+          type: string
+          format: date-time
+        modifiedOn:
+          type: string
+          format: date-time
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        modifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        isDeleted:
+          type: boolean
+          description: Whether this definition has been deleted
+        environments:
+          type: array
+          description: Environments (deployment stages) in the release pipeline
+          items:
+            $ref: '#/components/schemas/ReleaseDefinitionEnvironment'
+        artifacts:
+          type: array
+          description: Artifact sources used by this release definition
+          items:
+            $ref: '#/components/schemas/Artifact'
+        triggers:
+          type: array
+          description: Triggers that automatically create releases
+          items:
+            type: object
+        variables:
+          type: object
+          description: Release-level variables
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        tags:
+          type: array
+          items:
+            type: string
+        source:
+          type: string
+          enum: [undefined, restApi, userInterface, ibiza, portalExtensionApi]
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    ReleaseEnvironment:
+      type: object
+      description: An environment (deployment stage) within a release
+      properties:
+        id:
+          type: integer
+        releaseId:
+          type: integer
+          description: ID of the release this environment belongs to
+        name:
+          type: string
+          description: Environment name (e.g., Dev, Staging, Production)
+        status:
+          type: string
+          description: Current deployment status of this environment
+          enum: [undefined, notStarted, inProgress, succeeded, canceled, rejected, queued, scheduled, partiallySucceeded]
+        definitionEnvironmentId:
+          type: integer
+          description: ID of the corresponding environment definition
+        createdOn:
+          type: string
+          format: date-time
+        queuedOn:
+          type: string
+          format: date-time
+        lastModifiedOn:
+          type: string
+          format: date-time
+        deployedOn:
+          type: string
+          format: date-time
+        timeToDeploy:
+          type: number
+          description: Time to deploy in minutes
+        deploymentJobs:
+          type: array
+          description: Deployment jobs for this environment
+          items:
+            type: object
+        preDeployApprovals:
+          type: array
+          description: Pre-deployment approval records
+          items:
+            $ref: '#/components/schemas/ReleaseApproval'
+        postDeployApprovals:
+          type: array
+          description: Post-deployment approval records
+          items:
+            $ref: '#/components/schemas/ReleaseApproval'
+        url:
+          type: string
+          format: uri
+    ReleaseDefinitionEnvironment:
+      type: object
+      description: An environment definition within a release pipeline
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: Name of the environment
+          example: 'Production'
+        rank:
+          type: integer
+          description: Sequence order of the environment in the pipeline
+        deployPhases:
+          type: array
+          description: Deployment phases in this environment
+          items:
+            type: object
+        conditions:
+          type: array
+          description: Conditions that must be met before deploying to this environment
+          items:
+            type: object
+        preDeployApprovals:
+          type: object
+          description: Pre-deployment approval configuration
+        postDeployApprovals:
+          type: object
+          description: Post-deployment approval configuration
+        environmentOptions:
+          type: object
+          description: Environment-level options
+        variables:
+          type: object
+          description: Environment-level variables
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        demands:
+          type: array
+          items:
+            type: object
+    ReleaseApproval:
+      type: object
+      description: An approval record for a release environment
+      properties:
+        id:
+          type: integer
+        revision:
+          type: integer
+        approvalType:
+          type: string
+          enum: [undefined, preDeploy, postDeploy, all]
+        createdOn:
+          type: string
+          format: date-time
+        modifiedOn:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [undefined, pending, approved, rejected, reassigned, canceled, skipped]
+        comments:
+          type: string
+        isAutomated:
+          type: boolean
+        approver:
+          $ref: '#/components/schemas/IdentityRef'
+        approvedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        attempt:
+          type: integer
+        rank:
+          type: integer
+        url:
+          type: string
+          format: uri
+    Artifact:
+      type: object
+      description: An artifact used in a release
+      properties:
+        alias:
+          type: string
+          description: Alias for the artifact within the release definition
+          example: '_MyBuild'
+        type:
+          type: string
+          description: Artifact type
+          enum: [build, jenkins, github, nuget, team, externaltfsbuild, git, tfvc]
+        definitionReference:
+          type: object
+          description: Reference to the artifact source definition
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        isPrimary:
+          type: boolean
+          description: Whether this is the primary artifact
+        isRetained:
+          type: boolean
+          description: Whether this artifact is retained
+        sourceId:
+          type: string
+          description: Source identifier for the artifact
+    Deployment:
+      type: object
+      description: A deployment of a release to an environment
+      properties:
+        id:
+          type: integer
+          description: Unique deployment ID
+        releaseId:
+          type: integer
+          description: ID of the release associated with this deployment
+        releaseDefinitionId:
+          type: integer
+          description: ID of the release definition
+        releaseEnvironmentId:
+          type: integer
+          description: ID of the environment within the release
+        definitionEnvironmentId:
+          type: integer
+          description: ID of the environment definition
+        attempt:
+          type: integer
+          description: Deployment attempt number
+        reason:
+          type: string
+          description: Reason for the deployment
+          enum: [none, manual, automated, scheduled, redeployTrigger]
+        deploymentStatus:
+          type: string
+          description: Current deployment status
+          enum: [undefined, notDeployed, inProgress, succeeded, partiallySucceeded, failed, all]
+        operationStatus:
+          type: string
+          description: Current operation status
+          enum: [undefined, queued, scheduled, pending, approved, rejected, deferred, queuedForAgent, phaseInProgress, phaseSucceeded, phasePartiallySucceeded, phaseFailed, canceled, phaseCanceled, manualInterventionPending, queued, all]
+        requestedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        requestedFor:
+          $ref: '#/components/schemas/IdentityRef'
+        queuedOn:
+          type: string
+          format: date-time
+        startedOn:
+          type: string
+          format: date-time
+        completedOn:
+          type: string
+          format: date-time
+        lastModifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        lastModifiedOn:
+          type: string
+          format: date-time
+        release:
+          type: object
+          description: Minimal release reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        releaseDefinition:
+          $ref: '#/components/schemas/ReleaseDefinitionShallowReference'
+        releaseEnvironment:
+          type: object
+          description: Minimal environment reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        projectReference:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        url:
+          type: string
+          format: uri
+    ConfigurationVariableValue:
+      type: object
+      description: A variable value in a release definition or release
+      properties:
+        value:
+          type: string
+          description: The variable value
+        isSecret:
+          type: boolean
+          description: Whether the value is treated as a secret
+        allowOverride:
+          type: boolean
+          description: Whether the value can be overridden when creating a release
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: 'John Doe'
+        uniqueName:
+          type: string
+          example: 'john.doe@example.com'
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

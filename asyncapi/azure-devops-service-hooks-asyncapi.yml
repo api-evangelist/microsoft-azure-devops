@@ -1,0 +1,743 @@
+asyncapi: 2.6.0
+info:
+  title: Azure DevOps Service Hooks AsyncAPI
+  version: '7.1'
+  description: >
+    AsyncAPI specification for Azure DevOps Service Hooks (webhooks and event subscriptions).
+    Azure DevOps delivers event notifications via HTTP POST requests to subscriber endpoints
+    when events occur such as work item changes, git pushes, pull request updates, build
+    completions, and release deployments.
+
+    Subscribers configure webhooks through the Service Hooks REST API or the Azure DevOps
+    portal. Each subscription specifies the event type, optional filter conditions, and the
+    target consumer endpoint.
+
+    Azure DevOps signs each delivery with an HMAC-SHA1 signature in the
+    X-AzureDevOps-Signature header, allowing subscribers to verify message authenticity.
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/azure/devops/service-hooks/overview?view=azure-devops
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  x-publisher:
+    name: Azure DevOps
+    id: tfs
+    description: >
+      The primary Azure DevOps event publisher. All events described in this spec
+      are produced by the 'tfs' publisher.
+
+defaultContentType: application/json
+
+servers:
+  subscriber-endpoint:
+    url: '{subscriberUrl}'
+    protocol: https
+    description: >
+      The HTTPS endpoint configured by the webhook subscriber to receive event
+      notifications. This URL is specified when creating a service hook subscription
+      via the Azure DevOps Service Hooks API (POST /hooks/subscriptions with
+      consumerId: 'webHooks' and consumerActionId: 'httpRequest').
+    variables:
+      subscriberUrl:
+        description: The full HTTPS URL of the subscriber endpoint
+
+channels:
+  workitem/created:
+    description: >
+      Triggered when a new work item is created in Azure Boards. The resource
+      in the payload contains the full work item with all its fields.
+    subscribe:
+      operationId: onWorkItemCreated
+      summary: Receive work item created events
+      description: >
+        Subscribe to this channel to receive notifications whenever a new work item
+        is created in any project (or in a specific project and area path based on
+        subscription filters). The event payload includes the complete work item.
+      tags:
+        - name: Work Items
+        - name: Azure Boards
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/WorkItemCreatedEvent'
+
+  workitem/updated:
+    description: >
+      Triggered when any field of a work item is updated, including state changes,
+      assignment changes, field value updates, and relation additions or removals.
+    subscribe:
+      operationId: onWorkItemUpdated
+      summary: Receive work item updated events
+      description: >
+        Subscribe to receive notifications when work items are modified. The payload
+        includes both the updated work item and details of what changed. Filter by
+        specific field changes using the subscription's publisherInputs.
+      tags:
+        - name: Work Items
+        - name: Azure Boards
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/WorkItemUpdatedEvent'
+
+  workitem/deleted:
+    description: >
+      Triggered when a work item is deleted (moved to the recycle bin or permanently
+      deleted). The payload contains the work item as it was before deletion.
+    subscribe:
+      operationId: onWorkItemDeleted
+      summary: Receive work item deleted events
+      description: >
+        Subscribe to receive notifications when work items are deleted. Useful for
+        maintaining external systems in sync with Azure Boards.
+      tags:
+        - name: Work Items
+        - name: Azure Boards
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/WorkItemDeletedEvent'
+
+  workitem/commented:
+    description: >
+      Triggered when a comment is added to a work item. The payload contains the
+      work item and the new comment.
+    subscribe:
+      operationId: onWorkItemCommented
+      summary: Receive work item commented events
+      description: >
+        Subscribe to receive notifications when comments are added to work items.
+        Useful for triggering notifications or integrations based on team discussions.
+      tags:
+        - name: Work Items
+        - name: Azure Boards
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/WorkItemCommentedEvent'
+
+  git/push:
+    description: >
+      Triggered when one or more commits are pushed to a Git repository branch.
+      The payload includes the repository, branch, and list of commits pushed.
+    subscribe:
+      operationId: onGitPush
+      summary: Receive git push events
+      description: >
+        Subscribe to receive notifications when code is pushed to a repository.
+        Can be filtered to specific repositories or branches via subscription
+        publisherInputs. Useful for triggering CI processes or code reviews.
+      tags:
+        - name: Git
+        - name: Azure Repos
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/GitPushEvent'
+
+  git/pullrequest/created:
+    description: >
+      Triggered when a new pull request is created in a Git repository. The payload
+      contains the full pull request details including source and target branches,
+      title, description, and assigned reviewers.
+    subscribe:
+      operationId: onPullRequestCreated
+      summary: Receive pull request created events
+      description: >
+        Subscribe to receive notifications when new pull requests are opened.
+        Useful for triggering automated code review processes, notifications,
+        or external workflow systems.
+      tags:
+        - name: Git
+        - name: Pull Requests
+        - name: Azure Repos
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/PullRequestCreatedEvent'
+
+  git/pullrequest/updated:
+    description: >
+      Triggered when an existing pull request is updated, such as when reviewers
+      are added, the PR is approved, the merge status changes, or the title or
+      description is modified.
+    subscribe:
+      operationId: onPullRequestUpdated
+      summary: Receive pull request updated events
+      description: >
+        Subscribe to receive notifications on pull request changes. The payload
+        includes the updated pull request with the most recent status and reviewer votes.
+      tags:
+        - name: Git
+        - name: Pull Requests
+        - name: Azure Repos
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/PullRequestUpdatedEvent'
+
+  git/pullrequest/merged:
+    description: >
+      Triggered when a pull request is merged (completed) into the target branch.
+      The payload includes the merge commit and the completed pull request details.
+    subscribe:
+      operationId: onPullRequestMerged
+      summary: Receive pull request merged events
+      description: >
+        Subscribe to receive notifications when pull requests are completed and
+        merged into the target branch. Useful for triggering deployment workflows
+        or updating external project tracking systems.
+      tags:
+        - name: Git
+        - name: Pull Requests
+        - name: Azure Repos
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/PullRequestMergedEvent'
+
+  build/complete:
+    description: >
+      Triggered when a build completes (succeeds, fails, is canceled, or partially
+      succeeds). The payload includes the build details, result, and links to logs
+      and artifacts.
+    subscribe:
+      operationId: onBuildComplete
+      summary: Receive build completed events
+      description: >
+        Subscribe to receive notifications when builds finish executing. Can be
+        filtered by definition ID and build status. Useful for triggering downstream
+        deployments or notifying teams about build results.
+      tags:
+        - name: Builds
+        - name: Azure Pipelines
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/BuildCompleteEvent'
+
+  ms.vss-release.release-created-event:
+    description: >
+      Triggered when a new release is created from a release definition. The payload
+      includes the release details, artifacts, and environments.
+    subscribe:
+      operationId: onReleaseCreated
+      summary: Receive release created events
+      description: >
+        Subscribe to receive notifications when releases are created. Useful for
+        triggering external workflow systems or sending release announcements.
+      tags:
+        - name: Releases
+        - name: Azure Pipelines
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/ReleaseCreatedEvent'
+
+  ms.vss-release.deployment-approval-pending-event:
+    description: >
+      Triggered when a deployment to an environment requires manual approval.
+      The payload includes the release, environment, and approval request details.
+    subscribe:
+      operationId: onDeploymentApprovalPending
+      summary: Receive deployment approval pending events
+      description: >
+        Subscribe to receive notifications when deployments are waiting for manual
+        approval before proceeding. Useful for notifying approvers through external
+        channels or triggering approval workflow integrations.
+      tags:
+        - name: Releases
+        - name: Deployments
+        - name: Azure Pipelines
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/DeploymentApprovalPendingEvent'
+
+  ms.vss-release.deployment-completed-event:
+    description: >
+      Triggered when a deployment to an environment is completed, regardless of
+      whether it succeeded or failed. The payload includes the release, environment,
+      deployment result, and timing information.
+    subscribe:
+      operationId: onDeploymentCompleted
+      summary: Receive deployment completed events
+      description: >
+        Subscribe to receive notifications when deployments finish. Useful for
+        auditing deployment activity, updating external dashboards, or triggering
+        post-deployment testing workflows.
+      tags:
+        - name: Releases
+        - name: Deployments
+        - name: Azure Pipelines
+      bindings:
+        http:
+          method: POST
+      message:
+        $ref: '#/components/messages/DeploymentCompletedEvent'
+
+components:
+  messages:
+    WorkItemCreatedEvent:
+      name: WorkItemCreatedEvent
+      title: Work item created
+      summary: A new work item was created in Azure Boards
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: >
+              HMAC-SHA1 signature of the request body using the subscription's
+              shared secret. Format: sha1={signature}
+            example: 'sha1=7a3f9b2c4d5e6f8a9b0c1d2e3f4a5b6c7d8e9f0a'
+          Content-Type:
+            type: string
+            enum: ['application/json']
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+      examples:
+        - name: BasicWorkItemCreated
+          summary: Example of a work item created event payload
+          payload:
+            subscriptionId: 'c0cc6f6a-b2b3-4c4e-b1b0-2c5d7e6f8a9b'
+            notificationId: 1
+            id: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+            eventType: 'workitem.created'
+            publisherId: 'tfs'
+            message:
+              text: 'Bug #42 (Fix login alignment) created by John Doe'
+              html: '<a href="https://dev.azure.com/myorg/myproject/_workitems/edit/42">Bug #42</a> (Fix login alignment) created by John Doe'
+              markdown: '[Bug #42](https://dev.azure.com/myorg/myproject/_workitems/edit/42) (Fix login alignment) created by John Doe'
+            detailedMessage:
+              text: 'Bug #42 (Fix login alignment) created by John Doe in Sprint 5'
+              html: '<a href="https://dev.azure.com/myorg/myproject/_workitems/edit/42">Bug #42</a> (Fix login alignment) created by John Doe in Sprint 5'
+              markdown: '[Bug #42](https://dev.azure.com/myorg/myproject/_workitems/edit/42) (Fix login alignment) created by John Doe in Sprint 5'
+            resource:
+              id: 42
+              rev: 1
+              fields:
+                System.Id: 42
+                System.Title: 'Fix login alignment'
+                System.WorkItemType: 'Bug'
+                System.State: 'New'
+                System.CreatedBy:
+                  displayName: 'John Doe'
+                  uniqueName: 'john.doe@example.com'
+                System.CreatedDate: '2024-03-15T10:30:00Z'
+                System.TeamProject: 'myproject'
+                System.AreaPath: 'myproject'
+                System.IterationPath: 'myproject\\Sprint 5'
+              url: 'https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42'
+              _links:
+                self:
+                  href: 'https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42'
+            resourceVersion: '1.0'
+            resourceContainers:
+              collection:
+                id: 'myorg-collection-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              account:
+                id: 'myorg-account-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              project:
+                id: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+                baseUrl: 'https://dev.azure.com/myorg/myproject'
+            createdDate: '2024-03-15T10:30:00Z'
+
+    WorkItemUpdatedEvent:
+      name: WorkItemUpdatedEvent
+      title: Work item updated
+      summary: A work item was updated in Azure Boards
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    WorkItemDeletedEvent:
+      name: WorkItemDeletedEvent
+      title: Work item deleted
+      summary: A work item was deleted from Azure Boards
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    WorkItemCommentedEvent:
+      name: WorkItemCommentedEvent
+      title: Work item comment added
+      summary: A comment was added to a work item
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    GitPushEvent:
+      name: GitPushEvent
+      title: Git push
+      summary: Commits were pushed to a Git repository
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+      examples:
+        - name: BasicGitPush
+          summary: Example of a git push event payload
+          payload:
+            subscriptionId: 'd1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6'
+            notificationId: 2
+            id: 'b2c3d4e5-f6a1-b2c3-d4e5-f6a1b2c3d4e5'
+            eventType: 'git.push'
+            publisherId: 'tfs'
+            message:
+              text: 'John Doe pushed to main in myproject/my-application'
+              html: 'John Doe pushed to <a href="https://dev.azure.com/myorg/myproject/_git/my-application/commits?itemVersion=GBmain">main</a> in <a href="https://dev.azure.com/myorg/myproject/_git/my-application">myproject/my-application</a>'
+              markdown: 'John Doe pushed to [main](https://dev.azure.com/myorg/myproject/_git/my-application) in [my-application](https://dev.azure.com/myorg/myproject/_git/my-application)'
+            resource:
+              commits:
+                - commitId: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+                  author:
+                    name: 'John Doe'
+                    email: 'john.doe@example.com'
+                    date: '2024-03-15T10:30:00Z'
+                  committer:
+                    name: 'John Doe'
+                    email: 'john.doe@example.com'
+                    date: '2024-03-15T10:30:00Z'
+                  comment: 'Fix login button alignment'
+                  url: 'https://dev.azure.com/myorg/myproject/_git/my-application/commit/a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+              refUpdates:
+                - name: 'refs/heads/main'
+                  oldObjectId: '0000000000000000000000000000000000000000'
+                  newObjectId: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+              repository:
+                id: 'repo-guid-here'
+                name: 'my-application'
+                url: 'https://dev.azure.com/myorg/myproject/_git/my-application'
+                project:
+                  id: 'proj-guid-here'
+                  name: 'myproject'
+              pushedBy:
+                displayName: 'John Doe'
+                uniqueName: 'john.doe@example.com'
+              pushId: 12345
+              date: '2024-03-15T10:30:00Z'
+              url: 'https://dev.azure.com/myorg/myproject/_git/my-application/pushes/12345'
+            resourceVersion: '1.0'
+            resourceContainers:
+              collection:
+                id: 'collection-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              account:
+                id: 'account-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              project:
+                id: 'proj-guid-here'
+                baseUrl: 'https://dev.azure.com/myorg/myproject'
+            createdDate: '2024-03-15T10:30:01Z'
+
+    PullRequestCreatedEvent:
+      name: PullRequestCreatedEvent
+      title: Pull request created
+      summary: A new pull request was opened
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    PullRequestUpdatedEvent:
+      name: PullRequestUpdatedEvent
+      title: Pull request updated
+      summary: A pull request was updated (reviewer added, approved, etc.)
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    PullRequestMergedEvent:
+      name: PullRequestMergedEvent
+      title: Pull request merged
+      summary: A pull request was completed and merged
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    BuildCompleteEvent:
+      name: BuildCompleteEvent
+      title: Build complete
+      summary: A build finished executing
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+      examples:
+        - name: BuildSucceeded
+          summary: Example of a build complete event payload (succeeded)
+          payload:
+            subscriptionId: 'e3f4a5b6-c7d8-e9f0-a1b2-c3d4e5f6a7b8'
+            notificationId: 5
+            id: 'c4d5e6f7-a8b9-c0d1-e2f3-a4b5c6d7e8f9'
+            eventType: 'build.complete'
+            publisherId: 'tfs'
+            message:
+              text: 'Build CI-Pipeline 20240315.1 succeeded'
+              html: 'Build <a href="https://dev.azure.com/myorg/myproject/_build/results?buildId=1234">CI-Pipeline 20240315.1</a> succeeded'
+              markdown: 'Build [CI-Pipeline 20240315.1](https://dev.azure.com/myorg/myproject/_build/results?buildId=1234) succeeded'
+            resource:
+              id: 1234
+              buildNumber: '20240315.1'
+              status: 'completed'
+              result: 'succeeded'
+              queueTime: '2024-03-15T10:00:00Z'
+              startTime: '2024-03-15T10:01:00Z'
+              finishTime: '2024-03-15T10:15:00Z'
+              url: 'https://dev.azure.com/myorg/myproject/_apis/build/Builds/1234'
+              definition:
+                id: 5
+                name: 'CI-Pipeline'
+                url: 'https://dev.azure.com/myorg/myproject/_apis/build/Definitions/5'
+              sourceBranch: 'refs/heads/main'
+              sourceVersion: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2'
+              requestedBy:
+                displayName: 'John Doe'
+                uniqueName: 'john.doe@example.com'
+              project:
+                id: 'proj-guid-here'
+                name: 'myproject'
+            resourceVersion: '1.0'
+            resourceContainers:
+              collection:
+                id: 'collection-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              account:
+                id: 'account-id'
+                baseUrl: 'https://dev.azure.com/myorg'
+              project:
+                id: 'proj-guid-here'
+                baseUrl: 'https://dev.azure.com/myorg/myproject'
+            createdDate: '2024-03-15T10:15:01Z'
+
+    ReleaseCreatedEvent:
+      name: ReleaseCreatedEvent
+      title: Release created
+      summary: A new release was created from a release definition
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    DeploymentApprovalPendingEvent:
+      name: DeploymentApprovalPendingEvent
+      title: Deployment approval pending
+      summary: A deployment is waiting for manual approval
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+    DeploymentCompletedEvent:
+      name: DeploymentCompletedEvent
+      title: Deployment completed
+      summary: A deployment to an environment finished executing
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          X-AzureDevOps-Signature:
+            type: string
+            description: HMAC-SHA1 signature of the request body
+      payload:
+        $ref: '#/components/schemas/ServiceHookEventEnvelope'
+
+  schemas:
+    ServiceHookEventEnvelope:
+      type: object
+      description: >
+        The standard envelope for all Azure DevOps Service Hook event notifications.
+        Delivered via HTTP POST to the configured subscriber endpoint.
+      required:
+        - subscriptionId
+        - notificationId
+        - id
+        - eventType
+        - publisherId
+        - resource
+        - resourceVersion
+        - resourceContainers
+        - createdDate
+      properties:
+        subscriptionId:
+          type: string
+          format: uuid
+          description: GUID of the service hook subscription that triggered this notification
+          example: 'c0cc6f6a-b2b3-4c4e-b1b0-2c5d7e6f8a9b'
+        notificationId:
+          type: integer
+          description: Sequential notification ID within the subscription
+          example: 42
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier for this specific notification event instance
+          example: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+        eventType:
+          type: string
+          description: >
+            The type of event that triggered this notification. Identifies the
+            channel/event category.
+          enum:
+            - workitem.created
+            - workitem.updated
+            - workitem.deleted
+            - workitem.commented
+            - git.push
+            - git.pullrequest.created
+            - git.pullrequest.updated
+            - git.pullrequest.merged
+            - build.complete
+            - ms.vss-release.release-created-event
+            - ms.vss-release.deployment-approval-pending-event
+            - ms.vss-release.deployment-completed-event
+          example: 'workitem.created'
+        publisherId:
+          type: string
+          description: Identifier of the publisher that produced this event
+          example: 'tfs'
+        message:
+          $ref: '#/components/schemas/FormattedEventMessage'
+        detailedMessage:
+          $ref: '#/components/schemas/FormattedEventMessage'
+        resource:
+          type: object
+          description: >
+            The primary resource affected by the event. The schema of this object
+            varies by eventType:
+            - Work item events: contains the work item fields (id, rev, fields, relations)
+            - Git push: contains commits, refUpdates, repository, pushedBy
+            - Pull request events: contains the full pull request object
+            - Build events: contains the build object (id, buildNumber, status, result)
+            - Release events: contains the release or deployment object
+          additionalProperties: true
+        resourceVersion:
+          type: string
+          description: Version of the resource schema used in this event payload
+          example: '1.0'
+        resourceContainers:
+          $ref: '#/components/schemas/ResourceContainers'
+        createdDate:
+          type: string
+          format: date-time
+          description: Date and time the event was created (ISO 8601 UTC)
+          example: '2024-03-15T10:30:00Z'
+
+    FormattedEventMessage:
+      type: object
+      description: An event message rendered in multiple formats for different use cases
+      properties:
+        text:
+          type: string
+          description: Plain text version of the event message
+          example: 'Bug #42 (Fix login alignment) created by John Doe'
+        html:
+          type: string
+          description: HTML version with hyperlinks to relevant Azure DevOps resources
+          example: '<a href="https://dev.azure.com/myorg/myproject/_workitems/edit/42">Bug #42</a> (Fix login alignment) created by John Doe'
+        markdown:
+          type: string
+          description: Markdown version of the event message with links
+          example: '[Bug #42](https://dev.azure.com/myorg/myproject/_workitems/edit/42) (Fix login alignment) created by John Doe'
+
+    ResourceContainers:
+      type: object
+      description: >
+        Context about the Azure DevOps organization, account, and project in which
+        the event occurred. Useful for routing events in multi-tenant scenarios.
+      properties:
+        collection:
+          $ref: '#/components/schemas/ResourceContainer'
+        account:
+          $ref: '#/components/schemas/ResourceContainer'
+        project:
+          $ref: '#/components/schemas/ResourceContainer'
+
+    ResourceContainer:
+      type: object
+      description: An Azure DevOps resource container (collection, account, or project)
+      properties:
+        id:
+          type: string
+          description: GUID identifier for this container
+          example: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+        baseUrl:
+          type: string
+          format: uri
+          description: Base URL for accessing this container
+          example: 'https://dev.azure.com/myorganization'
+        name:
+          type: string
+          description: Display name of the container
+          example: 'myorganization'

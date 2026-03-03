@@ -1,0 +1,596 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Wiki API
+  description: >
+    REST API for creating and managing wikis and wiki pages in Azure DevOps projects.
+    Every project wiki is backed by a Git repository, enabling version-controlled
+    documentation. Supports creating, reading, updating, and deleting wikis and
+    pages programmatically with Markdown content.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Wiki API
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Wikis
+    description: Operations for managing wiki instances
+  - name: Wiki Pages
+    description: Operations for managing wiki page content
+paths:
+  /wiki/wikis:
+    get:
+      operationId: wikis_list
+      summary: List wikis
+      description: >
+        Returns a list of all wikis in the project. A project typically has one
+        project wiki and may have additional code wikis that are backed by specific
+        Git repository folders.
+      tags:
+        - Wikis
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of wikis returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of wikis returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WikiV2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: wikis_create
+      summary: Create a wiki
+      description: >
+        Creates a new wiki for a project. You can create a project wiki (backed by
+        a dedicated wiki repository) or a code wiki (backed by an existing Git
+        repository and folder path). Only one project wiki can exist per project.
+      tags:
+        - Wikis
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Wiki creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiCreateParametersV2'
+            example:
+              name: 'Project Wiki'
+              type: projectWiki
+              projectId: 'a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4'
+      responses:
+        '200':
+          description: Wiki created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiV2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wiki/wikis/{wikiIdentifier}:
+    get:
+      operationId: wikis_get
+      summary: Get a wiki
+      description: >
+        Returns detailed information about a specific wiki, including its backing
+        Git repository ID, mapped path (for code wikis), and current version.
+        The wikiIdentifier can be either the wiki GUID or its name.
+      tags:
+        - Wikis
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+        - name: versionDescriptor
+          in: query
+          required: false
+          description: Version descriptor for the wiki (branch or tag)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Wiki returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiV2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: wikis_update
+      summary: Update a wiki
+      description: >
+        Updates the wiki by changing the default branch for a code wiki's backed
+        repository. This is useful when the main branch of the backing repository
+        has been renamed.
+      tags:
+        - Wikis
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+      requestBody:
+        required: true
+        description: Wiki update parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WikiUpdateParameters'
+            example:
+              versions:
+                - version: 'main'
+      responses:
+        '200':
+          description: Wiki updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiV2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: wikis_delete
+      summary: Delete a wiki
+      description: >
+        Deletes a wiki. For a project wiki, this deletes the wiki and the backing
+        Git repository. For a code wiki, this removes the wiki but leaves the
+        backing repository intact. This operation cannot be undone.
+      tags:
+        - Wikis
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+      responses:
+        '200':
+          description: Wiki deleted successfully, returns the deleted wiki
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiV2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wiki/wikis/{wikiIdentifier}/pages:
+    get:
+      operationId: pages_get
+      summary: Get a wiki page
+      description: >
+        Returns the content and metadata for a wiki page at a given path.
+        The path parameter is required to specify which page to retrieve.
+        Returns the Markdown content of the page and optional metadata such as
+        git commit information.
+      tags:
+        - Wiki Pages
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+        - name: path
+          in: query
+          required: false
+          description: Wiki page path (e.g., /MyPage or /Folder/SubPage)
+          schema:
+            type: string
+          example: '/Getting-Started'
+        - name: recursionLevel
+          in: query
+          required: false
+          description: Recursion level for subpages
+          schema:
+            type: string
+            enum: [none, oneLevel, oneLevelPlusNestedEmptyFolders, full]
+        - name: versionDescriptor
+          in: query
+          required: false
+          description: Version descriptor (branch or tag) to read the page from
+          schema:
+            type: string
+        - name: includeContent
+          in: query
+          required: false
+          description: Whether to include the page content in the response
+          schema:
+            type: boolean
+          default: true
+      responses:
+        '200':
+          description: Wiki page returned successfully
+          headers:
+            ETag:
+              description: Entity tag for the current version of the page (version hash)
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: pages_createOrUpdate
+      summary: Create or update a wiki page
+      description: >
+        Creates a new wiki page or updates an existing page at the specified path.
+        The request body must contain the Markdown content for the page. To update
+        an existing page, include the current page version in the If-Match header
+        to prevent overwriting concurrent changes.
+      tags:
+        - Wiki Pages
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+        - name: path
+          in: query
+          required: true
+          description: Path of the wiki page to create or update
+          schema:
+            type: string
+          example: '/Getting-Started'
+        - name: comment
+          in: query
+          required: false
+          description: Comment for the commit creating this page update
+          schema:
+            type: string
+        - name: versionDescriptor
+          in: query
+          required: false
+          description: Branch to create or update the page on
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Page content in Markdown format
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  description: Markdown content for the wiki page
+            example:
+              content: "# Getting Started\n\nWelcome to the project wiki!\n\n## Prerequisites\n\n- Node.js 18+\n- npm or yarn\n"
+      responses:
+        '200':
+          description: Wiki page updated successfully
+          headers:
+            ETag:
+              description: Entity tag for the new version of the page
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '201':
+          description: Wiki page created successfully
+          headers:
+            ETag:
+              description: Entity tag for the new page version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: pages_delete
+      summary: Delete a wiki page
+      description: >
+        Deletes a wiki page at the specified path. This commits a deletion to the
+        backing Git repository. Deleted pages cannot be recovered except through
+        the backing repository's Git history.
+      tags:
+        - Wiki Pages
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/WikiIdentifier'
+        - name: path
+          in: query
+          required: true
+          description: Path of the wiki page to delete
+          schema:
+            type: string
+          example: '/Old-Page'
+        - name: comment
+          in: query
+          required: false
+          description: Comment for the deletion commit
+          schema:
+            type: string
+        - name: versionDescriptor
+          in: query
+          required: false
+          description: Branch to delete the page from
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Wiki page deleted successfully, returns the deleted page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+    WikiIdentifier:
+      name: wikiIdentifier
+      in: path
+      required: true
+      description: Wiki GUID or wiki name
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    WikiV2:
+      type: object
+      description: An Azure DevOps wiki
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the wiki
+        name:
+          type: string
+          description: Display name of the wiki
+          example: 'Project Wiki'
+        type:
+          type: string
+          description: Type of wiki
+          enum: [projectWiki, codeWiki]
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project this wiki belongs to
+        repositoryId:
+          type: string
+          format: uuid
+          description: ID of the backing Git repository
+        mappedPath:
+          type: string
+          description: Root folder path in the repository (for code wikis)
+          example: '/wiki'
+        versions:
+          type: array
+          description: Branches or versions available for this wiki
+          items:
+            type: object
+            properties:
+              version:
+                type: string
+                description: Branch name
+                example: 'main'
+        url:
+          type: string
+          format: uri
+          description: URL to access this wiki via the REST API
+        remoteUrl:
+          type: string
+          format: uri
+          description: Clone URL for the backing repository
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    WikiCreateParametersV2:
+      type: object
+      description: Parameters for creating a new wiki
+      required:
+        - name
+        - type
+        - projectId
+      properties:
+        name:
+          type: string
+          description: Name of the wiki
+          example: 'Project Wiki'
+        type:
+          type: string
+          description: Type of wiki to create
+          enum: [projectWiki, codeWiki]
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project to create the wiki in
+        repositoryId:
+          type: string
+          format: uuid
+          description: ID of the repository to back the wiki (required for codeWiki)
+        mappedPath:
+          type: string
+          description: Root folder in the repository to use as wiki content (for codeWiki)
+          example: '/docs'
+        version:
+          type: object
+          description: Branch to use for the wiki
+          properties:
+            version:
+              type: string
+              description: Branch name
+              example: 'main'
+    WikiUpdateParameters:
+      type: object
+      description: Parameters for updating a wiki
+      properties:
+        versions:
+          type: array
+          description: Updated branch list for this wiki
+          items:
+            type: object
+            properties:
+              version:
+                type: string
+                description: Branch name
+    WikiPage:
+      type: object
+      description: A wiki page with its content and metadata
+      properties:
+        id:
+          type: integer
+          description: Numeric ID of the page in the wiki repository
+        path:
+          type: string
+          description: Path of the wiki page
+          example: '/Getting-Started'
+        content:
+          type: string
+          description: Markdown content of the page
+        order:
+          type: integer
+          description: Display order of the page among siblings
+        isNonConformant:
+          type: boolean
+          description: Whether the page violates wiki naming conventions
+        isParentPage:
+          type: boolean
+          description: Whether this page has child pages
+        gitItemPath:
+          type: string
+          description: Path of the corresponding file in the Git repository
+          example: '/Getting-Started.md'
+        url:
+          type: string
+          format: uri
+          description: URL to access this page via the REST API
+        remoteUrl:
+          type: string
+          format: uri
+          description: URL to view the page in a web browser
+        subPages:
+          type: array
+          description: Child pages of this page (if recursion was requested)
+          items:
+            $ref: '#/components/schemas/WikiPage'
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

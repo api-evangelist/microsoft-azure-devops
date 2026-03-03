@@ -1,0 +1,938 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Test Plans API
+  description: >
+    REST API for managing test plans, test suites, and test cases in Azure Test Plans.
+    Provides programmatic access to quality assurance and testing workflows, enabling
+    teams to create and manage structured test plans, organize tests into suites,
+    and link test cases to work items.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Test Plans API
+    variables:
+      organization:
+        description: Azure DevOps organization name or ID
+        default: myorganization
+      project:
+        description: Azure DevOps project name or ID
+        default: myproject
+security:
+  - bearerAuth: []
+  - basicAuth: []
+tags:
+  - name: Test Plans
+    description: Operations for managing test plans
+  - name: Test Suites
+    description: Operations for managing test suites within test plans
+  - name: Test Cases
+    description: Operations for managing test cases within test suites
+paths:
+  /testplan/plans:
+    get:
+      operationId: testPlans_list
+      summary: List test plans
+      description: >
+        Returns a list of test plans in the project. Test plans are the top-level
+        containers for organizing test suites and test cases. They are typically
+        associated with a release milestone or sprint.
+      tags:
+        - Test Plans
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - name: owner
+          in: query
+          required: false
+          description: Filter test plans by owner (user display name or email)
+          schema:
+            type: string
+        - name: includePlanDetails
+          in: query
+          required: false
+          description: Whether to return full plan details or just IDs and names
+          schema:
+            type: boolean
+        - name: filterActivePlans
+          in: query
+          required: false
+          description: Return only active (non-completed) test plans
+          schema:
+            type: boolean
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+        - name: isLastUpdatedSet
+          in: query
+          required: false
+          description: Whether to return plans sorted by last update
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of test plans returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of test plans returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: testPlans_create
+      summary: Create a test plan
+      description: >
+        Creates a new test plan in the project. A test plan defines the scope
+        of testing for a release, milestone, or sprint. It can be associated with
+        an area path and iteration path to align with the project structure.
+      tags:
+        - Test Plans
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Test plan creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanCreateParams'
+            example:
+              name: 'Sprint 5 Test Plan'
+              areaPath: 'MyProject\Frontend'
+              iteration: 'MyProject\Sprint 5'
+              description: 'Test plan for Sprint 5 user stories'
+              startDate: '2024-03-01T00:00:00Z'
+              endDate: '2024-03-15T00:00:00Z'
+      responses:
+        '200':
+          description: Test plan created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /testplan/plans/{planId}:
+    get:
+      operationId: testPlans_get
+      summary: Get a test plan
+      description: >
+        Returns detailed information about a specific test plan, including its
+        area path, iteration, owner, and date range. Use the plan ID to retrieve
+        test suites associated with this plan.
+      tags:
+        - Test Plans
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+      responses:
+        '200':
+          description: Test plan returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: testPlans_update
+      summary: Update a test plan
+      description: >
+        Updates properties of an existing test plan such as its name, description,
+        area path, iteration, start date, and end date.
+      tags:
+        - Test Plans
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+      requestBody:
+        required: true
+        description: Test plan properties to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanUpdateParams'
+      responses:
+        '200':
+          description: Test plan updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: testPlans_delete
+      summary: Delete a test plan
+      description: >
+        Permanently deletes a test plan and all its suites and configurations.
+        This operation cannot be undone. All associated test results and run data
+        will also be deleted.
+      tags:
+        - Test Plans
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+      responses:
+        '204':
+          description: Test plan deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /testplan/plans/{planId}/suites:
+    get:
+      operationId: testSuites_list
+      summary: List test suites
+      description: >
+        Returns a list of test suites within a test plan. Test suites organize
+        test cases into logical groups. A plan always has a root suite, and suites
+        can be nested for hierarchical organization.
+      tags:
+        - Test Suites
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional suite details
+          schema:
+            type: string
+            enum: [none, children, defaultTesters]
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+        - name: asTreeView
+          in: query
+          required: false
+          description: Return suites in a tree structure
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of test suites returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestSuite'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: testSuites_create
+      summary: Create a test suite
+      description: >
+        Creates a new test suite within a test plan. Suites can be static
+        (manually added test cases), requirement-based (linked to work item queries),
+        or query-based (dynamic results from a work item query).
+      tags:
+        - Test Suites
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+      requestBody:
+        required: true
+        description: Test suite creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestSuiteCreateParams'
+            example:
+              name: 'Login Tests'
+              suiteType: staticTestSuite
+              parentSuite:
+                id: 1
+      responses:
+        '200':
+          description: Test suite created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuite'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /testplan/plans/{planId}/suites/{suiteId}:
+    get:
+      operationId: testSuites_get
+      summary: Get a test suite
+      description: >
+        Returns detailed information about a specific test suite, including its
+        type, parent suite, and associated test cases.
+      tags:
+        - Test Suites
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+        - name: suiteId
+          in: path
+          required: true
+          description: Numeric ID of the test suite
+          schema:
+            type: integer
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional suite details
+          schema:
+            type: string
+            enum: [none, children, defaultTesters]
+      responses:
+        '200':
+          description: Test suite returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuite'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /testplan/plans/{planId}/suites/{suiteId}/testcases:
+    get:
+      operationId: testCases_list
+      summary: List test cases in a suite
+      description: >
+        Returns a list of test cases within a specific test suite. Test cases
+        are work items of type Test Case that contain the test steps and expected
+        results for manual or automated tests.
+      tags:
+        - Test Cases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+        - name: suiteId
+          in: path
+          required: true
+          description: Numeric ID of the test suite
+          schema:
+            type: integer
+        - name: testIds
+          in: query
+          required: false
+          description: Comma-separated list of test case IDs to filter
+          schema:
+            type: string
+        - name: configurationIds
+          in: query
+          required: false
+          description: Comma-separated list of configuration IDs to filter
+          schema:
+            type: string
+        - name: witFields
+          in: query
+          required: false
+          description: Comma-separated work item field reference names to include
+          schema:
+            type: string
+        - name: $expand
+          in: query
+          required: false
+          description: Expand additional test case details
+          schema:
+            type: string
+            enum: [none, wiFields]
+        - name: continuationToken
+          in: query
+          required: false
+          description: Continuation token for paginated results
+          schema:
+            type: string
+        - name: returnIdentityRef
+          in: query
+          required: false
+          description: Whether to return identity fields as full IdentityRef objects
+          schema:
+            type: boolean
+        - name: $top
+          in: query
+          required: false
+          description: Maximum number of test cases to return
+          schema:
+            type: integer
+        - name: isRecursive
+          in: query
+          required: false
+          description: Whether to include test cases from child suites
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of test cases returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: testCases_add
+      summary: Add test cases to a suite
+      description: >
+        Adds existing test case work items to a test suite. Test cases must be
+        existing work items of type Test Case. Provide a list of work item IDs
+        to add to the suite.
+      tags:
+        - Test Cases
+      parameters:
+        - $ref: '#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/PlanId'
+        - name: suiteId
+          in: path
+          required: true
+          description: Numeric ID of the test suite to add test cases to
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: List of test case IDs and configuration assignments to add
+        content:
+          application/json:
+            schema:
+              type: array
+              description: Array of work item to suite mappings
+              items:
+                type: object
+                required:
+                  - workItem
+                  - pointAssignments
+                properties:
+                  workItem:
+                    type: object
+                    description: The test case work item to add
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                        description: Work item ID of the test case
+                  pointAssignments:
+                    type: array
+                    description: Configuration and tester assignments for this test case
+                    items:
+                      type: object
+                      properties:
+                        configuration:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Configuration ID
+                            name:
+                              type: string
+                        tester:
+                          $ref: '#/components/schemas/IdentityRef'
+            example:
+              - workItem:
+                  id: 101
+                pointAssignments:
+                  - configuration:
+                      id: 1
+                      name: 'Default Configuration'
+      responses:
+        '200':
+          description: Test cases added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCase'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum: ['7.1', '7.0', '6.0']
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    TestPlan:
+      type: object
+      description: A test plan in Azure Test Plans
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the test plan
+          example: 1
+        name:
+          type: string
+          description: Display name of the test plan
+          example: 'Sprint 5 Test Plan'
+        description:
+          type: string
+          description: Description of the test plan's scope and purpose
+        state:
+          type: string
+          description: Current state of the test plan
+          enum: [active, inactive]
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the test plan
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the test plan
+        area:
+          $ref: '#/components/schemas/TestSuiteReference'
+        areaPath:
+          type: string
+          description: Area path this test plan is associated with
+          example: 'MyProject\Frontend'
+        iteration:
+          type: string
+          description: Iteration path (sprint) this test plan is associated with
+          example: 'MyProject\Sprint 5'
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        revision:
+          type: integer
+          description: Current revision of the test plan
+        buildDefinition:
+          type: object
+          description: Build definition associated with this test plan
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        buildId:
+          type: integer
+          description: Specific build ID to test against
+        updatedDate:
+          type: string
+          format: date-time
+          description: Date and time the test plan was last updated
+        updatedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        project:
+          type: object
+          description: Project this test plan belongs to
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        rootSuite:
+          $ref: '#/components/schemas/TestSuiteReference'
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TestPlanCreateParams:
+      type: object
+      description: Parameters for creating a new test plan
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name for the new test plan
+        description:
+          type: string
+          description: Description of the test plan
+        areaPath:
+          type: string
+          description: Area path to associate with the test plan
+        iteration:
+          type: string
+          description: Iteration path (sprint) to associate with the test plan
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the test plan
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the test plan
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        buildDefinition:
+          type: object
+          description: Build definition to associate for automated testing
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+          description: Specific build ID to test against
+    TestPlanUpdateParams:
+      type: object
+      description: Parameters for updating an existing test plan
+      properties:
+        name:
+          type: string
+          description: New name for the test plan
+        description:
+          type: string
+          description: New description for the test plan
+        areaPath:
+          type: string
+          description: Updated area path
+        iteration:
+          type: string
+          description: Updated iteration path
+        startDate:
+          type: string
+          format: date-time
+          description: Updated start date
+        endDate:
+          type: string
+          format: date-time
+          description: Updated end date
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        status:
+          type: string
+          enum: [active, inactive]
+        buildDefinition:
+          type: object
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+        revision:
+          type: integer
+          description: Current revision number (required for update to prevent conflicts)
+    TestSuite:
+      type: object
+      description: A test suite within a test plan
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the test suite
+          example: 5
+        name:
+          type: string
+          description: Display name of the test suite
+          example: 'Login Tests'
+        suiteType:
+          type: string
+          description: Type of test suite
+          enum: [none, dynamicTestSuite, staticTestSuite, requirementTestSuite]
+        planId:
+          type: integer
+          description: ID of the test plan this suite belongs to
+        children:
+          type: array
+          description: Child test suites (if requested via expand)
+          items:
+            $ref: '#/components/schemas/TestSuite'
+        defaultTesters:
+          type: array
+          description: Default testers assigned to test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+        parentSuite:
+          $ref: '#/components/schemas/TestSuiteReference'
+        requirementId:
+          type: integer
+          description: Work item ID this suite is linked to (for requirement suites)
+        queryString:
+          type: string
+          description: WIQL query for dynamic suites
+        state:
+          type: string
+          description: Suite state
+          enum: [inProgress, completed]
+        testCaseCount:
+          type: integer
+          description: Number of test cases in this suite
+        isActive:
+          type: boolean
+          description: Whether this suite is active
+        lastUpdatedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        lastUpdatedDate:
+          type: string
+          format: date-time
+        project:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TestSuiteCreateParams:
+      type: object
+      description: Parameters for creating a new test suite
+      required:
+        - name
+        - suiteType
+        - parentSuite
+      properties:
+        name:
+          type: string
+          description: Name of the new test suite
+        suiteType:
+          type: string
+          description: Type of test suite to create
+          enum: [none, dynamicTestSuite, staticTestSuite, requirementTestSuite]
+        parentSuite:
+          type: object
+          description: Parent suite to nest this suite under
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              description: ID of the parent suite
+        requirementId:
+          type: integer
+          description: Work item ID to link (for requirementTestSuite type)
+        queryString:
+          type: string
+          description: WIQL query string (for dynamicTestSuite type)
+        defaultTesters:
+          type: array
+          description: Default testers for test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+    TestCase:
+      type: object
+      description: A test case within a test suite
+      properties:
+        testCase:
+          type: object
+          description: The work item representing this test case
+          properties:
+            id:
+              type: string
+              description: Work item ID (as string)
+            url:
+              type: string
+              format: uri
+            workItemFields:
+              type: array
+              description: Work item fields (if requested via witFields parameter)
+              items:
+                type: object
+                additionalProperties: true
+        pointAssignments:
+          type: array
+          description: Configuration and tester assignments for this test case
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Test point ID
+              configuration:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+              tester:
+                $ref: '#/components/schemas/IdentityRef'
+        order:
+          type: integer
+          description: Display order within the suite
+        links:
+          type: object
+          description: HAL links for this test case
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: 'John Doe'
+        uniqueName:
+          type: string
+          example: 'john.doe@example.com'
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer

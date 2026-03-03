@@ -1,0 +1,606 @@
+{
+  "@context": {
+    "@version": 1.1,
+
+    "azdevops": "https://learn.microsoft.com/en-us/rest/api/azure/devops/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+
+    "WorkItem": {
+      "@id": "azdevops:wit/WorkItem",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:wit/WorkItem/id",
+          "@type": "xsd:integer"
+        },
+        "rev": {
+          "@id": "azdevops:wit/WorkItem/rev",
+          "@type": "xsd:integer"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "fields": {
+          "@id": "azdevops:wit/WorkItem/fields",
+          "@container": "@index"
+        },
+        "relations": {
+          "@id": "azdevops:wit/WorkItem/relations",
+          "@container": "@set"
+        },
+        "title": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "state": {
+          "@id": "azdevops:wit/WorkItem/state"
+        },
+        "workItemType": {
+          "@id": "azdevops:wit/WorkItem/type"
+        },
+        "assignedTo": {
+          "@id": "schema:accountablePerson"
+        },
+        "createdBy": {
+          "@id": "dcterms:creator"
+        },
+        "createdDate": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "changedDate": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "areaPath": {
+          "@id": "azdevops:wit/WorkItem/areaPath"
+        },
+        "iterationPath": {
+          "@id": "azdevops:wit/WorkItem/iterationPath"
+        },
+        "priority": {
+          "@id": "azdevops:wit/WorkItem/priority",
+          "@type": "xsd:integer"
+        },
+        "tags": {
+          "@id": "schema:keywords"
+        }
+      }
+    },
+
+    "Repository": {
+      "@id": "azdevops:git/Repository",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:git/Repository/id"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "remoteUrl": {
+          "@id": "schema:codeRepository",
+          "@type": "@id"
+        },
+        "sshUrl": {
+          "@id": "azdevops:git/Repository/sshUrl"
+        },
+        "webUrl": {
+          "@id": "schema:mainEntityOfPage",
+          "@type": "@id"
+        },
+        "defaultBranch": {
+          "@id": "azdevops:git/Repository/defaultBranch"
+        },
+        "project": {
+          "@id": "schema:isPartOf"
+        },
+        "size": {
+          "@id": "schema:contentSize",
+          "@type": "xsd:integer"
+        },
+        "isFork": {
+          "@id": "azdevops:git/Repository/isFork",
+          "@type": "xsd:boolean"
+        },
+        "isDisabled": {
+          "@id": "azdevops:git/Repository/isDisabled",
+          "@type": "xsd:boolean"
+        },
+        "parentRepository": {
+          "@id": "schema:isBasedOn"
+        }
+      }
+    },
+
+    "PullRequest": {
+      "@id": "azdevops:git/PullRequest",
+      "@type": "@id",
+      "@context": {
+        "pullRequestId": {
+          "@id": "schema:identifier",
+          "@type": "xsd:integer"
+        },
+        "title": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "status": {
+          "@id": "azdevops:git/PullRequest/status"
+        },
+        "createdBy": {
+          "@id": "dcterms:creator"
+        },
+        "creationDate": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "closedDate": {
+          "@id": "dcterms:dateAccepted",
+          "@type": "xsd:dateTime"
+        },
+        "sourceRefName": {
+          "@id": "azdevops:git/PullRequest/sourceRefName"
+        },
+        "targetRefName": {
+          "@id": "azdevops:git/PullRequest/targetRefName"
+        },
+        "mergeStatus": {
+          "@id": "azdevops:git/PullRequest/mergeStatus"
+        },
+        "reviewers": {
+          "@id": "schema:contributor",
+          "@container": "@set"
+        },
+        "isDraft": {
+          "@id": "azdevops:git/PullRequest/isDraft",
+          "@type": "xsd:boolean"
+        },
+        "repository": {
+          "@id": "azdevops:git/PullRequest/repository"
+        },
+        "workItemRefs": {
+          "@id": "schema:about",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Build": {
+      "@id": "azdevops:build/Build",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:build/Build/id",
+          "@type": "xsd:integer"
+        },
+        "buildNumber": {
+          "@id": "schema:identifier"
+        },
+        "status": {
+          "@id": "azdevops:build/Build/status"
+        },
+        "result": {
+          "@id": "azdevops:build/Build/result"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "queueTime": {
+          "@id": "schema:dateCreated",
+          "@type": "xsd:dateTime"
+        },
+        "startTime": {
+          "@id": "dcterms:date",
+          "@type": "xsd:dateTime"
+        },
+        "finishTime": {
+          "@id": "schema:dateModified",
+          "@type": "xsd:dateTime"
+        },
+        "definition": {
+          "@id": "azdevops:build/Build/definition"
+        },
+        "project": {
+          "@id": "schema:isPartOf"
+        },
+        "sourceBranch": {
+          "@id": "azdevops:build/Build/sourceBranch"
+        },
+        "sourceVersion": {
+          "@id": "schema:version"
+        },
+        "requestedBy": {
+          "@id": "schema:author"
+        },
+        "repository": {
+          "@id": "azdevops:build/Build/repository"
+        }
+      }
+    },
+
+    "Pipeline": {
+      "@id": "azdevops:pipelines/Pipeline",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:pipelines/Pipeline/id",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "folder": {
+          "@id": "azdevops:pipelines/Pipeline/folder"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "revision": {
+          "@id": "schema:version",
+          "@type": "xsd:integer"
+        },
+        "configuration": {
+          "@id": "azdevops:pipelines/Pipeline/configuration"
+        }
+      }
+    },
+
+    "PipelineRun": {
+      "@id": "azdevops:pipelines/Run",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:pipelines/Run/id",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:identifier"
+        },
+        "state": {
+          "@id": "azdevops:pipelines/Run/state"
+        },
+        "result": {
+          "@id": "azdevops:pipelines/Run/result"
+        },
+        "createdDate": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "finishedDate": {
+          "@id": "schema:endDate",
+          "@type": "xsd:dateTime"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "pipeline": {
+          "@id": "azdevops:pipelines/Run/pipeline"
+        },
+        "resources": {
+          "@id": "azdevops:pipelines/Run/resources"
+        },
+        "variables": {
+          "@id": "azdevops:pipelines/Run/variables"
+        },
+        "templateParameters": {
+          "@id": "azdevops:pipelines/Run/templateParameters"
+        }
+      }
+    },
+
+    "ServiceHookEvent": {
+      "@id": "azdevops:hooks/ServiceHookEvent",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "@id"
+        },
+        "subscriptionId": {
+          "@id": "azdevops:hooks/ServiceHookEvent/subscriptionId"
+        },
+        "notificationId": {
+          "@id": "azdevops:hooks/ServiceHookEvent/notificationId",
+          "@type": "xsd:integer"
+        },
+        "eventType": {
+          "@id": "schema:identifier"
+        },
+        "publisherId": {
+          "@id": "azdevops:hooks/ServiceHookEvent/publisherId"
+        },
+        "createdDate": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "resource": {
+          "@id": "schema:object"
+        },
+        "resourceVersion": {
+          "@id": "schema:version"
+        },
+        "resourceContainers": {
+          "@id": "azdevops:hooks/ServiceHookEvent/resourceContainers"
+        },
+        "message": {
+          "@id": "schema:description"
+        }
+      }
+    },
+
+    "Feed": {
+      "@id": "azdevops:artifacts/Feed",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:artifacts/Feed/id"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "project": {
+          "@id": "schema:isPartOf"
+        },
+        "upstreamEnabled": {
+          "@id": "azdevops:artifacts/Feed/upstreamEnabled",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "Package": {
+      "@id": "azdevops:artifacts/Package",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:artifacts/Package/id"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "normalizedName": {
+          "@id": "azdevops:artifacts/Package/normalizedName"
+        },
+        "protocolType": {
+          "@id": "schema:encodingFormat"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "versions": {
+          "@id": "azdevops:artifacts/Package/versions",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "TestPlan": {
+      "@id": "azdevops:testplan/TestPlan",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:testplan/TestPlan/id",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "startDate": {
+          "@id": "schema:startDate",
+          "@type": "xsd:dateTime"
+        },
+        "endDate": {
+          "@id": "schema:endDate",
+          "@type": "xsd:dateTime"
+        },
+        "state": {
+          "@id": "azdevops:testplan/TestPlan/state"
+        },
+        "owner": {
+          "@id": "schema:author"
+        },
+        "areaPath": {
+          "@id": "azdevops:testplan/TestPlan/areaPath"
+        },
+        "iteration": {
+          "@id": "azdevops:testplan/TestPlan/iteration"
+        },
+        "project": {
+          "@id": "schema:isPartOf"
+        }
+      }
+    },
+
+    "Wiki": {
+      "@id": "azdevops:wiki/Wiki",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:wiki/Wiki/id"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "type": {
+          "@id": "schema:additionalType"
+        },
+        "repositoryId": {
+          "@id": "azdevops:wiki/Wiki/repositoryId"
+        },
+        "mappedPath": {
+          "@id": "azdevops:wiki/Wiki/mappedPath"
+        },
+        "project": {
+          "@id": "schema:isPartOf"
+        }
+      }
+    },
+
+    "WikiPage": {
+      "@id": "azdevops:wiki/WikiPage",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:wiki/WikiPage/id",
+          "@type": "xsd:integer"
+        },
+        "path": {
+          "@id": "azdevops:wiki/WikiPage/path"
+        },
+        "content": {
+          "@id": "schema:text"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "remoteUrl": {
+          "@id": "schema:mainEntityOfPage",
+          "@type": "@id"
+        },
+        "order": {
+          "@id": "schema:position",
+          "@type": "xsd:integer"
+        },
+        "subPages": {
+          "@id": "schema:hasPart",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Release": {
+      "@id": "azdevops:release/Release",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "azdevops:release/Release/id",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "status": {
+          "@id": "azdevops:release/Release/status"
+        },
+        "createdOn": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "modifiedOn": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "createdBy": {
+          "@id": "dcterms:creator"
+        },
+        "releaseDefinition": {
+          "@id": "azdevops:release/Release/definition"
+        },
+        "environments": {
+          "@id": "azdevops:release/Release/environments",
+          "@container": "@set"
+        },
+        "artifacts": {
+          "@id": "schema:result",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "IdentityRef": {
+      "@id": "schema:Person",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "schema:identifier"
+        },
+        "displayName": {
+          "@id": "schema:name"
+        },
+        "uniqueName": {
+          "@id": "schema:email"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "imageUrl": {
+          "@id": "schema:image",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "TeamProject": {
+      "@id": "azdevops:core/Project",
+      "@type": "@id",
+      "@context": {
+        "id": {
+          "@id": "schema:identifier"
+        },
+        "name": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "dcterms:description"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "state": {
+          "@id": "azdevops:core/Project/state"
+        },
+        "visibility": {
+          "@id": "schema:accessMode"
+        }
+      }
+    }
+  }
+}

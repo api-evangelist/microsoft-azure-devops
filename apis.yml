@@ -8,7 +8,7 @@ tags:
 - Project Management
 - Agile
 created: '2024'
-modified: '2024'
+modified: '2026-03-02'
 url: https://dev.azure.com
 specificationVersion: '0.18'
 apis:
@@ -28,11 +28,13 @@ apis:
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
   - type: Authentication
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: Client Libraries
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
   contact:
   - type: Support
     url: https://azure.microsoft.com/en-us/support/devops/
-- name: Boards API
-  description: API for managing work items, boards, backlogs, sprints, and queries.
+- name: Azure DevOps Boards API
+  description: API for managing work items, boards, backlogs, sprints, and queries in Azure Boards. Enables programmatic access to agile planning and tracking resources.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/wit
   tags:
@@ -42,8 +44,10 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
-- name: Repos API
-  description: API for managing Git repositories, pull requests, commits, and branches.
+  - type: OpenAPI
+    url: openapi/azure-devops-work-items-api-openapi.yml
+- name: Azure DevOps Repos API
+  description: API for managing Git repositories, pull requests, commits, branches, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
   tags:
@@ -53,8 +57,10 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
-- name: Pipelines API
-  description: API for managing build and release pipelines, runs, and artifacts.
+  - type: OpenAPI
+    url: openapi/azure-devops-git-api-openapi.yml
+- name: Azure DevOps Pipelines API
+  description: API for managing build and release pipelines, pipeline runs, and pipeline artifacts. Provides programmatic access to create, trigger, and monitor CI/CD pipelines.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/pipelines
   tags:
@@ -64,18 +70,23 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/
-- name: Build API
-  description: API for managing build definitions, queuing builds, and accessing build results.
+  - type: OpenAPI
+    url: openapi/azure-devops-pipelines-api-openapi.yml
+- name: Azure DevOps Build API
+  description: API for managing build definitions, queuing builds, and accessing build results and logs. Supports the full lifecycle of continuous integration builds in Azure DevOps.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/build
   tags:
   - Build
   - CI
+  - Automation
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
-- name: Release API
-  description: API for managing release definitions, deployments, and approvals.
+  - type: OpenAPI
+    url: openapi/azure-devops-builds-api-openapi.yml
+- name: Azure DevOps Release API
+  description: API for managing release definitions, deployments, and approvals in Azure Pipelines. Enables programmatic control over continuous delivery and release orchestration.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
   baseURL: https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
   tags:
@@ -85,18 +96,23 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
-- name: Test Plans API
-  description: API for managing test plans, test suites, test cases, and test runs.
+  - type: OpenAPI
+    url: openapi/azure-devops-releases-api-openapi.yml
+- name: Azure DevOps Test Plans API
+  description: API for managing test plans, test suites, test cases, and test runs in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/test/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/test
   tags:
   - Testing
   - QA
+  - Test Plans
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/test/
-- name: Artifacts API
-  description: API for managing packages, feeds, and artifact dependencies.
+  - type: OpenAPI
+    url: openapi/azure-devops-test-plans-api-openapi.yml
+- name: Azure DevOps Artifacts API
+  description: API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal packages in private or public feeds.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
   baseURL: https://feeds.dev.azure.com/{organization}/_apis/packaging
   tags:
@@ -106,8 +122,10 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
-- name: Graph API
-  description: API for managing users, groups, and memberships.
+  - type: OpenAPI
+    url: openapi/azure-devops-artifacts-api-openapi.yml
+- name: Azure DevOps Graph API
+  description: API for managing users, groups, and memberships within an Azure DevOps organization. Enables programmatic administration of identities and group membership.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
   baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
   tags:
@@ -117,20 +135,218 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
+- name: Azure DevOps Core API
+  description: API for managing Azure DevOps projects, teams, and team members. Provides foundational access to the organizational structure of an Azure DevOps organization.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/core/
+  baseURL: https://dev.azure.com/{organization}/_apis
+  tags:
+  - Projects
+  - Teams
+  - Organization
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/core/
+- name: Azure DevOps Security API
+  description: API for managing security namespaces, access control lists, and access control entries in Azure DevOps. Used to programmatically set and evaluate permissions on resources.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/security/
+  baseURL: https://dev.azure.com/{organization}/_apis/accesscontrollists
+  tags:
+  - Security
+  - Permissions
+  - Access Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/security/
+- name: Azure DevOps Service Hooks API
+  description: API for managing service hook subscriptions, publishers, and consumers. Enables event-driven integrations by configuring webhooks and other notification mechanisms when Azure DevOps events occur.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/
+  baseURL: https://dev.azure.com/{organization}/_apis/hooks
+  tags:
+  - Webhooks
+  - Events
+  - Integrations
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/azure/devops/service-hooks/overview?view=azure-devops
+  - type: OpenAPI
+    url: openapi/azure-devops-service-hooks-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/azure-devops-service-hooks-asyncapi.yml
+- name: Azure DevOps Notifications API
+  description: API for managing notification subscriptions for users and teams. Enables programmatic creation and management of email and other notification channels for Azure DevOps events such as work item changes, build results, and pull requests.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/
+  baseURL: https://dev.azure.com/{organization}/_apis/notification
+  tags:
+  - Notifications
+  - Subscriptions
+  - Alerts
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/
+- name: Azure DevOps Audit API
+  description: API for querying and downloading the Azure DevOps audit log. Provides access to auditable events within an organization for security reviews and compliance reporting.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/audit/
+  baseURL: https://auditservice.dev.azure.com/{organization}/_apis/audit
+  tags:
+  - Audit
+  - Compliance
+  - Security
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/audit/
+- name: Azure DevOps Search API
+  description: API for searching code, work items, and wiki pages across all projects and repositories within an Azure DevOps organization. Supports full-text and filtered search results.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/search/
+  baseURL: https://almsearch.dev.azure.com/{organization}/_apis/search
+  tags:
+  - Search
+  - Code
+  - Work Items
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/search/
+- name: Azure DevOps Policy API
+  description: API for managing code policy configurations and policy types in Azure Repos. Used to define and enforce branch policies such as required reviewers, status checks, and merge strategies.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/policy
+  tags:
+  - Policy
+  - Branch Protection
+  - Code Review
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/
+- name: Azure DevOps Distributed Task API
+  description: API for managing the pipeline agent infrastructure including agent pools, queues, agents, environments, deployment groups, and task groups. Provides programmatic control over the compute resources used to run pipelines.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/
+  baseURL: https://dev.azure.com/{organization}/_apis/distributedtask
+  tags:
+  - Agents
+  - Pools
+  - Pipelines
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/
+- name: Azure DevOps Analytics OData API
+  description: OData-based API providing access to the Azure DevOps Analytics service for reporting and querying historical and real-time project data. Supports queries across work items, pipelines, and test plans for Power BI and custom reporting scenarios.
+  humanURL: https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/quick-ref?view=azure-devops
+  baseURL: https://analytics.dev.azure.com/{organization}/{project}/_odata
+  tags:
+  - Analytics
+  - Reporting
+  - OData
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/quick-ref?view=azure-devops
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/odata-api-version?view=azure-devops
+- name: Azure DevOps Wiki API
+  description: API for creating and managing wikis and wiki pages within Azure DevOps projects. Every wiki is backed by a Git repository and supports creating, reading, updating, and deleting wikis and pages programmatically.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/wiki
+  tags:
+  - Wiki
+  - Documentation
+  - Pages
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
+  - type: OpenAPI
+    url: openapi/azure-devops-wiki-api-openapi.yml
+- name: Azure DevOps Extension Management API
+  description: API for managing extensions installed in an Azure DevOps organization. Enables programmatic listing, installing, updating, and removing of Marketplace extensions, as well as reading extension data and settings.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/
+  baseURL: https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+  tags:
+  - Extensions
+  - Marketplace
+  - Plugins
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/
+- name: Azure DevOps Service Endpoint API
+  description: API for managing service connections that connect Azure DevOps pipelines to external services such as GitHub, Docker, Azure, and other third-party providers. Supports creating, updating, and sharing service endpoints across projects.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+  tags:
+  - Service Connections
+  - Integrations
+  - Pipelines
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/
+- name: Azure DevOps TFVC API
+  description: API for accessing Team Foundation Version Control (TFVC) repositories within Azure DevOps. Provides programmatic access to TFVC items, changesets, shelvesets, labels, and branches for organizations using centralized version control.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/tfvc
+  tags:
+  - TFVC
+  - Version Control
+  - Source Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+- name: Azure DevOps Token Administration API
+  description: API for organization administrators to retrieve and revoke OAuth authorizations including personal access tokens and session tokens for users in their organizations. Enables centralized token governance and security oversight.
+  image: https://azure.microsoft.com/svghandler/devops/
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/
+  baseURL: https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+  tags:
+  - Security
+  - Token Administration
+  - Access Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/
 common:
+- type: Portal
+  url: https://dev.azure.com
+- type: Documentation
+  url: https://learn.microsoft.com/en-us/azure/devops/?view=azure-devops
 - type: Getting Started
   url: https://learn.microsoft.com/en-us/azure/devops/integrate/
 - type: Authentication
   url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+- type: Client Libraries
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
 - type: Rate Limits
   url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
 - type: Status
   url: https://status.dev.azure.com/
+- type: Support
+  url: https://azure.microsoft.com/en-us/support/devops/
+- type: Blog
+  url: https://devblogs.microsoft.com/devops/
 - type: Terms of Service
   url: https://azure.microsoft.com/en-us/support/legal/
+- type: Privacy Policy
+  url: https://privacy.microsoft.com/en-us/privacystatement
 - type: Pricing
   url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+- type: Sign Up
+  url: https://azure.microsoft.com/en-us/services/devops/
+- type: Community
+  url: https://developercommunity.visualstudio.com/AzureDevOps
+- type: Stack Overflow
+  url: https://stackoverflow.com/questions/tagged/azure-devops
+- type: Change Log
+  url: https://learn.microsoft.com/en-us/azure/devops/release-notes/
+- type: GitHub Organization
+  url: https://github.com/microsoft
+- type: GitHubRepository
+  url: https://github.com/microsoft/azure-devops-python-api
+- type: JSONSchema
+  url: json-schema/azure-devops-work-item-schema.json
+- type: JSONSchema
+  url: json-schema/azure-devops-pipeline-run-schema.json
+- type: JSON-LD
+  url: json-ld/azure-devops-context.jsonld
 maintainers:
-- name: Microsoft
-  email: azdevops@microsoft.com
-  url: https://azure.microsoft.com/en-us/products/devops/
+- name: Kin Lane
+  email: kin@apievangelist.com
