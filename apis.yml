@@ -8,7 +8,7 @@ tags:
 - Project Management
 - Agile
 created: '2024'
-modified: '2026-03-02'
+modified: '2026-03-03'
 url: https://dev.azure.com
 specificationVersion: '0.18'
 apis:
@@ -304,6 +304,194 @@ apis:
   properties:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/
+- name: Azure DevOps Accounts API
+  description: API for listing the Azure DevOps organizations that the authenticated user has access to. Each person using Azure DevOps Services has access to one or more organization accounts.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/account/
+  baseURL: https://app.vssps.visualstudio.com/_apis/accounts
+  tags:
+  - Accounts
+  - Organizations
+  - Administration
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/account/
+- name: Azure DevOps Approvals and Checks API
+  description: API for managing pipeline approvals and checks on resources such as environments, service connections, agent pools, variable groups, and secure files. Enables programmatic creation and modification of checks, management of approvals, and querying of check evaluation details.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/approvalsandchecks/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+  tags:
+  - Approvals
+  - Checks
+  - Pipelines
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/approvalsandchecks/
+- name: Azure DevOps Artifacts Package Types API
+  description: API for managing specific package types within Azure Artifacts feeds including NuGet, npm, Maven, Python, and Universal Packages. Provides package-type-specific operations beyond the general Artifacts feed management API.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/
+  baseURL: https://pkgs.dev.azure.com/{organization}/_apis/packaging
+  tags:
+  - Packages
+  - NuGet
+  - npm
+  - Maven
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/
+- name: Azure DevOps Dashboard API
+  description: API for creating and managing team dashboards and widgets in Azure DevOps. Each team can have one or more dashboards, and each dashboard contains a set of configurable widgets with multi-user concurrency support via eTag versioning.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/dashboard/
+  baseURL: https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+  tags:
+  - Dashboards
+  - Widgets
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/dashboard/
+- name: Azure DevOps Favorites API
+  description: API for managing user favorites in Azure DevOps. Enables programmatic creation, retrieval, and deletion of favorite items such as queries, builds, repositories, and other artifacts scoped to individual users or teams.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/favorite/
+  baseURL: https://dev.azure.com/{organization}/_apis/favorite
+  tags:
+  - Favorites
+  - Bookmarks
+  - User Preferences
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/favorite/
+- name: Azure DevOps Identities API
+  description: API for finding legacy identity descriptors for users and groups in Azure DevOps. Identities can be searched by name, email, ID, identity descriptor, and subject descriptor. Legacy identity descriptors are used by systems that rely on the identity management service, such as the security APIs for permissions management.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/
+  baseURL: https://vssps.dev.azure.com/{organization}/_apis/identities
+  tags:
+  - Identities
+  - Users
+  - Groups
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/
+- name: Azure DevOps Member Entitlement Management API
+  description: API for managing member entitlements in Azure DevOps organizations. A member is a user or group added to an account. Enables programmatic management of licenses, extensions, and project or team memberships for users and groups.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/
+  baseURL: https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+  tags:
+  - Licensing
+  - Entitlements
+  - User Management
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/
+- name: Azure DevOps Permissions Report API
+  description: API for generating and downloading permissions reports that help administrators determine the effective permissions of users and groups on securable resources in Azure DevOps. Reports list effective permissions for each user and group in the organization, accounting for directly assigned, group hierarchy inherited, and resource hierarchy inherited permissions.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/permissionsreport/
+  baseURL: https://dev.azure.com/{organization}/_apis/permissionsreport
+  tags:
+  - Permissions
+  - Reports
+  - Compliance
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/permissionsreport/
+- name: Azure DevOps Profile API
+  description: API for retrieving the authenticated user's profile information in Azure DevOps. Each person using Azure DevOps Services has a profile containing their identity and preference data.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/
+  baseURL: https://app.vssps.visualstudio.com/_apis/profile/profiles
+  tags:
+  - Profile
+  - Users
+  - Identity
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/
+- name: Azure DevOps Security Roles API
+  description: API for managing security role definitions and role assignments on Azure DevOps resources. Enables listing role definitions, assigning roles to identities on specific resources, removing role assignments, and managing permission inheritance.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/
+  baseURL: https://dev.azure.com/{organization}/_apis/securityroles
+  tags:
+  - Security Roles
+  - Role Assignments
+  - Access Control
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/
+- name: Azure DevOps Status API
+  description: API for querying the health and status of Azure DevOps services. Provides the ability to query status information for Azure DevOps all-up, or scoped to a specific service and geography. Results are cached for 60 seconds.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/status/
+  baseURL: https://status.dev.azure.com/_apis/status
+  tags:
+  - Status
+  - Health
+  - Monitoring
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/status/
+- name: Azure DevOps Symbol API
+  description: API for working with the Azure DevOps managed Symbol Service. Supports creating and managing symbol requests, updating debug entries, querying symbols via the Microsoft SymSrv protocol, and checking service availability. Used to publish and consume debug symbols for builds.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/symbol/
+  baseURL: https://artifacts.dev.azure.com/{organization}/_apis/symbol
+  tags:
+  - Symbols
+  - Debugging
+  - Artifacts
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/symbol/
+- name: Azure DevOps Test Plan API
+  description: API for managing modern test plans, test suites, test cases, test points, and test configurations in Azure DevOps. Provides programmatic access to test plan management operations including cloning, recycle bin operations, and test suite organization.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/testplan
+  tags:
+  - Test Plans
+  - Test Suites
+  - Test Cases
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/
+- name: Azure DevOps Test Results API
+  description: API for managing test results, code coverage data, test run logs, and test result metrics in Azure DevOps. Supports publishing test result documents, querying results by build or pipeline, and retrieving detailed test result group information.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/testresults/
+  baseURL: https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+  tags:
+  - Test Results
+  - Code Coverage
+  - Test Runs
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/testresults/
+- name: Azure DevOps Token Lifecycle Management API
+  description: API for users to manage the lifecycle of their own personal access tokens (PATs) in Azure DevOps. Supports creating, listing, updating, and revoking PATs programmatically. Requires authorization with Microsoft Entra ID access tokens.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/
+  baseURL: https://vssps.dev.azure.com/{organization}/_apis/tokens
+  tags:
+  - Tokens
+  - Personal Access Tokens
+  - Authentication
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/
+- name: Azure DevOps Work API
+  description: API for managing board configurations, team settings, iterations, capacities, and process configuration in Azure Boards. Provides programmatic access to board columns, rows, card styling rules, chart settings, team field values, backlog settings, and sprint capacity planning.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/work/
+  baseURL: https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+  tags:
+  - Boards
+  - Sprints
+  - Capacity
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/work/
+- name: Azure DevOps Work Item Tracking Process API
+  description: API for managing work item tracking process customizations in Azure DevOps. Enables programmatic management of inherited processes, work item types, fields, states, rules, behaviors, layouts, and picklist values for customizing Azure Boards experiences.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/
+  baseURL: https://dev.azure.com/{organization}/_apis/work/processes
+  tags:
+  - Processes
+  - Work Item Types
+  - Customization
+  properties:
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/
 common:
 - type: Portal
   url: https://dev.azure.com
@@ -337,10 +525,26 @@ common:
   url: https://stackoverflow.com/questions/tagged/azure-devops
 - type: Change Log
   url: https://learn.microsoft.com/en-us/azure/devops/release-notes/
+- type: Marketplace
+  url: https://marketplace.visualstudio.com/azuredevops
+- type: Extensions
+  url: https://learn.microsoft.com/en-us/azure/devops/extend/overview?view=azure-devops
+- type: CLI
+  url: https://learn.microsoft.com/en-us/azure/devops/cli/?view=azure-devops
+- type: Versioning
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rest-api-versioning?view=azure-devops
+- type: Samples
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/rest/samples?view=azure-devops
+- type: Best Practices
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices?view=azure-devops
 - type: GitHub Organization
   url: https://github.com/microsoft
 - type: GitHubRepository
   url: https://github.com/microsoft/azure-devops-python-api
+- type: GitHubRepository
+  url: https://github.com/microsoft/azure-devops-node-api
+- type: GitHubRepository
+  url: https://github.com/microsoft/azure-devops-extension-sdk
 - type: JSONSchema
   url: json-schema/azure-devops-work-item-schema.json
 - type: JSONSchema
