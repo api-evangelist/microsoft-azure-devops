@@ -8,7 +8,7 @@ tags:
 - Project Management
 - Agile
 created: '2024'
-modified: '2026-03-03'
+modified: '2026-03-16'
 url: https://dev.azure.com
 specificationVersion: '0.18'
 apis:
@@ -552,5 +552,5 @@ common:
 - type: JSON-LD
   url: json-ld/azure-devops-context.jsonld
 maintainers:
-- name: Kin Lane
+- FN: Kin Lane
   email: kin@apievangelist.com
