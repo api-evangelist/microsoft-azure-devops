@@ -27,12 +27,12 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Releases
-    description: Operations for managing release instances
-  - name: Release Definitions
-    description: Operations for managing release pipeline definitions
   - name: Deployments
     description: Operations for managing and monitoring deployments to environments
+  - name: Release Definitions
+    description: Operations for managing release pipeline definitions
+  - name: Releases
+    description: Operations for managing release instances
 paths:
   /release/releases:
     get:

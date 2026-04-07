@@ -26,16 +26,16 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Work Items
-    description: Operations for managing work items (Bugs, Tasks, User Stories, etc.)
-  - name: Work Item Tracking
-    description: Operations for querying and tracking work items using WIQL
-  - name: Work Item Types
-    description: Operations for work item type definitions and fields
   - name: Attachments
     description: Operations for work item attachments
   - name: Comments
     description: Operations for work item comments
+  - name: Work Item Tracking
+    description: Operations for querying and tracking work items using WIQL
+  - name: Work Item Types
+    description: Operations for work item type definitions and fields
+  - name: Work Items
+    description: Operations for managing work items (Bugs, Tasks, User Stories, etc.)
 paths:
   /wit/workitems:
     get:

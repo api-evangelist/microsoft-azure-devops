@@ -25,14 +25,14 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Subscriptions
-    description: Operations for managing service hook subscriptions
-  - name: Publishers
-    description: Operations for listing event publishers and their event types
   - name: Consumers
     description: Operations for listing consumers (webhook, service bus, etc.)
   - name: Notifications
     description: Operations for sending test notifications
+  - name: Publishers
+    description: Operations for listing event publishers and their event types
+  - name: Subscriptions
+    description: Operations for managing service hook subscriptions
 paths:
   /hooks/subscriptions:
     get:

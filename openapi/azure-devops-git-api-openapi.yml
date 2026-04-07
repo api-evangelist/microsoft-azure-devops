@@ -27,16 +27,16 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Repositories
-    description: Operations for managing Git repositories
-  - name: Pull Requests
-    description: Operations for creating and managing pull requests
   - name: Commits
     description: Operations for accessing commits and commit history
-  - name: Refs
-    description: Operations for managing branches and tags (refs)
+  - name: Pull Requests
+    description: Operations for creating and managing pull requests
   - name: Pushes
     description: Operations for managing pushes and commits
+  - name: Refs
+    description: Operations for managing branches and tags (refs)
+  - name: Repositories
+    description: Operations for managing Git repositories
 paths:
   /git/repositories:
     get:

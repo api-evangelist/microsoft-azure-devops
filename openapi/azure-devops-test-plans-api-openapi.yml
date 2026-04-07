@@ -27,12 +27,12 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
+  - name: Test Cases
+    description: Operations for managing test cases within test suites
   - name: Test Plans
     description: Operations for managing test plans
   - name: Test Suites
     description: Operations for managing test suites within test plans
-  - name: Test Cases
-    description: Operations for managing test cases within test suites
 paths:
   /testplan/plans:
     get:

@@ -27,12 +27,12 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Pipelines
-    description: Operations for managing pipeline definitions
-  - name: Pipeline Runs
-    description: Operations for triggering and monitoring pipeline runs
   - name: Pipeline Artifacts
     description: Operations for accessing artifacts from pipeline runs
+  - name: Pipeline Runs
+    description: Operations for triggering and monitoring pipeline runs
+  - name: Pipelines
+    description: Operations for managing pipeline definitions
 paths:
   /pipelines:
     get:

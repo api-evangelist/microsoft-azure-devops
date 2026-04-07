@@ -27,10 +27,10 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Wikis
-    description: Operations for managing wiki instances
   - name: Wiki Pages
     description: Operations for managing wiki page content
+  - name: Wikis
+    description: Operations for managing wiki instances
 paths:
   /wiki/wikis:
     get:

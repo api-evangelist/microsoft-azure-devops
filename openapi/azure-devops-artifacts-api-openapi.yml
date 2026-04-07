@@ -30,10 +30,10 @@ security:
 tags:
   - name: Feeds
     description: Operations for managing artifact feeds
-  - name: Packages
-    description: Operations for listing and managing packages within feeds
   - name: Package Versions
     description: Operations for managing specific package versions
+  - name: Packages
+    description: Operations for listing and managing packages within feeds
 paths:
   /packaging/feeds:
     get:

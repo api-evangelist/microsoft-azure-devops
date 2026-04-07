@@ -26,14 +26,14 @@ security:
   - bearerAuth: []
   - basicAuth: []
 tags:
-  - name: Builds
-    description: Operations for managing and queuing builds
-  - name: Build Definitions
-    description: Operations for managing build pipeline definitions
   - name: Build Artifacts
     description: Operations for accessing build artifacts
+  - name: Build Definitions
+    description: Operations for managing build pipeline definitions
   - name: Build Logs
     description: Operations for accessing build logs and timelines
+  - name: Builds
+    description: Operations for managing and queuing builds
 paths:
   /build/builds:
     get:
