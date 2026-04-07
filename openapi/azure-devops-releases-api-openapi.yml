@@ -37,7 +37,7 @@ paths:
   /release/releases:
     get:
       operationId: releases_list
-      summary: List releases
+      summary: Azure DevOps List releases
       description: >
         Returns a list of releases in the project. Supports filtering by definition,
         status, environment name, and date ranges. Results are paginated using
@@ -139,7 +139,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: releases_create
-      summary: Create a release
+      summary: Azure DevOps Create a release
       description: >
         Creates a new release based on a release definition. You can specify which
         artifacts to use, add a description, override variables, and optionally
@@ -181,7 +181,7 @@ paths:
   /release/releases/{releaseId}:
     get:
       operationId: releases_get
-      summary: Get a release
+      summary: Azure DevOps Get a release
       description: >
         Returns detailed information about a specific release, including all
         environments, deployment status, artifacts used, and approval history.
@@ -223,7 +223,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: releases_update
-      summary: Update a release
+      summary: Azure DevOps Update a release
       description: >
         Updates a release, such as changing its status from draft to active,
         updating the description, or modifying environment configurations.
@@ -262,7 +262,7 @@ paths:
   /release/definitions:
     get:
       operationId: releaseDefinitions_list
-      summary: List release definitions
+      summary: Azure DevOps List release definitions
       description: >
         Returns a list of release definitions in the project. Supports filtering
         by name and path. Definitions represent the release pipeline template
@@ -342,7 +342,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: releaseDefinitions_create
-      summary: Create a release definition
+      summary: Azure DevOps Create a release definition
       description: >
         Creates a new release definition specifying environments, artifacts,
         triggers, variables, and deployment steps. The definition serves as
@@ -374,7 +374,7 @@ paths:
   /release/definitions/{definitionId}:
     get:
       operationId: releaseDefinitions_get
-      summary: Get a release definition
+      summary: Azure DevOps Get a release definition
       description: >
         Returns detailed information about a specific release definition,
         including all environments, artifact sources, triggers, approvals,
@@ -416,7 +416,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: releaseDefinitions_update
-      summary: Update a release definition
+      summary: Azure DevOps Update a release definition
       description: >
         Replaces an existing release definition with the provided definition.
         The revision number in the body must match the current revision to
@@ -455,7 +455,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: releaseDefinitions_delete
-      summary: Delete a release definition
+      summary: Azure DevOps Delete a release definition
       description: >
         Deletes a release definition. All associated releases must be deleted or
         abandoned first. This operation cannot be undone.
@@ -493,7 +493,7 @@ paths:
   /release/deployments:
     get:
       operationId: deployments_list
-      summary: List deployments
+      summary: Azure DevOps List deployments
       description: >
         Returns a list of deployments across all release definitions and environments
         in the project. Supports filtering by definition, environment, and deployment

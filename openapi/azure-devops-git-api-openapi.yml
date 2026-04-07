@@ -41,7 +41,7 @@ paths:
   /git/repositories:
     get:
       operationId: repositories_list
-      summary: List repositories
+      summary: Azure DevOps List repositories
       description: >
         Returns a list of Git repositories in the project. Each repository includes
         its ID, name, default branch, clone URL, and remote URL.
@@ -87,7 +87,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: repositories_create
-      summary: Create a repository
+      summary: Azure DevOps Create a repository
       description: >
         Creates a new Git repository in the project. Optionally can initialize the
         repository with a README and specify its visibility. After creation, the
@@ -156,7 +156,7 @@ paths:
   /git/repositories/{repositoryId}:
     get:
       operationId: repositories_get
-      summary: Get a repository
+      summary: Azure DevOps Get a repository
       description: >
         Returns detailed information about a specific Git repository, including
         its default branch, clone URL, and project association. The repositoryId
@@ -187,7 +187,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: repositories_update
-      summary: Update a repository
+      summary: Azure DevOps Update a repository
       description: >
         Updates properties of a repository such as its name or default branch.
         Only the fields provided in the request body will be changed.
@@ -230,7 +230,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: repositories_delete
-      summary: Delete a repository
+      summary: Azure DevOps Delete a repository
       description: >
         Permanently deletes a repository and all its contents. This action cannot
         be undone. The repository and all pull requests, branches, and history
@@ -252,7 +252,7 @@ paths:
   /git/repositories/{repositoryId}/refs:
     get:
       operationId: refs_list
-      summary: List branches and refs
+      summary: Azure DevOps List branches and refs
       description: >
         Returns a list of refs (branches and tags) for a repository. Supports
         filtering by a prefix string (e.g., "heads/" for branches, "tags/" for tags).
@@ -327,7 +327,7 @@ paths:
   /git/repositories/{repositoryId}/commits:
     get:
       operationId: commits_list
-      summary: List commits
+      summary: Azure DevOps List commits
       description: >
         Returns a list of commits in a repository. Supports filtering by branch,
         author, date range, file path, and commit message text. Results are
@@ -404,7 +404,7 @@ paths:
   /git/repositories/{repositoryId}/items:
     get:
       operationId: items_list
-      summary: List repository items
+      summary: Azure DevOps List repository items
       description: >
         Returns a list of items (files and folders) in the repository at a specified
         path and version. Use this to browse the repository tree and download file
@@ -475,7 +475,7 @@ paths:
   /git/repositories/{repositoryId}/pullrequests:
     get:
       operationId: pullRequests_list
-      summary: List pull requests
+      summary: Azure DevOps List pull requests
       description: >
         Returns a list of pull requests in a repository. Supports filtering by
         status, target branch, source branch, creator, and reviewer.
@@ -551,7 +551,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: pullRequests_create
-      summary: Create a pull request
+      summary: Azure DevOps Create a pull request
       description: >
         Creates a new pull request to merge changes from a source branch into a
         target branch. Supports specifying reviewers, work item links, labels,
@@ -599,7 +599,7 @@ paths:
   /git/repositories/{repositoryId}/pullrequests/{pullRequestId}:
     get:
       operationId: pullRequests_get
-      summary: Get a pull request
+      summary: Azure DevOps Get a pull request
       description: >
         Returns detailed information about a specific pull request, including
         its status, reviewers, commits, merge status, and associated work items.
@@ -659,7 +659,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: pullRequests_update
-      summary: Update a pull request
+      summary: Azure DevOps Update a pull request
       description: >
         Updates a pull request. Use this to change the title, description, status
         (abandon or complete), target branch, and auto-complete settings. To complete
@@ -735,7 +735,7 @@ paths:
   /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads:
     get:
       operationId: pullRequests_listThreads
-      summary: Get pull request threads
+      summary: Azure DevOps Get pull request threads
       description: >
         Returns all comment threads on a pull request, including code review comments
         tied to specific file positions and general conversation threads.
@@ -784,7 +784,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: pullRequests_addComment
-      summary: Add a pull request comment thread
+      summary: Azure DevOps Add a pull request comment thread
       description: >
         Adds a new comment thread to a pull request. Threads can be general
         comments or code review comments tied to a specific file and line number.
@@ -830,7 +830,7 @@ paths:
   /git/repositories/{repositoryId}/pushes:
     get:
       operationId: pushes_list
-      summary: List pushes
+      summary: Azure DevOps List pushes
       description: >
         Returns a list of pushes in a repository. Each push contains references
         to the commits pushed and the branch or tag updated. Supports filtering
@@ -901,7 +901,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: pushes_create
-      summary: Create a push
+      summary: Azure DevOps Create a push
       description: >
         Creates a new push to the repository. This can be used to create commits,
         update branches, and modify repository contents programmatically. Requires

@@ -37,7 +37,7 @@ paths:
   /hooks/subscriptions:
     get:
       operationId: subscriptions_list
-      summary: List subscriptions
+      summary: Azure DevOps List subscriptions
       description: >
         Returns a list of all service hook subscriptions in the organization.
         Each subscription specifies an event type, publisher, consumer (webhook endpoint),
@@ -93,7 +93,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: subscriptions_create
-      summary: Create a subscription
+      summary: Azure DevOps Create a subscription
       description: >
         Creates a new service hook subscription. The subscription defines which
         event to listen for (publisher + eventType), filter conditions to narrow
@@ -142,7 +142,7 @@ paths:
   /hooks/subscriptions/{subscriptionId}:
     get:
       operationId: subscriptions_get
-      summary: Get a subscription
+      summary: Azure DevOps Get a subscription
       description: >
         Returns detailed information about a specific service hook subscription,
         including its publisher, event type, consumer configuration, filter inputs,
@@ -173,7 +173,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: subscriptions_update
-      summary: Update a subscription
+      summary: Azure DevOps Update a subscription
       description: >
         Updates properties of an existing service hook subscription such as
         the consumer endpoint URL, filter conditions, or resource detail settings.
@@ -212,7 +212,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: subscriptions_delete
-      summary: Delete a subscription
+      summary: Azure DevOps Delete a subscription
       description: >
         Permanently deletes a service hook subscription. After deletion, the
         consumer endpoint will no longer receive notifications for the configured
@@ -240,7 +240,7 @@ paths:
   /hooks/publishers:
     get:
       operationId: publishers_list
-      summary: List publishers
+      summary: Azure DevOps List publishers
       description: >
         Returns a list of all available publishers (event sources) that can be
         subscribed to. The primary publisher for Azure DevOps events is 'tfs'.
@@ -270,7 +270,7 @@ paths:
   /hooks/publishers/{publisherId}/eventTypes:
     get:
       operationId: publishers_listEventTypes
-      summary: List event types for a publisher
+      summary: Azure DevOps List event types for a publisher
       description: >
         Returns all event types defined by a specific publisher. Each event type
         includes its ID, name, description, and the input parameters that can be
@@ -309,7 +309,7 @@ paths:
   /hooks/consumers:
     get:
       operationId: consumers_list
-      summary: List consumers
+      summary: Azure DevOps List consumers
       description: >
         Returns a list of all available consumers that can receive service hook
         notifications. Consumers include webhooks (httpRequest), Azure Service Bus,
@@ -339,7 +339,7 @@ paths:
   /hooks/testnotifications:
     post:
       operationId: notifications_sendTest
-      summary: Send a test notification
+      summary: Azure DevOps Send a test notification
       description: >
         Sends a test notification to verify that a service hook subscription is
         correctly configured and the consumer endpoint is reachable. Returns the

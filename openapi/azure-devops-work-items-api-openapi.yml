@@ -40,7 +40,7 @@ paths:
   /wit/workitems:
     get:
       operationId: workItems_list
-      summary: List work items by IDs
+      summary: Azure DevOps List work items by IDs
       description: >
         Returns a list of work items by their IDs. You must provide a comma-separated
         list of work item IDs. Optionally filter by specific fields, as-of date, or
@@ -100,7 +100,7 @@ paths:
   /wit/workitems/{type}:
     post:
       operationId: workItems_create
-      summary: Create a work item
+      summary: Azure DevOps Create a work item
       description: >
         Creates a new work item of the specified type. The request body must be a
         JSON Patch document describing the fields to set on the new work item.
@@ -166,7 +166,7 @@ paths:
   /wit/workitems/{id}:
     get:
       operationId: workItems_get
-      summary: Get a work item by ID
+      summary: Azure DevOps Get a work item by ID
       description: >
         Returns a single work item by its numeric ID. Optionally filter the fields
         returned, specify a point-in-time with asOf, or expand relations and links.
@@ -216,7 +216,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: workItems_update
-      summary: Update a work item
+      summary: Azure DevOps Update a work item
       description: >
         Updates an existing work item by applying a JSON Patch document. Supports
         updating fields, adding relations, and modifying links. Use the add, replace,
@@ -282,7 +282,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: workItems_delete
-      summary: Delete a work item
+      summary: Azure DevOps Delete a work item
       description: >
         Moves a work item to the recycle bin. The work item can be recovered from
         the recycle bin or permanently deleted. Deletion requires appropriate permissions.
@@ -314,7 +314,7 @@ paths:
   /wit/wiql:
     post:
       operationId: workItems_queryByWiql
-      summary: Execute a WIQL query
+      summary: Azure DevOps Execute a WIQL query
       description: >
         Executes a Work Item Query Language (WIQL) query and returns a list of
         work item references that match the query criteria. WIQL is a SQL-like
@@ -367,7 +367,7 @@ paths:
   /wit/workitemtypes:
     get:
       operationId: workItemTypes_list
-      summary: List work item types
+      summary: Azure DevOps List work item types
       description: >
         Returns a list of all work item types defined in the project. Work item types
         include Bug, Task, User Story, Feature, Epic, and any custom types defined
@@ -397,7 +397,7 @@ paths:
   /wit/workitemtypes/{type}:
     get:
       operationId: workItemTypes_get
-      summary: Get a work item type
+      summary: Azure DevOps Get a work item type
       description: >
         Returns detailed information about a specific work item type, including its
         fields, transitions, states, and rules. The type name is case-sensitive and
@@ -429,7 +429,7 @@ paths:
   /wit/fields:
     get:
       operationId: fields_list
-      summary: List work item fields
+      summary: Azure DevOps List work item fields
       description: >
         Returns a list of all work item fields available in the project. Includes
         both system fields (System.*) and custom fields, with their types,
@@ -466,7 +466,7 @@ paths:
   /wit/workitems/{id}/comments:
     get:
       operationId: workItems_listComments
-      summary: Get work item comments
+      summary: Azure DevOps Get work item comments
       description: >
         Returns all comments for a specific work item, ordered by creation date.
         Comments are user-authored notes attached to a work item and are separate
@@ -517,7 +517,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: workItems_addComment
-      summary: Add a comment to a work item
+      summary: Azure DevOps Add a comment to a work item
       description: >
         Adds a new comment to a work item. The comment body supports HTML markup.
         The new comment is appended to the existing list of comments.
@@ -564,7 +564,7 @@ paths:
   /wit/attachments/{id}:
     get:
       operationId: attachments_get
-      summary: Get attachment info
+      summary: Azure DevOps Get attachment info
       description: >
         Returns metadata about an attachment by its GUID identifier. The response
         includes the attachment URL, file name, size, and creation date. Use the
@@ -596,7 +596,7 @@ paths:
   /wit/attachments:
     post:
       operationId: attachments_upload
-      summary: Upload an attachment
+      summary: Azure DevOps Upload an attachment
       description: >
         Uploads a new attachment and returns the attachment reference including
         the ID and URL. After uploading, attach the file to a work item using

@@ -37,7 +37,7 @@ paths:
   /pipelines:
     get:
       operationId: pipelines_list
-      summary: List pipelines
+      summary: Azure DevOps List pipelines
       description: >
         Returns a list of pipelines in the project. Pipelines are YAML-based CI/CD
         definitions stored in source repositories. Supports ordering and pagination.
@@ -89,7 +89,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: pipelines_create
-      summary: Create a pipeline
+      summary: Azure DevOps Create a pipeline
       description: >
         Creates a new pipeline definition in the project. The pipeline references
         a YAML file in a source repository. After creation, the pipeline can be
@@ -130,7 +130,7 @@ paths:
   /pipelines/{pipelineId}:
     get:
       operationId: pipelines_get
-      summary: Get a pipeline
+      summary: Azure DevOps Get a pipeline
       description: >
         Returns detailed information about a specific pipeline, including its
         configuration, repository source, and revision. The pipelineId is the
@@ -162,7 +162,7 @@ paths:
   /pipelines/{pipelineId}/runs:
     get:
       operationId: runs_list
-      summary: List pipeline runs
+      summary: Azure DevOps List pipeline runs
       description: >
         Returns a list of runs (executions) for a specific pipeline. Includes
         the run state, result, timing, and template parameters used. Supports
@@ -206,7 +206,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     post:
       operationId: runs_run
-      summary: Run a pipeline
+      summary: Azure DevOps Run a pipeline
       description: >
         Triggers a new run of a pipeline. You can override template parameters,
         variables, the repository branch, and specify which stages to skip or
@@ -259,7 +259,7 @@ paths:
   /pipelines/{pipelineId}/runs/{runId}:
     get:
       operationId: runs_get
-      summary: Get a pipeline run
+      summary: Azure DevOps Get a pipeline run
       description: >
         Returns detailed information about a specific pipeline run, including
         its state, result, template parameters, variables used, and timing.
@@ -291,7 +291,7 @@ paths:
   /pipelines/{pipelineId}/runs/{runId}/artifacts:
     get:
       operationId: artifacts_list
-      summary: List run artifacts
+      summary: Azure DevOps List run artifacts
       description: >
         Returns a list of artifacts published by a specific pipeline run. Artifacts
         can include compiled binaries, test results, container images, or any

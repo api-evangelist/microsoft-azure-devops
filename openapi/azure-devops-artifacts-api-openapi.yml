@@ -38,7 +38,7 @@ paths:
   /packaging/feeds:
     get:
       operationId: feeds_list
-      summary: List feeds
+      summary: Azure DevOps List feeds
       description: >
         Returns a list of package feeds accessible within the organization or project.
         Feeds are the primary containers for packages in Azure Artifacts. A project
@@ -87,7 +87,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: feeds_create
-      summary: Create a feed
+      summary: Azure DevOps Create a feed
       description: >
         Creates a new artifact feed. You can configure whether the feed allows
         upstream sources (for fetching public packages), its visibility (project-wide
@@ -130,7 +130,7 @@ paths:
   /packaging/feeds/{feedId}:
     get:
       operationId: feeds_get
-      summary: Get a feed
+      summary: Azure DevOps Get a feed
       description: >
         Returns detailed information about a specific feed, including its configuration,
         upstream sources, and visibility settings. The feedId can be either the feed
@@ -161,7 +161,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: feeds_update
-      summary: Update a feed
+      summary: Azure DevOps Update a feed
       description: >
         Updates properties of a feed such as its name, description, upstream sources,
         and retention policy. Only fields provided in the request body will be changed.
@@ -194,7 +194,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: feeds_delete
-      summary: Delete a feed
+      summary: Azure DevOps Delete a feed
       description: >
         Permanently deletes a feed and all packages it contains. This operation
         cannot be undone. All packages will be permanently removed from the feed.
@@ -216,7 +216,7 @@ paths:
   /packaging/feeds/{feedId}/packages:
     get:
       operationId: packages_list
-      summary: List packages in a feed
+      summary: Azure DevOps List packages in a feed
       description: >
         Returns a list of packages in a specific feed. Supports filtering by
         package name, protocol type (nuget, npm, maven, pypi, upack), and
@@ -316,7 +316,7 @@ paths:
   /packaging/feeds/{feedId}/packages/{packageId}:
     get:
       operationId: packages_get
-      summary: Get package details
+      summary: Azure DevOps Get package details
       description: >
         Returns detailed information about a specific package, including all versions,
         its protocol type, and normalized name. The packageId is the GUID assigned
@@ -373,7 +373,7 @@ paths:
   /packaging/feeds/{feedId}/packages/{packageId}/versions/{packageVersionId}:
     delete:
       operationId: packageVersions_delete
-      summary: Delete a package version
+      summary: Azure DevOps Delete a package version
       description: >
         Deletes a specific version of a package from the feed. By default this moves
         the version to the recycle bin. Use the permanentlyDelete parameter to

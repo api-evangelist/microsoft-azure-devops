@@ -38,7 +38,7 @@ paths:
   /build/builds:
     get:
       operationId: builds_list
-      summary: List builds
+      summary: Azure DevOps List builds
       description: >
         Returns a list of builds for the project. Supports filtering by definition,
         build number, status, result, and branch. Results can be paginated using
@@ -133,7 +133,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: builds_queue
-      summary: Queue a new build
+      summary: Azure DevOps Queue a new build
       description: >
         Queues a new build by specifying the build definition and optional parameters
         such as source branch, build parameters, and demands. The build will be
@@ -182,7 +182,7 @@ paths:
   /build/builds/{buildId}:
     get:
       operationId: builds_get
-      summary: Get a build
+      summary: Azure DevOps Get a build
       description: >
         Returns detailed information about a specific build, including its status,
         result, timing, source information, and links to logs and artifacts.
@@ -211,7 +211,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: builds_delete
-      summary: Delete a build
+      summary: Azure DevOps Delete a build
       description: >
         Deletes a build record and its associated data, including logs and artifacts.
         This operation cannot be undone. The build must not be in progress to be deleted.
@@ -237,7 +237,7 @@ paths:
   /build/builds/{buildId}/logs:
     get:
       operationId: builds_getLogs
-      summary: Get build logs
+      summary: Azure DevOps Get build logs
       description: >
         Returns the list of log entries for a build. Each log entry corresponds to
         a step or phase in the build pipeline. Use the log ID to retrieve the
@@ -275,7 +275,7 @@ paths:
   /build/builds/{buildId}/timeline:
     get:
       operationId: builds_getTimeline
-      summary: Get build timeline
+      summary: Azure DevOps Get build timeline
       description: >
         Returns the detailed timeline for a build, showing all phases, jobs, tasks,
         and their individual statuses, start times, and durations. Useful for
@@ -306,7 +306,7 @@ paths:
   /build/builds/{buildId}/artifacts:
     get:
       operationId: builds_listArtifacts
-      summary: List build artifacts
+      summary: Azure DevOps List build artifacts
       description: >
         Returns a list of artifacts published by a specific build. Artifacts can
         be downloaded individually and include their name, type, and download URL.
@@ -349,7 +349,7 @@ paths:
   /build/definitions:
     get:
       operationId: definitions_list
-      summary: List build definitions
+      summary: Azure DevOps List build definitions
       description: >
         Returns a list of build definitions (pipelines) in the project. Supports
         filtering by name and path, and returns summary information for each definition.
@@ -408,7 +408,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: definitions_create
-      summary: Create a build definition
+      summary: Azure DevOps Create a build definition
       description: >
         Creates a new build definition (pipeline) in the project. The definition
         specifies the build steps, triggers, variables, and agent requirements.
@@ -451,7 +451,7 @@ paths:
   /build/definitions/{definitionId}:
     get:
       operationId: definitions_get
-      summary: Get a build definition
+      summary: Azure DevOps Get a build definition
       description: >
         Returns detailed information about a specific build definition, including
         all steps, triggers, variables, and configuration. You can also request
@@ -494,7 +494,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: definitions_update
-      summary: Update a build definition
+      summary: Azure DevOps Update a build definition
       description: >
         Replaces an existing build definition with the provided definition. The
         revision number in the body must match the current revision to prevent
@@ -545,7 +545,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: definitions_delete
-      summary: Delete a build definition
+      summary: Azure DevOps Delete a build definition
       description: >
         Deletes a build definition. All associated builds must be deleted first,
         or you must specify deleteBuilds=true to cascade delete all associated builds.

@@ -35,7 +35,7 @@ paths:
   /wiki/wikis:
     get:
       operationId: wikis_list
-      summary: List wikis
+      summary: Azure DevOps List wikis
       description: >
         Returns a list of all wikis in the project. A project typically has one
         project wiki and may have additional code wikis that are backed by specific
@@ -65,7 +65,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: wikis_create
-      summary: Create a wiki
+      summary: Azure DevOps Create a wiki
       description: >
         Creates a new wiki for a project. You can create a project wiki (backed by
         a dedicated wiki repository) or a code wiki (backed by an existing Git
@@ -101,7 +101,7 @@ paths:
   /wiki/wikis/{wikiIdentifier}:
     get:
       operationId: wikis_get
-      summary: Get a wiki
+      summary: Azure DevOps Get a wiki
       description: >
         Returns detailed information about a specific wiki, including its backing
         Git repository ID, mapped path (for code wikis), and current version.
@@ -132,7 +132,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: wikis_update
-      summary: Update a wiki
+      summary: Azure DevOps Update a wiki
       description: >
         Updates the wiki by changing the default branch for a code wiki's backed
         repository. This is useful when the main branch of the backing repository
@@ -169,7 +169,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: wikis_delete
-      summary: Delete a wiki
+      summary: Azure DevOps Delete a wiki
       description: >
         Deletes a wiki. For a project wiki, this deletes the wiki and the backing
         Git repository. For a code wiki, this removes the wiki but leaves the
@@ -195,7 +195,7 @@ paths:
   /wiki/wikis/{wikiIdentifier}/pages:
     get:
       operationId: pages_get
-      summary: Get a wiki page
+      summary: Azure DevOps Get a wiki page
       description: >
         Returns the content and metadata for a wiki page at a given path.
         The path parameter is required to specify which page to retrieve.
@@ -253,7 +253,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: pages_createOrUpdate
-      summary: Create or update a wiki page
+      summary: Azure DevOps Create or update a wiki page
       description: >
         Creates a new wiki page or updates an existing page at the specified path.
         The request body must contain the Markdown content for the page. To update
@@ -331,7 +331,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: pages_delete
-      summary: Delete a wiki page
+      summary: Azure DevOps Delete a wiki page
       description: >
         Deletes a wiki page at the specified path. This commits a deletion to the
         backing Git repository. Deleted pages cannot be recovered except through
