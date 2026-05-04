@@ -1,0 +1,506 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Azure DevOps
+providerId: microsoft-azure-devops
+created: '2026-05-04'
+modified: '2026-05-04'
+tags:
+  - Agile
+  - CI/CD
+  - DevOps
+  - Project Management
+  - Version Control
+description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
+  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+plans:
+  - id: microsoft-azure-devops-free
+    name: Free
+    type: freemium
+    description: Free entry tier for the Azure DevOps API surface. Intended for evaluation, prototyping,
+      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
+      plan documentation.
+    entries:
+      - label: API Requests
+        description: Monthly API request quota across all included endpoints
+        name: api_requests
+        type: quota
+        metric: requests
+        limit: 1000
+        timeFrame: month
+        geo: global
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Rate Limit
+        description: Maximum requests per minute on the free tier
+        name: rate_limit
+        type: rate
+        metric: requests_per_minute
+        limit: 10
+        timeFrame: minute
+        geo: global
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Public Documentation
+      - name: Community Support
+      - name: Sandbox Access
+      - name: Azure DevOps Services REST API
+      - name: Azure DevOps Boards API
+      - name: Azure DevOps Repos API
+      - name: Azure DevOps Pipelines API
+      - name: Azure DevOps Build API
+      - name: Azure DevOps Release API
+      - name: Azure DevOps Test Plans API
+      - name: Azure DevOps Artifacts API
+  - id: microsoft-azure-devops-pro
+    name: Professional
+    type: paid
+    description: Production tier for Azure DevOps. Provides higher quotas, priority support, and access
+      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+    entries:
+      - label: API Requests
+        description: Monthly API request quota
+        name: api_requests
+        type: quota
+        metric: requests
+        limit: 100000
+        timeFrame: month
+        geo: global
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: TBD
+        userMultiplied: false
+      - label: Rate Limit
+        description: Maximum requests per minute on the professional tier
+        name: rate_limit
+        type: rate
+        metric: requests_per_minute
+        limit: 100
+        timeFrame: minute
+        geo: global
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Overage
+        description: Per-request price after monthly quota is exceeded
+        name: overage
+        type: metered
+        metric: requests
+        limit: -1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1000
+        price: TBD
+        userMultiplied: false
+    elements:
+      - name: All Production Endpoints
+      - name: Email Support
+      - name: SLA Targets
+      - name: Webhook Subscriptions
+      - name: Azure DevOps Services REST API
+      - name: Azure DevOps Boards API
+      - name: Azure DevOps Repos API
+      - name: Azure DevOps Pipelines API
+      - name: Azure DevOps Build API
+      - name: Azure DevOps Release API
+      - name: Azure DevOps Test Plans API
+      - name: Azure DevOps Artifacts API
+      - name: Azure DevOps Graph API
+      - name: Azure DevOps Core API
+      - name: Azure DevOps Security API
+      - name: Azure DevOps Service Hooks API
+      - name: Azure DevOps Notifications API
+      - name: Azure DevOps Audit API
+      - name: Azure DevOps Search API
+      - name: Azure DevOps Policy API
+      - name: Azure DevOps Distributed Task API
+      - name: Azure DevOps Analytics OData API
+      - name: Azure DevOps Wiki API
+      - name: Azure DevOps Extension Management API
+      - name: Azure DevOps Service Endpoint API
+      - name: Azure DevOps TFVC API
+      - name: Azure DevOps Token Administration API
+      - name: Azure DevOps Accounts API
+      - name: Azure DevOps Approvals and Checks API
+      - name: Azure DevOps Artifacts Package Types API
+      - name: Azure DevOps Dashboard API
+      - name: Azure DevOps Favorites API
+      - name: Azure DevOps Identities API
+      - name: Azure DevOps Member Entitlement Management API
+      - name: Azure DevOps Permissions Report API
+      - name: Azure DevOps Profile API
+      - name: Azure DevOps Security Roles API
+      - name: Azure DevOps Status API
+      - name: Azure DevOps Symbol API
+      - name: Azure DevOps Test Plan API
+      - name: Azure DevOps Test Results API
+      - name: Azure DevOps Token Lifecycle Management API
+      - name: Azure DevOps Work API
+      - name: Azure DevOps Work Item Tracking Process API
+  - id: microsoft-azure-devops-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Custom-negotiated tier for Azure DevOps. Includes dedicated capacity, contractual SLAs,
+      security review, data residency options, and named technical account management.
+    entries:
+      - label: API Requests
+        description: Negotiated request volume; -1 indicates uncapped subject to fair use
+        name: api_requests
+        type: quota
+        metric: requests
+        limit: -1
+        timeFrame: month
+        geo: configurable
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: custom
+        userMultiplied: false
+      - label: Rate Limit
+        description: Negotiated burst and steady-state rate
+        name: rate_limit
+        type: rate
+        metric: requests_per_minute
+        limit: 1000
+        timeFrame: minute
+        geo: configurable
+        domains:
+          - https://dev.azure.com/{organization}
+          - https://dev.azure.com/{organization}/{project}/_apis/wit
+          - https://dev.azure.com/{organization}/{project}/_apis/git
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines
+          - https://dev.azure.com/{organization}/{project}/_apis/build
+          - https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
+          - https://dev.azure.com/{organization}/{project}/_apis/test
+          - https://feeds.dev.azure.com/{organization}/_apis/packaging
+          - https://vssps.dev.azure.com/{organization}/_apis/graph
+          - https://dev.azure.com/{organization}/_apis
+          - https://dev.azure.com/{organization}/_apis/accesscontrollists
+          - https://dev.azure.com/{organization}/_apis/hooks
+          - https://dev.azure.com/{organization}/_apis/notification
+          - https://auditservice.dev.azure.com/{organization}/_apis/audit
+          - https://almsearch.dev.azure.com/{organization}/_apis/search
+          - https://dev.azure.com/{organization}/{project}/_apis/policy
+          - https://dev.azure.com/{organization}/_apis/distributedtask
+          - https://analytics.dev.azure.com/{organization}/{project}/_odata
+          - https://dev.azure.com/{organization}/{project}/_apis/wiki
+          - https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
+          - https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
+          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
+          - https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
+          - https://app.vssps.visualstudio.com/_apis/accounts
+          - https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
+          - https://pkgs.dev.azure.com/{organization}/_apis/packaging
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
+          - https://dev.azure.com/{organization}/_apis/favorite
+          - https://vssps.dev.azure.com/{organization}/_apis/identities
+          - https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
+          - https://dev.azure.com/{organization}/_apis/permissionsreport
+          - https://app.vssps.visualstudio.com/_apis/profile/profiles
+          - https://dev.azure.com/{organization}/_apis/securityroles
+          - https://status.dev.azure.com/_apis/status
+          - https://artifacts.dev.azure.com/{organization}/_apis/symbol
+          - https://dev.azure.com/{organization}/{project}/_apis/testplan
+          - https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
+          - https://vssps.dev.azure.com/{organization}/_apis/tokens
+          - https://dev.azure.com/{organization}/{project}/{team}/_apis/work
+          - https://dev.azure.com/{organization}/_apis/work/processes
+        unit: 1
+        price: custom
+        userMultiplied: false
+    elements:
+      - name: Unlimited / Negotiated Volume
+      - name: 24/7 Dedicated Support
+      - name: Contractual SLA
+      - name: Security & Compliance Review
+      - name: Dedicated Account Manager
+      - name: Custom Data Residency
+      - name: Azure DevOps Services REST API
+      - name: Azure DevOps Boards API
+      - name: Azure DevOps Repos API
+      - name: Azure DevOps Pipelines API
+      - name: Azure DevOps Build API
+      - name: Azure DevOps Release API
+      - name: Azure DevOps Test Plans API
+      - name: Azure DevOps Artifacts API
+      - name: Azure DevOps Graph API
+      - name: Azure DevOps Core API
+      - name: Azure DevOps Security API
+      - name: Azure DevOps Service Hooks API
+      - name: Azure DevOps Notifications API
+      - name: Azure DevOps Audit API
+      - name: Azure DevOps Search API
+      - name: Azure DevOps Policy API
+      - name: Azure DevOps Distributed Task API
+      - name: Azure DevOps Analytics OData API
+      - name: Azure DevOps Wiki API
+      - name: Azure DevOps Extension Management API
+      - name: Azure DevOps Service Endpoint API
+      - name: Azure DevOps TFVC API
+      - name: Azure DevOps Token Administration API
+      - name: Azure DevOps Accounts API
+      - name: Azure DevOps Approvals and Checks API
+      - name: Azure DevOps Artifacts Package Types API
+      - name: Azure DevOps Dashboard API
+      - name: Azure DevOps Favorites API
+      - name: Azure DevOps Identities API
+      - name: Azure DevOps Member Entitlement Management API
+      - name: Azure DevOps Permissions Report API
+      - name: Azure DevOps Profile API
+      - name: Azure DevOps Security Roles API
+      - name: Azure DevOps Status API
+      - name: Azure DevOps Symbol API
+      - name: Azure DevOps Test Plan API
+      - name: Azure DevOps Test Results API
+      - name: Azure DevOps Token Lifecycle Management API
+      - name: Azure DevOps Work API
+      - name: Azure DevOps Work Item Tracking Process API
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
