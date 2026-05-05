@@ -1,0 +1,13 @@
+{
+  "repo": "microsoft-azure-devops",
+  "feeds": [
+    {
+      "source": "https://devblogs.microsoft.com/devops/",
+      "feed_url": "https://devblogs.microsoft.com/devops/feed/",
+      "saved": 10,
+      "title": "Azure DevOps Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:31:19Z"
+}
