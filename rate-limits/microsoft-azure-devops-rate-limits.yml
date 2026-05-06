@@ -4,281 +4,60 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Azure DevOps
 providerId: microsoft-azure-devops
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Agile
-  - CI/CD
-  - DevOps
-  - Project Management
-  - Version Control
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Azure DevOps API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+  - DevOps
+  - Microsoft Azure
+description: Azure DevOps Services rate-limits API consumers via Throughput Service Tokens (TSTUs).
+  TSTUs blend SQL DTU, compute, and storage usage. Each user has a sliding 5-minute window; sustained
+  high consumption triggers delays first (X-RateLimit-Delay), then 429 responses.
+sources:
+  - https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
+  rateLimitRemaining: X-RateLimit-Remaining
+  rateLimitDelay: X-RateLimit-Delay
+  rateLimitReset: X-RateLimit-Reset
+  rateLimitLimit: X-RateLimit-Limit
   retryAfter: Retry-After
-  policy: RateLimit-Policy
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
+  - name: Global per-user TSTU window
+    scope: user
+    metric: TSTU_per_5_minutes
+    limit: 200
+    timeFrame: minute
+    notes: 200 TSTUs in any sliding 5-minute window. 1 TSTU ~= average load of one typical user
+      over 5 minutes. Spikes up to 100 TSTUs are tolerated.
+  - name: Typical user spike
+    scope: user
+    metric: TSTU_per_5_minutes
     limit: 10
-    burst: 20
     timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API
-      - Azure DevOps Boards API
-      - Azure DevOps Repos API
-      - Azure DevOps Pipelines API
-      - Azure DevOps Build API
-      - Azure DevOps Release API
-      - Azure DevOps Test Plans API
-      - Azure DevOps Artifacts API
-      - Azure DevOps Graph API
-      - Azure DevOps Core API
-      - Azure DevOps Security API
-      - Azure DevOps Service Hooks API
-      - Azure DevOps Notifications API
-      - Azure DevOps Audit API
-      - Azure DevOps Search API
-      - Azure DevOps Policy API
-      - Azure DevOps Distributed Task API
-      - Azure DevOps Analytics OData API
-      - Azure DevOps Wiki API
-      - Azure DevOps Extension Management API
-      - Azure DevOps Service Endpoint API
-      - Azure DevOps TFVC API
-      - Azure DevOps Token Administration API
-      - Azure DevOps Accounts API
-      - Azure DevOps Approvals and Checks API
-      - Azure DevOps Artifacts Package Types API
-      - Azure DevOps Dashboard API
-      - Azure DevOps Favorites API
-      - Azure DevOps Identities API
-      - Azure DevOps Member Entitlement Management API
-      - Azure DevOps Permissions Report API
-      - Azure DevOps Profile API
-      - Azure DevOps Security Roles API
-      - Azure DevOps Status API
-      - Azure DevOps Symbol API
-      - Azure DevOps Test Plan API
-      - Azure DevOps Test Results API
-      - Azure DevOps Token Lifecycle Management API
-      - Azure DevOps Work API
-      - Azure DevOps Work Item Tracking Process API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Azure DevOps Services REST API
-      - Azure DevOps Boards API
-      - Azure DevOps Repos API
-      - Azure DevOps Pipelines API
-      - Azure DevOps Build API
-      - Azure DevOps Release API
-      - Azure DevOps Test Plans API
-      - Azure DevOps Artifacts API
-      - Azure DevOps Graph API
-      - Azure DevOps Core API
-      - Azure DevOps Security API
-      - Azure DevOps Service Hooks API
-      - Azure DevOps Notifications API
-      - Azure DevOps Audit API
-      - Azure DevOps Search API
-      - Azure DevOps Policy API
-      - Azure DevOps Distributed Task API
-      - Azure DevOps Analytics OData API
-      - Azure DevOps Wiki API
-      - Azure DevOps Extension Management API
-      - Azure DevOps Service Endpoint API
-      - Azure DevOps TFVC API
-      - Azure DevOps Token Administration API
-      - Azure DevOps Accounts API
-      - Azure DevOps Approvals and Checks API
-      - Azure DevOps Artifacts Package Types API
-      - Azure DevOps Dashboard API
-      - Azure DevOps Favorites API
-      - Azure DevOps Identities API
-      - Azure DevOps Member Entitlement Management API
-      - Azure DevOps Permissions Report API
-      - Azure DevOps Profile API
-      - Azure DevOps Security Roles API
-      - Azure DevOps Status API
-      - Azure DevOps Symbol API
-      - Azure DevOps Test Plan API
-      - Azure DevOps Test Results API
-      - Azure DevOps Token Lifecycle Management API
-      - Azure DevOps Work API
-      - Azure DevOps Work Item Tracking Process API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    notes: Normal user activity generates spikes of 10 TSTUs or fewer per 5 minutes.
+  - name: Tolerated burst
+    scope: user
+    metric: TSTU_per_5_minutes
     limit: 100
-    burst: 200
     timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API
-      - Azure DevOps Boards API
-      - Azure DevOps Repos API
-      - Azure DevOps Pipelines API
-      - Azure DevOps Build API
-      - Azure DevOps Release API
-      - Azure DevOps Test Plans API
-      - Azure DevOps Artifacts API
-      - Azure DevOps Graph API
-      - Azure DevOps Core API
-      - Azure DevOps Security API
-      - Azure DevOps Service Hooks API
-      - Azure DevOps Notifications API
-      - Azure DevOps Audit API
-      - Azure DevOps Search API
-      - Azure DevOps Policy API
-      - Azure DevOps Distributed Task API
-      - Azure DevOps Analytics OData API
-      - Azure DevOps Wiki API
-      - Azure DevOps Extension Management API
-      - Azure DevOps Service Endpoint API
-      - Azure DevOps TFVC API
-      - Azure DevOps Token Administration API
-      - Azure DevOps Accounts API
-      - Azure DevOps Approvals and Checks API
-      - Azure DevOps Artifacts Package Types API
-      - Azure DevOps Dashboard API
-      - Azure DevOps Favorites API
-      - Azure DevOps Identities API
-      - Azure DevOps Member Entitlement Management API
-      - Azure DevOps Permissions Report API
-      - Azure DevOps Profile API
-      - Azure DevOps Security Roles API
-      - Azure DevOps Status API
-      - Azure DevOps Symbol API
-      - Azure DevOps Test Plan API
-      - Azure DevOps Test Results API
-      - Azure DevOps Token Lifecycle Management API
-      - Azure DevOps Work API
-      - Azure DevOps Work Item Tracking Process API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Azure DevOps Services REST API
-      - Azure DevOps Boards API
-      - Azure DevOps Repos API
-      - Azure DevOps Pipelines API
-      - Azure DevOps Build API
-      - Azure DevOps Release API
-      - Azure DevOps Test Plans API
-      - Azure DevOps Artifacts API
-      - Azure DevOps Graph API
-      - Azure DevOps Core API
-      - Azure DevOps Security API
-      - Azure DevOps Service Hooks API
-      - Azure DevOps Notifications API
-      - Azure DevOps Audit API
-      - Azure DevOps Search API
-      - Azure DevOps Policy API
-      - Azure DevOps Distributed Task API
-      - Azure DevOps Analytics OData API
-      - Azure DevOps Wiki API
-      - Azure DevOps Extension Management API
-      - Azure DevOps Service Endpoint API
-      - Azure DevOps TFVC API
-      - Azure DevOps Token Administration API
-      - Azure DevOps Accounts API
-      - Azure DevOps Approvals and Checks API
-      - Azure DevOps Artifacts Package Types API
-      - Azure DevOps Dashboard API
-      - Azure DevOps Favorites API
-      - Azure DevOps Identities API
-      - Azure DevOps Member Entitlement Management API
-      - Azure DevOps Permissions Report API
-      - Azure DevOps Profile API
-      - Azure DevOps Security Roles API
-      - Azure DevOps Status API
-      - Azure DevOps Symbol API
-      - Azure DevOps Test Plan API
-      - Azure DevOps Test Results API
-      - Azure DevOps Token Lifecycle Management API
-      - Azure DevOps Work API
-      - Azure DevOps Work Item Tracking Process API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API
-      - Azure DevOps Boards API
-      - Azure DevOps Repos API
-      - Azure DevOps Pipelines API
-      - Azure DevOps Build API
-      - Azure DevOps Release API
-      - Azure DevOps Test Plans API
-      - Azure DevOps Artifacts API
-      - Azure DevOps Graph API
-      - Azure DevOps Core API
-      - Azure DevOps Security API
-      - Azure DevOps Service Hooks API
-      - Azure DevOps Notifications API
-      - Azure DevOps Audit API
-      - Azure DevOps Search API
-      - Azure DevOps Policy API
-      - Azure DevOps Distributed Task API
-      - Azure DevOps Analytics OData API
-      - Azure DevOps Wiki API
-      - Azure DevOps Extension Management API
-      - Azure DevOps Service Endpoint API
-      - Azure DevOps TFVC API
-      - Azure DevOps Token Administration API
-      - Azure DevOps Accounts API
-      - Azure DevOps Approvals and Checks API
-      - Azure DevOps Artifacts Package Types API
-      - Azure DevOps Dashboard API
-      - Azure DevOps Favorites API
-      - Azure DevOps Identities API
-      - Azure DevOps Member Entitlement Management API
-      - Azure DevOps Permissions Report API
-      - Azure DevOps Profile API
-      - Azure DevOps Security Roles API
-      - Azure DevOps Status API
-      - Azure DevOps Symbol API
-      - Azure DevOps Test Plan API
-      - Azure DevOps Test Results API
-      - Azure DevOps Token Lifecycle Management API
-      - Azure DevOps Work API
-      - Azure DevOps Work Item Tracking Process API
+    notes: Larger but less frequent spikes can reach up to 100 TSTUs before delay/throttle kicks
+      in.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Honor Retry-After
+    description: When the API returns Retry-After (with HTTP 200 in delayed mode or 429 in blocked
+      mode), wait the specified seconds before sending another request.
+  - name: Monitor X-RateLimit headers
+    description: Track X-RateLimit-Remaining and X-RateLimit-Limit to smooth out request bursts proactively
+      before delays start (Remaining = 0 indicates active delay).
+  - name: Use bulk and webhook patterns
+    description: Use service hooks, batch APIs, and OData reports instead of polling individual work
+      items to reduce TSTU consumption.
+  - name: Personal access token attribution
+    description: Use distinct PATs / app identities per integration so a single misbehaving integration
+      does not consume a user's full quota.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

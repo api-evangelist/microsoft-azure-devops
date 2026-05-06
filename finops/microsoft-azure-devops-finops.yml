@@ -1,444 +1,91 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Azure DevOps
+providerId: microsoft-azure-devops
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - DevOps
+  - Microsoft Azure
+description: 'FOCUS-aligned FinOps for Azure DevOps Services: per-user license subscriptions (Basic,
+  Basic + Test Plans, Stakeholder free) plus pay-per-slot Microsoft-hosted and self-hosted Pipelines
+  parallel jobs and tiered Artifacts storage.'
+sources:
+  - https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: Azure DevOps
-providerId: microsoft-azure-devops
-publisherName: Azure DevOps
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - Agile
-  - CI/CD
-  - DevOps
-  - Project Management
-  - Version Control
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Azure DevOps API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: Microsoft Corporation
+serviceCategory: DevOps / Developer Tools
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Tiered Subscription
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Credit
 focusColumns:
-  ServiceName: Azure DevOps
-  ServiceCategory: Developer Tools / API
-  ProviderName: Azure DevOps
-  PublisherName: Azure DevOps
-  InvoiceIssuerName: Azure DevOps
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Azure DevOps Services
+  ServiceCategory: DevOps
+  ProviderName: Microsoft
+  PublisherName: Microsoft Corporation
+  InvoiceIssuerName: Microsoft Corporation
   BillingCurrency: USD
   ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: basic_user_seats
+    unit: seat-month
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - organization
+      - team
+  - name: basic_test_plans_seats
+    unit: seat-month
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
+      - organization
+      - team
+  - name: ms_hosted_parallel_jobs
+    unit: parallel_job-month
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Azure DevOps Services REST API
-    baseURL: https://dev.azure.com/{organization}
-    tags:
-      - DevOps
-      - REST
-    serviceName: Azure DevOps Services REST API
-    serviceCategory: API
-  - name: Azure DevOps Boards API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/wit
-    tags:
-      - Agile
-      - Boards
-      - Work Items
-    serviceName: Azure DevOps Boards API
-    serviceCategory: API
-  - name: Azure DevOps Repos API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
-    tags:
-      - Git
-      - Repositories
-      - Source Control
-    serviceName: Azure DevOps Repos API
-    serviceCategory: API
-  - name: Azure DevOps Pipelines API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/pipelines
-    tags:
-      - Builds
-      - CI/CD
-      - Releases
-    serviceName: Azure DevOps Pipelines API
-    serviceCategory: API
-  - name: Azure DevOps Build API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/build
-    tags:
-      - Automation
-      - Build
-      - CI
-    serviceName: Azure DevOps Build API
-    serviceCategory: API
-  - name: Azure DevOps Release API
-    baseURL: https://vsrm.dev.azure.com/{organization}/{project}/_apis/release
-    tags:
-      - CD
-      - Deployment
-      - Release
-    serviceName: Azure DevOps Release API
-    serviceCategory: API
-  - name: Azure DevOps Test Plans API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/test
-    tags:
-      - QA
-      - Test Plans
-      - Testing
-    serviceName: Azure DevOps Test Plans API
-    serviceCategory: API
-  - name: Azure DevOps Artifacts API
-    baseURL: https://feeds.dev.azure.com/{organization}/_apis/packaging
-    tags:
-      - Artifacts
-      - Dependencies
-      - Packages
-    serviceName: Azure DevOps Artifacts API
-    serviceCategory: API
-  - name: Azure DevOps Graph API
-    baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
-    tags:
-      - Groups
-      - Permissions
-      - Users
-    serviceName: Azure DevOps Graph API
-    serviceCategory: API
-  - name: Azure DevOps Core API
-    baseURL: https://dev.azure.com/{organization}/_apis
-    tags:
-      - Organization
-      - Projects
-      - Teams
-    serviceName: Azure DevOps Core API
-    serviceCategory: API
-  - name: Azure DevOps Security API
-    baseURL: https://dev.azure.com/{organization}/_apis/accesscontrollists
-    tags:
-      - Access Control
-      - Permissions
-      - Security
-    serviceName: Azure DevOps Security API
-    serviceCategory: API
-  - name: Azure DevOps Service Hooks API
-    baseURL: https://dev.azure.com/{organization}/_apis/hooks
-    tags:
-      - Events
-      - Integrations
-      - Webhooks
-    serviceName: Azure DevOps Service Hooks API
-    serviceCategory: API
-  - name: Azure DevOps Notifications API
-    baseURL: https://dev.azure.com/{organization}/_apis/notification
-    tags:
-      - Alerts
-      - Notifications
-      - Subscriptions
-    serviceName: Azure DevOps Notifications API
-    serviceCategory: API
-  - name: Azure DevOps Audit API
-    baseURL: https://auditservice.dev.azure.com/{organization}/_apis/audit
-    tags:
-      - Audit
-      - Compliance
-      - Security
-    serviceName: Azure DevOps Audit API
-    serviceCategory: API
-  - name: Azure DevOps Search API
-    baseURL: https://almsearch.dev.azure.com/{organization}/_apis/search
-    tags:
-      - Code
-      - Search
-      - Work Items
-    serviceName: Azure DevOps Search API
-    serviceCategory: API
-  - name: Azure DevOps Policy API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/policy
-    tags:
-      - Branch Protection
-      - Code Review
-      - Policy
-    serviceName: Azure DevOps Policy API
-    serviceCategory: API
-  - name: Azure DevOps Distributed Task API
-    baseURL: https://dev.azure.com/{organization}/_apis/distributedtask
-    tags:
-      - Agents
-      - Pipelines
-      - Pools
-    serviceName: Azure DevOps Distributed Task API
-    serviceCategory: API
-  - name: Azure DevOps Analytics OData API
-    baseURL: https://analytics.dev.azure.com/{organization}/{project}/_odata
-    tags:
-      - Analytics
-      - OData
-      - Reporting
-    serviceName: Azure DevOps Analytics OData API
-    serviceCategory: API
-  - name: Azure DevOps Wiki API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/wiki
-    tags:
-      - Documentation
-      - Pages
-      - Wiki
-    serviceName: Azure DevOps Wiki API
-    serviceCategory: API
-  - name: Azure DevOps Extension Management API
-    baseURL: https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement
-    tags:
-      - Extensions
-      - Marketplace
-      - Plugins
-    serviceName: Azure DevOps Extension Management API
-    serviceCategory: API
-  - name: Azure DevOps Service Endpoint API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
-    tags:
-      - Integrations
-      - Pipelines
-      - Service Connections
-    serviceName: Azure DevOps Service Endpoint API
-    serviceCategory: API
-  - name: Azure DevOps TFVC API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/tfvc
-    tags:
-      - Source Control
-      - TFVC
-      - Version Control
-    serviceName: Azure DevOps TFVC API
-    serviceCategory: API
-  - name: Azure DevOps Token Administration API
-    baseURL: https://vssps.dev.azure.com/{organization}/_apis/tokenadmin
-    tags:
-      - Access Control
-      - Security
-      - Token Administration
-    serviceName: Azure DevOps Token Administration API
-    serviceCategory: API
-  - name: Azure DevOps Accounts API
-    baseURL: https://app.vssps.visualstudio.com/_apis/accounts
-    tags:
-      - Accounts
-      - Administration
-      - Organizations
-    serviceName: Azure DevOps Accounts API
-    serviceCategory: API
-  - name: Azure DevOps Approvals and Checks API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks
-    tags:
-      - Approvals
-      - Checks
-      - Pipelines
-    serviceName: Azure DevOps Approvals and Checks API
-    serviceCategory: API
-  - name: Azure DevOps Artifacts Package Types API
-    baseURL: https://pkgs.dev.azure.com/{organization}/_apis/packaging
-    tags:
-      - Maven
-      - Npm
-      - NuGet
-      - Packages
-    serviceName: Azure DevOps Artifacts Package Types API
-    serviceCategory: API
-  - name: Azure DevOps Dashboard API
-    baseURL: https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard
-    tags:
-      - Dashboards
-      - Reporting
-      - Widgets
-    serviceName: Azure DevOps Dashboard API
-    serviceCategory: API
-  - name: Azure DevOps Favorites API
-    baseURL: https://dev.azure.com/{organization}/_apis/favorite
-    tags:
-      - Bookmarks
-      - Favorites
-      - User Preferences
-    serviceName: Azure DevOps Favorites API
-    serviceCategory: API
-  - name: Azure DevOps Identities API
-    baseURL: https://vssps.dev.azure.com/{organization}/_apis/identities
-    tags:
-      - Groups
-      - Identities
-      - Users
-    serviceName: Azure DevOps Identities API
-    serviceCategory: API
-  - name: Azure DevOps Member Entitlement Management API
-    baseURL: https://vsaex.dev.azure.com/{organization}/_apis/userentitlements
-    tags:
-      - Entitlements
-      - Licensing
-      - User Management
-    serviceName: Azure DevOps Member Entitlement Management API
-    serviceCategory: API
-  - name: Azure DevOps Permissions Report API
-    baseURL: https://dev.azure.com/{organization}/_apis/permissionsreport
-    tags:
-      - Compliance
-      - Permissions
-      - Reports
-    serviceName: Azure DevOps Permissions Report API
-    serviceCategory: API
-  - name: Azure DevOps Profile API
-    baseURL: https://app.vssps.visualstudio.com/_apis/profile/profiles
-    tags:
-      - Identity
-      - Profile
-      - Users
-    serviceName: Azure DevOps Profile API
-    serviceCategory: API
-  - name: Azure DevOps Security Roles API
-    baseURL: https://dev.azure.com/{organization}/_apis/securityroles
-    tags:
-      - Access Control
-      - Role Assignments
-      - Security Roles
-    serviceName: Azure DevOps Security Roles API
-    serviceCategory: API
-  - name: Azure DevOps Status API
-    baseURL: https://status.dev.azure.com/_apis/status
-    tags:
-      - Health
-      - Monitoring
-      - Status
-    serviceName: Azure DevOps Status API
-    serviceCategory: API
-  - name: Azure DevOps Symbol API
-    baseURL: https://artifacts.dev.azure.com/{organization}/_apis/symbol
-    tags:
-      - Artifacts
-      - Debugging
-      - Symbols
-    serviceName: Azure DevOps Symbol API
-    serviceCategory: API
-  - name: Azure DevOps Test Plan API
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/testplan
-    tags:
-      - Test Cases
-      - Test Plans
-      - Test Suites
-    serviceName: Azure DevOps Test Plan API
-    serviceCategory: API
-  - name: Azure DevOps Test Results API
-    baseURL: https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults
-    tags:
-      - Code Coverage
-      - Test Results
-      - Test Runs
-    serviceName: Azure DevOps Test Results API
-    serviceCategory: API
-  - name: Azure DevOps Token Lifecycle Management API
-    baseURL: https://vssps.dev.azure.com/{organization}/_apis/tokens
-    tags:
-      - Authentication
-      - Personal Access Tokens
-      - Tokens
-    serviceName: Azure DevOps Token Lifecycle Management API
-    serviceCategory: API
-  - name: Azure DevOps Work API
-    baseURL: https://dev.azure.com/{organization}/{project}/{team}/_apis/work
-    tags:
-      - Boards
-      - Capacity
-      - Sprints
-    serviceName: Azure DevOps Work API
-    serviceCategory: API
-  - name: Azure DevOps Work Item Tracking Process API
-    baseURL: https://dev.azure.com/{organization}/_apis/work/processes
-    tags:
-      - Customization
-      - Processes
-      - Work Item Types
-    serviceName: Azure DevOps Work Item Tracking Process API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - organization
+      - project
+  - name: self_hosted_parallel_jobs
+    unit: parallel_job-month
+    aggregation: sum
+    dimensions:
+      - organization
+  - name: artifacts_storage
+    unit: GB-month
+    aggregation: avg
+    dimensions:
+      - organization
+      - feed
+principles:
+  - name: Visibility
+    description: Use the Azure DevOps organization Billing settings page and Azure Cost Management
+      filtered to Azure DevOps for license, pipelines, and artifacts breakdown by organization.
+  - name: Allocation
+    description: Allocate cost by organization, project, and team using project ownership metadata;
+      tag billing subscriptions per business unit.
+  - name: Optimization
+    description: Reclaim Basic licenses from inactive users on a quarterly cadence; downgrade non-contributors
+      to Stakeholder; right-size parallel job slots vs queue time; move high-volume builds to self-hosted
+      agents for cost savings.
+  - name: Accountability
+    description: Assign org admins as cost owners; set per-org spend alerts in Azure Cost Management;
+      review at quarterly Microsoft EA true-up.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
