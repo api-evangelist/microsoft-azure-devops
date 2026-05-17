@@ -496,33 +496,33 @@ common:
     url: https://dev.azure.com
   - type: Documentation
     url: https://learn.microsoft.com/en-us/azure/devops/?view=azure-devops
-  - type: Getting Started
+  - type: GettingStarted
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/
   - type: Authentication
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
   - type: Client Libraries
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
-  - type: Rate Limits
+  - type: RateLimits
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-  - type: Status
+  - type: StatusPage
     url: https://status.dev.azure.com/
   - type: Support
     url: https://azure.microsoft.com/en-us/support/devops/
   - type: Blog
     url: https://devblogs.microsoft.com/devops/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://azure.microsoft.com/en-us/support/legal/
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Pricing
     url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
-  - type: Sign Up
+  - type: SignUp
     url: https://azure.microsoft.com/en-us/services/devops/
   - type: Community
     url: https://developercommunity.visualstudio.com/AzureDevOps
-  - type: Stack Overflow
+  - type: StackOverflow
     url: https://stackoverflow.com/questions/tagged/azure-devops
-  - type: Change Log
+  - type: ChangeLog
     url: https://learn.microsoft.com/en-us/azure/devops/release-notes/
   - type: Marketplace
     url: https://marketplace.visualstudio.com/azuredevops
@@ -536,7 +536,7 @@ common:
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/rest/samples?view=azure-devops
   - type: Best Practices
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices?view=azure-devops
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/microsoft
   - type: GitHubRepository
     url: https://github.com/microsoft/azure-devops-python-api
@@ -548,7 +548,7 @@ common:
     url: json-schema/azure-devops-work-item-schema.json
   - type: JSONSchema
     url: json-schema/azure-devops-pipeline-run-schema.json
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/azure-devops-context.jsonld
 maintainers:
   - FN: Kin Lane
