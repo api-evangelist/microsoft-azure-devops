@@ -1,0 +1,86 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Builds API — Build Artifacts
+  description: 'Azure DevOps Builds API — Build Artifacts. 1 operations. Lead operation: Azure DevOps List build artifacts.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Build Artifacts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-builds-build-artifacts
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Builds API — Build Artifacts business capability. Self-contained, no shared references.
+    resources:
+    - name: build-builds-buildId-artifacts
+      path: /build/builds/{buildId}/artifacts
+      operations:
+      - name: buildslistartifacts
+        method: GET
+        description: Azure DevOps List build artifacts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: buildId
+          in: path
+          type: integer
+          description: Numeric ID of the build
+          required: true
+        - name: artifactName
+          in: query
+          type: string
+          description: Filter by a specific artifact name
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-builds-build-artifacts-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Builds API — Build Artifacts. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/build/builds/{buildid}/artifacts
+      name: build-builds-buildid-artifacts
+      description: REST surface for build-builds-buildId-artifacts.
+      operations:
+      - method: GET
+        name: buildslistartifacts
+        description: Azure DevOps List build artifacts
+        call: azure-devops-builds-build-artifacts.buildslistartifacts
+        with:
+          buildId: rest.buildId
+          artifactName: rest.artifactName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-builds-build-artifacts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Builds API — Build Artifacts. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-build-artifacts
+      description: Azure DevOps List build artifacts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-builds-build-artifacts.buildslistartifacts
+      with:
+        buildId: tools.buildId
+        artifactName: tools.artifactName
+      outputParameters:
+      - type: object
+        mapping: $.

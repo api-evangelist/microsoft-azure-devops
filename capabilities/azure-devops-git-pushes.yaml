@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Git Repositories API — Pushes
+  description: 'Azure DevOps Git Repositories API — Pushes. 2 operations. Lead operation: Azure DevOps List pushes. Self-contained
+    Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Pushes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-git-pushes
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Git Repositories API — Pushes business capability. Self-contained, no shared references.
+    resources:
+    - name: git-repositories-repositoryId-pushes
+      path: /git/repositories/{repositoryId}/pushes
+      operations:
+      - name: pusheslist
+        method: GET
+        description: Azure DevOps List pushes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of pushes to return
+        - name: $skip
+          in: query
+          type: integer
+          description: Number of pushes to skip
+        - name: searchCriteria.fromDate
+          in: query
+          type: string
+          description: Return pushes from after this date
+        - name: searchCriteria.toDate
+          in: query
+          type: string
+          description: Return pushes before this date
+        - name: searchCriteria.refName
+          in: query
+          type: string
+          description: Filter by branch or ref name
+        - name: searchCriteria.pusherId
+          in: query
+          type: string
+          description: Filter pushes by user who pushed
+      - name: pushescreate
+        method: POST
+        description: Azure DevOps Create a push
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-git-pushes-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Git Repositories API — Pushes. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/git/repositories/{repositoryid}/pushes
+      name: git-repositories-repositoryid-pushes
+      description: REST surface for git-repositories-repositoryId-pushes.
+      operations:
+      - method: GET
+        name: pusheslist
+        description: Azure DevOps List pushes
+        call: azure-devops-git-pushes.pusheslist
+        with:
+          $top: rest.$top
+          $skip: rest.$skip
+          searchCriteria.fromDate: rest.searchCriteria.fromDate
+          searchCriteria.toDate: rest.searchCriteria.toDate
+          searchCriteria.refName: rest.searchCriteria.refName
+          searchCriteria.pusherId: rest.searchCriteria.pusherId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: pushescreate
+        description: Azure DevOps Create a push
+        call: azure-devops-git-pushes.pushescreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-git-pushes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Git Repositories API — Pushes. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-pushes
+      description: Azure DevOps List pushes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-pushes.pusheslist
+      with:
+        $top: tools.$top
+        $skip: tools.$skip
+        searchCriteria.fromDate: tools.searchCriteria.fromDate
+        searchCriteria.toDate: tools.searchCriteria.toDate
+        searchCriteria.refName: tools.searchCriteria.refName
+        searchCriteria.pusherId: tools.searchCriteria.pusherId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-push
+      description: Azure DevOps Create a push
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-git-pushes.pushescreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

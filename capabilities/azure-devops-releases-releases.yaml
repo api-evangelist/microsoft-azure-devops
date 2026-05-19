@@ -1,0 +1,270 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Releases API — Releases
+  description: 'Azure DevOps Releases API — Releases. 4 operations. Lead operation: Azure DevOps List releases. Self-contained
+    Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Releases
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-releases-releases
+    baseUri: https://vsrm.dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Releases API — Releases business capability. Self-contained, no shared references.
+    resources:
+    - name: release-releases
+      path: /release/releases
+      operations:
+      - name: releaseslist
+        method: GET
+        description: Azure DevOps List releases
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: query
+          type: integer
+          description: Filter releases by release definition ID
+        - name: definitionEnvironmentId
+          in: query
+          type: integer
+          description: Filter releases by definition environment ID
+        - name: searchText
+          in: query
+          type: string
+          description: Search by release name
+        - name: createdBy
+          in: query
+          type: string
+          description: Filter releases created by a specific user (descriptor)
+        - name: statusFilter
+          in: query
+          type: string
+          description: Filter by release status
+        - name: environmentStatusFilter
+          in: query
+          type: integer
+          description: Filter by environment status
+        - name: minCreatedTime
+          in: query
+          type: string
+          description: Returns releases created after this date
+        - name: maxCreatedTime
+          in: query
+          type: string
+          description: Returns releases created before this date
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of releases to return
+        - name: continuationToken
+          in: query
+          type: integer
+          description: Continuation token for paginated results
+        - name: $expand
+          in: query
+          type: string
+          description: Expand additional release details
+      - name: releasescreate
+        method: POST
+        description: Azure DevOps Create a release
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: release-releases-releaseId
+      path: /release/releases/{releaseId}
+      operations:
+      - name: releasesget
+        method: GET
+        description: Azure DevOps Get a release
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: releaseId
+          in: path
+          type: integer
+          description: Numeric ID of the release
+          required: true
+        - name: $expand
+          in: query
+          type: string
+          description: Expand additional release details
+        - name: approvalFilters
+          in: query
+          type: string
+          description: Filter type for approval details
+      - name: releasesupdate
+        method: PUT
+        description: Azure DevOps Update a release
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: releaseId
+          in: path
+          type: integer
+          description: Numeric ID of the release to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-releases-releases-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Releases API — Releases. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/release/releases
+      name: release-releases
+      description: REST surface for release-releases.
+      operations:
+      - method: GET
+        name: releaseslist
+        description: Azure DevOps List releases
+        call: azure-devops-releases-releases.releaseslist
+        with:
+          definitionId: rest.definitionId
+          definitionEnvironmentId: rest.definitionEnvironmentId
+          searchText: rest.searchText
+          createdBy: rest.createdBy
+          statusFilter: rest.statusFilter
+          environmentStatusFilter: rest.environmentStatusFilter
+          minCreatedTime: rest.minCreatedTime
+          maxCreatedTime: rest.maxCreatedTime
+          $top: rest.$top
+          continuationToken: rest.continuationToken
+          $expand: rest.$expand
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: releasescreate
+        description: Azure DevOps Create a release
+        call: azure-devops-releases-releases.releasescreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/release/releases/{releaseid}
+      name: release-releases-releaseid
+      description: REST surface for release-releases-releaseId.
+      operations:
+      - method: GET
+        name: releasesget
+        description: Azure DevOps Get a release
+        call: azure-devops-releases-releases.releasesget
+        with:
+          releaseId: rest.releaseId
+          $expand: rest.$expand
+          approvalFilters: rest.approvalFilters
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: releasesupdate
+        description: Azure DevOps Update a release
+        call: azure-devops-releases-releases.releasesupdate
+        with:
+          releaseId: rest.releaseId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-releases-releases-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Releases API — Releases. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: azure-devops-list-releases
+      description: Azure DevOps List releases
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-releases.releaseslist
+      with:
+        definitionId: tools.definitionId
+        definitionEnvironmentId: tools.definitionEnvironmentId
+        searchText: tools.searchText
+        createdBy: tools.createdBy
+        statusFilter: tools.statusFilter
+        environmentStatusFilter: tools.environmentStatusFilter
+        minCreatedTime: tools.minCreatedTime
+        maxCreatedTime: tools.maxCreatedTime
+        $top: tools.$top
+        continuationToken: tools.continuationToken
+        $expand: tools.$expand
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-release
+      description: Azure DevOps Create a release
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-releases-releases.releasescreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-release
+      description: Azure DevOps Get a release
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-releases.releasesget
+      with:
+        releaseId: tools.releaseId
+        $expand: tools.$expand
+        approvalFilters: tools.approvalFilters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-update-release
+      description: Azure DevOps Update a release
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-releases.releasesupdate
+      with:
+        releaseId: tools.releaseId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

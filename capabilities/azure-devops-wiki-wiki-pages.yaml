@@ -1,0 +1,198 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Wiki API — Wiki Pages
+  description: 'Azure DevOps Wiki API — Wiki Pages. 3 operations. Lead operation: Azure DevOps Get a wiki page. Self-contained
+    Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Wiki Pages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-wiki-wiki-pages
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Wiki API — Wiki Pages business capability. Self-contained, no shared references.
+    resources:
+    - name: wiki-wikis-wikiIdentifier-pages
+      path: /wiki/wikis/{wikiIdentifier}/pages
+      operations:
+      - name: pagesget
+        method: GET
+        description: Azure DevOps Get a wiki page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: query
+          type: string
+          description: Wiki page path (e.g., /MyPage or /Folder/SubPage)
+        - name: recursionLevel
+          in: query
+          type: string
+          description: Recursion level for subpages
+        - name: versionDescriptor
+          in: query
+          type: string
+          description: Version descriptor (branch or tag) to read the page from
+        - name: includeContent
+          in: query
+          type: boolean
+          description: Whether to include the page content in the response
+      - name: pagescreateorupdate
+        method: PUT
+        description: Azure DevOps Create or update a wiki page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: query
+          type: string
+          description: Path of the wiki page to create or update
+          required: true
+        - name: comment
+          in: query
+          type: string
+          description: Comment for the commit creating this page update
+        - name: versionDescriptor
+          in: query
+          type: string
+          description: Branch to create or update the page on
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: pagesdelete
+        method: DELETE
+        description: Azure DevOps Delete a wiki page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: path
+          in: query
+          type: string
+          description: Path of the wiki page to delete
+          required: true
+        - name: comment
+          in: query
+          type: string
+          description: Comment for the deletion commit
+        - name: versionDescriptor
+          in: query
+          type: string
+          description: Branch to delete the page from
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-wiki-wiki-pages-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Wiki API — Wiki Pages. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/wiki/wikis/{wikiidentifier}/pages
+      name: wiki-wikis-wikiidentifier-pages
+      description: REST surface for wiki-wikis-wikiIdentifier-pages.
+      operations:
+      - method: GET
+        name: pagesget
+        description: Azure DevOps Get a wiki page
+        call: azure-devops-wiki-wiki-pages.pagesget
+        with:
+          path: rest.path
+          recursionLevel: rest.recursionLevel
+          versionDescriptor: rest.versionDescriptor
+          includeContent: rest.includeContent
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: pagescreateorupdate
+        description: Azure DevOps Create or update a wiki page
+        call: azure-devops-wiki-wiki-pages.pagescreateorupdate
+        with:
+          path: rest.path
+          comment: rest.comment
+          versionDescriptor: rest.versionDescriptor
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: pagesdelete
+        description: Azure DevOps Delete a wiki page
+        call: azure-devops-wiki-wiki-pages.pagesdelete
+        with:
+          path: rest.path
+          comment: rest.comment
+          versionDescriptor: rest.versionDescriptor
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-wiki-wiki-pages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Wiki API — Wiki Pages. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: azure-devops-get-wiki-page
+      description: Azure DevOps Get a wiki page
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-wiki-wiki-pages.pagesget
+      with:
+        path: tools.path
+        recursionLevel: tools.recursionLevel
+        versionDescriptor: tools.versionDescriptor
+        includeContent: tools.includeContent
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-update-wiki
+      description: Azure DevOps Create or update a wiki page
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: azure-devops-wiki-wiki-pages.pagescreateorupdate
+      with:
+        path: tools.path
+        comment: tools.comment
+        versionDescriptor: tools.versionDescriptor
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-delete-wiki-page
+      description: Azure DevOps Delete a wiki page
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: azure-devops-wiki-wiki-pages.pagesdelete
+      with:
+        path: tools.path
+        comment: tools.comment
+        versionDescriptor: tools.versionDescriptor
+      outputParameters:
+      - type: object
+        mapping: $.

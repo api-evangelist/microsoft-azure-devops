@@ -1,0 +1,366 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Git Repositories API — Pull Requests
+  description: 'Azure DevOps Git Repositories API — Pull Requests. 6 operations. Lead operation: Azure DevOps List pull requests.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Pull Requests
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-git-pull-requests
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Git Repositories API — Pull Requests business capability. Self-contained, no shared references.
+    resources:
+    - name: git-repositories-repositoryId-pullrequests
+      path: /git/repositories/{repositoryId}/pullrequests
+      operations:
+      - name: pullrequestslist
+        method: GET
+        description: Azure DevOps List pull requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: searchCriteria.status
+          in: query
+          type: string
+          description: Filter pull requests by status
+        - name: searchCriteria.targetRefName
+          in: query
+          type: string
+          description: Filter by target branch (e.g., refs/heads/main)
+        - name: searchCriteria.sourceRefName
+          in: query
+          type: string
+          description: Filter by source branch
+        - name: searchCriteria.creatorId
+          in: query
+          type: string
+          description: Filter pull requests by creator's user ID
+        - name: searchCriteria.reviewerId
+          in: query
+          type: string
+          description: Filter pull requests by reviewer's user ID
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of pull requests to return
+        - name: $skip
+          in: query
+          type: integer
+          description: Number of pull requests to skip (for pagination)
+      - name: pullrequestscreate
+        method: POST
+        description: Azure DevOps Create a pull request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: supportsIterations
+          in: query
+          type: boolean
+          description: Whether the PR should support iterations (diff views)
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: git-repositories-repositoryId-pullrequests-pullRequestId
+      path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}
+      operations:
+      - name: pullrequestsget
+        method: GET
+        description: Azure DevOps Get a pull request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pullRequestId
+          in: path
+          type: integer
+          description: Numeric ID of the pull request
+          required: true
+        - name: maxCommentLength
+          in: query
+          type: integer
+          description: Maximum character count in returned comments
+        - name: $skip
+          in: query
+          type: integer
+          description: Number of items to skip in collections
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of items in collections
+        - name: includeCommits
+          in: query
+          type: boolean
+          description: Whether to include commit details
+        - name: includeWorkItemRefs
+          in: query
+          type: boolean
+          description: Whether to include linked work item references
+      - name: pullrequestsupdate
+        method: PATCH
+        description: Azure DevOps Update a pull request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pullRequestId
+          in: path
+          type: integer
+          description: Numeric ID of the pull request to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: git-repositories-repositoryId-pullrequests-pullRequestId-threads
+      path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads
+      operations:
+      - name: pullrequestslistthreads
+        method: GET
+        description: Azure DevOps Get pull request threads
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pullRequestId
+          in: path
+          type: integer
+          description: Numeric ID of the pull request
+          required: true
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of threads to return
+        - name: $skip
+          in: query
+          type: integer
+          description: Number of threads to skip
+      - name: pullrequestsaddcomment
+        method: POST
+        description: Azure DevOps Add a pull request comment thread
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pullRequestId
+          in: path
+          type: integer
+          description: Numeric ID of the pull request
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-git-pull-requests-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Git Repositories API — Pull Requests. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/git/repositories/{repositoryid}/pullrequests
+      name: git-repositories-repositoryid-pullrequests
+      description: REST surface for git-repositories-repositoryId-pullrequests.
+      operations:
+      - method: GET
+        name: pullrequestslist
+        description: Azure DevOps List pull requests
+        call: azure-devops-git-pull-requests.pullrequestslist
+        with:
+          searchCriteria.status: rest.searchCriteria.status
+          searchCriteria.targetRefName: rest.searchCriteria.targetRefName
+          searchCriteria.sourceRefName: rest.searchCriteria.sourceRefName
+          searchCriteria.creatorId: rest.searchCriteria.creatorId
+          searchCriteria.reviewerId: rest.searchCriteria.reviewerId
+          $top: rest.$top
+          $skip: rest.$skip
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: pullrequestscreate
+        description: Azure DevOps Create a pull request
+        call: azure-devops-git-pull-requests.pullrequestscreate
+        with:
+          supportsIterations: rest.supportsIterations
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/repositories/{repositoryid}/pullrequests/{pullrequestid}
+      name: git-repositories-repositoryid-pullrequests-pullrequestid
+      description: REST surface for git-repositories-repositoryId-pullrequests-pullRequestId.
+      operations:
+      - method: GET
+        name: pullrequestsget
+        description: Azure DevOps Get a pull request
+        call: azure-devops-git-pull-requests.pullrequestsget
+        with:
+          pullRequestId: rest.pullRequestId
+          maxCommentLength: rest.maxCommentLength
+          $skip: rest.$skip
+          $top: rest.$top
+          includeCommits: rest.includeCommits
+          includeWorkItemRefs: rest.includeWorkItemRefs
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: pullrequestsupdate
+        description: Azure DevOps Update a pull request
+        call: azure-devops-git-pull-requests.pullrequestsupdate
+        with:
+          pullRequestId: rest.pullRequestId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/repositories/{repositoryid}/pullrequests/{pullrequestid}/threads
+      name: git-repositories-repositoryid-pullrequests-pullrequestid-threads
+      description: REST surface for git-repositories-repositoryId-pullrequests-pullRequestId-threads.
+      operations:
+      - method: GET
+        name: pullrequestslistthreads
+        description: Azure DevOps Get pull request threads
+        call: azure-devops-git-pull-requests.pullrequestslistthreads
+        with:
+          pullRequestId: rest.pullRequestId
+          $top: rest.$top
+          $skip: rest.$skip
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: pullrequestsaddcomment
+        description: Azure DevOps Add a pull request comment thread
+        call: azure-devops-git-pull-requests.pullrequestsaddcomment
+        with:
+          pullRequestId: rest.pullRequestId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-git-pull-requests-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Git Repositories API — Pull Requests. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-pull-requests
+      description: Azure DevOps List pull requests
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-pull-requests.pullrequestslist
+      with:
+        searchCriteria.status: tools.searchCriteria.status
+        searchCriteria.targetRefName: tools.searchCriteria.targetRefName
+        searchCriteria.sourceRefName: tools.searchCriteria.sourceRefName
+        searchCriteria.creatorId: tools.searchCriteria.creatorId
+        searchCriteria.reviewerId: tools.searchCriteria.reviewerId
+        $top: tools.$top
+        $skip: tools.$skip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-pull-request
+      description: Azure DevOps Create a pull request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-git-pull-requests.pullrequestscreate
+      with:
+        supportsIterations: tools.supportsIterations
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-pull-request
+      description: Azure DevOps Get a pull request
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-pull-requests.pullrequestsget
+      with:
+        pullRequestId: tools.pullRequestId
+        maxCommentLength: tools.maxCommentLength
+        $skip: tools.$skip
+        $top: tools.$top
+        includeCommits: tools.includeCommits
+        includeWorkItemRefs: tools.includeWorkItemRefs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-update-pull-request
+      description: Azure DevOps Update a pull request
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-pull-requests.pullrequestsupdate
+      with:
+        pullRequestId: tools.pullRequestId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-pull-request-2
+      description: Azure DevOps Get pull request threads
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-pull-requests.pullrequestslistthreads
+      with:
+        pullRequestId: tools.pullRequestId
+        $top: tools.$top
+        $skip: tools.$skip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-add-pull-request
+      description: Azure DevOps Add a pull request comment thread
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-git-pull-requests.pullrequestsaddcomment
+      with:
+        pullRequestId: tools.pullRequestId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,293 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Builds API — Build Definitions
+  description: 'Azure DevOps Builds API — Build Definitions. 5 operations. Lead operation: Azure DevOps List build definitions.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Build Definitions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-builds-build-definitions
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Builds API — Build Definitions business capability. Self-contained, no shared references.
+    resources:
+    - name: build-definitions
+      path: /build/definitions
+      operations:
+      - name: definitionslist
+        method: GET
+        description: Azure DevOps List build definitions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: name
+          in: query
+          type: string
+          description: Filter definitions by name (supports wildcards with *)
+        - name: path
+          in: query
+          type: string
+          description: Filter definitions by folder path
+        - name: builtAfter
+          in: query
+          type: string
+          description: Return definitions that were built after this date
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of definitions to return
+        - name: continuationToken
+          in: query
+          type: string
+          description: Continuation token for paginated results
+      - name: definitionscreate
+        method: POST
+        description: Azure DevOps Create a build definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionToCloneId
+          in: query
+          type: integer
+          description: ID of an existing definition to clone
+        - name: definitionToCloneRevision
+          in: query
+          type: integer
+          description: Revision number of the definition to clone
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: build-definitions-definitionId
+      path: /build/definitions/{definitionId}
+      operations:
+      - name: definitionsget
+        method: GET
+        description: Azure DevOps Get a build definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the build definition
+          required: true
+        - name: revision
+          in: query
+          type: integer
+          description: Specific revision number to retrieve
+        - name: minMetricsTime
+          in: query
+          type: string
+          description: Minimum date for including build metrics
+      - name: definitionsupdate
+        method: PUT
+        description: Azure DevOps Update a build definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the build definition to update
+          required: true
+        - name: secretsSourceDefinitionId
+          in: query
+          type: integer
+          description: ID of the definition to clone secrets from
+        - name: secretsSourceDefinitionRevision
+          in: query
+          type: integer
+          description: Revision number to clone secrets from
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: definitionsdelete
+        method: DELETE
+        description: Azure DevOps Delete a build definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the build definition to delete
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-builds-build-definitions-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Builds API — Build Definitions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/build/definitions
+      name: build-definitions
+      description: REST surface for build-definitions.
+      operations:
+      - method: GET
+        name: definitionslist
+        description: Azure DevOps List build definitions
+        call: azure-devops-builds-build-definitions.definitionslist
+        with:
+          name: rest.name
+          path: rest.path
+          builtAfter: rest.builtAfter
+          $top: rest.$top
+          continuationToken: rest.continuationToken
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: definitionscreate
+        description: Azure DevOps Create a build definition
+        call: azure-devops-builds-build-definitions.definitionscreate
+        with:
+          definitionToCloneId: rest.definitionToCloneId
+          definitionToCloneRevision: rest.definitionToCloneRevision
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/build/definitions/{definitionid}
+      name: build-definitions-definitionid
+      description: REST surface for build-definitions-definitionId.
+      operations:
+      - method: GET
+        name: definitionsget
+        description: Azure DevOps Get a build definition
+        call: azure-devops-builds-build-definitions.definitionsget
+        with:
+          definitionId: rest.definitionId
+          revision: rest.revision
+          minMetricsTime: rest.minMetricsTime
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: definitionsupdate
+        description: Azure DevOps Update a build definition
+        call: azure-devops-builds-build-definitions.definitionsupdate
+        with:
+          definitionId: rest.definitionId
+          secretsSourceDefinitionId: rest.secretsSourceDefinitionId
+          secretsSourceDefinitionRevision: rest.secretsSourceDefinitionRevision
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: definitionsdelete
+        description: Azure DevOps Delete a build definition
+        call: azure-devops-builds-build-definitions.definitionsdelete
+        with:
+          definitionId: rest.definitionId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-builds-build-definitions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Builds API — Build Definitions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-build-definitions
+      description: Azure DevOps List build definitions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-builds-build-definitions.definitionslist
+      with:
+        name: tools.name
+        path: tools.path
+        builtAfter: tools.builtAfter
+        $top: tools.$top
+        continuationToken: tools.continuationToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-build-definition
+      description: Azure DevOps Create a build definition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-builds-build-definitions.definitionscreate
+      with:
+        definitionToCloneId: tools.definitionToCloneId
+        definitionToCloneRevision: tools.definitionToCloneRevision
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-build-definition
+      description: Azure DevOps Get a build definition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-builds-build-definitions.definitionsget
+      with:
+        definitionId: tools.definitionId
+        revision: tools.revision
+        minMetricsTime: tools.minMetricsTime
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-update-build-definition
+      description: Azure DevOps Update a build definition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: azure-devops-builds-build-definitions.definitionsupdate
+      with:
+        definitionId: tools.definitionId
+        secretsSourceDefinitionId: tools.secretsSourceDefinitionId
+        secretsSourceDefinitionRevision: tools.secretsSourceDefinitionRevision
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-delete-build-definition
+      description: Azure DevOps Delete a build definition
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: azure-devops-builds-build-definitions.definitionsdelete
+      with:
+        definitionId: tools.definitionId
+      outputParameters:
+      - type: object
+        mapping: $.

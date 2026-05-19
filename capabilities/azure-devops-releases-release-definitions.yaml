@@ -1,0 +1,299 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Releases API — Release Definitions
+  description: 'Azure DevOps Releases API — Release Definitions. 5 operations. Lead operation: Azure DevOps List release definitions.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Release Definitions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-releases-release-definitions
+    baseUri: https://vsrm.dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Releases API — Release Definitions business capability. Self-contained, no shared references.
+    resources:
+    - name: release-definitions
+      path: /release/definitions
+      operations:
+      - name: releasedefinitionslist
+        method: GET
+        description: Azure DevOps List release definitions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: searchText
+          in: query
+          type: string
+          description: Filter definitions by name (supports wildcards)
+        - name: $expand
+          in: query
+          type: string
+          description: Expand additional definition details
+        - name: artifactType
+          in: query
+          type: string
+          description: Filter definitions by artifact type
+        - name: artifactSourceId
+          in: query
+          type: string
+          description: Filter definitions by artifact source ID
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of definitions to return
+        - name: continuationToken
+          in: query
+          type: string
+          description: Continuation token for paged results
+        - name: queryOrder
+          in: query
+          type: string
+          description: Results ordering
+        - name: path
+          in: query
+          type: string
+          description: Filter definitions by folder path
+      - name: releasedefinitionscreate
+        method: POST
+        description: Azure DevOps Create a release definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: release-definitions-definitionId
+      path: /release/definitions/{definitionId}
+      operations:
+      - name: releasedefinitionsget
+        method: GET
+        description: Azure DevOps Get a release definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the release definition
+          required: true
+        - name: $expand
+          in: query
+          type: string
+          description: Expand additional definition details
+        - name: propertyFilters
+          in: query
+          type: string
+          description: Comma-separated list of properties to include
+      - name: releasedefinitionsupdate
+        method: PUT
+        description: Azure DevOps Update a release definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the release definition to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: releasedefinitionsdelete
+        method: DELETE
+        description: Azure DevOps Delete a release definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: path
+          type: integer
+          description: Numeric ID of the release definition to delete
+          required: true
+        - name: comment
+          in: query
+          type: string
+          description: Comment explaining why the definition is being deleted
+        - name: forceDelete
+          in: query
+          type: boolean
+          description: Force delete even if there are associated releases
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-releases-release-definitions-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Releases API — Release Definitions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/release/definitions
+      name: release-definitions
+      description: REST surface for release-definitions.
+      operations:
+      - method: GET
+        name: releasedefinitionslist
+        description: Azure DevOps List release definitions
+        call: azure-devops-releases-release-definitions.releasedefinitionslist
+        with:
+          searchText: rest.searchText
+          $expand: rest.$expand
+          artifactType: rest.artifactType
+          artifactSourceId: rest.artifactSourceId
+          $top: rest.$top
+          continuationToken: rest.continuationToken
+          queryOrder: rest.queryOrder
+          path: rest.path
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: releasedefinitionscreate
+        description: Azure DevOps Create a release definition
+        call: azure-devops-releases-release-definitions.releasedefinitionscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/release/definitions/{definitionid}
+      name: release-definitions-definitionid
+      description: REST surface for release-definitions-definitionId.
+      operations:
+      - method: GET
+        name: releasedefinitionsget
+        description: Azure DevOps Get a release definition
+        call: azure-devops-releases-release-definitions.releasedefinitionsget
+        with:
+          definitionId: rest.definitionId
+          $expand: rest.$expand
+          propertyFilters: rest.propertyFilters
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: releasedefinitionsupdate
+        description: Azure DevOps Update a release definition
+        call: azure-devops-releases-release-definitions.releasedefinitionsupdate
+        with:
+          definitionId: rest.definitionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: releasedefinitionsdelete
+        description: Azure DevOps Delete a release definition
+        call: azure-devops-releases-release-definitions.releasedefinitionsdelete
+        with:
+          definitionId: rest.definitionId
+          comment: rest.comment
+          forceDelete: rest.forceDelete
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-releases-release-definitions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Releases API — Release Definitions. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-release-definitions
+      description: Azure DevOps List release definitions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-release-definitions.releasedefinitionslist
+      with:
+        searchText: tools.searchText
+        $expand: tools.$expand
+        artifactType: tools.artifactType
+        artifactSourceId: tools.artifactSourceId
+        $top: tools.$top
+        continuationToken: tools.continuationToken
+        queryOrder: tools.queryOrder
+        path: tools.path
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-create-release-definition
+      description: Azure DevOps Create a release definition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-releases-release-definitions.releasedefinitionscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-release-definition
+      description: Azure DevOps Get a release definition
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-release-definitions.releasedefinitionsget
+      with:
+        definitionId: tools.definitionId
+        $expand: tools.$expand
+        propertyFilters: tools.propertyFilters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-update-release-definition
+      description: Azure DevOps Update a release definition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-release-definitions.releasedefinitionsupdate
+      with:
+        definitionId: tools.definitionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-delete-release-definition
+      description: Azure DevOps Delete a release definition
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: azure-devops-releases-release-definitions.releasedefinitionsdelete
+      with:
+        definitionId: tools.definitionId
+        comment: tools.comment
+        forceDelete: tools.forceDelete
+      outputParameters:
+      - type: object
+        mapping: $.

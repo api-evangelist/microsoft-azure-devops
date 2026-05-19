@@ -1,0 +1,135 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Work Items API — Attachments
+  description: 'Azure DevOps Work Items API — Attachments. 2 operations. Lead operation: Azure DevOps Upload an attachment.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Attachments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-work-items-attachments
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Work Items API — Attachments business capability. Self-contained, no shared references.
+    resources:
+    - name: wit-attachments
+      path: /wit/attachments
+      operations:
+      - name: attachmentsupload
+        method: POST
+        description: Azure DevOps Upload an attachment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fileName
+          in: query
+          type: string
+          description: Name of the file being uploaded
+          required: true
+        - name: uploadType
+          in: query
+          type: string
+          description: Upload type (simple for files up to 130 MB)
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: wit-attachments-id
+      path: /wit/attachments/{id}
+      operations:
+      - name: attachmentsget
+        method: GET
+        description: Azure DevOps Get attachment info
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: GUID of the attachment
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-work-items-attachments-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Work Items API — Attachments. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/wit/attachments
+      name: wit-attachments
+      description: REST surface for wit-attachments.
+      operations:
+      - method: POST
+        name: attachmentsupload
+        description: Azure DevOps Upload an attachment
+        call: azure-devops-work-items-attachments.attachmentsupload
+        with:
+          fileName: rest.fileName
+          uploadType: rest.uploadType
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/wit/attachments/{id}
+      name: wit-attachments-id
+      description: REST surface for wit-attachments-id.
+      operations:
+      - method: GET
+        name: attachmentsget
+        description: Azure DevOps Get attachment info
+        call: azure-devops-work-items-attachments.attachmentsget
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-work-items-attachments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Work Items API — Attachments. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-devops-upload-attachment
+      description: Azure DevOps Upload an attachment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-work-items-attachments.attachmentsupload
+      with:
+        fileName: tools.fileName
+        uploadType: tools.uploadType
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-get-attachment-info
+      description: Azure DevOps Get attachment info
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-work-items-attachments.attachmentsget
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

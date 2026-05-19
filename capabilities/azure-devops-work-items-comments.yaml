@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Work Items API — Comments
+  description: 'Azure DevOps Work Items API — Comments. 2 operations. Lead operation: Azure DevOps Get work item comments.
+    Self-contained Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Comments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-work-items-comments
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Work Items API — Comments business capability. Self-contained, no shared references.
+    resources:
+    - name: wit-workitems-id-comments
+      path: /wit/workitems/{id}/comments
+      operations:
+      - name: workitemslistcomments
+        method: GET
+        description: Azure DevOps Get work item comments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: Numeric ID of the work item
+          required: true
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of comments to return
+        - name: continuationToken
+          in: query
+          type: string
+          description: Continuation token for paging
+      - name: workitemsaddcomment
+        method: POST
+        description: Azure DevOps Add a comment to a work item
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: integer
+          description: Numeric ID of the work item
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-work-items-comments-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Work Items API — Comments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/wit/workitems/{id}/comments
+      name: wit-workitems-id-comments
+      description: REST surface for wit-workitems-id-comments.
+      operations:
+      - method: GET
+        name: workitemslistcomments
+        description: Azure DevOps Get work item comments
+        call: azure-devops-work-items-comments.workitemslistcomments
+        with:
+          id: rest.id
+          $top: rest.$top
+          continuationToken: rest.continuationToken
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: workitemsaddcomment
+        description: Azure DevOps Add a comment to a work item
+        call: azure-devops-work-items-comments.workitemsaddcomment
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-work-items-comments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Work Items API — Comments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: azure-devops-get-work-item
+      description: Azure DevOps Get work item comments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-work-items-comments.workitemslistcomments
+      with:
+        id: tools.id
+        $top: tools.$top
+        continuationToken: tools.continuationToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: azure-devops-add-comment-work
+      description: Azure DevOps Add a comment to a work item
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: azure-devops-work-items-comments.workitemsaddcomment
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,115 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Git Repositories API — Commits
+  description: 'Azure DevOps Git Repositories API — Commits. 1 operations. Lead operation: Azure DevOps List commits. Self-contained
+    Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Commits
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-git-commits
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Git Repositories API — Commits business capability. Self-contained, no shared references.
+    resources:
+    - name: git-repositories-repositoryId-commits
+      path: /git/repositories/{repositoryId}/commits
+      operations:
+      - name: commitslist
+        method: GET
+        description: Azure DevOps List commits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: searchCriteria.itemVersion.version
+          in: query
+          type: string
+          description: Branch, tag, or commit SHA to start listing from
+        - name: searchCriteria.author
+          in: query
+          type: string
+          description: Filter by commit author name or email
+        - name: searchCriteria.fromDate
+          in: query
+          type: string
+          description: Return commits after this date
+        - name: searchCriteria.toDate
+          in: query
+          type: string
+          description: Return commits before this date
+        - name: searchCriteria.itemPath
+          in: query
+          type: string
+          description: Filter commits that touched this file or folder path
+        - name: searchCriteria.$top
+          in: query
+          type: integer
+          description: Maximum number of commits to return
+        - name: searchCriteria.$skip
+          in: query
+          type: integer
+          description: Number of commits to skip (for pagination)
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-git-commits-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Git Repositories API — Commits. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/git/repositories/{repositoryid}/commits
+      name: git-repositories-repositoryid-commits
+      description: REST surface for git-repositories-repositoryId-commits.
+      operations:
+      - method: GET
+        name: commitslist
+        description: Azure DevOps List commits
+        call: azure-devops-git-commits.commitslist
+        with:
+          searchCriteria.itemVersion.version: rest.searchCriteria.itemVersion.version
+          searchCriteria.author: rest.searchCriteria.author
+          searchCriteria.fromDate: rest.searchCriteria.fromDate
+          searchCriteria.toDate: rest.searchCriteria.toDate
+          searchCriteria.itemPath: rest.searchCriteria.itemPath
+          searchCriteria.$top: rest.searchCriteria.$top
+          searchCriteria.$skip: rest.searchCriteria.$skip
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-git-commits-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Git Repositories API — Commits. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: azure-devops-list-commits
+      description: Azure DevOps List commits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-git-commits.commitslist
+      with:
+        searchCriteria.itemVersion.version: tools.searchCriteria.itemVersion.version
+        searchCriteria.author: tools.searchCriteria.author
+        searchCriteria.fromDate: tools.searchCriteria.fromDate
+        searchCriteria.toDate: tools.searchCriteria.toDate
+        searchCriteria.itemPath: tools.searchCriteria.itemPath
+        searchCriteria.$top: tools.searchCriteria.$top
+        searchCriteria.$skip: tools.searchCriteria.$skip
+      outputParameters:
+      - type: object
+        mapping: $.

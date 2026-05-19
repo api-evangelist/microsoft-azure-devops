@@ -1,0 +1,145 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure DevOps Releases API — Deployments
+  description: 'Azure DevOps Releases API — Deployments. 1 operations. Lead operation: Azure DevOps List deployments. Self-contained
+    Naftiko capability covering one Microsoft Azure Devops business surface.'
+  tags:
+  - Microsoft Azure Devops
+  - Deployments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_DEVOPS_API_KEY: MICROSOFT_AZURE_DEVOPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-devops-releases-deployments
+    baseUri: https://vsrm.dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Releases API — Deployments business capability. Self-contained, no shared references.
+    resources:
+    - name: release-deployments
+      path: /release/deployments
+      operations:
+      - name: deploymentslist
+        method: GET
+        description: Azure DevOps List deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: definitionId
+          in: query
+          type: integer
+          description: Filter deployments by release definition ID
+        - name: definitionEnvironmentId
+          in: query
+          type: integer
+          description: Filter deployments by environment ID within the definition
+        - name: createdBy
+          in: query
+          type: string
+          description: Filter deployments triggered by a specific user
+        - name: minModifiedTime
+          in: query
+          type: string
+          description: Returns deployments modified after this date
+        - name: maxModifiedTime
+          in: query
+          type: string
+          description: Returns deployments modified before this date
+        - name: deploymentStatus
+          in: query
+          type: string
+          description: Filter by deployment status
+        - name: operationStatus
+          in: query
+          type: string
+          description: Filter by operation status
+        - name: latestAttemptsOnly
+          in: query
+          type: boolean
+          description: Return only the latest deployment attempt for each environment
+        - name: queryOrder
+          in: query
+          type: string
+          description: Sort order for results
+        - name: $top
+          in: query
+          type: integer
+          description: Maximum number of deployments to return
+        - name: continuationToken
+          in: query
+          type: integer
+          description: Continuation token for paginated results
+        - name: projectName
+          in: query
+          type: string
+          description: Project name filter
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_DEVOPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-devops-releases-deployments-rest
+    port: 8080
+    description: REST adapter for Azure DevOps Releases API — Deployments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/release/deployments
+      name: release-deployments
+      description: REST surface for release-deployments.
+      operations:
+      - method: GET
+        name: deploymentslist
+        description: Azure DevOps List deployments
+        call: azure-devops-releases-deployments.deploymentslist
+        with:
+          definitionId: rest.definitionId
+          definitionEnvironmentId: rest.definitionEnvironmentId
+          createdBy: rest.createdBy
+          minModifiedTime: rest.minModifiedTime
+          maxModifiedTime: rest.maxModifiedTime
+          deploymentStatus: rest.deploymentStatus
+          operationStatus: rest.operationStatus
+          latestAttemptsOnly: rest.latestAttemptsOnly
+          queryOrder: rest.queryOrder
+          $top: rest.$top
+          continuationToken: rest.continuationToken
+          projectName: rest.projectName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-devops-releases-deployments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure DevOps Releases API — Deployments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: azure-devops-list-deployments
+      description: Azure DevOps List deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-devops-releases-deployments.deploymentslist
+      with:
+        definitionId: tools.definitionId
+        definitionEnvironmentId: tools.definitionEnvironmentId
+        createdBy: tools.createdBy
+        minModifiedTime: tools.minModifiedTime
+        maxModifiedTime: tools.maxModifiedTime
+        deploymentStatus: tools.deploymentStatus
+        operationStatus: tools.operationStatus
+        latestAttemptsOnly: tools.latestAttemptsOnly
+        queryOrder: tools.queryOrder
+        $top: tools.$top
+        continuationToken: tools.continuationToken
+        projectName: tools.projectName
+      outputParameters:
+      - type: object
+        mapping: $.
