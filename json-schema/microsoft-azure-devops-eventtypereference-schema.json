@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventTypeReference",
+  "title": "EventTypeReference",
+  "type": "object",
+  "description": "Minimal reference to an event type",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Event type identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Event type display name"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConfigurationVariableValue",
+  "title": "ConfigurationVariableValue",
+  "type": "object",
+  "description": "A variable value in a release definition or release",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The variable value"
+    },
+    "isSecret": {
+      "type": "boolean",
+      "description": "Whether the value is treated as a secret"
+    },
+    "allowOverride": {
+      "type": "boolean",
+      "description": "Whether the value can be overridden when creating a release"
+    }
+  }
+}

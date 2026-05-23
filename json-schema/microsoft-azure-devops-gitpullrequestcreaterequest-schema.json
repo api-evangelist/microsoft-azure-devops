@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPullRequestCreateRequest",
+  "title": "GitPullRequestCreateRequest",
+  "type": "object",
+  "description": "Request to create a new pull request",
+  "required": [
+    "title",
+    "sourceRefName",
+    "targetRefName"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title for the pull request"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the changes"
+    },
+    "sourceRefName": {
+      "type": "string",
+      "description": "Source branch containing the changes",
+      "example": "refs/heads/feature/my-feature"
+    },
+    "targetRefName": {
+      "type": "string",
+      "description": "Target branch for the merge",
+      "example": "refs/heads/main"
+    },
+    "reviewers": {
+      "type": "array",
+      "description": "Initial reviewers to assign",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    },
+    "isDraft": {
+      "type": "boolean",
+      "description": "Whether to create as a draft pull request",
+      "default": false
+    },
+    "workItemRefs": {
+      "type": "array",
+      "description": "Work items to associate with this pull request",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels to attach to this pull request",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

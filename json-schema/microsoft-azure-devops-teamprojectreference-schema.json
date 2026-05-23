@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TeamProjectReference",
+  "title": "TeamProjectReference",
+  "type": "object",
+  "description": "Reference to an Azure DevOps project",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Project ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "deleting",
+        "new",
+        "wellFormed",
+        "createPending",
+        "all",
+        "unchanged",
+        "deleted"
+      ]
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "private",
+        "public"
+      ]
+    },
+    "revision": {
+      "type": "integer"
+    }
+  }
+}

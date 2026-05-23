@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseEnvironment",
+  "title": "ReleaseEnvironment",
+  "type": "object",
+  "description": "An environment (deployment stage) within a release",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "releaseId": {
+      "type": "integer",
+      "description": "ID of the release this environment belongs to"
+    },
+    "name": {
+      "type": "string",
+      "description": "Environment name (e.g., Dev, Staging, Production)"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current deployment status of this environment",
+      "enum": [
+        "undefined",
+        "notStarted",
+        "inProgress",
+        "succeeded",
+        "canceled",
+        "rejected",
+        "queued",
+        "scheduled",
+        "partiallySucceeded"
+      ]
+    },
+    "definitionEnvironmentId": {
+      "type": "integer",
+      "description": "ID of the corresponding environment definition"
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "queuedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastModifiedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deployedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timeToDeploy": {
+      "type": "number",
+      "description": "Time to deploy in minutes"
+    },
+    "deploymentJobs": {
+      "type": "array",
+      "description": "Deployment jobs for this environment",
+      "items": {
+        "type": "object"
+      }
+    },
+    "preDeployApprovals": {
+      "type": "array",
+      "description": "Pre-deployment approval records",
+      "items": {
+        "$ref": "#/components/schemas/ReleaseApproval"
+      }
+    },
+    "postDeployApprovals": {
+      "type": "array",
+      "description": "Post-deployment approval records",
+      "items": {
+        "$ref": "#/components/schemas/ReleaseApproval"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

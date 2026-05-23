@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Feed",
+  "title": "Feed",
+  "type": "object",
+  "description": "An Azure Artifacts package feed",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of the feed"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the feed",
+      "example": "my-packages"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the feed and its contents"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this feed via the REST API"
+    },
+    "upstreamEnabled": {
+      "type": "boolean",
+      "description": "Whether upstream sources are enabled for this feed"
+    },
+    "upstreamSources": {
+      "type": "array",
+      "description": "Upstream package sources configured for this feed",
+      "items": {
+        "$ref": "#/components/schemas/UpstreamSource"
+      }
+    },
+    "hideDeletedPackageVersions": {
+      "type": "boolean",
+      "description": "Whether to hide deleted package versions from package listings"
+    },
+    "defaultViewId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the default view for this feed"
+    },
+    "views": {
+      "type": "array",
+      "description": "Views defined for this feed (e.g., @local, @prerelease, @release)",
+      "items": {
+        "$ref": "#/components/schemas/FeedView"
+      }
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "description": "Whether the feed is read-only"
+    },
+    "deletedDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date the feed was deleted (null if active)"
+    },
+    "project": {
+      "type": "object",
+      "description": "Project this feed belongs to",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildDefinitionReference",
+  "title": "BuildDefinitionReference",
+  "type": "object",
+  "description": "Reference to a build definition (minimal representation)",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Definition ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Definition name"
+    },
+    "path": {
+      "type": "string",
+      "description": "Folder path of the definition"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "project": {
+      "$ref": "#/components/schemas/TeamProjectReference"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "operationId": "builds_queue",
+  "method": "POST",
+  "path": "/build/builds",
+  "summary": "Azure DevOps Queue a new build",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "definition": {
+          "id": 5
+        },
+        "sourceBranch": "refs/heads/main",
+        "parameters": "{\"system.debug\":\"false\"}"
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Release",
+  "title": "Release",
+  "type": "object",
+  "description": "An Azure DevOps release instance",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the release",
+      "example": 42
+    },
+    "name": {
+      "type": "string",
+      "description": "Auto-generated release name",
+      "example": "Release-42"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the release",
+      "enum": [
+        "undefined",
+        "draft",
+        "active",
+        "abandoned"
+      ]
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the release was created"
+    },
+    "modifiedOn": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the release was last modified"
+    },
+    "createdBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "modifiedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "createdFor": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description for this release"
+    },
+    "releaseDefinition": {
+      "$ref": "#/components/schemas/ReleaseDefinitionShallowReference"
+    },
+    "releaseDefinitionRevision": {
+      "type": "integer",
+      "description": "Revision of the release definition used for this release"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason the release was created",
+      "enum": [
+        "none",
+        "manual",
+        "continuousIntegration",
+        "schedule",
+        "pullRequest"
+      ]
+    },
+    "environments": {
+      "type": "array",
+      "description": "Environments in this release with their deployment status",
+      "items": {
+        "$ref": "#/components/schemas/ReleaseEnvironment"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Artifacts used in this release",
+      "items": {
+        "$ref": "#/components/schemas/Artifact"
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Release-level variable overrides",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/ConfigurationVariableValue"
+      }
+    },
+    "keepForever": {
+      "type": "boolean",
+      "description": "Whether to retain this release indefinitely"
+    },
+    "logsContainerUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the logs container for this release"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this release via the REST API"
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL links for related resources",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with this release",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

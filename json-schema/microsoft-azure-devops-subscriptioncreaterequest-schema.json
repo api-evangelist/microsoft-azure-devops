@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SubscriptionCreateRequest",
+  "title": "SubscriptionCreateRequest",
+  "type": "object",
+  "description": "Request body for creating or updating a service hook subscription",
+  "required": [
+    "publisherId",
+    "eventType",
+    "consumerId",
+    "consumerActionId",
+    "publisherInputs",
+    "consumerInputs"
+  ],
+  "properties": {
+    "publisherId": {
+      "type": "string",
+      "description": "Publisher ID for the event source",
+      "example": "tfs"
+    },
+    "eventType": {
+      "type": "string",
+      "description": "Event type to subscribe to",
+      "example": "workitem.created"
+    },
+    "resourceVersion": {
+      "type": "string",
+      "description": "Version of the event resource schema to use",
+      "example": "1.0",
+      "default": "1.0"
+    },
+    "consumerId": {
+      "type": "string",
+      "description": "Consumer ID for the notification target",
+      "example": "webHooks"
+    },
+    "consumerActionId": {
+      "type": "string",
+      "description": "Action ID within the consumer",
+      "example": "httpRequest"
+    },
+    "publisherInputs": {
+      "type": "object",
+      "description": "Filter inputs controlling which events trigger a notification",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "consumerInputs": {
+      "type": "object",
+      "description": "Configuration for the consumer endpoint",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Comment",
+  "title": "Comment",
+  "type": "object",
+  "description": "A comment in a pull request thread",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "parentCommentId": {
+      "type": "integer"
+    },
+    "content": {
+      "type": "string"
+    },
+    "publishedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastUpdatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastContentUpdatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "commentType": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "text",
+        "codeChange",
+        "system"
+      ]
+    },
+    "author": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "usersLiked": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/IdentityRef"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

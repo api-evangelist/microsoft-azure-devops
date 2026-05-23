@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestPlanCreateParams",
+  "title": "TestPlanCreateParams",
+  "type": "object",
+  "description": "Parameters for creating a new test plan",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the new test plan"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the test plan"
+    },
+    "areaPath": {
+      "type": "string",
+      "description": "Area path to associate with the test plan"
+    },
+    "iteration": {
+      "type": "string",
+      "description": "Iteration path (sprint) to associate with the test plan"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start date of the test plan"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End date of the test plan"
+    },
+    "owner": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "buildDefinition": {
+      "type": "object",
+      "description": "Build definition to associate for automated testing",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "buildId": {
+      "type": "integer",
+      "description": "Specific build ID to test against"
+    }
+  }
+}

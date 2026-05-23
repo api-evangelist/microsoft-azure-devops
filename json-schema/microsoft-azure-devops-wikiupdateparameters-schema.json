@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WikiUpdateParameters",
+  "title": "WikiUpdateParameters",
+  "type": "object",
+  "description": "Parameters for updating a wiki",
+  "properties": {
+    "versions": {
+      "type": "array",
+      "description": "Updated branch list for this wiki",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Branch name"
+          }
+        }
+      }
+    }
+  }
+}

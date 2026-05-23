@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemRelation",
+  "title": "WorkItemRelation",
+  "type": "object",
+  "description": "A relation between a work item and another resource",
+  "properties": {
+    "rel": {
+      "type": "string",
+      "description": "Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)",
+      "example": "System.LinkTypes.Hierarchy-Reverse"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the related resource"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Additional attributes for the relation (e.g., comment, isLocked)",
+      "additionalProperties": true
+    }
+  }
+}

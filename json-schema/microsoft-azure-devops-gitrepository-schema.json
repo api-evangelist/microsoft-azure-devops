@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitRepository",
+  "title": "GitRepository",
+  "type": "object",
+  "description": "An Azure DevOps Git repository",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of the repository"
+    },
+    "name": {
+      "type": "string",
+      "description": "Repository name",
+      "example": "my-application"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "REST API URL for this repository"
+    },
+    "project": {
+      "$ref": "#/components/schemas/TeamProjectReference"
+    },
+    "defaultBranch": {
+      "type": "string",
+      "description": "Default branch of the repository",
+      "example": "refs/heads/main"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Size of the repository in bytes"
+    },
+    "remoteUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Remote URL for cloning (HTTPS)",
+      "example": "https://dev.azure.com/myorg/myproject/_git/my-application"
+    },
+    "sshUrl": {
+      "type": "string",
+      "description": "SSH URL for cloning",
+      "example": "git@ssh.dev.azure.com:v3/myorg/myproject/my-application"
+    },
+    "webUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Web browser URL for the repository"
+    },
+    "parentRepository": {
+      "type": "object",
+      "nullable": true,
+      "description": "Parent repository (if this is a fork)",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "isFork": {
+      "type": "boolean",
+      "description": "Whether this repository is a fork of another"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "description": "Whether this repository is disabled"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

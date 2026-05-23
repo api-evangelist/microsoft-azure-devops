@@ -1,0 +1,15 @@
+{
+  "operationId": "pages_createOrUpdate",
+  "method": "PUT",
+  "path": "/wiki/wikis/{wikiIdentifier}/pages",
+  "summary": "Azure DevOps Create or update a wiki page",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "content": "# Getting Started\n\nWelcome to the project wiki!\n\n## Prerequisites\n\n- Node.js 18+\n- npm or yarn\n"
+      }
+    }
+  ],
+  "responseExamples": []
+}

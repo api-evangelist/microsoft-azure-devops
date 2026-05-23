@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemType",
+  "title": "WorkItemType",
+  "type": "object",
+  "description": "Definition of a work item type",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the work item type",
+      "example": "Bug"
+    },
+    "referenceName": {
+      "type": "string",
+      "description": "Reference name used in WIQL queries",
+      "example": "Microsoft.VSTS.WorkItemTypes.Bug"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the work item type and its intended use"
+    },
+    "color": {
+      "type": "string",
+      "description": "Hex color code for the work item type icon",
+      "example": "CC293D"
+    },
+    "icon": {
+      "type": "object",
+      "description": "Icon information for the work item type",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "description": "Whether the work item type is disabled"
+    },
+    "xmlForm": {
+      "type": "string",
+      "description": "XML definition of the work item type form"
+    },
+    "fields": {
+      "type": "array",
+      "description": "Fields defined for this work item type",
+      "items": {
+        "$ref": "#/components/schemas/WorkItemTypeFieldInstance"
+      }
+    },
+    "fieldInstances": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/WorkItemTypeFieldInstance"
+      }
+    },
+    "transitions": {
+      "type": "object",
+      "description": "Map of allowed state transitions",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "to": {
+              "type": "string"
+            },
+            "actions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "states": {
+      "type": "array",
+      "description": "Valid states for this work item type",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

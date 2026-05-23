@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AttachmentReference",
+  "title": "AttachmentReference",
+  "type": "object",
+  "description": "Reference to an uploaded attachment",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "GUID identifier of the attachment"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to download or reference the attachment"
+    }
+  }
+}

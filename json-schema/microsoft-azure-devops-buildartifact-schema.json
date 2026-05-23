@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildArtifact",
+  "title": "BuildArtifact",
+  "type": "object",
+  "description": "An artifact published by a build",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Artifact ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the artifact (e.g., 'drop', 'packages')",
+      "example": "drop"
+    },
+    "resource": {
+      "type": "object",
+      "description": "Resource details for downloading the artifact",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of artifact storage (e.g., Container, FilePath, VersionControl)"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to download the artifact"
+        },
+        "downloadUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Direct download URL"
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "source": {
+      "type": "string",
+      "description": "Source of the artifact"
+    }
+  }
+}

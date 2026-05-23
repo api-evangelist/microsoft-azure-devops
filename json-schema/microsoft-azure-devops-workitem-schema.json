@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItem",
+  "title": "WorkItem",
+  "type": "object",
+  "description": "An Azure DevOps work item (Bug, Task, User Story, etc.)",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the work item",
+      "example": 42
+    },
+    "rev": {
+      "type": "integer",
+      "description": "Revision number of the work item (increments on each update)",
+      "example": 3
+    },
+    "fields": {
+      "type": "object",
+      "description": "Dynamic map of field reference names to values. Common fields include System.Title, System.State, System.AssignedTo, System.Description, System.WorkItemType, System.AreaPath, System.IterationPath, etc.\n",
+      "additionalProperties": true,
+      "example": {
+        "System.Title": "Fix login button alignment",
+        "System.State": "Active",
+        "System.AssignedTo": "User Name <user@example.com>",
+        "System.WorkItemType": "Bug",
+        "System.TeamProject": "MyProject",
+        "System.AreaPath": "MyProject\\\\Frontend",
+        "System.IterationPath": "MyProject\\\\Sprint 5"
+      }
+    },
+    "relations": {
+      "type": "array",
+      "description": "Links and relations to other work items or external resources",
+      "items": {
+        "$ref": "#/components/schemas/WorkItemRelation"
+      }
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL links for navigating related resources",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this work item via the REST API",
+      "example": "https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42"
+    }
+  }
+}

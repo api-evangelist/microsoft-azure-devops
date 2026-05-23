@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/IdentityRef",
+  "title": "IdentityRef",
+  "type": "object",
+  "description": "Reference to an Azure DevOps user identity",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "displayName": {
+      "type": "string",
+      "example": "John Doe"
+    },
+    "uniqueName": {
+      "type": "string",
+      "example": "john.doe@example.com"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "descriptor": {
+      "type": "string"
+    }
+  }
+}

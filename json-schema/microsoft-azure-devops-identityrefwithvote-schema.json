@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/IdentityRefWithVote",
+  "title": "IdentityRefWithVote",
+  "type": "object",
+  "description": "A reviewer identity with their vote on a pull request",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/IdentityRef"
+    }
+  ],
+  "properties": {
+    "vote": {
+      "type": "integer",
+      "description": "Vote value: 10 = approved, 5 = approved with suggestions, 0 = no vote, -5 = waiting for author, -10 = rejected\n",
+      "enum": [
+        10,
+        5,
+        0,
+        -5,
+        -10
+      ]
+    },
+    "hasDeclined": {
+      "type": "boolean",
+      "description": "Whether the reviewer has declined"
+    },
+    "isFlagged": {
+      "type": "boolean",
+      "description": "Whether the reviewer has flagged the PR"
+    },
+    "isRequired": {
+      "type": "boolean",
+      "description": "Whether this reviewer's approval is required"
+    },
+    "reviewerUrl": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

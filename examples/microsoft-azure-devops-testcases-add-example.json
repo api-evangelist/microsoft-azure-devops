@@ -1,0 +1,27 @@
+{
+  "operationId": "testCases_add",
+  "method": "POST",
+  "path": "/testplan/plans/{planId}/suites/{suiteId}/testcases",
+  "summary": "Azure DevOps Add test cases to a suite",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": [
+        {
+          "workItem": {
+            "id": 101
+          },
+          "pointAssignments": [
+            {
+              "configuration": {
+                "id": 1,
+                "name": "Default Configuration"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "responseExamples": []
+}

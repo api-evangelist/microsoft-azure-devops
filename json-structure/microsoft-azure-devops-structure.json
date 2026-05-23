@@ -1,0 +1,267 @@
+{
+  "provider": "Azure DevOps",
+  "providerId": "microsoft-azure-devops",
+  "kind": "json-structure",
+  "description": "Structural overview of the Azure DevOps API surface; extracted from openapi/.",
+  "schemaCount": 17,
+  "operationCount": 16,
+  "schemas": [
+    {
+      "name": "GitRepository",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "GitRef",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "GitCommitRef",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "GitUserDate",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "GitItem",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    },
+    {
+      "name": "GitPullRequest",
+      "type": "object",
+      "propertyCount": 23,
+      "required": []
+    },
+    {
+      "name": "GitPullRequestCreateRequest",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "title",
+        "sourceRefName",
+        "targetRefName"
+      ]
+    },
+    {
+      "name": "IdentityRefWithVote",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "GitPullRequestCommentThread",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "GitPullRequestCommentThreadCreateRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "comments"
+      ]
+    },
+    {
+      "name": "Comment",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "GitPush",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "GitRefUpdate",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "GitPushCreateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "refUpdates",
+        "commits"
+      ]
+    },
+    {
+      "name": "TeamProjectReference",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "IdentityRef",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ApiError",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/git/repositories",
+      "operationId": "repositories_list",
+      "summary": "Azure DevOps List repositories",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/git/repositories",
+      "operationId": "repositories_create",
+      "summary": "Azure DevOps Create a repository",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}",
+      "operationId": "repositories_get",
+      "summary": "Azure DevOps Get a repository",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/git/repositories/{repositoryId}",
+      "operationId": "repositories_delete",
+      "summary": "Azure DevOps Delete a repository",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/git/repositories/{repositoryId}",
+      "operationId": "repositories_update",
+      "summary": "Azure DevOps Update a repository",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/refs",
+      "operationId": "refs_list",
+      "summary": "Azure DevOps List branches and refs",
+      "tags": [
+        "Refs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/commits",
+      "operationId": "commits_list",
+      "summary": "Azure DevOps List commits",
+      "tags": [
+        "Commits"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/items",
+      "operationId": "items_list",
+      "summary": "Azure DevOps List repository items",
+      "tags": [
+        "Repositories"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/pullrequests",
+      "operationId": "pullRequests_list",
+      "summary": "Azure DevOps List pull requests",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/git/repositories/{repositoryId}/pullrequests",
+      "operationId": "pullRequests_create",
+      "summary": "Azure DevOps Create a pull request",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+      "operationId": "pullRequests_get",
+      "summary": "Azure DevOps Get a pull request",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+      "operationId": "pullRequests_update",
+      "summary": "Azure DevOps Update a pull request",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads",
+      "operationId": "pullRequests_listThreads",
+      "summary": "Azure DevOps Get pull request threads",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads",
+      "operationId": "pullRequests_addComment",
+      "summary": "Azure DevOps Add a pull request comment thread",
+      "tags": [
+        "Pull Requests"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/git/repositories/{repositoryId}/pushes",
+      "operationId": "pushes_list",
+      "summary": "Azure DevOps List pushes",
+      "tags": [
+        "Pushes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/git/repositories/{repositoryId}/pushes",
+      "operationId": "pushes_create",
+      "summary": "Azure DevOps Create a push",
+      "tags": [
+        "Pushes"
+      ]
+    }
+  ]
+}

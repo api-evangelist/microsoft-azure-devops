@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WikiV2",
+  "title": "WikiV2",
+  "type": "object",
+  "description": "An Azure DevOps wiki",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of the wiki"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the wiki",
+      "example": "Project Wiki"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of wiki",
+      "enum": [
+        "projectWiki",
+        "codeWiki"
+      ]
+    },
+    "projectId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the project this wiki belongs to"
+    },
+    "repositoryId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the backing Git repository"
+    },
+    "mappedPath": {
+      "type": "string",
+      "description": "Root folder path in the repository (for code wikis)",
+      "example": "/wiki"
+    },
+    "versions": {
+      "type": "array",
+      "description": "Branches or versions available for this wiki",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Branch name",
+            "example": "main"
+          }
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this wiki via the REST API"
+    },
+    "remoteUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Clone URL for the backing repository"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

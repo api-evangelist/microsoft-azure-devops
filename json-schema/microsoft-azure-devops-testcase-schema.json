@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestCase",
+  "title": "TestCase",
+  "type": "object",
+  "description": "A test case within a test suite",
+  "properties": {
+    "testCase": {
+      "type": "object",
+      "description": "The work item representing this test case",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Work item ID (as string)"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "workItemFields": {
+          "type": "array",
+          "description": "Work item fields (if requested via witFields parameter)",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "pointAssignments": {
+      "type": "array",
+      "description": "Configuration and tester assignments for this test case",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Test point ID"
+          },
+          "configuration": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "tester": {
+            "$ref": "#/components/schemas/IdentityRef"
+          }
+        }
+      }
+    },
+    "order": {
+      "type": "integer",
+      "description": "Display order within the suite"
+    },
+    "links": {
+      "type": "object",
+      "description": "HAL links for this test case",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "operationId": "testSuites_create",
+  "method": "POST",
+  "path": "/testplan/plans/{planId}/suites",
+  "summary": "Azure DevOps Create a test suite",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "name": "Login Tests",
+        "suiteType": "staticTestSuite",
+        "parentSuite": {
+          "id": 1
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Artifact",
+  "title": "Artifact",
+  "type": "object",
+  "description": "An artifact produced by a pipeline run",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the artifact",
+      "example": "drop"
+    },
+    "signedContent": {
+      "type": "object",
+      "description": "Signed content reference for secure artifact downloads",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Download URL for the artifact"
+        },
+        "signatureExpires": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "fileContainerResource": {
+      "type": "object",
+      "description": "File container resource details",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FeedView",
+  "title": "FeedView",
+  "type": "object",
+  "description": "A view of a feed (e.g., @local, @prerelease, @release)",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "View ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "View name (e.g., '@local', '@release')",
+      "example": "@release"
+    },
+    "type": {
+      "type": "string",
+      "description": "View type",
+      "enum": [
+        "none",
+        "release",
+        "implicit"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

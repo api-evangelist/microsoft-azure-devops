@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimelineRecord",
+  "title": "TimelineRecord",
+  "type": "object",
+  "description": "A single record in the build timeline",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "parentId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the parent record (e.g., job's parent is a stage)"
+    },
+    "type": {
+      "type": "string",
+      "description": "Record type (Phase, Job, Task, Checkpoint)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the record"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finishTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "inProgress",
+        "completed"
+      ]
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "succeeded",
+        "succeededWithIssues",
+        "failed",
+        "canceled",
+        "skipped",
+        "abandoned"
+      ]
+    },
+    "resultCode": {
+      "type": "string"
+    },
+    "changeId": {
+      "type": "integer"
+    },
+    "lastModified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "workerName": {
+      "type": "string",
+      "description": "Name of the agent that executed this record"
+    },
+    "order": {
+      "type": "integer",
+      "description": "Display order within the parent"
+    },
+    "errorCount": {
+      "type": "integer",
+      "description": "Number of errors in this record"
+    },
+    "warningCount": {
+      "type": "integer",
+      "description": "Number of warnings in this record"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "log": {
+      "type": "object",
+      "description": "Log reference for this record",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "description": "Issues (errors/warnings) encountered in this record",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

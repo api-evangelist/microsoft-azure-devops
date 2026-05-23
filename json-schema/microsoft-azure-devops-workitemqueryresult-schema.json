@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemQueryResult",
+  "title": "WorkItemQueryResult",
+  "type": "object",
+  "description": "Results from a WIQL query execution",
+  "properties": {
+    "queryType": {
+      "type": "string",
+      "description": "Type of query (flat, oneHop, tree)",
+      "enum": [
+        "flat",
+        "oneHop",
+        "tree"
+      ]
+    },
+    "queryResultType": {
+      "type": "string",
+      "description": "Result type (workItem, workItemLink)",
+      "enum": [
+        "workItem",
+        "workItemLink"
+      ]
+    },
+    "asOf": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the query was executed"
+    },
+    "columns": {
+      "type": "array",
+      "description": "Columns returned by the query",
+      "items": {
+        "type": "object",
+        "properties": {
+          "referenceName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "workItems": {
+      "type": "array",
+      "description": "List of work item references matching the query",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

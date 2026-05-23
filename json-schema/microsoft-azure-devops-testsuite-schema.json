@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestSuite",
+  "title": "TestSuite",
+  "type": "object",
+  "description": "A test suite within a test plan",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the test suite",
+      "example": 5
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the test suite",
+      "example": "Login Tests"
+    },
+    "suiteType": {
+      "type": "string",
+      "description": "Type of test suite",
+      "enum": [
+        "none",
+        "dynamicTestSuite",
+        "staticTestSuite",
+        "requirementTestSuite"
+      ]
+    },
+    "planId": {
+      "type": "integer",
+      "description": "ID of the test plan this suite belongs to"
+    },
+    "children": {
+      "type": "array",
+      "description": "Child test suites (if requested via expand)",
+      "items": {
+        "$ref": "#/components/schemas/TestSuite"
+      }
+    },
+    "defaultTesters": {
+      "type": "array",
+      "description": "Default testers assigned to test cases in this suite",
+      "items": {
+        "$ref": "#/components/schemas/IdentityRef"
+      }
+    },
+    "parentSuite": {
+      "$ref": "#/components/schemas/TestSuiteReference"
+    },
+    "requirementId": {
+      "type": "integer",
+      "description": "Work item ID this suite is linked to (for requirement suites)"
+    },
+    "queryString": {
+      "type": "string",
+      "description": "WIQL query for dynamic suites"
+    },
+    "state": {
+      "type": "string",
+      "description": "Suite state",
+      "enum": [
+        "inProgress",
+        "completed"
+      ]
+    },
+    "testCaseCount": {
+      "type": "integer",
+      "description": "Number of test cases in this suite"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether this suite is active"
+    },
+    "lastUpdatedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "lastUpdatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

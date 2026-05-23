@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/FeedCreateRequest",
+  "title": "FeedCreateRequest",
+  "type": "object",
+  "description": "Parameters for creating a new feed",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the new feed",
+      "example": "my-packages"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the feed"
+    },
+    "upstreamEnabled": {
+      "type": "boolean",
+      "description": "Whether to enable upstream sources",
+      "default": true
+    },
+    "upstreamSources": {
+      "type": "array",
+      "description": "Upstream package sources to configure",
+      "items": {
+        "$ref": "#/components/schemas/UpstreamSource"
+      }
+    },
+    "hideDeletedPackageVersions": {
+      "type": "boolean",
+      "description": "Whether to hide deleted package versions",
+      "default": true
+    },
+    "badgesEnabled": {
+      "type": "boolean",
+      "description": "Whether to enable package badges",
+      "default": false
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Publisher",
+  "title": "Publisher",
+  "type": "object",
+  "description": "An event publisher (source) that can produce service hook events",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the publisher",
+      "example": "tfs"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the publisher",
+      "example": "Azure DevOps"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the publisher and the events it produces"
+    },
+    "supportedEvents": {
+      "type": "array",
+      "description": "List of event types this publisher supports",
+      "items": {
+        "$ref": "#/components/schemas/EventTypeReference"
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input parameters for filtering publisher events",
+      "items": {
+        "$ref": "#/components/schemas/InputDescriptor"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

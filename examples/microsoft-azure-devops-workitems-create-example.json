@@ -1,0 +1,24 @@
+{
+  "operationId": "workItems_create",
+  "method": "POST",
+  "path": "/wit/workitems/{type}",
+  "summary": "Azure DevOps Create a work item",
+  "requestExamples": [
+    {
+      "contentType": "application/json-patch+json",
+      "example": [
+        {
+          "op": "add",
+          "path": "/fields/System.Title",
+          "value": "Fix login button alignment"
+        },
+        {
+          "op": "add",
+          "path": "/fields/System.Description",
+          "value": "The login button is misaligned on mobile screens"
+        }
+      ]
+    }
+  ],
+  "responseExamples": []
+}

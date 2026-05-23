@@ -1,0 +1,15 @@
+{
+  "operationId": "workItems_addComment",
+  "method": "POST",
+  "path": "/wit/workitems/{id}/comments",
+  "summary": "Azure DevOps Add a comment to a work item",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "text": "<p>This bug has been reproduced in the staging environment.</p>"
+      }
+    }
+  ],
+  "responseExamples": []
+}

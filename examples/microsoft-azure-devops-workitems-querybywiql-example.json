@@ -1,0 +1,15 @@
+{
+  "operationId": "workItems_queryByWiql",
+  "method": "POST",
+  "path": "/wit/wiql",
+  "summary": "Azure DevOps Execute a WIQL query",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "query": "SELECT [System.Id], [System.Title], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] = 'Bug' ORDER BY [System.CreatedDate] DESC"
+      }
+    }
+  ],
+  "responseExamples": []
+}

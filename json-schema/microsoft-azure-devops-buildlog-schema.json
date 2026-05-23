@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildLog",
+  "title": "BuildLog",
+  "type": "object",
+  "description": "Metadata about a single build log",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Log entry ID"
+    },
+    "type": {
+      "type": "string",
+      "description": "Storage type of the log"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to retrieve the log content"
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastChangedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lineCount": {
+      "type": "integer",
+      "description": "Number of log lines"
+    }
+  }
+}

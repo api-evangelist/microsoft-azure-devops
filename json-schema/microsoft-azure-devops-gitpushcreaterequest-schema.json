@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPushCreateRequest",
+  "title": "GitPushCreateRequest",
+  "type": "object",
+  "description": "Request to create a push with new commits",
+  "required": [
+    "refUpdates",
+    "commits"
+  ],
+  "properties": {
+    "refUpdates": {
+      "type": "array",
+      "description": "Branch updates to apply in this push",
+      "items": {
+        "$ref": "#/components/schemas/GitRefUpdate"
+      }
+    },
+    "commits": {
+      "type": "array",
+      "description": "Commits to push",
+      "items": {
+        "type": "object",
+        "required": [
+          "comment",
+          "changes"
+        ],
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Commit message"
+          },
+          "changes": {
+            "type": "array",
+            "description": "File changes in this commit",
+            "items": {
+              "type": "object",
+              "properties": {
+                "changeType": {
+                  "type": "string",
+                  "enum": [
+                    "add",
+                    "edit",
+                    "delete",
+                    "rename",
+                    "sourceRename",
+                    "targetRename"
+                  ]
+                },
+                "item": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "newContent": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string"
+                    },
+                    "contentType": {
+                      "type": "string",
+                      "enum": [
+                        "rawText",
+                        "base64Encoded"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

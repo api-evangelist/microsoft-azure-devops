@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPush",
+  "title": "GitPush",
+  "type": "object",
+  "description": "A push to a Git repository",
+  "properties": {
+    "pushId": {
+      "type": "integer",
+      "description": "Unique numeric push ID"
+    },
+    "date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time of the push"
+    },
+    "pushedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "commits": {
+      "type": "array",
+      "description": "Commits included in this push",
+      "items": {
+        "$ref": "#/components/schemas/GitCommitRef"
+      }
+    },
+    "refUpdates": {
+      "type": "array",
+      "description": "Ref updates (branch changes) in this push",
+      "items": {
+        "$ref": "#/components/schemas/GitRefUpdate"
+      }
+    },
+    "repository": {
+      "$ref": "#/components/schemas/GitRepository"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

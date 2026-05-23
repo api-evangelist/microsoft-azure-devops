@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WikiPage",
+  "title": "WikiPage",
+  "type": "object",
+  "description": "A wiki page with its content and metadata",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Numeric ID of the page in the wiki repository"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path of the wiki page",
+      "example": "/Getting-Started"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown content of the page"
+    },
+    "order": {
+      "type": "integer",
+      "description": "Display order of the page among siblings"
+    },
+    "isNonConformant": {
+      "type": "boolean",
+      "description": "Whether the page violates wiki naming conventions"
+    },
+    "isParentPage": {
+      "type": "boolean",
+      "description": "Whether this page has child pages"
+    },
+    "gitItemPath": {
+      "type": "string",
+      "description": "Path of the corresponding file in the Git repository",
+      "example": "/Getting-Started.md"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this page via the REST API"
+    },
+    "remoteUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to view the page in a web browser"
+    },
+    "subPages": {
+      "type": "array",
+      "description": "Child pages of this page (if recursion was requested)",
+      "items": {
+        "$ref": "#/components/schemas/WikiPage"
+      }
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

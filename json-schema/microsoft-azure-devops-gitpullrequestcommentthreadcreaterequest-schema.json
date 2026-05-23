@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPullRequestCommentThreadCreateRequest",
+  "title": "GitPullRequestCommentThreadCreateRequest",
+  "type": "object",
+  "description": "Request to create a new pull request comment thread",
+  "required": [
+    "comments"
+  ],
+  "properties": {
+    "comments": {
+      "type": "array",
+      "description": "Initial comments for the thread",
+      "items": {
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "parentCommentId": {
+            "type": "integer",
+            "description": "Parent comment ID (0 for root comment)"
+          },
+          "content": {
+            "type": "string",
+            "description": "Comment text"
+          },
+          "commentType": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "text",
+              "codeChange",
+              "system"
+            ]
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "active",
+        "byDesign",
+        "closed",
+        "fixed",
+        "wontFix",
+        "pending"
+      ]
+    },
+    "threadContext": {
+      "type": "object",
+      "description": "File location context for code review comments",
+      "properties": {
+        "filePath": {
+          "type": "string"
+        },
+        "rightFileStart": {
+          "type": "object",
+          "properties": {
+            "line": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "rightFileEnd": {
+          "type": "object",
+          "properties": {
+            "line": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

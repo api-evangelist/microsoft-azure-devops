@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitItem",
+  "title": "GitItem",
+  "type": "object",
+  "description": "A file or folder in a Git repository",
+  "properties": {
+    "objectId": {
+      "type": "string",
+      "description": "Git blob or tree SHA"
+    },
+    "gitObjectType": {
+      "type": "string",
+      "description": "Git object type",
+      "enum": [
+        "bad",
+        "commit",
+        "tree",
+        "blob",
+        "tag",
+        "ext2",
+        "offsetDelta",
+        "refDelta"
+      ]
+    },
+    "commitId": {
+      "type": "string",
+      "description": "SHA of the commit this item belongs to"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to the item within the repository",
+      "example": "/src/main.ts"
+    },
+    "isFolder": {
+      "type": "boolean",
+      "description": "Whether this item is a folder (tree)"
+    },
+    "isSymLink": {
+      "type": "boolean",
+      "description": "Whether this item is a symbolic link"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "content": {
+      "type": "string",
+      "description": "File content (if requested and item is a file)"
+    },
+    "contentMetadata": {
+      "type": "object",
+      "description": "Metadata about the file content",
+      "properties": {
+        "encoding": {
+          "type": "integer",
+          "description": "Text encoding (code page)"
+        },
+        "extension": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "isBinary": {
+          "type": "boolean"
+        },
+        "isImage": {
+          "type": "boolean"
+        }
+      }
+    },
+    "latestProcessedChange": {
+      "$ref": "#/components/schemas/GitCommitRef"
+    }
+  }
+}

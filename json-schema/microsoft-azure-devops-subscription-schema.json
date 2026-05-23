@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Subscription",
+  "title": "Subscription",
+  "type": "object",
+  "description": "A service hook subscription that delivers event notifications to a consumer",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of the subscription"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current health status of the subscription",
+      "enum": [
+        "enabled",
+        "onProbation",
+        "disabledByUser",
+        "disabledBySystem",
+        "disabledByInactiveIdentity"
+      ]
+    },
+    "publisherId": {
+      "type": "string",
+      "description": "Identifier of the publisher (event source)",
+      "example": "tfs"
+    },
+    "eventType": {
+      "type": "string",
+      "description": "Type of event this subscription listens for",
+      "example": "workitem.created"
+    },
+    "resourceVersion": {
+      "type": "string",
+      "description": "Version of the event resource schema",
+      "example": "1.0"
+    },
+    "consumerId": {
+      "type": "string",
+      "description": "Identifier of the consumer (notification target)",
+      "example": "webHooks"
+    },
+    "consumerActionId": {
+      "type": "string",
+      "description": "Identifier of the specific consumer action",
+      "example": "httpRequest"
+    },
+    "publisherInputs": {
+      "type": "object",
+      "description": "Filter inputs for the event publisher (project ID, event conditions)",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "example": {
+        "projectId": "a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4",
+        "workItemType": "Bug",
+        "areaPath": "MyProject"
+      }
+    },
+    "consumerInputs": {
+      "type": "object",
+      "description": "Configuration inputs for the consumer (URL, headers, auth)",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "example": {
+        "url": "https://myserver.example.com/webhook",
+        "resourceDetailsToSend": "all"
+      }
+    },
+    "modifiedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "modifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the subscription was last modified"
+    },
+    "createdBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the subscription was created"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this subscription via the REST API"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

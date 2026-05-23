@@ -1,0 +1,24 @@
+{
+  "operationId": "workItems_update",
+  "method": "PATCH",
+  "path": "/wit/workitems/{id}",
+  "summary": "Azure DevOps Update a work item",
+  "requestExamples": [
+    {
+      "contentType": "application/json-patch+json",
+      "example": [
+        {
+          "op": "replace",
+          "path": "/fields/System.State",
+          "value": "Active"
+        },
+        {
+          "op": "replace",
+          "path": "/fields/System.AssignedTo",
+          "value": "user@example.com"
+        }
+      ]
+    }
+  ],
+  "responseExamples": []
+}

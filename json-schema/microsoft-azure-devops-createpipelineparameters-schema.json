@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreatePipelineParameters",
+  "title": "CreatePipelineParameters",
+  "type": "object",
+  "description": "Parameters for creating a new pipeline",
+  "required": [
+    "name",
+    "configuration"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name for the new pipeline",
+      "example": "My New Pipeline"
+    },
+    "folder": {
+      "type": "string",
+      "description": "Folder path where the pipeline will be created",
+      "default": "\\"
+    },
+    "configuration": {
+      "type": "object",
+      "description": "Pipeline configuration specifying the YAML file and repository",
+      "required": [
+        "type",
+        "path",
+        "repository"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Configuration type (yaml for YAML-based pipelines)",
+          "enum": [
+            "unknown",
+            "yaml",
+            "designerJson",
+            "justInTime",
+            "designerHyphenJson"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the YAML file in the repository",
+          "example": "/azure-pipelines.yml"
+        },
+        "repository": {
+          "type": "object",
+          "description": "Repository where the pipeline YAML file is located",
+          "required": [
+            "id",
+            "type"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Repository GUID for Azure Repos, or full name for GitHub"
+            },
+            "type": {
+              "type": "string",
+              "description": "Repository type",
+              "enum": [
+                "unknown",
+                "azureReposGit",
+                "gitHub",
+                "azureReposGitHyphenated"
+              ]
+            },
+            "name": {
+              "type": "string",
+              "description": "Repository name (for GitHub repositories)"
+            }
+          }
+        }
+      }
+    }
+  }
+}

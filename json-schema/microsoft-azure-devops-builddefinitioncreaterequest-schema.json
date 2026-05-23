@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildDefinitionCreateRequest",
+  "title": "BuildDefinitionCreateRequest",
+  "type": "object",
+  "description": "Request to create a new build definition",
+  "required": [
+    "name",
+    "repository",
+    "process",
+    "queue"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the build definition"
+    },
+    "path": {
+      "type": "string",
+      "description": "Folder path for the definition",
+      "default": "\\"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "xaml",
+        "build"
+      ],
+      "default": "build"
+    },
+    "repository": {
+      "$ref": "#/components/schemas/BuildRepository"
+    },
+    "process": {
+      "type": "object",
+      "description": "Build process configuration",
+      "properties": {
+        "yamlFilename": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer"
+        }
+      }
+    },
+    "queue": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "variables": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "isSecret": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

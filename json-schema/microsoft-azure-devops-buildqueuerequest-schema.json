@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildQueueRequest",
+  "title": "BuildQueueRequest",
+  "type": "object",
+  "description": "Request to queue a new build",
+  "required": [
+    "definition"
+  ],
+  "properties": {
+    "definition": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of the build definition to queue"
+        }
+      }
+    },
+    "sourceBranch": {
+      "type": "string",
+      "description": "Override the source branch for this build",
+      "example": "refs/heads/feature/my-feature"
+    },
+    "sourceVersion": {
+      "type": "string",
+      "description": "Override the source version (commit ID) for this build"
+    },
+    "parameters": {
+      "type": "string",
+      "description": "JSON-serialized key-value pairs of build parameters to override",
+      "example": "{\"system.debug\":\"false\",\"BuildConfiguration\":\"Release\"}"
+    },
+    "demands": {
+      "type": "array",
+      "description": "Agent demands for this build",
+      "items": {
+        "type": "string"
+      }
+    },
+    "priority": {
+      "type": "string",
+      "description": "Queue priority for this build",
+      "enum": [
+        "low",
+        "belowNormal",
+        "normal",
+        "aboveNormal",
+        "high"
+      ]
+    },
+    "queue": {
+      "type": "object",
+      "description": "Agent queue override",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

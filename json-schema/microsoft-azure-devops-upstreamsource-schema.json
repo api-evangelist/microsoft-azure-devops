@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UpstreamSource",
+  "title": "UpstreamSource",
+  "type": "object",
+  "description": "An upstream package source configured for a feed",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Upstream source identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the upstream source",
+      "example": "NuGet Gallery"
+    },
+    "upstreamSourceType": {
+      "type": "string",
+      "description": "Type of upstream source",
+      "enum": [
+        "public",
+        "internal"
+      ]
+    },
+    "protocol": {
+      "type": "string",
+      "description": "Package protocol type",
+      "enum": [
+        "nuget",
+        "npm",
+        "maven",
+        "pypi",
+        "upack",
+        "cargo",
+        "swift"
+      ]
+    },
+    "location": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the upstream package registry",
+      "example": "https://api.nuget.org/v3/index.json"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the upstream source",
+      "enum": [
+        "ok",
+        "disabled"
+      ]
+    },
+    "deletedDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  }
+}

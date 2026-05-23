@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemComment",
+  "title": "WorkItemComment",
+  "type": "object",
+  "description": "A comment on a work item",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the comment"
+    },
+    "text": {
+      "type": "string",
+      "description": "Comment text in HTML format"
+    },
+    "workItemId": {
+      "type": "integer",
+      "description": "ID of the work item this comment belongs to"
+    },
+    "version": {
+      "type": "integer",
+      "description": "Version number of the comment"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the comment was created"
+    },
+    "createdBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "modifiedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the comment was last modified"
+    },
+    "modifiedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "operationId": "feeds_create",
+  "method": "POST",
+  "path": "/packaging/feeds",
+  "summary": "Azure DevOps Create a feed",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "name": "my-packages",
+        "description": "Internal NuGet packages feed",
+        "upstreamEnabled": true,
+        "upstreamSources": [
+          {
+            "id": "nuget-gallery",
+            "name": "NuGet Gallery",
+            "upstreamSourceType": "public",
+            "protocol": "nuget",
+            "location": "https://api.nuget.org/v3/index.json"
+          }
+        ],
+        "hideDeletedPackageVersions": true
+      }
+    }
+  ],
+  "responseExamples": []
+}

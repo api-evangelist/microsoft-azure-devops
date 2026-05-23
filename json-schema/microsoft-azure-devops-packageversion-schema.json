@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PackageVersion",
+  "title": "PackageVersion",
+  "type": "object",
+  "description": "A specific version of a package",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of this version"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version string (e.g., '1.2.3' or '1.0.0-beta.1')",
+      "example": "1.2.3"
+    },
+    "normalizedVersion": {
+      "type": "string",
+      "description": "Normalized version string for comparison",
+      "example": "1.2.3"
+    },
+    "isLatest": {
+      "type": "boolean",
+      "description": "Whether this is the latest stable version"
+    },
+    "isListed": {
+      "type": "boolean",
+      "description": "Whether the version is listed (visible in package managers)"
+    },
+    "storageId": {
+      "type": "string",
+      "description": "Storage identifier for the package files"
+    },
+    "views": {
+      "type": "array",
+      "description": "Feed views this version is promoted to",
+      "items": {
+        "$ref": "#/components/schemas/FeedView"
+      }
+    },
+    "deletedDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date the version was deleted (null if active)"
+    },
+    "publishDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time this version was published"
+    },
+    "sourceChain": {
+      "type": "array",
+      "description": "Upstream source chain for packages from upstream sources",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "upstreamSourceType": {
+            "type": "string"
+          },
+          "protocol": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

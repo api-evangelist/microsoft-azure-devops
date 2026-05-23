@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Deployment",
+  "title": "Deployment",
+  "type": "object",
+  "description": "A deployment of a release to an environment",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique deployment ID"
+    },
+    "releaseId": {
+      "type": "integer",
+      "description": "ID of the release associated with this deployment"
+    },
+    "releaseDefinitionId": {
+      "type": "integer",
+      "description": "ID of the release definition"
+    },
+    "releaseEnvironmentId": {
+      "type": "integer",
+      "description": "ID of the environment within the release"
+    },
+    "definitionEnvironmentId": {
+      "type": "integer",
+      "description": "ID of the environment definition"
+    },
+    "attempt": {
+      "type": "integer",
+      "description": "Deployment attempt number"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for the deployment",
+      "enum": [
+        "none",
+        "manual",
+        "automated",
+        "scheduled",
+        "redeployTrigger"
+      ]
+    },
+    "deploymentStatus": {
+      "type": "string",
+      "description": "Current deployment status",
+      "enum": [
+        "undefined",
+        "notDeployed",
+        "inProgress",
+        "succeeded",
+        "partiallySucceeded",
+        "failed",
+        "all"
+      ]
+    },
+    "operationStatus": {
+      "type": "string",
+      "description": "Current operation status",
+      "enum": [
+        "undefined",
+        "queued",
+        "scheduled",
+        "pending",
+        "approved",
+        "rejected",
+        "deferred",
+        "queuedForAgent",
+        "phaseInProgress",
+        "phaseSucceeded",
+        "phasePartiallySucceeded",
+        "phaseFailed",
+        "canceled",
+        "phaseCanceled",
+        "manualInterventionPending",
+        "queued",
+        "all"
+      ]
+    },
+    "requestedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "requestedFor": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "queuedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "startedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastModifiedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "lastModifiedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "release": {
+      "type": "object",
+      "description": "Minimal release reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "releaseDefinition": {
+      "$ref": "#/components/schemas/ReleaseDefinitionShallowReference"
+    },
+    "releaseEnvironment": {
+      "type": "object",
+      "description": "Minimal environment reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "projectReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

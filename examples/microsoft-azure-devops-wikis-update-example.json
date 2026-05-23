@@ -1,0 +1,19 @@
+{
+  "operationId": "wikis_update",
+  "method": "PATCH",
+  "path": "/wiki/wikis/{wikiIdentifier}",
+  "summary": "Azure DevOps Update a wiki",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "versions": [
+          {
+            "version": "main"
+          }
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

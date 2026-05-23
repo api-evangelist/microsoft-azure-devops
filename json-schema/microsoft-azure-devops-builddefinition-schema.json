@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BuildDefinition",
+  "title": "BuildDefinition",
+  "type": "object",
+  "description": "A build pipeline definition in Azure DevOps",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the definition",
+      "example": 5
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the build definition",
+      "example": "CI-Pipeline"
+    },
+    "path": {
+      "type": "string",
+      "description": "Folder path for organizing definitions",
+      "example": "\\MyFolder"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of build definition",
+      "enum": [
+        "xaml",
+        "build"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Current revision number of the definition"
+    },
+    "quality": {
+      "type": "string",
+      "description": "Quality of the definition",
+      "enum": [
+        "definition",
+        "draft"
+      ]
+    },
+    "authoredBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "queue": {
+      "type": "object",
+      "description": "Default agent queue for this definition",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "pool": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "isHosted": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "project": {
+      "$ref": "#/components/schemas/TeamProjectReference"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "queueStatus": {
+      "type": "string",
+      "description": "Whether new builds can be queued against this definition",
+      "enum": [
+        "enabled",
+        "paused",
+        "disabled"
+      ]
+    },
+    "variables": {
+      "type": "object",
+      "description": "Map of variable names to variable definitions",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "allowOverride": {
+            "type": "boolean"
+          },
+          "isSecret": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "description": "Triggers that automatically start this build",
+      "items": {
+        "type": "object",
+        "properties": {
+          "triggerType": {
+            "type": "string",
+            "enum": [
+              "none",
+              "continuousIntegration",
+              "batchedContinuousIntegration",
+              "schedule",
+              "gatedCheckIn",
+              "buildCompletion",
+              "pullRequest"
+            ]
+          }
+        }
+      }
+    },
+    "repository": {
+      "$ref": "#/components/schemas/BuildRepository"
+    },
+    "process": {
+      "type": "object",
+      "description": "Build process definition (YAML or designer)",
+      "properties": {
+        "yamlFilename": {
+          "type": "string",
+          "description": "Path to the YAML pipeline file"
+        },
+        "type": {
+          "type": "integer",
+          "description": "1 = designer, 2 = YAML"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WikiCreateParametersV2",
+  "title": "WikiCreateParametersV2",
+  "type": "object",
+  "description": "Parameters for creating a new wiki",
+  "required": [
+    "name",
+    "type",
+    "projectId"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the wiki",
+      "example": "Project Wiki"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of wiki to create",
+      "enum": [
+        "projectWiki",
+        "codeWiki"
+      ]
+    },
+    "projectId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the project to create the wiki in"
+    },
+    "repositoryId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the repository to back the wiki (required for codeWiki)"
+    },
+    "mappedPath": {
+      "type": "string",
+      "description": "Root folder in the repository to use as wiki content (for codeWiki)",
+      "example": "/docs"
+    },
+    "version": {
+      "type": "object",
+      "description": "Branch to use for the wiki",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Branch name",
+          "example": "main"
+        }
+      }
+    }
+  }
+}

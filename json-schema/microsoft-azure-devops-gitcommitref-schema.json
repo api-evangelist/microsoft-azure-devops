@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitCommitRef",
+  "title": "GitCommitRef",
+  "type": "object",
+  "description": "A reference to a Git commit",
+  "properties": {
+    "commitId": {
+      "type": "string",
+      "description": "Full SHA hash of the commit",
+      "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Commit message",
+      "example": "Fix login button alignment"
+    },
+    "commentTruncated": {
+      "type": "boolean",
+      "description": "Whether the comment has been truncated"
+    },
+    "author": {
+      "$ref": "#/components/schemas/GitUserDate"
+    },
+    "committer": {
+      "$ref": "#/components/schemas/GitUserDate"
+    },
+    "parents": {
+      "type": "array",
+      "description": "Parent commit SHAs",
+      "items": {
+        "type": "string"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "remoteUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "changeCounts": {
+      "type": "object",
+      "description": "Number of files changed (Add, Edit, Delete)",
+      "properties": {
+        "Add": {
+          "type": "integer"
+        },
+        "Edit": {
+          "type": "integer"
+        },
+        "Delete": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

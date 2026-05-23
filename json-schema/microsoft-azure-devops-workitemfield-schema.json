@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemField",
+  "title": "WorkItemField",
+  "type": "object",
+  "description": "Definition of a work item field",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the field",
+      "example": "Assigned To"
+    },
+    "referenceName": {
+      "type": "string",
+      "description": "Reference name used in WIQL and API (e.g., System.AssignedTo)",
+      "example": "System.AssignedTo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what the field stores"
+    },
+    "type": {
+      "type": "string",
+      "description": "Data type of the field",
+      "enum": [
+        "string",
+        "integer",
+        "dateTime",
+        "plainText",
+        "html",
+        "treePath",
+        "history",
+        "double",
+        "guid",
+        "boolean",
+        "identity",
+        "picklistString",
+        "picklistInteger",
+        "picklistDouble"
+      ]
+    },
+    "usage": {
+      "type": "string",
+      "description": "Whether the field is used for work items or work item links",
+      "enum": [
+        "none",
+        "workItem",
+        "workItemLink",
+        "tree",
+        "workItemTypeExtension"
+      ]
+    },
+    "readOnly": {
+      "type": "boolean",
+      "description": "Whether the field is read-only"
+    },
+    "canSortBy": {
+      "type": "boolean",
+      "description": "Whether work items can be sorted by this field"
+    },
+    "isQueryable": {
+      "type": "boolean",
+      "description": "Whether this field can be used in WIQL queries"
+    },
+    "isIdentity": {
+      "type": "boolean",
+      "description": "Whether this field stores an identity (user) value"
+    },
+    "isPicklist": {
+      "type": "boolean",
+      "description": "Whether this field has a picklist of allowed values"
+    },
+    "isPicklistSuggested": {
+      "type": "boolean",
+      "description": "Whether the picklist values are suggested (non-exclusive)"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

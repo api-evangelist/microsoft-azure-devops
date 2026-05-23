@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RunPipelineParameters",
+  "title": "RunPipelineParameters",
+  "type": "object",
+  "description": "Parameters for running a pipeline",
+  "properties": {
+    "stagesToSkip": {
+      "type": "array",
+      "description": "Stages to skip in this run",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resource versions to use for this run",
+      "properties": {
+        "repositories": {
+          "type": "object",
+          "description": "Repository resource versions (keyed by repository alias)",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "refName": {
+                "type": "string",
+                "description": "Branch or tag to check out",
+                "example": "refs/heads/feature/my-feature"
+              },
+              "version": {
+                "type": "string",
+                "description": "Specific commit SHA to use"
+              }
+            }
+          }
+        },
+        "pipelines": {
+          "type": "object",
+          "description": "Pipeline resource versions (keyed by pipeline alias)",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "builds": {
+          "type": "object",
+          "description": "Build resource versions",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Variable overrides for this run (keyed by variable name)",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Variable value override"
+          },
+          "isSecret": {
+            "type": "boolean",
+            "description": "Whether this variable value should be treated as secret"
+          }
+        }
+      }
+    },
+    "templateParameters": {
+      "type": "object",
+      "description": "Template parameter overrides for YAML pipelines",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "example": {
+        "environment": "production",
+        "deployRegion": "eastus"
+      }
+    }
+  }
+}

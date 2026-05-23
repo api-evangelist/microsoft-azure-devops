@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestSuiteCreateParams",
+  "title": "TestSuiteCreateParams",
+  "type": "object",
+  "description": "Parameters for creating a new test suite",
+  "required": [
+    "name",
+    "suiteType",
+    "parentSuite"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the new test suite"
+    },
+    "suiteType": {
+      "type": "string",
+      "description": "Type of test suite to create",
+      "enum": [
+        "none",
+        "dynamicTestSuite",
+        "staticTestSuite",
+        "requirementTestSuite"
+      ]
+    },
+    "parentSuite": {
+      "type": "object",
+      "description": "Parent suite to nest this suite under",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "ID of the parent suite"
+        }
+      }
+    },
+    "requirementId": {
+      "type": "integer",
+      "description": "Work item ID to link (for requirementTestSuite type)"
+    },
+    "queryString": {
+      "type": "string",
+      "description": "WIQL query string (for dynamicTestSuite type)"
+    },
+    "defaultTesters": {
+      "type": "array",
+      "description": "Default testers for test cases in this suite",
+      "items": {
+        "$ref": "#/components/schemas/IdentityRef"
+      }
+    }
+  }
+}

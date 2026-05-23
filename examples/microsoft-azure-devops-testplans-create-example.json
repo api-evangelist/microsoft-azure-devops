@@ -1,0 +1,20 @@
+{
+  "operationId": "testPlans_create",
+  "method": "POST",
+  "path": "/testplan/plans",
+  "summary": "Azure DevOps Create a test plan",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "name": "Sprint 5 Test Plan",
+        "areaPath": "MyProject\\Frontend",
+        "iteration": "MyProject\\Sprint 5",
+        "description": "Test plan for Sprint 5 user stories",
+        "startDate": "2024-03-01T00:00:00Z",
+        "endDate": "2024-03-15T00:00:00Z"
+      }
+    }
+  ],
+  "responseExamples": []
+}

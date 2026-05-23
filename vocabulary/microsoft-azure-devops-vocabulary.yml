@@ -1,0 +1,15 @@
+name: Azure DevOps Domain Vocabulary
+provider: Azure DevOps
+providerId: microsoft-azure-devops
+description: Tag-derived vocabulary for the Azure DevOps API surface; sourced from openapi/ tags.
+terms:
+- term: Commits
+  description: Operations for accessing commits and commit history
+- term: Pull Requests
+  description: Operations for creating and managing pull requests
+- term: Pushes
+  description: Operations for managing pushes and commits
+- term: Refs
+  description: Operations for managing branches and tags (refs)
+- term: Repositories
+  description: Operations for managing Git repositories

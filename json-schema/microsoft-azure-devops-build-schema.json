@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Build",
+  "title": "Build",
+  "type": "object",
+  "description": "An Azure DevOps build instance",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the build",
+      "example": 1234
+    },
+    "buildNumber": {
+      "type": "string",
+      "description": "The build number assigned at queue time",
+      "example": "20240315.1"
+    },
+    "buildNumberRevision": {
+      "type": "integer",
+      "description": "Revision of the build number if duplicates exist"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the build",
+      "enum": [
+        "none",
+        "inProgress",
+        "completed",
+        "cancelling",
+        "postponed",
+        "notStarted",
+        "all"
+      ],
+      "example": "completed"
+    },
+    "result": {
+      "type": "string",
+      "description": "Final result of a completed build",
+      "enum": [
+        "none",
+        "succeeded",
+        "partiallySucceeded",
+        "failed",
+        "canceled"
+      ],
+      "example": "succeeded"
+    },
+    "queueTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the build was queued"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the build started executing"
+    },
+    "finishTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the build finished"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this build via the REST API"
+    },
+    "definition": {
+      "$ref": "#/components/schemas/BuildDefinitionReference"
+    },
+    "buildNumberRevisions": {
+      "type": "integer"
+    },
+    "project": {
+      "$ref": "#/components/schemas/TeamProjectReference"
+    },
+    "sourceBranch": {
+      "type": "string",
+      "description": "Branch that triggered the build (e.g., refs/heads/main)",
+      "example": "refs/heads/main"
+    },
+    "sourceVersion": {
+      "type": "string",
+      "description": "Commit ID or changeset number used for the build",
+      "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+    },
+    "requestedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "requestedFor": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason the build was triggered",
+      "enum": [
+        "none",
+        "manual",
+        "individualCI",
+        "batchedCI",
+        "schedule",
+        "userCreated",
+        "validateShelveset",
+        "checkInShelveset",
+        "pullRequest",
+        "buildCompletion",
+        "resourceTrigger",
+        "triggered",
+        "all"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "description": "Build queue priority",
+      "enum": [
+        "low",
+        "belowNormal",
+        "normal",
+        "aboveNormal",
+        "high"
+      ]
+    },
+    "repository": {
+      "$ref": "#/components/schemas/BuildRepository"
+    },
+    "logs": {
+      "type": "object",
+      "description": "Reference to the build logs container",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "retainedByRelease": {
+      "type": "boolean",
+      "description": "Whether this build is retained by a release"
+    },
+    "triggeredByBuild": {
+      "type": "object",
+      "nullable": true,
+      "description": "The build that triggered this build (for completion triggers)",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "buildNumber": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "definition": {
+          "$ref": "#/components/schemas/BuildDefinitionReference"
+        },
+        "project": {
+          "$ref": "#/components/schemas/TeamProjectReference"
+        }
+      }
+    }
+  }
+}

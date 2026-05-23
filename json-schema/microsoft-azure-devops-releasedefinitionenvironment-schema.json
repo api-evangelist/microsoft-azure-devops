@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseDefinitionEnvironment",
+  "title": "ReleaseDefinitionEnvironment",
+  "type": "object",
+  "description": "An environment definition within a release pipeline",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the environment",
+      "example": "Production"
+    },
+    "rank": {
+      "type": "integer",
+      "description": "Sequence order of the environment in the pipeline"
+    },
+    "deployPhases": {
+      "type": "array",
+      "description": "Deployment phases in this environment",
+      "items": {
+        "type": "object"
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Conditions that must be met before deploying to this environment",
+      "items": {
+        "type": "object"
+      }
+    },
+    "preDeployApprovals": {
+      "type": "object",
+      "description": "Pre-deployment approval configuration"
+    },
+    "postDeployApprovals": {
+      "type": "object",
+      "description": "Post-deployment approval configuration"
+    },
+    "environmentOptions": {
+      "type": "object",
+      "description": "Environment-level options"
+    },
+    "variables": {
+      "type": "object",
+      "description": "Environment-level variables",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/ConfigurationVariableValue"
+      }
+    },
+    "demands": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

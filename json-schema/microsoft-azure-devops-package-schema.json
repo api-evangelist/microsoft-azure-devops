@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Package",
+  "title": "Package",
+  "type": "object",
+  "description": "A package in an Azure Artifacts feed",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique GUID identifier of the package"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the package",
+      "example": "MyCompany.MyLibrary"
+    },
+    "normalizedName": {
+      "type": "string",
+      "description": "Normalized (lowercase) version of the package name",
+      "example": "mycompany.mylibrary"
+    },
+    "protocolType": {
+      "type": "string",
+      "description": "Package manager protocol type",
+      "enum": [
+        "nuget",
+        "npm",
+        "maven",
+        "pypi",
+        "upack",
+        "cargo",
+        "swift"
+      ]
+    },
+    "versions": {
+      "type": "array",
+      "description": "List of available versions (if requested)",
+      "items": {
+        "$ref": "#/components/schemas/PackageVersion"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this package via the REST API"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

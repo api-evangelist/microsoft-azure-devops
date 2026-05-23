@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NotificationResult",
+  "title": "NotificationResult",
+  "type": "object",
+  "description": "Result of a test notification delivery attempt",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Notification ID"
+    },
+    "subscriptionId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the subscription used for the test"
+    },
+    "result": {
+      "type": "string",
+      "description": "Delivery result status",
+      "enum": [
+        "pending",
+        "processing",
+        "requestInProgress",
+        "delivered",
+        "dequeued",
+        "abandoned",
+        "error",
+        "filteredBySubscriber"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "HTTP status description from the consumer"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "details": {
+      "type": "object",
+      "description": "Detailed delivery attempt information",
+      "properties": {
+        "errorMessage": {
+          "type": "string"
+        },
+        "errorDetail": {
+          "type": "string"
+        },
+        "deliveryAttempts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "requestData": {
+                "type": "object",
+                "properties": {
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  }
+                }
+              },
+              "responseData": {
+                "type": "object",
+                "properties": {
+                  "statusCode": {
+                    "type": "integer"
+                  },
+                  "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "body": {
+                    "type": "string"
+                  }
+                }
+              },
+              "startTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endTime": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/WorkItemTypeFieldInstance",
+  "title": "WorkItemTypeFieldInstance",
+  "type": "object",
+  "description": "A field instance within a work item type",
+  "properties": {
+    "fieldName": {
+      "type": "string",
+      "description": "Display name of the field"
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "referenceName": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "referenceName": {
+      "type": "string",
+      "description": "Reference name (e.g., System.Title)"
+    },
+    "defaultValue": {
+      "description": "Default value for the field"
+    },
+    "allowedValues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Allowed values for fields with a restricted set of values"
+    },
+    "helpText": {
+      "type": "string"
+    },
+    "alwaysRequired": {
+      "type": "boolean"
+    },
+    "readOnly": {
+      "type": "boolean"
+    }
+  }
+}

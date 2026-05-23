@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseApproval",
+  "title": "ReleaseApproval",
+  "type": "object",
+  "description": "An approval record for a release environment",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "revision": {
+      "type": "integer"
+    },
+    "approvalType": {
+      "type": "string",
+      "enum": [
+        "undefined",
+        "preDeploy",
+        "postDeploy",
+        "all"
+      ]
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "undefined",
+        "pending",
+        "approved",
+        "rejected",
+        "reassigned",
+        "canceled",
+        "skipped"
+      ]
+    },
+    "comments": {
+      "type": "string"
+    },
+    "isAutomated": {
+      "type": "boolean"
+    },
+    "approver": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "approvedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "attempt": {
+      "type": "integer"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

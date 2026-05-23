@@ -1,0 +1,25 @@
+{
+  "operationId": "notifications_sendTest",
+  "method": "POST",
+  "path": "/hooks/testnotifications",
+  "summary": "Azure DevOps Send a test notification",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "publisherId": "tfs",
+        "eventType": "workitem.created",
+        "resourceVersion": "1.0",
+        "consumerId": "webHooks",
+        "consumerActionId": "httpRequest",
+        "publisherInputs": {
+          "projectId": "a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4"
+        },
+        "consumerInputs": {
+          "url": "https://myserver.example.com/webhook"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

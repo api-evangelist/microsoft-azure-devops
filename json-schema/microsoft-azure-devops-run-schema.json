@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Run",
+  "title": "Run",
+  "type": "object",
+  "description": "A pipeline run (execution instance)",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the run",
+      "example": 1001
+    },
+    "name": {
+      "type": "string",
+      "description": "Auto-generated run name (usually the build number)",
+      "example": "20240315.1"
+    },
+    "state": {
+      "type": "string",
+      "description": "Current state of the run",
+      "enum": [
+        "unknown",
+        "inProgress",
+        "canceling",
+        "completed"
+      ]
+    },
+    "result": {
+      "type": "string",
+      "description": "Final result of the run (set when state is completed)",
+      "enum": [
+        "unknown",
+        "succeeded",
+        "failed",
+        "canceled"
+      ],
+      "nullable": true
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the run was created"
+    },
+    "finishedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the run finished",
+      "nullable": true
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this run via the REST API"
+    },
+    "pipeline": {
+      "type": "object",
+      "description": "The pipeline this run belongs to",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "folder": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "description": "Resources used in this run",
+      "properties": {
+        "repositories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "refName": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "pipelines": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Variables used in this run",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "isSecret": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "templateParameters": {
+      "type": "object",
+      "description": "Template parameters used in this run",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL links for related resources",
+      "properties": {
+        "self": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "web": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "pipeline": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "pipeline.web": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    }
+  }
+}

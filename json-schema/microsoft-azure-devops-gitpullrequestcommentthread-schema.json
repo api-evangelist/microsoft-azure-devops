@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPullRequestCommentThread",
+  "title": "GitPullRequestCommentThread",
+  "type": "object",
+  "description": "A comment thread on a pull request",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Thread ID"
+    },
+    "publishedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastUpdatedDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "comments": {
+      "type": "array",
+      "description": "Comments in this thread",
+      "items": {
+        "$ref": "#/components/schemas/Comment"
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Thread status",
+      "enum": [
+        "unknown",
+        "active",
+        "byDesign",
+        "closed",
+        "fixed",
+        "wontFix",
+        "pending"
+      ]
+    },
+    "threadContext": {
+      "type": "object",
+      "description": "Location in the diff where this thread was created",
+      "properties": {
+        "filePath": {
+          "type": "string"
+        },
+        "rightFileStart": {
+          "type": "object",
+          "properties": {
+            "line": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        },
+        "rightFileEnd": {
+          "type": "object",
+          "properties": {
+            "line": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "pullRequestThreadContext": {
+      "type": "object",
+      "description": "Pull request context for the thread"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

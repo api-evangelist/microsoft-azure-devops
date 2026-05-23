@@ -1,0 +1,23 @@
+{
+  "operationId": "pullRequests_create",
+  "method": "POST",
+  "path": "/git/repositories/{repositoryId}/pullrequests",
+  "summary": "Azure DevOps Create a pull request",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "title": "Add new login feature",
+        "description": "This PR adds the new OAuth 2.0 login flow",
+        "sourceRefName": "refs/heads/feature/login",
+        "targetRefName": "refs/heads/main",
+        "reviewers": [
+          {
+            "id": "8c8c7d32-6b1b-47f4-b2e9-30209d6d62be"
+          }
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

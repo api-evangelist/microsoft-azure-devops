@@ -1,0 +1,22 @@
+{
+  "operationId": "pullRequests_addComment",
+  "method": "POST",
+  "path": "/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads",
+  "summary": "Azure DevOps Add a pull request comment thread",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "comments": [
+          {
+            "parentCommentId": 0,
+            "content": "Please add unit tests for this change",
+            "commentType": "text"
+          }
+        ],
+        "status": "active"
+      }
+    }
+  ],
+  "responseExamples": []
+}

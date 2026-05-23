@@ -1,0 +1,31 @@
+{
+  "operationId": "subscriptions_create",
+  "method": "POST",
+  "path": "/hooks/subscriptions",
+  "summary": "Azure DevOps Create a subscription",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "publisherId": "tfs",
+        "eventType": "workitem.created",
+        "resourceVersion": "1.0",
+        "consumerId": "webHooks",
+        "consumerActionId": "httpRequest",
+        "publisherInputs": {
+          "projectId": "a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4",
+          "workItemType": "Bug",
+          "areaPath": "MyProject"
+        },
+        "consumerInputs": {
+          "url": "https://myserver.example.com/webhook",
+          "httpHeaders": "X-Custom-Header: my-value",
+          "messagesToSend": "none",
+          "detailedMessagesToSend": "all",
+          "resourceDetailsToSend": "all"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

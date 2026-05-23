@@ -1,0 +1,31 @@
+{
+  "operationId": "runs_run",
+  "method": "POST",
+  "path": "/pipelines/{pipelineId}/runs",
+  "summary": "Azure DevOps Run a pipeline",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "stagesToSkip": [],
+        "resources": {
+          "repositories": {
+            "self": {
+              "refName": "refs/heads/main"
+            }
+          }
+        },
+        "variables": {
+          "MyVariable": {
+            "value": "custom-value",
+            "isSecret": false
+          }
+        },
+        "templateParameters": {
+          "environment": "staging"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

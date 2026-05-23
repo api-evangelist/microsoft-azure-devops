@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApiError",
+  "title": "ApiError",
+  "type": "object",
+  "description": "Error response from the Azure DevOps API",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "message": {
+      "type": "string"
+    },
+    "typeName": {
+      "type": "string"
+    },
+    "typeKey": {
+      "type": "string"
+    },
+    "errorCode": {
+      "type": "integer"
+    },
+    "eventId": {
+      "type": "integer"
+    }
+  }
+}

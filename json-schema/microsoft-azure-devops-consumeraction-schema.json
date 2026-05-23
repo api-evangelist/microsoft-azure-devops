@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConsumerAction",
+  "title": "ConsumerAction",
+  "type": "object",
+  "description": "An action available in a consumer",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Action identifier",
+      "example": "httpRequest"
+    },
+    "name": {
+      "type": "string",
+      "description": "Action display name",
+      "example": "Send a generic HTTP request with a JSON payload"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what this action does"
+    },
+    "consumerId": {
+      "type": "string",
+      "description": "Parent consumer ID"
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input parameters required for this action",
+      "items": {
+        "$ref": "#/components/schemas/InputDescriptor"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

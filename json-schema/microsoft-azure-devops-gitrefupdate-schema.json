@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitRefUpdate",
+  "title": "GitRefUpdate",
+  "type": "object",
+  "description": "A ref update in a push",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The ref name (e.g., refs/heads/main)"
+    },
+    "oldObjectId": {
+      "type": "string",
+      "description": "Previous SHA the ref pointed to (zeros for new ref)"
+    },
+    "newObjectId": {
+      "type": "string",
+      "description": "New SHA the ref now points to (zeros to delete)"
+    },
+    "repositoryId": {
+      "type": "string",
+      "format": "uuid"
+    }
+  }
+}

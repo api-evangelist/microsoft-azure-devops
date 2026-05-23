@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestPlan",
+  "title": "TestPlan",
+  "type": "object",
+  "description": "A test plan in Azure Test Plans",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the test plan",
+      "example": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the test plan",
+      "example": "Sprint 5 Test Plan"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the test plan's scope and purpose"
+    },
+    "state": {
+      "type": "string",
+      "description": "Current state of the test plan",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start date of the test plan"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End date of the test plan"
+    },
+    "area": {
+      "$ref": "#/components/schemas/TestSuiteReference"
+    },
+    "areaPath": {
+      "type": "string",
+      "description": "Area path this test plan is associated with",
+      "example": "MyProject\\Frontend"
+    },
+    "iteration": {
+      "type": "string",
+      "description": "Iteration path (sprint) this test plan is associated with",
+      "example": "MyProject\\Sprint 5"
+    },
+    "owner": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Current revision of the test plan"
+    },
+    "buildDefinition": {
+      "type": "object",
+      "description": "Build definition associated with this test plan",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "buildId": {
+      "type": "integer",
+      "description": "Specific build ID to test against"
+    },
+    "updatedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the test plan was last updated"
+    },
+    "updatedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "project": {
+      "type": "object",
+      "description": "Project this test plan belongs to",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "rootSuite": {
+      "$ref": "#/components/schemas/TestSuiteReference"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

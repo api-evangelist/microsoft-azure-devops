@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Pipeline",
+  "title": "Pipeline",
+  "type": "object",
+  "description": "An Azure DevOps pipeline definition",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the pipeline",
+      "example": 15
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the pipeline",
+      "example": "CI Pipeline"
+    },
+    "folder": {
+      "type": "string",
+      "description": "Folder path for organizing pipelines",
+      "example": "\\CI"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Current revision number of the pipeline"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to access this pipeline via the REST API"
+    },
+    "_links": {
+      "type": "object",
+      "description": "HAL links for related resources",
+      "properties": {
+        "self": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "web": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    },
+    "configuration": {
+      "$ref": "#/components/schemas/PipelineConfiguration"
+    }
+  }
+}

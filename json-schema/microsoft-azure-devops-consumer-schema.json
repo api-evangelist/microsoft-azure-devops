@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Consumer",
+  "title": "Consumer",
+  "type": "object",
+  "description": "A consumer that can receive service hook notifications",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the consumer",
+      "example": "webHooks"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the consumer",
+      "example": "Web Hooks"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of this consumer type"
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the consumer's icon"
+    },
+    "informationUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Documentation URL for this consumer"
+    },
+    "actions": {
+      "type": "array",
+      "description": "Available actions for this consumer",
+      "items": {
+        "$ref": "#/components/schemas/ConsumerAction"
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Configuration inputs for this consumer",
+      "items": {
+        "$ref": "#/components/schemas/InputDescriptor"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

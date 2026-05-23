@@ -1,0 +1,24 @@
+{
+  "operationId": "pipelines_create",
+  "method": "POST",
+  "path": "/pipelines",
+  "summary": "Azure DevOps Create a pipeline",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "name": "CI Pipeline",
+        "folder": "\\CI",
+        "configuration": {
+          "type": "yaml",
+          "path": "/azure-pipelines.yml",
+          "repository": {
+            "id": "a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4",
+            "type": "azureReposGit"
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,17 @@
+{
+  "operationId": "wikis_create",
+  "method": "POST",
+  "path": "/wiki/wikis",
+  "summary": "Azure DevOps Create a wiki",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "name": "Project Wiki",
+        "type": "projectWiki",
+        "projectId": "a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4"
+      }
+    }
+  ],
+  "responseExamples": []
+}

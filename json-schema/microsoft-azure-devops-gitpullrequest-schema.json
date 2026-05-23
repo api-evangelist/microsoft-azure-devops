@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GitPullRequest",
+  "title": "GitPullRequest",
+  "type": "object",
+  "description": "An Azure DevOps Git pull request",
+  "properties": {
+    "pullRequestId": {
+      "type": "integer",
+      "description": "Unique numeric ID of the pull request",
+      "example": 42
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the pull request",
+      "example": "Add new login feature"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the changes in this pull request"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the pull request",
+      "enum": [
+        "notSet",
+        "active",
+        "abandoned",
+        "completed",
+        "all"
+      ]
+    },
+    "createdBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "creationDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the pull request was created"
+    },
+    "closedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the pull request was completed or abandoned"
+    },
+    "targetRefName": {
+      "type": "string",
+      "description": "Target branch for the merge",
+      "example": "refs/heads/main"
+    },
+    "sourceRefName": {
+      "type": "string",
+      "description": "Source branch containing the changes",
+      "example": "refs/heads/feature/login"
+    },
+    "mergeId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the merge operation"
+    },
+    "mergeStatus": {
+      "type": "string",
+      "description": "Current merge status",
+      "enum": [
+        "notSet",
+        "queued",
+        "conflicts",
+        "succeeded",
+        "rejectedByPolicy",
+        "failure"
+      ]
+    },
+    "lastMergeSourceCommit": {
+      "type": "object",
+      "description": "Latest commit in the source branch",
+      "properties": {
+        "commitId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "lastMergeTargetCommit": {
+      "type": "object",
+      "description": "Latest commit in the target branch",
+      "properties": {
+        "commitId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "lastMergeCommit": {
+      "type": "object",
+      "description": "The merge commit (if the PR has been merged)",
+      "properties": {
+        "commitId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "reviewers": {
+      "type": "array",
+      "description": "Reviewers assigned to this pull request",
+      "items": {
+        "$ref": "#/components/schemas/IdentityRefWithVote"
+      }
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "repository": {
+      "$ref": "#/components/schemas/GitRepository"
+    },
+    "isDraft": {
+      "type": "boolean",
+      "description": "Whether this is a draft pull request"
+    },
+    "autoCompleteSetBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "completionOptions": {
+      "type": "object",
+      "description": "Options for auto-completing the PR",
+      "properties": {
+        "deleteSourceBranch": {
+          "type": "boolean"
+        },
+        "squashMerge": {
+          "type": "boolean"
+        },
+        "mergeStrategy": {
+          "type": "string",
+          "enum": [
+            "noFastForward",
+            "squash",
+            "rebase",
+            "rebaseMerge"
+          ]
+        },
+        "transitionWorkItems": {
+          "type": "boolean"
+        }
+      }
+    },
+    "workItemRefs": {
+      "type": "array",
+      "description": "Work items associated with this pull request",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "description": "Labels attached to this pull request",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

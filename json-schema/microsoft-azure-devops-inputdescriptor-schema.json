@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InputDescriptor",
+  "title": "InputDescriptor",
+  "type": "object",
+  "description": "Descriptor for a configurable input parameter",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Input identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Help text"
+    },
+    "inputMode": {
+      "type": "string",
+      "description": "How the input is presented in UI",
+      "enum": [
+        "none",
+        "textBox",
+        "passwordBox",
+        "combo",
+        "radioButtons",
+        "checkBox",
+        "textArea"
+      ]
+    },
+    "isConfidential": {
+      "type": "boolean",
+      "description": "Whether the value is treated as a secret"
+    },
+    "isRequired": {
+      "type": "boolean",
+      "description": "Whether this input is required"
+    },
+    "values": {
+      "type": "object",
+      "description": "Allowed values for combo/radio inputs",
+      "properties": {
+        "defaultValue": {
+          "type": "string"
+        },
+        "possibleValues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "displayValue": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Validation rules for this input",
+      "properties": {
+        "dataType": {
+          "type": "string",
+          "enum": [
+            "none",
+            "string",
+            "number",
+            "boolean",
+            "guid",
+            "uri"
+          ]
+        },
+        "isRequired": {
+          "type": "boolean"
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Regex pattern for validation"
+        },
+        "patternMismatchErrorMessage": {
+          "type": "string"
+        },
+        "minLength": {
+          "type": "integer"
+        },
+        "maxLength": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

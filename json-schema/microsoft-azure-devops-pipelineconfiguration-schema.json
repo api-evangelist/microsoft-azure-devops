@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PipelineConfiguration",
+  "title": "PipelineConfiguration",
+  "type": "object",
+  "description": "Configuration details for a pipeline",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Pipeline configuration type",
+      "enum": [
+        "unknown",
+        "yaml",
+        "designerJson",
+        "justInTime",
+        "designerHyphenJson"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to the YAML pipeline file in the repository",
+      "example": "/azure-pipelines.yml"
+    },
+    "repository": {
+      "$ref": "#/components/schemas/BuildRepository"
+    }
+  }
+}

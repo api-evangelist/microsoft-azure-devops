@@ -1,0 +1,27 @@
+{
+  "operationId": "releases_create",
+  "method": "POST",
+  "path": "/release/releases",
+  "summary": "Azure DevOps Create a release",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "example": {
+        "definitionId": 3,
+        "description": "Deploying version 1.2.3 to production",
+        "artifacts": [
+          {
+            "alias": "_MyBuild",
+            "instanceReference": {
+              "id": "1234",
+              "name": "20240315.1"
+            }
+          }
+        ],
+        "isDraft": false,
+        "manualEnvironments": []
+      }
+    }
+  ],
+  "responseExamples": []
+}

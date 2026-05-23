@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EventType",
+  "title": "EventType",
+  "type": "object",
+  "description": "An event type that a publisher can produce",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the event type",
+      "example": "workitem.created"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the event type",
+      "example": "Work item created"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of when this event fires"
+    },
+    "publisherId": {
+      "type": "string",
+      "description": "ID of the publisher that produces this event"
+    },
+    "supportedResourceVersions": {
+      "type": "array",
+      "description": "Supported versions of the event resource schema",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fields": {
+      "type": "object",
+      "description": "Fields available in the event payload",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fieldType": {
+            "type": "string"
+          },
+          "isFilterable": {
+            "type": "boolean"
+          },
+          "isQueryable": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

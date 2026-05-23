@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TestPlanUpdateParams",
+  "title": "TestPlanUpdateParams",
+  "type": "object",
+  "description": "Parameters for updating an existing test plan",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "New name for the test plan"
+    },
+    "description": {
+      "type": "string",
+      "description": "New description for the test plan"
+    },
+    "areaPath": {
+      "type": "string",
+      "description": "Updated area path"
+    },
+    "iteration": {
+      "type": "string",
+      "description": "Updated iteration path"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated start date"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Updated end date"
+    },
+    "owner": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    },
+    "buildDefinition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "buildId": {
+      "type": "integer"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Current revision number (required for update to prevent conflicts)"
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseDefinition",
+  "title": "ReleaseDefinition",
+  "type": "object",
+  "description": "A release pipeline definition",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique numeric identifier of the definition"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the release definition",
+      "example": "Production Deployment"
+    },
+    "path": {
+      "type": "string",
+      "description": "Folder path for the definition",
+      "example": "\\Production"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the release definition"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Current revision number"
+    },
+    "createdOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modifiedOn": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "createdBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "modifiedBy": {
+      "$ref": "#/components/schemas/IdentityRef"
+    },
+    "isDeleted": {
+      "type": "boolean",
+      "description": "Whether this definition has been deleted"
+    },
+    "environments": {
+      "type": "array",
+      "description": "Environments (deployment stages) in the release pipeline",
+      "items": {
+        "$ref": "#/components/schemas/ReleaseDefinitionEnvironment"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Artifact sources used by this release definition",
+      "items": {
+        "$ref": "#/components/schemas/Artifact"
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "description": "Triggers that automatically create releases",
+      "items": {
+        "type": "object"
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Release-level variables",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/ConfigurationVariableValue"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "undefined",
+        "restApi",
+        "userInterface",
+        "ibiza",
+        "portalExtensionApi"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "_links": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

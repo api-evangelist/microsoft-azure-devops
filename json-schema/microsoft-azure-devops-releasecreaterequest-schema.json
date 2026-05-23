@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseCreateRequest",
+  "title": "ReleaseCreateRequest",
+  "type": "object",
+  "description": "Request to create a new release",
+  "required": [
+    "definitionId"
+  ],
+  "properties": {
+    "definitionId": {
+      "type": "integer",
+      "description": "ID of the release definition to create the release from"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description for the release"
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Artifact versions to use in the release",
+      "items": {
+        "type": "object",
+        "properties": {
+          "alias": {
+            "type": "string",
+            "description": "Artifact alias as defined in the release definition"
+          },
+          "instanceReference": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Build ID or artifact version ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "Build number or version string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "isDraft": {
+      "type": "boolean",
+      "description": "Whether to create the release as a draft (not deployed automatically)",
+      "default": false
+    },
+    "manualEnvironments": {
+      "type": "array",
+      "description": "Environments to skip automatic deployment (requires manual trigger)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "type": "object",
+      "description": "Release-level variable overrides",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "isSecret": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "properties": {
+      "type": "object",
+      "description": "Additional release properties",
+      "additionalProperties": true
+    }
+  }
+}
