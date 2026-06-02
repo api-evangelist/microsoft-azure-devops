@@ -2,12 +2,20 @@
   "repo": "microsoft-azure-devops",
   "feeds": [
     {
-      "source": "https://devblogs.microsoft.com/devops/",
+      "source": "https://devblogs.microsoft.com/devops/feed/",
       "feed_url": "https://devblogs.microsoft.com/devops/feed/",
-      "title": "Azure DevOps Blog",
-      "saved": 3
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://azure.microsoft.com/en-us/support/devops/",
+      "feed_url": "https://azure.microsoft.com/en-us/support/devops/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 13,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
