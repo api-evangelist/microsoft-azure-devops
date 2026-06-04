@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Inspect a Release Definition and Cut a Release
+  summary: Read a release definition, create a release from it, and confirm the release.
+  description: >-
+    Cuts a release from an existing release definition with a verification pass.
+    The workflow fetches the release definition to confirm it exists and capture
+    its name, creates a release from that definition bound to a build artifact,
+    and then fetches the new release to confirm it was created. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: releasesApi
+  url: ../openapi/azure-devops-releases-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: release-from-definition
+  summary: Read a release definition, create a release, and confirm it.
+  description: >-
+    Gets a release definition, creates a release from it with an artifact, and
+    retrieves the created release.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - definitionId
+    - artifactAlias
+    - artifactInstanceId
+    - artifactInstanceName
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      definitionId:
+        type: integer
+        description: ID of the release definition.
+      artifactAlias:
+        type: string
+        description: Artifact alias as defined in the release definition.
+      artifactInstanceId:
+        type: string
+        description: Build ID or artifact version ID to deploy.
+      artifactInstanceName:
+        type: string
+        description: Build number or version string for the artifact.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: getDefinition
+    description: >-
+      Fetch the release definition to confirm it exists and capture its name and
+      revision before cutting a release.
+    operationId: releaseDefinitions_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: definitionId
+      in: path
+      value: $inputs.definitionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      definitionName: $response.body#/name
+      revision: $response.body#/revision
+  - stepId: createRelease
+    description: >-
+      Create a release from the confirmed definition, binding the named artifact
+      to the requested build instance.
+    operationId: releases_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        definitionId: $inputs.definitionId
+        description: $steps.getDefinition.outputs.definitionName
+        artifacts:
+        - alias: $inputs.artifactAlias
+          instanceReference:
+            id: $inputs.artifactInstanceId
+            name: $inputs.artifactInstanceName
+        isDraft: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      releaseId: $response.body#/id
+  - stepId: confirmRelease
+    description: >-
+      Fetch the newly created release to confirm it exists and read its status.
+    operationId: releases_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: releaseId
+      in: path
+      value: $steps.createRelease.outputs.releaseId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      name: $response.body#/name
+  outputs:
+    releaseId: $steps.createRelease.outputs.releaseId
+    status: $steps.confirmRelease.outputs.status

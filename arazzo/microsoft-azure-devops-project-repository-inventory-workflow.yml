@@ -1,0 +1,104 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Project Repository Inventory
+  summary: List a project's repositories, pick the first, and inventory its branches and pull requests.
+  description: >-
+    Surveys the Git assets of an Azure DevOps project. Because the project is
+    addressed through the organization/project server variables on the Git API,
+    this flow lists the repositories in the project, branches on whether any
+    exist, fetches the first repository to read its default branch, and lists the
+    active pull requests in it. This adapts the requested "projects" theme to the
+    operations the Git specification actually exposes (there is no standalone
+    Core/Projects specification in this provider's OpenAPI set). Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: gitApi
+  url: ../openapi/azure-devops-git-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: project-repository-inventory
+  summary: List repositories in a project, then inventory the first one.
+  description: >-
+    Lists repositories, and when at least one exists, gets the first repository
+    and lists its active pull requests.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: listRepositories
+    description: >-
+      List the Git repositories in the project (scoped by the organization and
+      project server variables).
+    operationId: repositories_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      repositoryCount: $response.body#/count
+      firstRepositoryId: $response.body#/value/0/id
+    onSuccess:
+    - name: hasRepositories
+      type: goto
+      stepId: getFirstRepository
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: noRepositories
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: getFirstRepository
+    description: >-
+      Fetch the first repository to read its default branch and project details.
+    operationId: repositories_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $steps.listRepositories.outputs.firstRepositoryId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      repositoryName: $response.body#/name
+      defaultBranch: $response.body#/defaultBranch
+  - stepId: listActivePullRequests
+    description: >-
+      List the active pull requests in the selected repository to complete the
+      inventory.
+    operationId: pullRequests_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $steps.listRepositories.outputs.firstRepositoryId
+    - name: searchCriteria.status
+      in: query
+      value: active
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      activePullRequestCount: $response.body#/count
+  outputs:
+    repositoryCount: $steps.listRepositories.outputs.repositoryCount
+    repositoryName: $steps.getFirstRepository.outputs.repositoryName
+    activePullRequestCount: $steps.listActivePullRequests.outputs.activePullRequestCount

@@ -1,0 +1,104 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Provision and Inspect a Git Repository
+  summary: Create a Git repository, confirm it, and list its branches.
+  description: >-
+    Provisions a new Azure Repos Git repository inside a project and verifies the
+    result. The workflow creates the repository under the supplied project ID,
+    fetches the repository by its returned ID to confirm the default branch and
+    clone URLs, and then lists the branch refs under heads/ so callers can see
+    the initial branch layout. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: gitApi
+  url: ../openapi/azure-devops-git-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-and-inspect-repository
+  summary: Create a repository, confirm it, and list its branches.
+  description: >-
+    Creates a Git repository in a project, retrieves it to confirm creation, and
+    lists its branch refs.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - repositoryName
+    - projectId
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      repositoryName:
+        type: string
+        description: Name for the new Git repository.
+      projectId:
+        type: string
+        description: GUID of the project to create the repository in.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createRepository
+    description: >-
+      Create the Git repository in the target project. The response carries the
+      new repository ID used by later steps.
+    operationId: repositories_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.repositoryName
+        project:
+          id: $inputs.projectId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      repositoryId: $response.body#/id
+      remoteUrl: $response.body#/remoteUrl
+  - stepId: confirmRepository
+    description: >-
+      Fetch the repository by ID to confirm it exists and capture its default
+      branch and web URL.
+    operationId: repositories_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $steps.createRepository.outputs.repositoryId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      defaultBranch: $response.body#/defaultBranch
+      webUrl: $response.body#/webUrl
+  - stepId: listBranches
+    description: >-
+      List the repository refs filtered to heads/ so the initial branches are
+      visible after provisioning.
+    operationId: refs_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $steps.createRepository.outputs.repositoryId
+    - name: filter
+      in: query
+      value: heads/
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      branchCount: $response.body#/count
+      firstBranchName: $response.body#/value/0/name
+  outputs:
+    repositoryId: $steps.createRepository.outputs.repositoryId
+    defaultBranch: $steps.confirmRepository.outputs.defaultBranch
+    branchCount: $steps.listBranches.outputs.branchCount

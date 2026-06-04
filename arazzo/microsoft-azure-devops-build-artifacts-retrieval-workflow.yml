@@ -1,0 +1,114 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Retrieve Artifacts of the Latest Successful Build
+  summary: Find the latest succeeded build for a definition, confirm it, and list its artifacts.
+  description: >-
+    Locates the most recent successful build of a definition and pulls its
+    artifact list. The workflow lists builds filtered to a definition with a
+    completed status and succeeded result, branches on whether any were found,
+    fetches the top build to confirm its result, and lists the artifacts that
+    build published. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: buildsApi
+  url: ../openapi/azure-devops-builds-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: retrieve-latest-build-artifacts
+  summary: Find the latest succeeded build and list its artifacts.
+  description: >-
+    Lists succeeded builds for a definition, and when one exists, gets the top
+    build and lists its artifacts.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - definitionId
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      definitionId:
+        type: integer
+        description: ID of the build definition to search builds for.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: listSucceededBuilds
+    description: >-
+      List completed, succeeded builds for the definition, newest first.
+    operationId: builds_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: definitions
+      in: query
+      value: $inputs.definitionId
+    - name: statusFilter
+      in: query
+      value: completed
+    - name: resultFilter
+      in: query
+      value: succeeded
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topBuildId: $response.body#/value/0/id
+      buildCount: $response.body#/count
+    onSuccess:
+    - name: hasBuild
+      type: goto
+      stepId: getBuild
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: noBuild
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: getBuild
+    description: >-
+      Fetch the top build to confirm its result and capture its build number.
+    operationId: builds_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: buildId
+      in: path
+      value: $steps.listSucceededBuilds.outputs.topBuildId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/result == succeeded
+    outputs:
+      buildNumber: $response.body#/buildNumber
+      result: $response.body#/result
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts published by the selected build.
+    operationId: builds_listArtifacts
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: buildId
+      in: path
+      value: $steps.listSucceededBuilds.outputs.topBuildId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifactCount: $response.body#/count
+      firstArtifactName: $response.body#/value/0/name
+  outputs:
+    buildId: $steps.listSucceededBuilds.outputs.topBuildId
+    buildNumber: $steps.getBuild.outputs.buildNumber
+    artifactCount: $steps.listArtifacts.outputs.artifactCount

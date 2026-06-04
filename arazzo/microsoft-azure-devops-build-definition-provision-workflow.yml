@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Provision a Build Definition and Run It
+  summary: Create a build definition, confirm it, and queue its first build.
+  description: >-
+    Stands up a new classic build definition and immediately exercises it. The
+    workflow creates the build definition from a supplied definition body,
+    fetches it by the returned ID to confirm the configuration, and then queues a
+    first build against that definition. Every step spells out its request inline
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: buildsApi
+  url: ../openapi/azure-devops-builds-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-build-definition
+  summary: Create a build definition, confirm it, and queue its first build.
+  description: >-
+    Creates a build definition, retrieves it to confirm creation, and queues an
+    initial build.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - definition
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      definition:
+        type: object
+        description: >-
+          Build definition body matching BuildDefinitionCreateRequest (name,
+          repository, process, queue, etc.).
+      sourceBranch:
+        type: string
+        description: Optional source branch for the first queued build.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createDefinition
+    description: >-
+      Create the build definition from the supplied definition body.
+    operationId: definitions_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload: $inputs.definition
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      definitionId: $response.body#/id
+      definitionName: $response.body#/name
+  - stepId: confirmDefinition
+    description: >-
+      Fetch the build definition by ID to confirm it was created and capture its
+      current revision.
+    operationId: definitions_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: definitionId
+      in: path
+      value: $steps.createDefinition.outputs.definitionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      revision: $response.body#/revision
+  - stepId: queueFirstBuild
+    description: >-
+      Queue an initial build against the newly created definition.
+    operationId: builds_queue
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        definition:
+          id: $steps.createDefinition.outputs.definitionId
+        sourceBranch: $inputs.sourceBranch
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      buildId: $response.body#/id
+      buildNumber: $response.body#/buildNumber
+  outputs:
+    definitionId: $steps.createDefinition.outputs.definitionId
+    buildId: $steps.queueFirstBuild.outputs.buildId

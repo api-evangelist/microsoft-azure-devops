@@ -1,0 +1,121 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Run and Monitor a Pipeline
+  summary: Run a YAML pipeline, poll the run until it finishes, and list its artifacts.
+  description: >-
+    Triggers a run of a YAML-based Azure Pipeline and follows it to completion.
+    The workflow runs the pipeline with optional branch and template parameter
+    overrides, polls the run by ID until its state reaches completed (looping
+    back while it is still in progress), and then lists the run artifacts. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: pipelinesApi
+  url: ../openapi/azure-devops-pipelines-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: run-and-monitor-pipeline
+  summary: Run a pipeline, poll the run to completion, and list its artifacts.
+  description: >-
+    Starts a pipeline run, polls the run until it completes, and lists the
+    artifacts the run produced.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - pipelineId
+    - branchRef
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      pipelineId:
+        type: integer
+        description: Numeric ID of the pipeline to run.
+      branchRef:
+        type: string
+        description: Branch ref for the self repository (e.g. refs/heads/main).
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: runPipeline
+    description: >-
+      Start a new run of the pipeline against the requested branch.
+    operationId: runs_run
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: pipelineId
+      in: path
+      value: $inputs.pipelineId
+    requestBody:
+      contentType: application/json
+      payload:
+        resources:
+          repositories:
+            self:
+              refName: $inputs.branchRef
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      runId: $response.body#/id
+      runName: $response.body#/name
+  - stepId: pollRun
+    description: >-
+      Fetch the run by ID and check its state. While the run is still in
+      progress, loop back and poll again; once completed, continue to the
+      artifacts step.
+    operationId: runs_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: pipelineId
+      in: path
+      value: $inputs.pipelineId
+    - name: runId
+      in: path
+      value: $steps.runPipeline.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      state: $response.body#/state
+      result: $response.body#/result
+    onSuccess:
+    - name: stillRunning
+      type: goto
+      stepId: pollRun
+      criteria:
+      - context: $response.body
+        condition: $.state != 'completed'
+        type: jsonpath
+    - name: finished
+      type: goto
+      stepId: listArtifacts
+      criteria:
+      - condition: $response.body#/state == completed
+  - stepId: listArtifacts
+    description: >-
+      List the artifacts produced by the completed pipeline run.
+    operationId: artifacts_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: pipelineId
+      in: path
+      value: $inputs.pipelineId
+    - name: runId
+      in: path
+      value: $steps.runPipeline.outputs.runId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      artifactCount: $response.body#/count
+  outputs:
+    runId: $steps.runPipeline.outputs.runId
+    runResult: $steps.pollRun.outputs.result
+    artifactCount: $steps.listArtifacts.outputs.artifactCount

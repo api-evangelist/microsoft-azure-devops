@@ -1,0 +1,131 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Create and Monitor a Release
+  summary: Create a release from a definition, poll it active, and fetch environments.
+  description: >-
+    Creates a classic Azure Pipelines release and follows it as it becomes
+    active. The workflow creates a release from a release definition and a build
+    artifact, polls the release by ID until its status reaches active (looping
+    while it is still draft), and then fetches the release with its environments
+    expanded so callers can see the deployment stages. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: releasesApi
+  url: ../openapi/azure-devops-releases-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-monitor-release
+  summary: Create a release, poll until active, and fetch its environments.
+  description: >-
+    Creates a release from a definition and artifact, polls until it is active,
+    and retrieves the release with environments expanded.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - definitionId
+    - artifactAlias
+    - artifactInstanceId
+    - artifactInstanceName
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      definitionId:
+        type: integer
+        description: ID of the release definition to create the release from.
+      description:
+        type: string
+        description: Optional description for the release.
+      artifactAlias:
+        type: string
+        description: Artifact alias as defined in the release definition.
+      artifactInstanceId:
+        type: string
+        description: Build ID or artifact version ID to deploy.
+      artifactInstanceName:
+        type: string
+        description: Build number or version string for the artifact.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createRelease
+    description: >-
+      Create a release from the supplied definition, binding the named artifact
+      to the requested build instance.
+    operationId: releases_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        definitionId: $inputs.definitionId
+        description: $inputs.description
+        artifacts:
+        - alias: $inputs.artifactAlias
+          instanceReference:
+            id: $inputs.artifactInstanceId
+            name: $inputs.artifactInstanceName
+        isDraft: false
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      releaseId: $response.body#/id
+      releaseName: $response.body#/name
+  - stepId: pollRelease
+    description: >-
+      Fetch the release by ID and check its status. While the release is still a
+      draft, loop back and poll again; once active, continue to the environments
+      step.
+    operationId: releases_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: releaseId
+      in: path
+      value: $steps.createRelease.outputs.releaseId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+    onSuccess:
+    - name: stillDraft
+      type: goto
+      stepId: pollRelease
+      criteria:
+      - context: $response.body
+        condition: $.status == 'draft'
+        type: jsonpath
+    - name: active
+      type: goto
+      stepId: getReleaseWithEnvironments
+      criteria:
+      - condition: $response.body#/status == active
+  - stepId: getReleaseWithEnvironments
+    description: >-
+      Fetch the release with its environments expanded to expose the deployment
+      stages of the active release.
+    operationId: releases_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: releaseId
+      in: path
+      value: $steps.createRelease.outputs.releaseId
+    - name: $expand
+      in: query
+      value: environments
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+  outputs:
+    releaseId: $steps.createRelease.outputs.releaseId
+    finalStatus: $steps.getReleaseWithEnvironments.outputs.status

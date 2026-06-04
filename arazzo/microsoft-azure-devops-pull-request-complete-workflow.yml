@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Complete a Pull Request
+  summary: Fetch a pull request, verify it can merge, and complete it.
+  description: >-
+    Completes (merges) an active Azure Repos pull request safely. The workflow
+    fetches the pull request to read its current status and the head commit of
+    the source branch, branches on whether the merge status is clean, and only
+    then patches the pull request to status completed — supplying the required
+    lastMergeSourceCommit and completion options such as squash merge and source
+    branch deletion. Every step spells out its request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: gitApi
+  url: ../openapi/azure-devops-git-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: complete-pull-request
+  summary: Verify a pull request can merge, then complete it.
+  description: >-
+    Gets a pull request, and when its merge status is clean, completes it with
+    the required source commit and completion options.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - repositoryId
+    - pullRequestId
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      repositoryId:
+        type: string
+        description: Repository ID or name containing the pull request.
+      pullRequestId:
+        type: integer
+        description: Numeric ID of the pull request to complete.
+      deleteSourceBranch:
+        type: boolean
+        description: Whether to delete the source branch on completion.
+      squashMerge:
+        type: boolean
+        description: Whether to squash the source commits into a single commit.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: getPullRequest
+    description: >-
+      Fetch the pull request to read its merge status and the head commit of the
+      source branch needed to complete it.
+    operationId: pullRequests_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: pullRequestId
+      in: path
+      value: $inputs.pullRequestId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      mergeStatus: $response.body#/mergeStatus
+      lastMergeSourceCommitId: $response.body#/lastMergeSourceCommit/commitId
+    onSuccess:
+    - name: mergeable
+      type: goto
+      stepId: completePullRequest
+      criteria:
+      - condition: $response.body#/mergeStatus == succeeded
+    - name: notMergeable
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.mergeStatus != 'succeeded'
+        type: jsonpath
+  - stepId: completePullRequest
+    description: >-
+      Patch the pull request to status completed, supplying the required source
+      head commit and the requested completion options.
+    operationId: pullRequests_update
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: pullRequestId
+      in: path
+      value: $inputs.pullRequestId
+    requestBody:
+      contentType: application/json
+      payload:
+        status: completed
+        lastMergeSourceCommit:
+          commitId: $steps.getPullRequest.outputs.lastMergeSourceCommitId
+        completionOptions:
+          deleteSourceBranch: $inputs.deleteSourceBranch
+          squashMerge: $inputs.squashMerge
+          transitionWorkItems: true
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == completed
+    outputs:
+      finalStatus: $response.body#/status
+      closedDate: $response.body#/closedDate
+  outputs:
+    pullRequestId: $inputs.pullRequestId
+    finalStatus: $steps.completePullRequest.outputs.finalStatus
+    closedDate: $steps.completePullRequest.outputs.closedDate

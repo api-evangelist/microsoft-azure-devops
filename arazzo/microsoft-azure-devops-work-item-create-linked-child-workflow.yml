@@ -1,0 +1,123 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Create a Parent and Linked Child Work Item
+  summary: Create a parent work item, create a child, and link them hierarchically.
+  description: >-
+    Builds a two-level work item hierarchy in Azure Boards. The workflow creates
+    a parent work item (for example a User Story), creates a child work item (for
+    example a Task), and then patches the child with a relation operation that
+    links it to the parent using the System.LinkTypes.Hierarchy-Reverse link
+    type pointing at the parent's API URL. All three writes use the
+    application/json-patch+json media type required by the work item endpoints.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workItemsApi
+  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-linked-child-work-item
+  summary: Create a parent and child work item, then link the child to the parent.
+  description: >-
+    Creates a parent work item, creates a child work item, and adds a
+    parent/child hierarchy relation between them.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - parentType
+    - parentTitle
+    - childType
+    - childTitle
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      parentType:
+        type: string
+        description: Work item type for the parent (e.g. User Story).
+      parentTitle:
+        type: string
+        description: Title for the parent work item.
+      childType:
+        type: string
+        description: Work item type for the child (e.g. Task).
+      childTitle:
+        type: string
+        description: Title for the child work item.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createParent
+    description: >-
+      Create the parent work item with a JSON Patch document setting its title.
+    operationId: workItems_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: type
+      in: path
+      value: $inputs.parentType
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /fields/System.Title
+        value: $inputs.parentTitle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      parentId: $response.body#/id
+      parentUrl: $response.body#/url
+  - stepId: createChild
+    description: >-
+      Create the child work item with a JSON Patch document setting its title.
+    operationId: workItems_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: type
+      in: path
+      value: $inputs.childType
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /fields/System.Title
+        value: $inputs.childTitle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      childId: $response.body#/id
+  - stepId: linkChildToParent
+    description: >-
+      Patch the child work item with a relations add operation that creates a
+      Hierarchy-Reverse link pointing at the parent's API URL.
+    operationId: workItems_update
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.createChild.outputs.childId
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /relations/-
+        value:
+          rel: System.LinkTypes.Hierarchy-Reverse
+          url: $steps.createParent.outputs.parentUrl
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      linkedRev: $response.body#/rev
+  outputs:
+    parentId: $steps.createParent.outputs.parentId
+    childId: $steps.createChild.outputs.childId
+    linkedRev: $steps.linkChildToParent.outputs.linkedRev

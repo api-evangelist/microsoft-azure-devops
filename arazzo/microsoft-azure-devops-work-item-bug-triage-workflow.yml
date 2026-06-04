@@ -1,0 +1,125 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Bug Triage by WIQL Query
+  summary: Find open bugs with a WIQL query, fetch the top result, and triage it.
+  description: >-
+    Automates the first pass of bug triage on an Azure Boards backlog. The
+    workflow runs a Work Item Query Language (WIQL) query to find matching bugs,
+    branches on whether any results were returned, fetches the full work item
+    for the top match, and then transitions it with a JSON Patch document by
+    setting its state and priority. Note that the WIQL query uses
+    application/json while the work item update uses application/json-patch+json.
+    Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workItemsApi
+  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: bug-triage-by-wiql
+  summary: Query bugs with WIQL, then fetch and triage the top match.
+  description: >-
+    Executes a WIQL query, and when at least one work item is returned, gets the
+    top result and updates its state and priority.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - query
+    - triageState
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      query:
+        type: string
+        description: A WIQL query string selecting work items to triage.
+      triageState:
+        type: string
+        description: State to transition the matched work item to (e.g. Active).
+      priority:
+        type: integer
+        description: Microsoft.VSTS.Common.Priority value to set (e.g. 1).
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: runQuery
+    description: >-
+      Execute the WIQL query and capture the first matching work item ID. The
+      WIQL endpoint accepts a plain JSON body with a single query property.
+    operationId: workItems_queryByWiql
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topWorkItemId: $response.body#/workItems/0/id
+      queryType: $response.body#/queryType
+    onSuccess:
+    - name: hasMatches
+      type: goto
+      stepId: getWorkItem
+      criteria:
+      - context: $response.body
+        condition: $.workItems.length > 0
+        type: jsonpath
+    - name: noMatches
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.workItems.length == 0
+        type: jsonpath
+  - stepId: getWorkItem
+    description: >-
+      Fetch the full work item for the top match so the current fields are
+      available before applying triage changes.
+    operationId: workItems_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.runQuery.outputs.topWorkItemId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentState: $response.body#/fields/System.State
+      rev: $response.body#/rev
+  - stepId: triageWorkItem
+    description: >-
+      Apply a JSON Patch document that transitions the work item state and sets
+      its priority, completing the triage action.
+    operationId: workItems_update
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.runQuery.outputs.topWorkItemId
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /fields/System.State
+        value: $inputs.triageState
+      - op: add
+        path: /fields/Microsoft.VSTS.Common.Priority
+        value: $inputs.priority
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedRev: $response.body#/rev
+  outputs:
+    triagedWorkItemId: $steps.runQuery.outputs.topWorkItemId
+    previousState: $steps.getWorkItem.outputs.currentState
+    updatedRev: $steps.triageWorkItem.outputs.updatedRev

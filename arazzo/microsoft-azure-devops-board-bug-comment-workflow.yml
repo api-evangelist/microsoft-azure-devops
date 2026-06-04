@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Board Bug Acknowledgement
+  summary: Query a board column with WIQL, fetch the work item type, and acknowledge the top bug.
+  description: >-
+    Acknowledges the top bug sitting in a board column. Azure Boards are backed
+    by work item tracking, so this flow adapts the requested "boards" theme to
+    the Work Items specification: it runs a WIQL query (typically scoped to a
+    board column via System.BoardColumn) to find the top bug, branches on whether
+    anything matched, reads the Bug work item type definition to confirm the
+    type's states, and posts an acknowledgement comment on the matched work item.
+    The WIQL and comment endpoints use application/json. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workItemsApi
+  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: board-bug-acknowledgement
+  summary: Find the top board bug via WIQL and post an acknowledgement comment.
+  description: >-
+    Runs a WIQL query, and when a bug is found, reads the Bug type definition and
+    adds an acknowledgement comment to the matched work item.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - query
+    - commentText
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      query:
+        type: string
+        description: WIQL query selecting bugs in a board column.
+      commentText:
+        type: string
+        description: Acknowledgement comment to post on the matched bug.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: queryBoardColumn
+    description: >-
+      Execute the WIQL query to find the top bug in the board column. The WIQL
+      endpoint accepts a plain JSON body with a single query property.
+    operationId: workItems_queryByWiql
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topWorkItemId: $response.body#/workItems/0/id
+    onSuccess:
+    - name: hasBug
+      type: goto
+      stepId: getBugType
+      criteria:
+      - context: $response.body
+        condition: $.workItems.length > 0
+        type: jsonpath
+    - name: noBug
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.workItems.length == 0
+        type: jsonpath
+  - stepId: getBugType
+    description: >-
+      Read the Bug work item type definition to confirm the type and its valid
+      states before commenting.
+    operationId: workItemTypes_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: type
+      in: path
+      value: Bug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      typeName: $response.body#/name
+      referenceName: $response.body#/referenceName
+  - stepId: acknowledgeBug
+    description: >-
+      Post an acknowledgement comment on the matched bug work item. This endpoint
+      uses application/json (not the JSON Patch media type).
+    operationId: workItems_addComment
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.queryBoardColumn.outputs.topWorkItemId
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $inputs.commentText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      commentId: $response.body#/id
+  outputs:
+    bugWorkItemId: $steps.queryBoardColumn.outputs.topWorkItemId
+    typeName: $steps.getBugType.outputs.typeName
+    commentId: $steps.acknowledgeBug.outputs.commentId

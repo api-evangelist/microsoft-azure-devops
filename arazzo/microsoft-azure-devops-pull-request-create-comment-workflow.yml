@@ -1,0 +1,131 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Open a Pull Request and Start a Review Thread
+  summary: Create a pull request, confirm it, and add an opening review comment thread.
+  description: >-
+    Opens a pull request from a source branch into a target branch and kicks off
+    the review conversation. The workflow creates the pull request, fetches it to
+    confirm its active status and capture the head commit of the source branch,
+    and then adds an active comment thread asking reviewers to begin. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: gitApi
+  url: ../openapi/azure-devops-git-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: open-pull-request-and-comment
+  summary: Create a pull request, confirm it, and add an opening comment thread.
+  description: >-
+    Creates a pull request, retrieves it to confirm creation, and adds an active
+    comment thread to start the review.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - repositoryId
+    - title
+    - sourceRefName
+    - targetRefName
+    - commentText
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      repositoryId:
+        type: string
+        description: Repository ID or name to open the pull request in.
+      title:
+        type: string
+        description: Title for the pull request.
+      description:
+        type: string
+        description: Optional description for the pull request.
+      sourceRefName:
+        type: string
+        description: Source branch ref (e.g. refs/heads/feature/login).
+      targetRefName:
+        type: string
+        description: Target branch ref (e.g. refs/heads/main).
+      commentText:
+        type: string
+        description: Opening review comment to post on the pull request.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createPullRequest
+    description: >-
+      Create the pull request between the supplied source and target branches.
+    operationId: pullRequests_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    requestBody:
+      contentType: application/json
+      payload:
+        title: $inputs.title
+        description: $inputs.description
+        sourceRefName: $inputs.sourceRefName
+        targetRefName: $inputs.targetRefName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      pullRequestId: $response.body#/pullRequestId
+      status: $response.body#/status
+  - stepId: confirmPullRequest
+    description: >-
+      Fetch the pull request to confirm it is active and capture the head commit
+      of the source branch for later completion.
+    operationId: pullRequests_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: pullRequestId
+      in: path
+      value: $steps.createPullRequest.outputs.pullRequestId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == active
+    outputs:
+      lastMergeSourceCommitId: $response.body#/lastMergeSourceCommit/commitId
+      mergeStatus: $response.body#/mergeStatus
+  - stepId: addReviewThread
+    description: >-
+      Post an active comment thread on the pull request to start the review.
+    operationId: pullRequests_addComment
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: pullRequestId
+      in: path
+      value: $steps.createPullRequest.outputs.pullRequestId
+    requestBody:
+      contentType: application/json
+      payload:
+        comments:
+        - parentCommentId: 0
+          content: $inputs.commentText
+          commentType: text
+        status: active
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      threadId: $response.body#/id
+  outputs:
+    pullRequestId: $steps.createPullRequest.outputs.pullRequestId
+    lastMergeSourceCommitId: $steps.confirmPullRequest.outputs.lastMergeSourceCommitId
+    threadId: $steps.addReviewThread.outputs.threadId

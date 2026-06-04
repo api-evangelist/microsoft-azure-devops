@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Commit a File via a Git Push
+  summary: Resolve the tip of a branch, push a new commit, and confirm the push.
+  description: >-
+    Commits a single file change to an Azure Repos branch through the pushes API.
+    The workflow lists the repository refs to resolve the current object ID
+    (tip) of the target branch, creates a push whose refUpdate advances that
+    branch from the resolved old object ID and whose commit adds or edits a file
+    with raw text content, and then lists recent pushes to confirm the new push
+    landed. Every step spells out its request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: gitApi
+  url: ../openapi/azure-devops-git-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: commit-file-via-push
+  summary: Resolve a branch tip, push a file change, and confirm the push.
+  description: >-
+    Lists refs to find the branch tip, creates a push that commits a file change
+    on top of it, and lists pushes to confirm.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - repositoryId
+    - branchRef
+    - filePath
+    - fileContent
+    - commitMessage
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      repositoryId:
+        type: string
+        description: Repository ID or name to commit into.
+      branchRef:
+        type: string
+        description: Full branch ref to update (e.g. refs/heads/main).
+      filePath:
+        type: string
+        description: Path of the file to add or edit (e.g. /docs/readme.md).
+      fileContent:
+        type: string
+        description: Raw text content to write to the file.
+      commitMessage:
+        type: string
+        description: Commit message for the push.
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: resolveBranchTip
+    description: >-
+      List refs filtered to the target branch to resolve its current object ID,
+      which becomes the oldObjectId of the push refUpdate.
+    operationId: refs_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: filter
+      in: query
+      value: heads/
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tipObjectId: $response.body#/value/0/objectId
+      refName: $response.body#/value/0/name
+  - stepId: createPush
+    description: >-
+      Create a push that advances the branch from the resolved tip and commits a
+      single file edit with raw text content.
+    operationId: pushes_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    requestBody:
+      contentType: application/json
+      payload:
+        refUpdates:
+        - name: $inputs.branchRef
+          oldObjectId: $steps.resolveBranchTip.outputs.tipObjectId
+        commits:
+        - comment: $inputs.commitMessage
+          changes:
+          - changeType: edit
+            item:
+              path: $inputs.filePath
+            newContent:
+              content: $inputs.fileContent
+              contentType: rawText
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      pushId: $response.body#/pushId
+  - stepId: confirmPush
+    description: >-
+      List recent pushes on the branch to confirm the new push is present.
+    operationId: pushes_list
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: repositoryId
+      in: path
+      value: $inputs.repositoryId
+    - name: searchCriteria.refName
+      in: query
+      value: $inputs.branchRef
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      latestPushId: $response.body#/value/0/pushId
+  outputs:
+    pushId: $steps.createPush.outputs.pushId
+    latestPushId: $steps.confirmPush.outputs.latestPushId

@@ -1,0 +1,133 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Create, Update, and Comment on a Work Item
+  summary: Create a work item, transition its state, and append a comment in one flow.
+  description: >-
+    A core Azure Boards authoring pattern. The workflow creates a new work item
+    of the requested type using a JSON Patch document, transitions the newly
+    created item to a working state with a second JSON Patch, and then appends a
+    human-readable comment describing the change. Note that work item create and
+    update use the application/json-patch+json media type, while the comment
+    endpoint uses plain application/json. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: workItemsApi
+  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-update-comment-work-item
+  summary: Create a work item, move it to a new state, and add a comment.
+  description: >-
+    Creates a work item from a title and type, transitions it to the supplied
+    state, and posts a comment summarizing the action.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - type
+    - title
+    - newState
+    - commentText
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      type:
+        type: string
+        description: Work item type to create (e.g. Bug, Task, User Story).
+      title:
+        type: string
+        description: Title for the new work item.
+      description:
+        type: string
+        description: Optional description (HTML) for the new work item.
+      newState:
+        type: string
+        description: State to transition the work item to (e.g. Active).
+      assignedTo:
+        type: string
+        description: Optional user to assign the work item to.
+      commentText:
+        type: string
+        description: Comment text to append to the work item (HTML supported).
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: createWorkItem
+    description: >-
+      Create a new work item of the requested type by submitting a JSON Patch
+      document that sets the title and description fields.
+    operationId: workItems_create
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: type
+      in: path
+      value: $inputs.type
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /fields/System.Title
+        value: $inputs.title
+      - op: add
+        path: /fields/System.Description
+        value: $inputs.description
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      workItemId: $response.body#/id
+      rev: $response.body#/rev
+  - stepId: transitionState
+    description: >-
+      Apply a JSON Patch that replaces the work item state and, when provided,
+      its assignee, moving the item into an active working state.
+    operationId: workItems_update
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.createWorkItem.outputs.workItemId
+    requestBody:
+      contentType: application/json-patch+json
+      payload:
+      - op: add
+        path: /fields/System.State
+        value: $inputs.newState
+      - op: add
+        path: /fields/System.AssignedTo
+        value: $inputs.assignedTo
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedRev: $response.body#/rev
+  - stepId: addComment
+    description: >-
+      Append a comment to the work item describing the change. This endpoint
+      uses application/json (not the JSON Patch media type).
+    operationId: workItems_addComment
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: id
+      in: path
+      value: $steps.createWorkItem.outputs.workItemId
+    requestBody:
+      contentType: application/json
+      payload:
+        text: $inputs.commentText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      commentId: $response.body#/id
+  outputs:
+    workItemId: $steps.createWorkItem.outputs.workItemId
+    finalRev: $steps.transitionState.outputs.updatedRev
+    commentId: $steps.addComment.outputs.commentId

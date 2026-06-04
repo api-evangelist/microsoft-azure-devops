@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Azure DevOps Queue and Monitor a Build
+  summary: Queue a build, poll until it completes, and fetch its timeline.
+  description: >-
+    Queues an Azure Pipelines (classic) build and follows it to completion. The
+    workflow queues a build for a definition with an optional source branch
+    override, polls the build by ID until its status reaches completed (looping
+    back while it is still in progress), and then fetches the detailed timeline
+    so callers can see which phases, jobs, and tasks passed or failed. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: buildsApi
+  url: ../openapi/azure-devops-builds-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: queue-and-monitor-build
+  summary: Queue a build, poll to completion, and retrieve its timeline.
+  description: >-
+    Queues a build for a definition, polls the build until it completes, and
+    fetches the build timeline.
+  inputs:
+    type: object
+    required:
+    - apiVersion
+    - definitionId
+    properties:
+      apiVersion:
+        type: string
+        description: Azure DevOps REST API version (e.g. 7.1).
+      definitionId:
+        type: integer
+        description: ID of the build definition to queue.
+      sourceBranch:
+        type: string
+        description: Optional source branch override (e.g. refs/heads/main).
+      accessToken:
+        type: string
+        description: Azure DevOps bearer (OAuth 2.0) access token.
+  steps:
+  - stepId: queueBuild
+    description: >-
+      Queue a new build for the supplied definition, optionally overriding the
+      source branch.
+    operationId: builds_queue
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        definition:
+          id: $inputs.definitionId
+        sourceBranch: $inputs.sourceBranch
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      buildId: $response.body#/id
+      buildNumber: $response.body#/buildNumber
+  - stepId: pollBuild
+    description: >-
+      Fetch the build by ID and check its status. While the build is still in
+      progress, loop back and poll again; once completed, continue to the
+      timeline step.
+    operationId: builds_get
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: buildId
+      in: path
+      value: $steps.queueBuild.outputs.buildId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      result: $response.body#/result
+    onSuccess:
+    - name: stillRunning
+      type: goto
+      stepId: pollBuild
+      criteria:
+      - context: $response.body
+        condition: $.status != 'completed'
+        type: jsonpath
+    - name: finished
+      type: goto
+      stepId: getTimeline
+      criteria:
+      - condition: $response.body#/status == completed
+  - stepId: getTimeline
+    description: >-
+      Fetch the detailed build timeline to expose the per-task pass/fail state of
+      the completed build.
+    operationId: builds_getTimeline
+    parameters:
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: buildId
+      in: path
+      value: $steps.queueBuild.outputs.buildId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      timelineId: $response.body#/id
+  outputs:
+    buildId: $steps.queueBuild.outputs.buildId
+    buildResult: $steps.pollBuild.outputs.result
+    timelineId: $steps.getTimeline.outputs.timelineId
