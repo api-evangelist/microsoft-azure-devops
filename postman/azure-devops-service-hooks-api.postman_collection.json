@@ -1,0 +1,2690 @@
+{
+  "info": {
+    "_postman_id": "8d9c354a-3eee-41a3-87bb-c8de3f795de0",
+    "name": "Azure DevOps Service Hooks API",
+    "description": "REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:11:24.000Z",
+    "updatedAt": "2026-06-05T15:11:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-8d9c354a-3eee-41a3-87bb-c8de3f795de0"
+  },
+  "item": [
+    {
+      "name": "hooks",
+      "item": [
+        {
+          "name": "subscriptions",
+          "item": [
+            {
+              "name": "{subscriptionId}",
+              "item": [
+                {
+                  "name": "Azure DevOps Get a subscription",
+                  "id": "d8e8bdd4-bc48-4ae7-8301-b87a4454e29d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "bd851c90-9f52-4e5b-9b06-a88a5703b2d0",
+                          "key": "subscriptionId",
+                          "value": "<uuid>",
+                          "description": "(Required) GUID of the subscription"
+                        }
+                      ]
+                    },
+                    "description": "Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "478dac0f-66bf-43b2-a853-844a0b66b65e",
+                      "name": "Subscription returned successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"status\": \"disabledByInactiveIdentity\",\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"resourceVersion\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"sunt_d1b\": \"<string>\",\n    \"occaecat_9f9\": \"<string>\",\n    \"dolor_92a\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"proident_2\": \"<string>\",\n    \"Excepteur137\": \"<string>\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"createdDate\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"_links\": {\n    \"irure6\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-478dac0f-66bf-43b2-a853-844a0b66b65e"
+                    },
+                    {
+                      "id": "5a208ae7-2276-433d-aa6b-30f234f93fd1",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-5a208ae7-2276-433d-aa6b-30f234f93fd1"
+                    },
+                    {
+                      "id": "8fccd2af-b2d8-45e6-b58b-3461e2fd2a29",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-8fccd2af-b2d8-45e6-b58b-3461e2fd2a29"
+                    },
+                    {
+                      "id": "9ef8a29b-3bc6-4bbf-943d-04e943693eb2",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-9ef8a29b-3bc6-4bbf-943d-04e943693eb2"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-d8e8bdd4-bc48-4ae7-8301-b87a4454e29d"
+                },
+                {
+                  "name": "Azure DevOps Update a subscription",
+                  "id": "e4fddd04-53f1-4339-bcda-d23e5d0229df",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "5f935c0f-3c12-4d13-829e-29ed567febbc",
+                          "key": "subscriptionId",
+                          "value": "<uuid>",
+                          "description": "(Required) GUID of the subscription to update"
+                        }
+                      ]
+                    },
+                    "description": "Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "cf790db5-6cfe-46ae-a214-8bd1e4ec3334",
+                      "name": "Subscription updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"status\": \"disabledByInactiveIdentity\",\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"resourceVersion\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"sunt_d1b\": \"<string>\",\n    \"occaecat_9f9\": \"<string>\",\n    \"dolor_92a\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"proident_2\": \"<string>\",\n    \"Excepteur137\": \"<string>\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"createdDate\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"_links\": {\n    \"irure6\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-cf790db5-6cfe-46ae-a214-8bd1e4ec3334"
+                    },
+                    {
+                      "id": "e532c02d-f03e-4f3d-95fd-81bac6581973",
+                      "name": "Bad request - invalid parameters or request body",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-e532c02d-f03e-4f3d-95fd-81bac6581973"
+                    },
+                    {
+                      "id": "ccebeb80-193c-47e6-b01c-0154cb0e0647",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-ccebeb80-193c-47e6-b01c-0154cb0e0647"
+                    },
+                    {
+                      "id": "7055f9f1-6c7e-4ae1-8fc4-163f089b9a40",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-7055f9f1-6c7e-4ae1-8fc4-163f089b9a40"
+                    },
+                    {
+                      "id": "5a2dca75-91e7-40c3-8c0d-2575cec5b553",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-5a2dca75-91e7-40c3-8c0d-2575cec5b553"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-e4fddd04-53f1-4339-bcda-d23e5d0229df"
+                },
+                {
+                  "name": "Azure DevOps Delete a subscription",
+                  "id": "ac2e3e56-1154-44ae-9408-87c64165ee22",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions",
+                        ":subscriptionId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "2e5663e3-32d6-4532-99f6-5753466392dc",
+                          "key": "subscriptionId",
+                          "value": "<uuid>",
+                          "description": "(Required) GUID of the subscription to delete"
+                        }
+                      ]
+                    },
+                    "description": "Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "092ac8d1-adce-445b-9794-3942fe93f75a",
+                      "name": "Subscription deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-092ac8d1-adce-445b-9794-3942fe93f75a"
+                    },
+                    {
+                      "id": "54105e55-d8ab-49d4-bf9f-ff05ad150968",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-54105e55-d8ab-49d4-bf9f-ff05ad150968"
+                    },
+                    {
+                      "id": "bbda69bc-7ae5-4317-a5a3-5ffe2f9aebf3",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-bbda69bc-7ae5-4317-a5a3-5ffe2f9aebf3"
+                    },
+                    {
+                      "id": "d1eb7ebf-2589-4a1a-8de3-71e4c29cc06f",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/subscriptions/:subscriptionId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "subscriptions",
+                            ":subscriptionId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "subscriptionId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-d1eb7ebf-2589-4a1a-8de3-71e4c29cc06f"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-ac2e3e56-1154-44ae-9408-87c64165ee22"
+                }
+              ],
+              "id": "bb4aa4b8-1a7e-41b1-8ad0-26d1c4d78ebc",
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-bb4aa4b8-1a7e-41b1-8ad0-26d1c4d78ebc"
+            },
+            {
+              "name": "Azure DevOps List subscriptions",
+              "id": "8fe89fc1-4d4f-44da-9036-a1a321e34ba7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1&publisherId=<string>&eventType=<string>&consumerId=<string>&consumerActionId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "description": "Filter subscriptions by publisher ID (e.g., 'tfs')",
+                      "key": "publisherId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter subscriptions by event type (e.g., 'workitem.created')",
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')",
+                      "key": "consumerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter subscriptions by consumer action ID",
+                      "key": "consumerActionId",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.\n"
+              },
+              "response": [
+                {
+                  "id": "74980aa2-2789-403f-98a5-591c61c9949d",
+                  "name": "List of subscriptions returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1&publisherId=<string>&eventType=<string>&consumerId=<string>&consumerActionId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter subscriptions by publisher ID (e.g., 'tfs')",
+                          "key": "publisherId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by event type (e.g., 'workitem.created')",
+                          "key": "eventType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')",
+                          "key": "consumerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer action ID",
+                          "key": "consumerActionId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"status\": \"disabledByUser\",\n      \"publisherId\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"resourceVersion\": \"<string>\",\n      \"consumerId\": \"<string>\",\n      \"consumerActionId\": \"<string>\",\n      \"publisherInputs\": {\n        \"consecteturc\": \"<string>\"\n      },\n      \"consumerInputs\": {\n        \"esse_d\": \"<string>\"\n      },\n      \"modifiedBy\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"modifiedDate\": \"<dateTime>\",\n      \"createdBy\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"createdDate\": \"<dateTime>\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"amet_7\": {\n          \"href\": \"<uri>\"\n        },\n        \"mollit_6\": {\n          \"href\": \"<uri>\"\n        },\n        \"cupidatatb7\": {\n          \"href\": \"<uri>\"\n        },\n        \"commodo_a\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"status\": \"enabled\",\n      \"publisherId\": \"<string>\",\n      \"eventType\": \"<string>\",\n      \"resourceVersion\": \"<string>\",\n      \"consumerId\": \"<string>\",\n      \"consumerActionId\": \"<string>\",\n      \"publisherInputs\": {\n        \"eiusmodd7\": \"<string>\"\n      },\n      \"consumerInputs\": {\n        \"inc\": \"<string>\",\n        \"dolore519\": \"<string>\",\n        \"irure_6_6\": \"<string>\"\n      },\n      \"modifiedBy\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"modifiedDate\": \"<dateTime>\",\n      \"createdBy\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\"\n      },\n      \"createdDate\": \"<dateTime>\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"enimeb\": {\n          \"href\": \"<uri>\"\n        },\n        \"deseruntad8\": {\n          \"href\": \"<uri>\"\n        },\n        \"voluptate_a_1\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-74980aa2-2789-403f-98a5-591c61c9949d"
+                },
+                {
+                  "id": "fa8d2c62-5160-4a46-aa3c-f681e82e92d2",
+                  "name": "Bad request - invalid parameters or request body",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1&publisherId=<string>&eventType=<string>&consumerId=<string>&consumerActionId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter subscriptions by publisher ID (e.g., 'tfs')",
+                          "key": "publisherId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by event type (e.g., 'workitem.created')",
+                          "key": "eventType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')",
+                          "key": "consumerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer action ID",
+                          "key": "consumerActionId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-fa8d2c62-5160-4a46-aa3c-f681e82e92d2"
+                },
+                {
+                  "id": "813d5458-2ce6-4b7e-8399-dc8157469bad",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1&publisherId=<string>&eventType=<string>&consumerId=<string>&consumerActionId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter subscriptions by publisher ID (e.g., 'tfs')",
+                          "key": "publisherId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by event type (e.g., 'workitem.created')",
+                          "key": "eventType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')",
+                          "key": "consumerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer action ID",
+                          "key": "consumerActionId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-813d5458-2ce6-4b7e-8399-dc8157469bad"
+                },
+                {
+                  "id": "03fba956-c06a-46dd-ab0a-a881e0dc7d2c",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1&publisherId=<string>&eventType=<string>&consumerId=<string>&consumerActionId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter subscriptions by publisher ID (e.g., 'tfs')",
+                          "key": "publisherId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by event type (e.g., 'workitem.created')",
+                          "key": "eventType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')",
+                          "key": "consumerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter subscriptions by consumer action ID",
+                          "key": "consumerActionId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-03fba956-c06a-46dd-ab0a-a881e0dc7d2c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-8fe89fc1-4d4f-44da-9036-a1a321e34ba7"
+            },
+            {
+              "name": "Azure DevOps Create a subscription",
+              "id": "da81515d-6f64-4426-9883-52aa7390c7d1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ]
+                },
+                "description": "Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.\n"
+              },
+              "response": [
+                {
+                  "id": "c6518071-4f83-492e-9432-968f112bf7b4",
+                  "name": "Subscription created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"status\": \"disabledByInactiveIdentity\",\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"resourceVersion\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"sunt_d1b\": \"<string>\",\n    \"occaecat_9f9\": \"<string>\",\n    \"dolor_92a\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"proident_2\": \"<string>\",\n    \"Excepteur137\": \"<string>\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"modifiedDate\": \"<dateTime>\",\n  \"createdBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"createdDate\": \"<dateTime>\",\n  \"url\": \"<uri>\",\n  \"_links\": {\n    \"irure6\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-c6518071-4f83-492e-9432-968f112bf7b4"
+                },
+                {
+                  "id": "9a82d166-759c-4699-9cac-7f86d46ac679",
+                  "name": "Bad request - invalid parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-9a82d166-759c-4699-9cac-7f86d46ac679"
+                },
+                {
+                  "id": "614b65fc-07ee-40c7-b92d-9e9e7a4cbe70",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-614b65fc-07ee-40c7-b92d-9e9e7a4cbe70"
+                },
+                {
+                  "id": "f74b2707-ea24-42ad-b867-52b638e51bda",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/subscriptions?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "subscriptions"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-f74b2707-ea24-42ad-b867-52b638e51bda"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-da81515d-6f64-4426-9883-52aa7390c7d1"
+            }
+          ],
+          "id": "1cc2f41f-2558-4203-b210-3a2175e5fc56",
+          "createdAt": "2026-06-05T15:11:25.000Z",
+          "updatedAt": "2026-06-05T15:11:25.000Z",
+          "uid": "35240-1cc2f41f-2558-4203-b210-3a2175e5fc56"
+        },
+        {
+          "name": "publishers",
+          "item": [
+            {
+              "name": "{publisherId}",
+              "item": [
+                {
+                  "name": "eventTypes",
+                  "item": [
+                    {
+                      "name": "Azure DevOps List event types for a publisher",
+                      "id": "4f49d1bc-7829-4a2a-bff4-82ca70894209",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/hooks/publishers/:publisherId/eventTypes?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "hooks",
+                            "publishers",
+                            ":publisherId",
+                            "eventTypes"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "172c1b95-244b-4395-8a6f-65e3f9132736",
+                              "key": "publisherId",
+                              "value": "<string>",
+                              "description": "(Required) Publisher identifier (e.g., 'tfs')"
+                            }
+                          ]
+                        },
+                        "description": "Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.\n"
+                      },
+                      "response": [
+                        {
+                          "id": "d2fb54ba-5e10-4e5f-b514-33a39798f5e0",
+                          "name": "List of event types returned successfully",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/hooks/publishers/:publisherId/eventTypes?api-version=7.1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "hooks",
+                                "publishers",
+                                ":publisherId",
+                                "eventTypes"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "publisherId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"publisherId\": \"<string>\",\n      \"supportedResourceVersions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"commodo_f\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"fieldType\": \"<string>\",\n          \"isFilterable\": \"<boolean>\",\n          \"isQueryable\": \"<boolean>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"publisherId\": \"<string>\",\n      \"supportedResourceVersions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fields\": {\n        \"tempor1\": {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"fieldType\": \"<string>\",\n          \"isFilterable\": \"<boolean>\",\n          \"isQueryable\": \"<boolean>\"\n        }\n      }\n    }\n  ]\n}",
+                          "createdAt": "2026-06-05T15:11:25.000Z",
+                          "updatedAt": "2026-06-05T15:11:25.000Z",
+                          "uid": "35240-d2fb54ba-5e10-4e5f-b514-33a39798f5e0"
+                        },
+                        {
+                          "id": "6d8d0284-6459-4dc9-a05b-799cffb21c45",
+                          "name": "Unauthorized - missing or invalid authentication credentials",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/hooks/publishers/:publisherId/eventTypes?api-version=7.1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "hooks",
+                                "publishers",
+                                ":publisherId",
+                                "eventTypes"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "publisherId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:25.000Z",
+                          "updatedAt": "2026-06-05T15:11:25.000Z",
+                          "uid": "35240-6d8d0284-6459-4dc9-a05b-799cffb21c45"
+                        },
+                        {
+                          "id": "f89dd39c-db93-4801-8475-2d58307da74b",
+                          "name": "Forbidden - insufficient permissions to perform this operation",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/hooks/publishers/:publisherId/eventTypes?api-version=7.1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "hooks",
+                                "publishers",
+                                ":publisherId",
+                                "eventTypes"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "publisherId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:25.000Z",
+                          "updatedAt": "2026-06-05T15:11:25.000Z",
+                          "uid": "35240-f89dd39c-db93-4801-8475-2d58307da74b"
+                        },
+                        {
+                          "id": "38a5b252-78e8-44cf-be53-c1010c75b613",
+                          "name": "Not found - the requested resource does not exist",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/hooks/publishers/:publisherId/eventTypes?api-version=7.1",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "hooks",
+                                "publishers",
+                                ":publisherId",
+                                "eventTypes"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "publisherId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:25.000Z",
+                          "updatedAt": "2026-06-05T15:11:25.000Z",
+                          "uid": "35240-38a5b252-78e8-44cf-be53-c1010c75b613"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:11:25.000Z",
+                      "updatedAt": "2026-06-05T15:11:25.000Z",
+                      "uid": "35240-4f49d1bc-7829-4a2a-bff4-82ca70894209"
+                    }
+                  ],
+                  "id": "f8803400-0fbf-4038-acee-933f71f03a7e",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-f8803400-0fbf-4038-acee-933f71f03a7e"
+                }
+              ],
+              "id": "40a7100e-4ff8-452a-945c-f163de76efd8",
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-40a7100e-4ff8-452a-945c-f163de76efd8"
+            },
+            {
+              "name": "Azure DevOps List publishers",
+              "id": "ecfa2f76-4fc7-4eba-836a-d7a6373b7f82",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/hooks/publishers?api-version=7.1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "hooks",
+                    "publishers"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ]
+                },
+                "description": "Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is 'tfs'. Each publisher defines what event types it can produce.\n"
+              },
+              "response": [
+                {
+                  "id": "4a321dcc-bf18-49df-8a7b-2e331293ca53",
+                  "name": "List of publishers returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/publishers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "publishers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"supportedEvents\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"inputs\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"textArea\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"string\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"checkBox\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"boolean\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        }\n      ],\n      \"url\": \"<uri>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"supportedEvents\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"inputs\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"combo\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"guid\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"none\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"boolean\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        }\n      ],\n      \"url\": \"<uri>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-4a321dcc-bf18-49df-8a7b-2e331293ca53"
+                },
+                {
+                  "id": "1adeb235-eb22-4f66-b6d7-cd93e49b3e7e",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/publishers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "publishers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-1adeb235-eb22-4f66-b6d7-cd93e49b3e7e"
+                },
+                {
+                  "id": "31eeb389-8fee-4138-bfad-1104a460bdaa",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/publishers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "publishers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-31eeb389-8fee-4138-bfad-1104a460bdaa"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-ecfa2f76-4fc7-4eba-836a-d7a6373b7f82"
+            }
+          ],
+          "id": "618c4a56-9355-4d4e-8a28-ee21b0fc82af",
+          "createdAt": "2026-06-05T15:11:25.000Z",
+          "updatedAt": "2026-06-05T15:11:25.000Z",
+          "uid": "35240-618c4a56-9355-4d4e-8a28-ee21b0fc82af"
+        },
+        {
+          "name": "consumers",
+          "item": [
+            {
+              "name": "Azure DevOps List consumers",
+              "id": "3fac9ffc-50c8-4f99-a6c1-b4a465325625",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/hooks/consumers?api-version=7.1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "hooks",
+                    "consumers"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ]
+                },
+                "description": "Returns a list of all available consumers that can receive service hook notifications. Consumers include webhooks (httpRequest), Azure Service Bus, Azure Storage, Microsoft Teams, and other integration targets.\n"
+              },
+              "response": [
+                {
+                  "id": "5967f925-c5b4-42db-bf64-572098b575e6",
+                  "name": "List of consumers returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/consumers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "consumers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"imageUrl\": \"<uri>\",\n      \"informationUrl\": \"<uri>\",\n      \"actions\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"consumerId\": \"<string>\",\n          \"inputs\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"radioButtons\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"string\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textBox\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"none\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            }\n          ],\n          \"url\": \"<uri>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"consumerId\": \"<string>\",\n          \"inputs\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textArea\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"uri\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textBox\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"uri\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            }\n          ],\n          \"url\": \"<uri>\"\n        }\n      ],\n      \"inputs\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"textBox\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"string\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"textBox\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"string\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        }\n      ],\n      \"url\": \"<uri>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"imageUrl\": \"<uri>\",\n      \"informationUrl\": \"<uri>\",\n      \"actions\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"consumerId\": \"<string>\",\n          \"inputs\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textBox\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"guid\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textArea\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"number\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            }\n          ],\n          \"url\": \"<uri>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"consumerId\": \"<string>\",\n          \"inputs\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"textBox\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"string\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"inputMode\": \"radioButtons\",\n              \"isConfidential\": \"<boolean>\",\n              \"isRequired\": \"<boolean>\",\n              \"values\": {\n                \"defaultValue\": \"<string>\",\n                \"possibleValues\": [\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  },\n                  {\n                    \"value\": \"<string>\",\n                    \"displayValue\": \"<string>\"\n                  }\n                ]\n              },\n              \"validation\": {\n                \"dataType\": \"string\",\n                \"isRequired\": \"<boolean>\",\n                \"pattern\": \"<string>\",\n                \"patternMismatchErrorMessage\": \"<string>\",\n                \"minLength\": \"<integer>\",\n                \"maxLength\": \"<integer>\"\n              }\n            }\n          ],\n          \"url\": \"<uri>\"\n        }\n      ],\n      \"inputs\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"combo\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"number\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputMode\": \"radioButtons\",\n          \"isConfidential\": \"<boolean>\",\n          \"isRequired\": \"<boolean>\",\n          \"values\": {\n            \"defaultValue\": \"<string>\",\n            \"possibleValues\": [\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              },\n              {\n                \"value\": \"<string>\",\n                \"displayValue\": \"<string>\"\n              }\n            ]\n          },\n          \"validation\": {\n            \"dataType\": \"none\",\n            \"isRequired\": \"<boolean>\",\n            \"pattern\": \"<string>\",\n            \"patternMismatchErrorMessage\": \"<string>\",\n            \"minLength\": \"<integer>\",\n            \"maxLength\": \"<integer>\"\n          }\n        }\n      ],\n      \"url\": \"<uri>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-5967f925-c5b4-42db-bf64-572098b575e6"
+                },
+                {
+                  "id": "324c5228-0f2b-4153-979f-f680a9d96de0",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/consumers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "consumers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-324c5228-0f2b-4153-979f-f680a9d96de0"
+                },
+                {
+                  "id": "00cd044c-bc7b-4d8d-a5c9-1b67b9dcce47",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/consumers?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "consumers"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-00cd044c-bc7b-4d8d-a5c9-1b67b9dcce47"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-3fac9ffc-50c8-4f99-a6c1-b4a465325625"
+            }
+          ],
+          "id": "b2d38637-92df-428c-8b2e-81c9a8e210b4",
+          "createdAt": "2026-06-05T15:11:25.000Z",
+          "updatedAt": "2026-06-05T15:11:25.000Z",
+          "uid": "35240-b2d38637-92df-428c-8b2e-81c9a8e210b4"
+        },
+        {
+          "name": "testnotifications",
+          "item": [
+            {
+              "name": "Azure DevOps Send a test notification",
+              "id": "e952d6ea-4894-4d7f-99e2-d23a564d72d4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/hooks/testnotifications?api-version=7.1&useRealData=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "hooks",
+                    "testnotifications"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "description": "Whether to use real event data or synthetic test data",
+                      "key": "useRealData",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "Sends a test notification to verify that a service hook subscription is correctly configured and the consumer endpoint is reachable. Returns the result of the delivery attempt including HTTP status code and response body.\n"
+              },
+              "response": [
+                {
+                  "id": "037bfecd-a254-45e4-88e0-74740fa0e453",
+                  "name": "Test notification sent, result returned",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/testnotifications?api-version=7.1&useRealData=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "testnotifications"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Whether to use real event data or synthetic test data",
+                          "key": "useRealData",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<integer>\",\n  \"subscriptionId\": \"<uuid>\",\n  \"result\": \"filteredBySubscriber\",\n  \"status\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"modifiedDate\": \"<dateTime>\",\n  \"details\": {\n    \"errorMessage\": \"<string>\",\n    \"errorDetail\": \"<string>\",\n    \"deliveryAttempts\": [\n      {\n        \"result\": \"<string>\",\n        \"status\": \"<string>\",\n        \"requestData\": {\n          \"headers\": {\n            \"veniam8d\": \"<string>\",\n            \"laboris_9\": \"<string>\",\n            \"consectetur_e6\": \"<string>\",\n            \"tempor_4e7\": \"<string>\"\n          },\n          \"body\": \"<string>\"\n        },\n        \"responseData\": {\n          \"statusCode\": \"<integer>\",\n          \"headers\": {\n            \"ex_6\": \"<string>\",\n            \"proident_863\": \"<string>\"\n          },\n          \"body\": \"<string>\"\n        },\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\"\n      },\n      {\n        \"result\": \"<string>\",\n        \"status\": \"<string>\",\n        \"requestData\": {\n          \"headers\": {\n            \"consequat1\": \"<string>\"\n          },\n          \"body\": \"<string>\"\n        },\n        \"responseData\": {\n          \"statusCode\": \"<integer>\",\n          \"headers\": {\n            \"minim_01\": \"<string>\"\n          },\n          \"body\": \"<string>\"\n        },\n        \"startTime\": \"<dateTime>\",\n        \"endTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-037bfecd-a254-45e4-88e0-74740fa0e453"
+                },
+                {
+                  "id": "a8dc7d60-d995-4b1f-9134-424e0cc949de",
+                  "name": "Bad request - invalid parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/testnotifications?api-version=7.1&useRealData=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "testnotifications"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Whether to use real event data or synthetic test data",
+                          "key": "useRealData",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-a8dc7d60-d995-4b1f-9134-424e0cc949de"
+                },
+                {
+                  "id": "d2e77818-2be1-4d09-9f25-00662a1a753a",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/testnotifications?api-version=7.1&useRealData=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "testnotifications"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Whether to use real event data or synthetic test data",
+                          "key": "useRealData",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-d2e77818-2be1-4d09-9f25-00662a1a753a"
+                },
+                {
+                  "id": "7fb84380-bf6f-411b-b1b3-d0be6007100e",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"proident_c\": \"<string>\",\n    \"est_a3\": \"<string>\",\n    \"consequat_45\": \"<string>\",\n    \"inf\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"irure460\": \"<string>\",\n    \"occaecat_d8\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/hooks/testnotifications?api-version=7.1&useRealData=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "hooks",
+                        "testnotifications"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Whether to use real event data or synthetic test data",
+                          "key": "useRealData",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:25.000Z",
+                  "updatedAt": "2026-06-05T15:11:25.000Z",
+                  "uid": "35240-7fb84380-bf6f-411b-b1b3-d0be6007100e"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:25.000Z",
+              "updatedAt": "2026-06-05T15:11:25.000Z",
+              "uid": "35240-e952d6ea-4894-4d7f-99e2-d23a564d72d4"
+            }
+          ],
+          "id": "1ec6139e-53da-49c0-a3ac-f3b3c8ba6e18",
+          "createdAt": "2026-06-05T15:11:25.000Z",
+          "updatedAt": "2026-06-05T15:11:25.000Z",
+          "uid": "35240-1ec6139e-53da-49c0-a3ac-f3b3c8ba6e18"
+        }
+      ],
+      "id": "21b2d277-1615-411f-a9cc-0ae12753bd38",
+      "createdAt": "2026-06-05T15:11:25.000Z",
+      "updatedAt": "2026-06-05T15:11:25.000Z",
+      "uid": "35240-21b2d277-1615-411f-a9cc-0ae12753bd38"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "organization",
+      "value": "myorganization"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://dev.azure.com/{{organization}}/_apis"
+    }
+  ]
+}

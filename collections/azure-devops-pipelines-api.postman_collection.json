@@ -1,0 +1,2782 @@
+{
+  "item": [
+    {
+      "id": "1d5f776e-ac9b-4b5d-b3f7-dde7e3594cdf",
+      "name": "Pipeline Artifacts",
+      "description": {
+        "content": "Operations for accessing artifacts from pipeline runs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0fd9eff2-389e-4af4-a4c8-891a63578b2a",
+          "name": "Azure DevOps List run artifacts",
+          "request": {
+            "name": "Azure DevOps List run artifacts",
+            "description": {
+              "content": "Returns a list of artifacts published by a specific pipeline run. Artifacts can include compiled binaries, test results, container images, or any other files published using the PublishBuildArtifacts or PublishPipelineArtifact task.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipelineId",
+                "runs",
+                ":runId",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactName",
+                  "value": "<string>",
+                  "description": "Filter by a specific artifact name"
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand additional artifact details"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Numeric ID of the pipeline"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "runId",
+                  "description": "(Required) Numeric ID of the pipeline run"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc6fe0c9-83dd-47ce-8f56-d475cb9dcbe1",
+              "name": "List of run artifacts returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "artifactName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3830,\n  \"value\": [\n    {\n      \"name\": \"drop\",\n      \"signedContent\": {\n        \"url\": \"https://BYrxcGhNbDTpEda.yotQbYBWP-xrVpANMOGTrVcl.hs5q0EYP6fHkDxsXGKqRcQmbAsTmsojmRh\",\n        \"signatureExpires\": \"2020-07-04T06:30:34.377Z\"\n      },\n      \"fileContainerResource\": {\n        \"type\": \"string\",\n        \"url\": \"http://YHycYgSwd.jikHuRoForQOfwaSEK-WzaydmsN3QT95KDip,UOmZZVR3m0tOctMLfJe9aMstld,qegaVMJ\"\n      },\n      \"url\": \"http://dRrzTzzDYMqeMqrf.jfzvE4CM2taWAmCrh+SSo9RVDCbTcnSiCDzayJbuGvT+ifYOD6n+648j\"\n    },\n    {\n      \"name\": \"drop\",\n      \"signedContent\": {\n        \"url\": \"https://ej.uhugiKWoygyo2LJ+ETS.cOEpwvBj,s,ExPsh1BtPXe.Qv1MJ6S7MWWUgM1MCSjnKkpLaBkxm5rikHDj\",\n        \"signatureExpires\": \"2010-02-18T15:11:26.539Z\"\n      },\n      \"fileContainerResource\": {\n        \"type\": \"string\",\n        \"url\": \"http://NTGgOq.uzwzh6U3APYj0OqW,.UvsRs4OWucKA.sNl1Y3K-vw5BOzuyOdFk2LlWtixfk6h,RWwS0vKX5hv8D\"\n      },\n      \"url\": \"http://vKWOdKVKLkPMRsdNiBYmxCkvx.dbkrvJFWD4XP3S2GzRSkAMo1S57-rsXZ+\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cabfe8f8-76d6-46f1-8e9a-e46e2480de8b",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "artifactName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8228152f-5acb-4e96-8395-0eceb6b715a8",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "artifactName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0cae4e9-9531-4977-b9f0-f17f5b42f0b2",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "artifactName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "291ce9af-4e16-40d6-849f-b4965d0c7fa1",
+      "name": "Pipeline Runs",
+      "description": {
+        "content": "Operations for triggering and monitoring pipeline runs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d5e34d89-916b-48d2-867c-77630d12f3f7",
+          "name": "Azure DevOps List pipeline runs",
+          "request": {
+            "name": "Azure DevOps List pipeline runs",
+            "description": {
+              "content": "Returns a list of runs (executions) for a specific pipeline. Includes the run state, result, timing, and template parameters used. Supports pagination through the continuationToken.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipelineId",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of runs to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Numeric ID of the pipeline"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1905eae-38d1-4712-875c-843c55928ed9",
+              "name": "List of pipeline runs returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6189,\n  \"value\": [\n    {\n      \"id\": 1001,\n      \"name\": \"20240315.1\",\n      \"state\": \"unknown\",\n      \"result\": \"succeeded\",\n      \"createdDate\": \"1999-07-01T08:14:31.974Z\",\n      \"finishedDate\": \"1992-03-27T18:52:31.597Z\",\n      \"url\": \"https://GCLDABueowGlEDNNcBjpnXlwVVUng.rhkkb+.u1a8o1.HmIb,IsXgXk.kAqfnzqmmCR5OIoSvM\",\n      \"pipeline\": {\n        \"id\": 3987,\n        \"name\": \"string\",\n        \"folder\": \"string\",\n        \"revision\": 9054,\n        \"url\": \"http://YxjyeBiikgUgTrbGCnpfwpvLBSx.vnlkLOuNY9Ir4zUP7SkwjaZ2UDljSvcJHpB8Mo0ciow+dyKp\"\n      },\n      \"resources\": {\n        \"repositories\": {\n          \"key_0\": {\n            \"refName\": \"string\",\n            \"version\": \"string\"\n          },\n          \"key_1\": {\n            \"refName\": \"string\",\n            \"version\": \"string\"\n          },\n          \"key_2\": {\n            \"refName\": \"string\",\n            \"version\": \"string\"\n          },\n          \"key_3\": {\n            \"refName\": \"string\",\n            \"version\": \"string\"\n          }\n        },\n        \"pipelines\": {\n          \"key_0\": {\n            \"version\": \"string\"\n          },\n          \"key_1\": {\n            \"version\": \"string\"\n          }\n        }\n      },\n      \"variables\": {\n        \"key_0\": {\n          \"value\": \"string\",\n          \"isSecret\": true\n        },\n        \"key_1\": {\n          \"value\": \"string\",\n          \"isSecret\": true\n        },\n        \"key_2\": {\n          \"value\": \"string\",\n          \"isSecret\": true\n        }\n      },\n      \"templateParameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"_links\": {\n        \"self\": {\n          \"href\": \"http://V.twedIh,PVYL1XUNvZM232Xc0IS\"\n        },\n        \"web\": {\n          \"href\": \"https://hFWvtBXdahzqRIENtlApeMR.zbaChE02x,+pduGQUM9Y2i8poCabtIA8mmV+SUX6HmPSumFOI7-VG1L,ycS\"\n        },\n        \"pipeline\": {\n          \"href\": \"https://ZGEtqiDsVDZQIWGnZJcvdlKVzSJ.log\"\n        },\n        \"pipeline.web\": {\n          \"href\": \"http://UuoefgOfnzEaROd.xrpeNViMuMIUMNmZ00tzb,bDIsRnVzd\"\n        }\n      }\n    },\n    {\n      \"id\": 1001,\n      \"name\": \"20240315.1\",\n      \"state\": \"canceling\",\n      \"result\": \"canceled\",\n      \"createdDate\": \"1956-07-31T11:40:18.032Z\",\n      \"finishedDate\": \"1999-08-26T20:49:21.466Z\",\n      \"url\": \"https://RJ.nfyeDoDeApYQCqpsL-HNxWu1usy,xgMB8+T4dURyQzndtQ4Qba0vJyyslK83wuWdlo0JDsO\",\n      \"pipeline\": {\n        \"id\": 3657,\n        \"name\": \"string\",\n        \"folder\": \"string\",\n        \"revision\": 8774,\n        \"url\": \"https://vYGsLybwucOwBhnXlVxJnnJwxnIIczzm.wdpppg+pYamVLNLNM6Vxl3QF2Uh\"\n      },\n      \"resources\": {\n        \"repositories\": {\n          \"key_0\": {\n            \"refName\": \"string\",\n            \"version\": \"string\"\n          }\n        },\n        \"pipelines\": {\n          \"key_0\": {\n            \"version\": \"string\"\n          }\n        }\n      },\n      \"variables\": {\n        \"key_0\": {\n          \"value\": \"string\",\n          \"isSecret\": false\n        }\n      },\n      \"templateParameters\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      },\n      \"_links\": {\n        \"self\": {\n          \"href\": \"https://PbNjjC.fsISJyfCcyBiGU9sEOSElXdLS7pjNz2BCv+F3wEfX-Cd,SPF9RwDWJD7.qTHS4G6mowit6\"\n        },\n        \"web\": {\n          \"href\": \"https://PGplwHaDeshIGdjNQSGoaPdFGdxr.ftT0sdjkxgJid,qx,WTgh5-ySiEKEs9DzpiOlJiUj8e,cj+H-uK\"\n        },\n        \"pipeline\": {\n          \"href\": \"https://DcSpNzFWfJpasNaxjZCmUPIYVD.lrwLNxyIb-n9YfprU1C7YiD1JT7+rqeWXgokdlwwreji6Nr7MorDt2aq,0-AuXYNJguM\"\n        },\n        \"pipeline.web\": {\n          \"href\": \"https://xClPJfGzhZmLXnttZGDoyuxDsujDqCCG.roRpvz1dZgRsBuKWC1tch2sXa+p-IxYibjswv4945X\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5087b029-5291-4edc-9c37-062dbe4ee0e0",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dd60a9a-82ab-41f2-a676-f8c8bcf4d7c1",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c65049d-b942-47d9-96ab-a75c585e2693",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de2e78d2-d102-4aad-bf29-513b20ad0a27",
+          "name": "Azure DevOps Run a pipeline",
+          "request": {
+            "name": "Azure DevOps Run a pipeline",
+            "description": {
+              "content": "Triggers a new run of a pipeline. You can override template parameters, variables, the repository branch, and specify which stages to skip or include. The run is queued and executed when an agent becomes available.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipelineId",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "pipelineVersion",
+                  "value": "<integer>",
+                  "description": "Specific version of the pipeline to run"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Numeric ID of the pipeline"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stagesToSkip\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"resources\": {\n    \"repositories\": {\n      \"key_0\": {\n        \"refName\": \"<string>\",\n        \"version\": \"<string>\"\n      },\n      \"key_1\": {\n        \"refName\": \"<string>\",\n        \"version\": \"<string>\"\n      }\n    },\n    \"pipelines\": {\n      \"key_0\": {\n        \"version\": \"<string>\"\n      },\n      \"key_1\": {\n        \"version\": \"<string>\"\n      }\n    },\n    \"builds\": {\n      \"key_0\": \"<object>\",\n      \"key_1\": \"<object>\",\n      \"key_2\": \"<object>\"\n    }\n  },\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"templateParameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1daaedf-2521-4ea1-bfd3-2ae9a6888a72",
+              "name": "Pipeline run started successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stagesToSkip\": [],\n  \"resources\": {\n    \"repositories\": {\n      \"self\": {\n        \"refName\": \"refs/heads/main\"\n      }\n    }\n  },\n  \"variables\": {\n    \"MyVariable\": {\n      \"value\": \"custom-value\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"environment\": \"staging\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1001,\n  \"name\": \"20240315.1\",\n  \"state\": \"completed\",\n  \"result\": \"succeeded\",\n  \"createdDate\": \"1986-03-06T02:42:29.521Z\",\n  \"finishedDate\": \"2019-09-26T11:08:48.396Z\",\n  \"url\": \"http://FqInireZifwbSMc.jygbNcPOVmBKbWL2h.3AEcnuXH2wn6r3+wYLDRg4vaFrAje6nJ\",\n  \"pipeline\": {\n    \"id\": 3594,\n    \"name\": \"string\",\n    \"folder\": \"string\",\n    \"revision\": 7302,\n    \"url\": \"https://qsMvqdOlLhQEMuLoGjLdeXsupSDXK.frzvqvdfG,BoRl1NXtSjRLDXToHYp\"\n  },\n  \"resources\": {\n    \"repositories\": {\n      \"key_0\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      },\n      \"key_1\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      },\n      \"key_2\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      }\n    },\n    \"pipelines\": {\n      \"key_0\": {\n        \"version\": \"string\"\n      },\n      \"key_1\": {\n        \"version\": \"string\"\n      }\n    }\n  },\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"string\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"key_0\": \"string\"\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"http://LuaVZIlBmXVOUJyCNdiHfmjCiEYlcq.cpw3kYjBSDGvwYVcxS.d0rur3oyg-1.0BzEzOgl4Y1IUE\"\n    },\n    \"web\": {\n      \"href\": \"https://TRESkkEnLZL.eeqhptCqsYIBuNgvO0SFMUPN4qefmV5hFJDj+riqD0zLLFAP2,RFrKVmp,,3uzA473utH3P9P\"\n    },\n    \"pipeline\": {\n      \"href\": \"https://YdtoKGNC.gmqIUytslSqFECGg1MEolP2tY63C+Cn0CN\"\n    },\n    \"pipeline.web\": {\n      \"href\": \"http://znpYlJbstDEHqFWuAREnZ.mzcwj6YyIIblg3\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "068d6b11-ad52-469e-8455-88ad4f18a7cd",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stagesToSkip\": [],\n  \"resources\": {\n    \"repositories\": {\n      \"self\": {\n        \"refName\": \"refs/heads/main\"\n      }\n    }\n  },\n  \"variables\": {\n    \"MyVariable\": {\n      \"value\": \"custom-value\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"environment\": \"staging\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8d85688-1766-45f5-ac0d-de23c8b79a31",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stagesToSkip\": [],\n  \"resources\": {\n    \"repositories\": {\n      \"self\": {\n        \"refName\": \"refs/heads/main\"\n      }\n    }\n  },\n  \"variables\": {\n    \"MyVariable\": {\n      \"value\": \"custom-value\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"environment\": \"staging\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd898852-edee-4b8e-a0c1-f3a7b1349b8e",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stagesToSkip\": [],\n  \"resources\": {\n    \"repositories\": {\n      \"self\": {\n        \"refName\": \"refs/heads/main\"\n      }\n    }\n  },\n  \"variables\": {\n    \"MyVariable\": {\n      \"value\": \"custom-value\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"environment\": \"staging\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "607f3b23-0498-486a-9e80-d8da12ecd5c7",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stagesToSkip\": [],\n  \"resources\": {\n    \"repositories\": {\n      \"self\": {\n        \"refName\": \"refs/heads/main\"\n      }\n    }\n  },\n  \"variables\": {\n    \"MyVariable\": {\n      \"value\": \"custom-value\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"environment\": \"staging\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c52da1f7-1b43-4d01-b233-4bfe92b6c9cb",
+          "name": "Azure DevOps Get a pipeline run",
+          "request": {
+            "name": "Azure DevOps Get a pipeline run",
+            "description": {
+              "content": "Returns detailed information about a specific pipeline run, including its state, result, template parameters, variables used, and timing. Poll this endpoint to monitor run progress.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipelineId",
+                "runs",
+                ":runId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Numeric ID of the pipeline"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "runId",
+                  "description": "(Required) Numeric ID of the pipeline run"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7406655d-ce63-4817-a7fd-7cd97c27fc51",
+              "name": "Pipeline run returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1001,\n  \"name\": \"20240315.1\",\n  \"state\": \"completed\",\n  \"result\": \"succeeded\",\n  \"createdDate\": \"1986-03-06T02:42:29.521Z\",\n  \"finishedDate\": \"2019-09-26T11:08:48.396Z\",\n  \"url\": \"http://FqInireZifwbSMc.jygbNcPOVmBKbWL2h.3AEcnuXH2wn6r3+wYLDRg4vaFrAje6nJ\",\n  \"pipeline\": {\n    \"id\": 3594,\n    \"name\": \"string\",\n    \"folder\": \"string\",\n    \"revision\": 7302,\n    \"url\": \"https://qsMvqdOlLhQEMuLoGjLdeXsupSDXK.frzvqvdfG,BoRl1NXtSjRLDXToHYp\"\n  },\n  \"resources\": {\n    \"repositories\": {\n      \"key_0\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      },\n      \"key_1\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      },\n      \"key_2\": {\n        \"refName\": \"string\",\n        \"version\": \"string\"\n      }\n    },\n    \"pipelines\": {\n      \"key_0\": {\n        \"version\": \"string\"\n      },\n      \"key_1\": {\n        \"version\": \"string\"\n      }\n    }\n  },\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"string\",\n      \"isSecret\": false\n    }\n  },\n  \"templateParameters\": {\n    \"key_0\": \"string\"\n  },\n  \"_links\": {\n    \"self\": {\n      \"href\": \"http://LuaVZIlBmXVOUJyCNdiHfmjCiEYlcq.cpw3kYjBSDGvwYVcxS.d0rur3oyg-1.0BzEzOgl4Y1IUE\"\n    },\n    \"web\": {\n      \"href\": \"https://TRESkkEnLZL.eeqhptCqsYIBuNgvO0SFMUPN4qefmV5hFJDj+riqD0zLLFAP2,RFrKVmp,,3uzA473utH3P9P\"\n    },\n    \"pipeline\": {\n      \"href\": \"https://YdtoKGNC.gmqIUytslSqFECGg1MEolP2tY63C+Cn0CN\"\n    },\n    \"pipeline.web\": {\n      \"href\": \"http://znpYlJbstDEHqFWuAREnZ.mzcwj6YyIIblg3\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acbffc99-aca3-4a94-952d-1031d4c2654b",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3386cb94-2d60-4451-a210-b1b2a49a7483",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e632f20-f2d3-43a7-9548-8d0ce871f2f5",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId",
+                    "runs",
+                    ":runId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "runId",
+                      "description": "(Required) Numeric ID of the pipeline run"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1d97fca8-f341-4230-8e6e-d9d14a9ebbe6",
+      "name": "Pipelines",
+      "description": {
+        "content": "Operations for managing pipeline definitions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d6f03e0-ba9a-4564-b479-3ae27066d26a",
+          "name": "Azure DevOps List pipelines",
+          "request": {
+            "name": "Azure DevOps List pipelines",
+            "description": {
+              "content": "Returns a list of pipelines in the project. Pipelines are YAML-based CI/CD definitions stored in source repositories. Supports ordering and pagination.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "Sort order for pipelines (e.g., name, createdDate)"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of pipelines to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7d6b6ee-1126-47a7-be1a-8d1c0eacb137",
+              "name": "List of pipelines returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Token for retrieving the next page of results",
+                  "key": "x-ms-continuationtoken",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8122,\n  \"value\": [\n    {\n      \"id\": 15,\n      \"name\": \"CI Pipeline\",\n      \"folder\": \"\\\\CI\",\n      \"revision\": 897,\n      \"url\": \"http://sXGrRddtDdicPbYDC.rsoalN1z90uJot8s+iyy4xeszYn1MHS4tg\",\n      \"_links\": {\n        \"self\": {\n          \"href\": \"https://dCMIfsSCUmouWGW.wnrSfja8fQ+oIQ5IdP-MYwtbqshGna7.R6HC1DFZ1KV2A7cCgParqCFdQV\"\n        },\n        \"web\": {\n          \"href\": \"https://xZZVgEaEaF.ymz7tqk5gJVzzuPMw90R98azIg6zmESFp,qjpa1d2AEmfcmh.II4ynBBungfcQYyt\"\n        }\n      },\n      \"configuration\": {\n        \"type\": \"unknown\",\n        \"path\": \"/azure-pipelines.yml\",\n        \"repository\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"TfsGit\",\n          \"url\": \"https://MEAiVIPwEhEuSvOjcFVzBvsjETJkvVgMp.ptjhbFg6.ZWJ1Ar9jb3u.tYW6h\",\n          \"defaultBranch\": \"refs/heads/main\"\n        }\n      }\n    },\n    {\n      \"id\": 15,\n      \"name\": \"CI Pipeline\",\n      \"folder\": \"\\\\CI\",\n      \"revision\": 4492,\n      \"url\": \"http://KzfcGgT.yocvTjSKS0Q9BBpEeRdxqUnshTX23VWPQKxrUltWXQTm4BH,c0Xt,d8qm9ISLfa\",\n      \"_links\": {\n        \"self\": {\n          \"href\": \"http://KEIrBIrddTRJSzh.awUHuWEV47wRLv-Fk904Tf,e9tyb781IdG\"\n        },\n        \"web\": {\n          \"href\": \"https://IOlLLlz.nunNhtuLS+zDltkiQj.EsiHQ\"\n        }\n      },\n      \"configuration\": {\n        \"type\": \"yaml\",\n        \"path\": \"/azure-pipelines.yml\",\n        \"repository\": {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"type\": \"GitHubEnterprise\",\n          \"url\": \"http://WqlhcphwSRrFZggEfQkpWoTr.srFibFNdcO8\",\n          \"defaultBranch\": \"refs/heads/main\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59a4c0b8-ece3-4a20-b9e3-773aa3be6580",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e372bffa-63cd-44a5-bac5-3336c17194f3",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6081e44f-4cd3-4068-a391-ccd6cfe48207",
+          "name": "Azure DevOps Create a pipeline",
+          "request": {
+            "name": "Azure DevOps Create a pipeline",
+            "description": {
+              "content": "Creates a new pipeline definition in the project. The pipeline references a YAML file in a source repository. After creation, the pipeline can be run manually or triggered by code changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"configuration\": {\n    \"type\": \"<string>\",\n    \"path\": \"<string>\",\n    \"repository\": {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  },\n  \"folder\": \"\\\\\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a71b210-4b66-4fb7-9ddc-eb6200d6e29a",
+              "name": "Pipeline created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"configuration\": {\n    \"type\": \"yaml\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n      \"type\": \"azureReposGit\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 15,\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"revision\": 2162,\n  \"url\": \"https://keGxpbCkeaaKlEtyCWxBuxzT.papsAJB9\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"http://ZvjCiUJibV.pdjRmFMq2QB.q,GA1-Q0iYeuymSxfBa\"\n    },\n    \"web\": {\n      \"href\": \"https://Os.oihVmx4tPKx6yAHiQ\"\n    }\n  },\n  \"configuration\": {\n    \"type\": \"designerJson\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"Bitbucket\",\n      \"url\": \"https://wrwlieEAakx.ikUfNlRCH\",\n      \"defaultBranch\": \"refs/heads/main\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "729baa28-60a6-4fbb-908e-e23bc5884ca4",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"configuration\": {\n    \"type\": \"yaml\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n      \"type\": \"azureReposGit\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94deb55a-0110-475b-9722-2801f728f44a",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"configuration\": {\n    \"type\": \"yaml\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n      \"type\": \"azureReposGit\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d99f1ac-7727-4271-9482-54d754c9be56",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"configuration\": {\n    \"type\": \"yaml\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n      \"type\": \"azureReposGit\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5efb3508-846d-4b7a-8a97-57ae76427511",
+          "name": "Azure DevOps Get a pipeline",
+          "request": {
+            "name": "Azure DevOps Get a pipeline",
+            "description": {
+              "content": "Returns detailed information about a specific pipeline, including its configuration, repository source, and revision. The pipelineId is the numeric identifier assigned when the pipeline was created.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pipelines",
+                ":pipelineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "pipelineVersion",
+                  "value": "<integer>",
+                  "description": "Specific version of the pipeline to retrieve"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Numeric ID of the pipeline"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "358499f6-89de-4b6f-b529-08bd1fd10ec1",
+              "name": "Pipeline returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 15,\n  \"name\": \"CI Pipeline\",\n  \"folder\": \"\\\\CI\",\n  \"revision\": 2162,\n  \"url\": \"https://keGxpbCkeaaKlEtyCWxBuxzT.papsAJB9\",\n  \"_links\": {\n    \"self\": {\n      \"href\": \"http://ZvjCiUJibV.pdjRmFMq2QB.q,GA1-Q0iYeuymSxfBa\"\n    },\n    \"web\": {\n      \"href\": \"https://Os.oihVmx4tPKx6yAHiQ\"\n    }\n  },\n  \"configuration\": {\n    \"type\": \"designerJson\",\n    \"path\": \"/azure-pipelines.yml\",\n    \"repository\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"Bitbucket\",\n      \"url\": \"https://wrwlieEAakx.ikUfNlRCH\",\n      \"defaultBranch\": \"refs/heads/main\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "847e5d20-2298-4f9a-8a84-2e61cd320614",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2ba35b1-7898-435a-ac2c-8740b86bb0d1",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "832ce818-4496-44a8-9070-51e45a0384cb",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "pipelineVersion",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Numeric ID of the pipeline"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e4dac9c8-ce1a-045a-b21d-73d8667555af\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4009,\n  \"eventId\": 774\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d80cf63d-0d03-41ac-8f70-769744dbe881",
+    "name": "Azure DevOps Pipelines API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing pipelines and pipeline runs in Azure DevOps. Provides programmatic access to create, list, run, and monitor CI/CD pipelines defined as YAML files in source repositories. Supports triggering runs with custom variables, parameters, and stage selections.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

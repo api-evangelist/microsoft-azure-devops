@@ -1,0 +1,474 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Builds API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Builds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List builds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitions",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of definition IDs to filter builds"
+              },
+              {
+                "name": "buildNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by build number"
+              },
+              {
+                "name": "statusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by status"
+              },
+              {
+                "name": "resultFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by result"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of builds to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "branchName",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by branch name"
+              },
+              {
+                "name": "reasonFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by trigger reason"
+              },
+              {
+                "name": "requestedFor",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds requested by a specific user (email or descriptor)"
+              }
+            ]
+          },
+          "docs": "Returns a list of builds for the project. Supports filtering by definition, build number, status, result, and branch. Results can be paginated using continuationToken.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Queue a new build",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "ignoreWarnings",
+                "value": "",
+                "type": "query",
+                "description": "Ignore warnings when queuing the build"
+              },
+              {
+                "name": "checkInTicket",
+                "value": "",
+                "type": "query",
+                "description": "Check-in ticket for gated check-in builds"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Queues a new build by specifying the build definition and optional parameters such as source branch, build parameters, and demands. The build will be scheduled and executed based on agent availability.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific build, including its status, result, timing, source information, and links to logs and artifacts.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a build",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a build record and its associated data, including logs and artifacts. This operation cannot be undone. The build must not be in progress to be deleted.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Build Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get build logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/logs",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns the list of log entries for a build. Each log entry corresponds to a step or phase in the build pipeline. Use the log ID to retrieve the content of a specific log.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get build timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/timeline",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns the detailed timeline for a build, showing all phases, jobs, tasks, and their individual statuses, start times, and durations. Useful for understanding which steps in the pipeline passed or failed.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Build Artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List build artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/artifacts",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              },
+              {
+                "name": "artifactName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by a specific artifact name"
+              }
+            ]
+          },
+          "docs": "Returns a list of artifacts published by a specific build. Artifacts can be downloaded individually and include their name, type, and download URL.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Build Definitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List build definitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/definitions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by name (supports wildcards with *)"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by folder path"
+              },
+              {
+                "name": "builtAfter",
+                "value": "",
+                "type": "query",
+                "description": "Return definitions that were built after this date"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of definitions to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              }
+            ]
+          },
+          "docs": "Returns a list of build definitions (pipelines) in the project. Supports filtering by name and path, and returns summary information for each definition.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a build definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/definitions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionToCloneId",
+                "value": "",
+                "type": "query",
+                "description": "ID of an existing definition to clone"
+              },
+              {
+                "name": "definitionToCloneRevision",
+                "value": "",
+                "type": "query",
+                "description": "Revision number of the definition to clone"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new build definition (pipeline) in the project. The definition specifies the build steps, triggers, variables, and agent requirements.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a build definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build definition"
+              },
+              {
+                "name": "revision",
+                "value": "",
+                "type": "query",
+                "description": "Specific revision number to retrieve"
+              },
+              {
+                "name": "minMetricsTime",
+                "value": "",
+                "type": "query",
+                "description": "Minimum date for including build metrics"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific build definition, including all steps, triggers, variables, and configuration. You can also request a specific revision of the definition.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a build definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build definition to update"
+              },
+              {
+                "name": "secretsSourceDefinitionId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the definition to clone secrets from"
+              },
+              {
+                "name": "secretsSourceDefinitionRevision",
+                "value": "",
+                "type": "query",
+                "description": "Revision number to clone secrets from"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces an existing build definition with the provided definition. The revision number in the body must match the current revision to prevent concurrent modification conflicts.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a build definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/build/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build definition to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a build definition. All associated builds must be deleted first, or you must specify deleteBuilds=true to cascade delete all associated builds.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

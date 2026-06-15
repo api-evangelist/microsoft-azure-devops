@@ -1,0 +1,768 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Git Repositories API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include _links in the response"
+              },
+              {
+                "name": "includeAllUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all remote URLs (fetch and push)"
+              },
+              {
+                "name": "includeHidden",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include hidden repositories"
+              }
+            ]
+          },
+          "docs": "Returns a list of Git repositories in the project. Each repository includes its ID, name, default branch, clone URL, and remote URL.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "sourceRef",
+                "value": "",
+                "type": "query",
+                "description": "Initial branch name for the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Git repository in the project. Optionally can initialize the repository with a README and specify its visibility. After creation, the repository is empty unless a source URL is provided.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "includeParent",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the parent repository (for forks)"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific Git repository, including its default branch, clone URL, and project association. The repositoryId can be either the GUID or the repository name.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of a repository such as its name or default branch. Only the fields provided in the request body will be changed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a repository and all its contents. This action cannot be undone. The repository and all pull requests, branches, and history will be permanently removed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps List repository items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/items",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "scopePath",
+                "value": "/src",
+                "type": "query",
+                "description": "Path to the folder or file to list"
+              },
+              {
+                "name": "recursionLevel",
+                "value": "",
+                "type": "query",
+                "description": "How deep to recurse into subfolders"
+              },
+              {
+                "name": "includeContentMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include content metadata (size, encoding) for files"
+              },
+              {
+                "name": "latestProcessedChange",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the latest commit that changed each item"
+              },
+              {
+                "name": "download",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return file content as a download"
+              },
+              {
+                "name": "versionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch, tag, or commit to retrieve items at"
+              }
+            ]
+          },
+          "docs": "Returns a list of items (files and folders) in the repository at a specified path and version. Use this to browse the repository tree and download file contents.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List branches and refs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "filter",
+                "value": "heads/",
+                "type": "query",
+                "description": "Prefix filter for ref names (e.g., 'heads/' returns branches)"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include _links"
+              },
+              {
+                "name": "includeStatuses",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include commit status information"
+              },
+              {
+                "name": "includeMyBranches",
+                "value": "",
+                "type": "query",
+                "description": "Whether to prioritize branches created by the current user"
+              },
+              {
+                "name": "latestStatusesOnly",
+                "value": "",
+                "type": "query",
+                "description": "Return only the latest status for each ref"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of refs to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paging"
+              }
+            ]
+          },
+          "docs": "Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., \"heads/\" for branches, \"tags/\" for tags).\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.itemVersion.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch, tag, or commit SHA to start listing from"
+              },
+              {
+                "name": "searchCriteria.author",
+                "value": "",
+                "type": "query",
+                "description": "Filter by commit author name or email"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return commits after this date"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return commits before this date"
+              },
+              {
+                "name": "searchCriteria.itemPath",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits that touched this file or folder path"
+              },
+              {
+                "name": "searchCriteria.$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of commits to return"
+              },
+              {
+                "name": "searchCriteria.$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to skip (for pagination)"
+              }
+            ]
+          },
+          "docs": "Returns a list of commits in a repository. Supports filtering by branch, author, date range, file path, and commit message text. Results are sorted by commit date (newest first by default).\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pull Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by status"
+              },
+              {
+                "name": "searchCriteria.targetRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target branch (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.sourceRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source branch"
+              },
+              {
+                "name": "searchCriteria.creatorId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by creator's user ID"
+              },
+              {
+                "name": "searchCriteria.reviewerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by reviewer's user ID"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pull requests to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to skip (for pagination)"
+              }
+            ]
+          },
+          "docs": "Returns a list of pull requests in a repository. Supports filtering by status, target branch, source branch, creator, and reviewer.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "supportsIterations",
+                "value": "",
+                "type": "query",
+                "description": "Whether the PR should support iterations (diff views)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new pull request to merge changes from a source branch into a target branch. Supports specifying reviewers, work item links, labels, and whether to complete the PR automatically on all approvals.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              },
+              {
+                "name": "maxCommentLength",
+                "value": "",
+                "type": "query",
+                "description": "Maximum character count in returned comments"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in collections"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items in collections"
+              },
+              {
+                "name": "includeCommits",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include commit details"
+              },
+              {
+                "name": "includeWorkItemRefs",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include linked work item references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific pull request, including its status, reviewers, commits, merge status, and associated work items.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a pull request. Use this to change the title, description, status (abandon or complete), target branch, and auto-complete settings. To complete a PR, set status to 'completed' and provide a lastMergeSourceCommit.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get pull request threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of threads to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of threads to skip"
+              }
+            ]
+          },
+          "docs": "Returns all comment threads on a pull request, including code review comments tied to specific file positions and general conversation threads.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Add a pull request comment thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new comment thread to a pull request. Threads can be general comments or code review comments tied to a specific file and line number.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pushes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List pushes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pushes to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to skip"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return pushes from after this date"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return pushes before this date"
+              },
+              {
+                "name": "searchCriteria.refName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by branch or ref name"
+              },
+              {
+                "name": "searchCriteria.pusherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pushes by user who pushed"
+              }
+            ]
+          },
+          "docs": "Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

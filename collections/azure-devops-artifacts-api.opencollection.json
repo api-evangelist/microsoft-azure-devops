@@ -1,0 +1,368 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List feeds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedRole",
+                "value": "",
+                "type": "query",
+                "description": "Filter feeds by the current user's role"
+              },
+              {
+                "name": "includeDeletedUpstreams",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include feeds with deleted upstream sources"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager endpoint URLs"
+              }
+            ]
+          },
+          "docs": "Returns a list of package feeds accessible within the organization or project. Feeds are the primary containers for packages in Azure Artifacts. A project can have multiple feeds with different visibility and upstream source settings.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new artifact feed. You can configure whether the feed allows upstream sources (for fetching public packages), its visibility (project-wide or organization-wide), and whether the feed is public or requires authentication.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "includeDeletedUpstreams",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted upstream sources in the response"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific feed, including its configuration, upstream sources, and visibility settings. The feedId can be either the feed GUID or its name.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of a feed such as its name, description, upstream sources, and retention policy. Only fields provided in the request body will be changed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a feed and all packages it contains. This operation cannot be undone. All packages will be permanently removed from the feed. Consumers of packages from this feed will lose access immediately.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Packages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List packages in a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "protocolType",
+                "value": "",
+                "type": "query",
+                "description": "Filter packages by protocol type"
+              },
+              {
+                "name": "packageNameQuery",
+                "value": "",
+                "type": "query",
+                "description": "Filter packages whose names contain this string"
+              },
+              {
+                "name": "normalizedPackageName",
+                "value": "",
+                "type": "query",
+                "description": "Exact package name match (normalized form)"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager URLs in the response"
+              },
+              {
+                "name": "includeAllVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all versions or only the latest"
+              },
+              {
+                "name": "isListed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by listed status (true=published, false=unlisted)"
+              },
+              {
+                "name": "getTopPackageVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the top versions for each package"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted packages"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of packages to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of packages to skip (for pagination)"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              }
+            ]
+          },
+          "docs": "Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get package details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages/:packageId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package"
+              },
+              {
+                "name": "includeAllVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all versions or only the latest"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager URLs"
+              },
+              {
+                "name": "isListed",
+                "value": "",
+                "type": "query",
+                "description": "Filter versions by listed status"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted versions"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Package Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Delete a package version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package"
+              },
+              {
+                "name": "packageVersionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package version"
+              }
+            ]
+          },
+          "docs": "Deletes a specific version of a package from the feed. By default this moves the version to the recycle bin. Use the permanentlyDelete parameter to permanently remove it. Once permanently deleted, the version cannot be recovered and the same version number cannot be reused.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

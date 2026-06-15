@@ -1,0 +1,414 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Test Plans API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List test plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "Filter test plans by owner (user display name or email)"
+              },
+              {
+                "name": "includePlanDetails",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return full plan details or just IDs and names"
+              },
+              {
+                "name": "filterActivePlans",
+                "value": "",
+                "type": "query",
+                "description": "Return only active (non-completed) test plans"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "isLastUpdatedSet",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return plans sorted by last update"
+              }
+            ]
+          },
+          "docs": "Returns a list of test plans in the project. Test plans are the top-level containers for organizing test suites and test cases. They are typically associated with a release milestone or sprint.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a test plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new test plan in the project. A test plan defines the scope of testing for a release, milestone, or sprint. It can be associated with an area path and iteration path to align with the project structure.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a test plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific test plan, including its area path, iteration, owner, and date range. Use the plan ID to retrieve test suites associated with this plan.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a test plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of an existing test plan such as its name, description, area path, iteration, start date, and end date.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a test plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a test plan and all its suites and configurations. This operation cannot be undone. All associated test results and run data will also be deleted.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Test Suites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional suite details"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "asTreeView",
+                "value": "",
+                "type": "query",
+                "description": "Return suites in a tree structure"
+              }
+            ]
+          },
+          "docs": "Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional suite details"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Test Cases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List test cases in a suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId/testcases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite"
+              },
+              {
+                "name": "testIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of test case IDs to filter"
+              },
+              {
+                "name": "configurationIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of configuration IDs to filter"
+              },
+              {
+                "name": "witFields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated work item field reference names to include"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional test case details"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "returnIdentityRef",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return identity fields as full IdentityRef objects"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of test cases to return"
+              },
+              {
+                "name": "isRecursive",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include test cases from child suites"
+              }
+            ]
+          },
+          "docs": "Returns a list of test cases within a specific test suite. Test cases are work items of type Test Case that contain the test steps and expected results for manual or automated tests.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Add test cases to a suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId/testcases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite to add test cases to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds existing test case work items to a test suite. Test cases must be existing work items of type Test Case. Provide a list of work item IDs to add to the suite.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

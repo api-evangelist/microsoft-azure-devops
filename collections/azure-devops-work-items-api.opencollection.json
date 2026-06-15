@@ -1,0 +1,493 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Work Items API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Work Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List work items by IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "ids",
+                "value": "1,2,3,4,5",
+                "type": "query",
+                "description": "Comma-separated list of work item IDs (up to 200)"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return (e.g., System.Title,System.State)"
+              },
+              {
+                "name": "asOf",
+                "value": "",
+                "type": "query",
+                "description": "Work items as of a specific date and time (ISO 8601 format)"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relations, links, or fields in the response"
+              }
+            ]
+          },
+          "docs": "Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:type",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "type",
+                "value": "Bug",
+                "type": "path",
+                "description": "Work item type (e.g., Bug, Task, User Story)"
+              },
+              {
+                "name": "validateOnly",
+                "value": "",
+                "type": "query",
+                "description": "Validate the fields without saving the work item"
+              },
+              {
+                "name": "bypassRules",
+                "value": "",
+                "type": "query",
+                "description": "Do not enforce the work item type rules on this update"
+              },
+              {
+                "name": "suppressNotifications",
+                "value": "",
+                "type": "query",
+                "description": "Do not fire any notifications for this change"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a work item by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "42",
+                "type": "path",
+                "description": "Numeric ID of the work item"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return"
+              },
+              {
+                "name": "asOf",
+                "value": "",
+                "type": "query",
+                "description": "Work item as of a specific date and time"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relations, links, or fields"
+              }
+            ]
+          },
+          "docs": "Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item to update"
+              },
+              {
+                "name": "validateOnly",
+                "value": "",
+                "type": "query",
+                "description": "Validate fields without saving the work item"
+              },
+              {
+                "name": "bypassRules",
+                "value": "",
+                "type": "query",
+                "description": "Do not enforce work item type rules on this update"
+              },
+              {
+                "name": "suppressNotifications",
+                "value": "",
+                "type": "query",
+                "description": "Do not fire any notifications for this change"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item to delete"
+              },
+              {
+                "name": "destroy",
+                "value": "",
+                "type": "query",
+                "description": "Permanently delete the work item instead of moving to recycle bin"
+              }
+            ]
+          },
+          "docs": "Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Work Item Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Execute a WIQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/wiql",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return"
+              },
+              {
+                "name": "timePrecision",
+                "value": "",
+                "type": "query",
+                "description": "Whether or not to use time precision"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a Work Item Query Language (WIQL) query and returns a list of work item references that match the query criteria. WIQL is a SQL-like language specific to Azure DevOps work item querying.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Work Item Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List work item types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ]
+          },
+          "docs": "Returns a list of all work item types defined in the project. Work item types include Bug, Task, User Story, Feature, Epic, and any custom types defined in the process template.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a work item type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypes/:type",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "type",
+                "value": "Bug",
+                "type": "path",
+                "description": "Name of the work item type"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific work item type, including its fields, transitions, states, and rules. The type name is case-sensitive and must match exactly (e.g., 'Bug', 'Task', 'User Story').\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps List work item fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/fields",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Include additional details such as allowed values"
+              }
+            ]
+          },
+          "docs": "Returns a list of all work item fields available in the project. Includes both system fields (System.*) and custom fields, with their types, reference names, and whether they are read-only.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get work item comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id/comments",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of comments to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paging"
+              }
+            ]
+          },
+          "docs": "Returns all comments for a specific work item, ordered by creation date. Comments are user-authored notes attached to a work item and are separate from the work item's history.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Add a comment to a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id/comments",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new comment to a work item. The comment body supports HTML markup. The new comment is appended to the existing list of comments.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get attachment info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/attachments/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the attachment"
+              }
+            ]
+          },
+          "docs": "Returns metadata about an attachment by its GUID identifier. The response includes the attachment URL, file name, size, and creation date. Use the URL in the response to download the actual attachment content.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Upload an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/wit/attachments",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the file being uploaded"
+              },
+              {
+                "name": "uploadType",
+                "value": "",
+                "type": "query",
+                "description": "Upload type (simple for files up to 130 MB)"
+              }
+            ]
+          },
+          "docs": "Uploads a new attachment and returns the attachment reference including the ID and URL. After uploading, attach the file to a work item using the work item update operation with a relation of type AttachedFile.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

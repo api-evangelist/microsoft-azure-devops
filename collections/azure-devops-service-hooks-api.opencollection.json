@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Service Hooks API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/subscriptions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by publisher ID (e.g., 'tfs')"
+              },
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by event type (e.g., 'workitem.created')"
+              },
+              {
+                "name": "consumerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')"
+              },
+              {
+                "name": "consumerActionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by consumer action ID"
+              }
+            ]
+          },
+          "docs": "Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/subscriptions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription to delete"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Publishers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List publishers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/publishers",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ]
+          },
+          "docs": "Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is 'tfs'. Each publisher defines what event types it can produce.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps List event types for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/publishers/:publisherId/eventTypes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "publisherId",
+                "value": "tfs",
+                "type": "path",
+                "description": "Publisher identifier (e.g., 'tfs')"
+              }
+            ]
+          },
+          "docs": "Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Consumers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List consumers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/consumers",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ]
+          },
+          "docs": "Returns a list of all available consumers that can receive service hook notifications. Consumers include webhooks (httpRequest), Azure Service Bus, Azure Storage, Microsoft Teams, and other integration targets.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Send a test notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/_apis/hooks/testnotifications",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "useRealData",
+                "value": "",
+                "type": "query",
+                "description": "Whether to use real event data or synthetic test data"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a test notification to verify that a service hook subscription is correctly configured and the consumer endpoint is reachable. Returns the result of the delivery attempt including HTTP status code and response body.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

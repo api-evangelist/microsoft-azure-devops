@@ -1,0 +1,2902 @@
+{
+  "info": {
+    "_postman_id": "2d5295d4-e779-4cd2-8d63-ed24b2fb8f16",
+    "name": "Azure DevOps Artifacts API",
+    "description": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:11:22.000Z",
+    "updatedAt": "2026-06-05T15:11:22.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2d5295d4-e779-4cd2-8d63-ed24b2fb8f16"
+  },
+  "item": [
+    {
+      "name": "packaging",
+      "item": [
+        {
+          "name": "feeds",
+          "item": [
+            {
+              "name": "{feedId}",
+              "item": [
+                {
+                  "name": "packages",
+                  "item": [
+                    {
+                      "name": "{packageId}",
+                      "item": [
+                        {
+                          "name": "versions",
+                          "item": [
+                            {
+                              "name": "{packageVersionId}",
+                              "item": [
+                                {
+                                  "name": "Azure DevOps Delete a package version",
+                                  "id": "9f67508c-a4fe-4909-96e2-aac63641d136",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId?api-version=7.1",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "packaging",
+                                        "feeds",
+                                        ":feedId",
+                                        "packages",
+                                        ":packageId",
+                                        "versions",
+                                        ":packageVersionId"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                          "key": "api-version",
+                                          "value": "7.1"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "16aebd63-7def-47cf-b54e-ee27a173fc39",
+                                          "key": "feedId",
+                                          "value": "<string>",
+                                          "description": "(Required) Feed GUID or feed name"
+                                        },
+                                        {
+                                          "id": "3f2418c4-f2a8-4224-bba2-f4d2efd4a425",
+                                          "key": "packageId",
+                                          "value": "<uuid>",
+                                          "description": "(Required) GUID identifier of the package"
+                                        },
+                                        {
+                                          "id": "f1a2ffdf-a0fd-4f52-9d6c-8c0f55a1793e",
+                                          "key": "packageVersionId",
+                                          "value": "<uuid>",
+                                          "description": "(Required) GUID identifier of the package version"
+                                        }
+                                      ]
+                                    },
+                                    "description": "Deletes a specific version of a package from the feed. By default this moves the version to the recycle bin. Use the permanentlyDelete parameter to permanently remove it. Once permanently deleted, the version cannot be recovered and the same version number cannot be reused.\n"
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "fd88bf99-3ca0-4621-96d0-e4eed216fe92",
+                                      "name": "Package version deleted successfully",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId?api-version=7.1",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "packaging",
+                                            "feeds",
+                                            ":feedId",
+                                            "packages",
+                                            ":packageId",
+                                            "versions",
+                                            ":packageVersionId"
+                                          ],
+                                          "query": [
+                                            {
+                                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                              "key": "api-version",
+                                              "value": "7.1"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "feedId"
+                                            },
+                                            {
+                                              "key": "packageId"
+                                            },
+                                            {
+                                              "key": "packageVersionId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "No Content",
+                                      "code": 204,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-06-05T15:11:22.000Z",
+                                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                                      "uid": "35240-fd88bf99-3ca0-4621-96d0-e4eed216fe92"
+                                    },
+                                    {
+                                      "id": "798b4423-03f0-41f0-bd4f-986e6c1b0449",
+                                      "name": "Unauthorized - missing or invalid authentication credentials",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId?api-version=7.1",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "packaging",
+                                            "feeds",
+                                            ":feedId",
+                                            "packages",
+                                            ":packageId",
+                                            "versions",
+                                            ":packageVersionId"
+                                          ],
+                                          "query": [
+                                            {
+                                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                              "key": "api-version",
+                                              "value": "7.1"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "feedId"
+                                            },
+                                            {
+                                              "key": "packageId"
+                                            },
+                                            {
+                                              "key": "packageVersionId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                                      "createdAt": "2026-06-05T15:11:22.000Z",
+                                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                                      "uid": "35240-798b4423-03f0-41f0-bd4f-986e6c1b0449"
+                                    },
+                                    {
+                                      "id": "a52d10e6-a16b-4e7c-a5f1-2ad94a9420a4",
+                                      "name": "Forbidden - insufficient permissions to perform this operation",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId?api-version=7.1",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "packaging",
+                                            "feeds",
+                                            ":feedId",
+                                            "packages",
+                                            ":packageId",
+                                            "versions",
+                                            ":packageVersionId"
+                                          ],
+                                          "query": [
+                                            {
+                                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                              "key": "api-version",
+                                              "value": "7.1"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "feedId"
+                                            },
+                                            {
+                                              "key": "packageId"
+                                            },
+                                            {
+                                              "key": "packageVersionId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Forbidden",
+                                      "code": 403,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                                      "createdAt": "2026-06-05T15:11:22.000Z",
+                                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                                      "uid": "35240-a52d10e6-a16b-4e7c-a5f1-2ad94a9420a4"
+                                    },
+                                    {
+                                      "id": "e31c0c1f-14fa-4a63-9a81-f1686cb55960",
+                                      "name": "Not found - the requested resource does not exist",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId?api-version=7.1",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "packaging",
+                                            "feeds",
+                                            ":feedId",
+                                            "packages",
+                                            ":packageId",
+                                            "versions",
+                                            ":packageVersionId"
+                                          ],
+                                          "query": [
+                                            {
+                                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                              "key": "api-version",
+                                              "value": "7.1"
+                                            }
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "feedId"
+                                            },
+                                            {
+                                              "key": "packageId"
+                                            },
+                                            {
+                                              "key": "packageVersionId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                                      "createdAt": "2026-06-05T15:11:22.000Z",
+                                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                                      "uid": "35240-e31c0c1f-14fa-4a63-9a81-f1686cb55960"
+                                    }
+                                  ],
+                                  "createdAt": "2026-06-05T15:11:22.000Z",
+                                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                                  "uid": "35240-9f67508c-a4fe-4909-96e2-aac63641d136"
+                                }
+                              ],
+                              "id": "c8ec90ee-d138-45fd-ae21-a4d85ea30820",
+                              "createdAt": "2026-06-05T15:11:22.000Z",
+                              "updatedAt": "2026-06-05T15:11:22.000Z",
+                              "uid": "35240-c8ec90ee-d138-45fd-ae21-a4d85ea30820"
+                            }
+                          ],
+                          "id": "3a5017b2-e0d6-4f77-9366-44b979966385",
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-3a5017b2-e0d6-4f77-9366-44b979966385"
+                        },
+                        {
+                          "name": "Azure DevOps Get package details",
+                          "id": "73aefcff-4bb1-41d9-8644-6327308916df",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId?api-version=7.1&includeAllVersions=<boolean>&includeUrls=<boolean>&isListed=<boolean>&isDeleted=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "packaging",
+                                "feeds",
+                                ":feedId",
+                                "packages",
+                                ":packageId"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                },
+                                {
+                                  "description": "Whether to include all versions or only the latest",
+                                  "key": "includeAllVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include package manager URLs",
+                                  "key": "includeUrls",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Filter versions by listed status",
+                                  "key": "isListed",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include deleted versions",
+                                  "key": "isDeleted",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "53f6b1f0-3d83-4865-b3f6-472c39bfc6e2",
+                                  "key": "feedId",
+                                  "value": "<string>",
+                                  "description": "(Required) Feed GUID or feed name"
+                                },
+                                {
+                                  "id": "5f3e6034-ab7a-4ab8-98f8-55dcb89d4ed0",
+                                  "key": "packageId",
+                                  "value": "<uuid>",
+                                  "description": "(Required) GUID identifier of the package"
+                                }
+                              ]
+                            },
+                            "description": "Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.\n"
+                          },
+                          "response": [
+                            {
+                              "id": "ca96b835-69f0-4e6c-ae56-1c5ee0730439",
+                              "name": "Package details returned successfully",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId?api-version=7.1&includeAllVersions=<boolean>&includeUrls=<boolean>&isListed=<boolean>&isDeleted=<boolean>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "packaging",
+                                    "feeds",
+                                    ":feedId",
+                                    "packages",
+                                    ":packageId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                      "key": "api-version",
+                                      "value": "7.1"
+                                    },
+                                    {
+                                      "description": "Whether to include all versions or only the latest",
+                                      "key": "includeAllVersions",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include package manager URLs",
+                                      "key": "includeUrls",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Filter versions by listed status",
+                                      "key": "isListed",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include deleted versions",
+                                      "key": "isDeleted",
+                                      "value": "<boolean>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "feedId"
+                                    },
+                                    {
+                                      "key": "packageId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"normalizedName\": \"<string>\",\n  \"protocolType\": \"swift\",\n  \"versions\": [\n    {\n      \"id\": \"<uuid>\",\n      \"version\": \"<string>\",\n      \"normalizedVersion\": \"<string>\",\n      \"isLatest\": \"<boolean>\",\n      \"isListed\": \"<boolean>\",\n      \"storageId\": \"<string>\",\n      \"views\": [\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"implicit\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"qui_5\": {\n              \"href\": \"<uri>\"\n            },\n            \"ind\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"release\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"labore10a\": {\n              \"href\": \"<uri>\"\n            },\n            \"ipsum_8\": {\n              \"href\": \"<uri>\"\n            },\n            \"aute_7e\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        }\n      ],\n      \"deletedDate\": \"<dateTime>\",\n      \"publishDate\": \"<dateTime>\",\n      \"sourceChain\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"<string>\",\n          \"protocol\": \"<string>\",\n          \"location\": \"<uri>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"<string>\",\n          \"protocol\": \"<string>\",\n          \"location\": \"<uri>\"\n        }\n      ],\n      \"url\": \"<uri>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"version\": \"<string>\",\n      \"normalizedVersion\": \"<string>\",\n      \"isLatest\": \"<boolean>\",\n      \"isListed\": \"<boolean>\",\n      \"storageId\": \"<string>\",\n      \"views\": [\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"none\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"adipisicing_d\": {\n              \"href\": \"<uri>\"\n            },\n            \"voluptate_3b2\": {\n              \"href\": \"<uri>\"\n            },\n            \"in_0\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"release\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"exercitationb7\": {\n              \"href\": \"<uri>\"\n            },\n            \"culpaa\": {\n              \"href\": \"<uri>\"\n            },\n            \"nulla22\": {\n              \"href\": \"<uri>\"\n            },\n            \"aliqua5\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        }\n      ],\n      \"deletedDate\": \"<dateTime>\",\n      \"publishDate\": \"<dateTime>\",\n      \"sourceChain\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"<string>\",\n          \"protocol\": \"<string>\",\n          \"location\": \"<uri>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"<string>\",\n          \"protocol\": \"<string>\",\n          \"location\": \"<uri>\"\n        }\n      ],\n      \"url\": \"<uri>\"\n    }\n  ],\n  \"url\": \"<uri>\",\n  \"_links\": {\n    \"labore2_4\": {\n      \"href\": \"<uri>\"\n    },\n    \"Duis_0\": {\n      \"href\": \"<uri>\"\n    },\n    \"aliquip_42\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                              "createdAt": "2026-06-05T15:11:22.000Z",
+                              "updatedAt": "2026-06-05T15:11:22.000Z",
+                              "uid": "35240-ca96b835-69f0-4e6c-ae56-1c5ee0730439"
+                            },
+                            {
+                              "id": "101db8c9-ed86-4ac6-8e4c-b7bb1cd98ac9",
+                              "name": "Unauthorized - missing or invalid authentication credentials",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId?api-version=7.1&includeAllVersions=<boolean>&includeUrls=<boolean>&isListed=<boolean>&isDeleted=<boolean>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "packaging",
+                                    "feeds",
+                                    ":feedId",
+                                    "packages",
+                                    ":packageId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                      "key": "api-version",
+                                      "value": "7.1"
+                                    },
+                                    {
+                                      "description": "Whether to include all versions or only the latest",
+                                      "key": "includeAllVersions",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include package manager URLs",
+                                      "key": "includeUrls",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Filter versions by listed status",
+                                      "key": "isListed",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include deleted versions",
+                                      "key": "isDeleted",
+                                      "value": "<boolean>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "feedId"
+                                    },
+                                    {
+                                      "key": "packageId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                              "createdAt": "2026-06-05T15:11:22.000Z",
+                              "updatedAt": "2026-06-05T15:11:22.000Z",
+                              "uid": "35240-101db8c9-ed86-4ac6-8e4c-b7bb1cd98ac9"
+                            },
+                            {
+                              "id": "274bc255-dff5-4b69-8b63-cd337178bee5",
+                              "name": "Forbidden - insufficient permissions to perform this operation",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId?api-version=7.1&includeAllVersions=<boolean>&includeUrls=<boolean>&isListed=<boolean>&isDeleted=<boolean>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "packaging",
+                                    "feeds",
+                                    ":feedId",
+                                    "packages",
+                                    ":packageId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                      "key": "api-version",
+                                      "value": "7.1"
+                                    },
+                                    {
+                                      "description": "Whether to include all versions or only the latest",
+                                      "key": "includeAllVersions",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include package manager URLs",
+                                      "key": "includeUrls",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Filter versions by listed status",
+                                      "key": "isListed",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include deleted versions",
+                                      "key": "isDeleted",
+                                      "value": "<boolean>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "feedId"
+                                    },
+                                    {
+                                      "key": "packageId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                              "createdAt": "2026-06-05T15:11:22.000Z",
+                              "updatedAt": "2026-06-05T15:11:22.000Z",
+                              "uid": "35240-274bc255-dff5-4b69-8b63-cd337178bee5"
+                            },
+                            {
+                              "id": "f5156d1b-4f20-426c-8c2a-9aae1c022be5",
+                              "name": "Not found - the requested resource does not exist",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages/:packageId?api-version=7.1&includeAllVersions=<boolean>&includeUrls=<boolean>&isListed=<boolean>&isDeleted=<boolean>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "packaging",
+                                    "feeds",
+                                    ":feedId",
+                                    "packages",
+                                    ":packageId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                      "key": "api-version",
+                                      "value": "7.1"
+                                    },
+                                    {
+                                      "description": "Whether to include all versions or only the latest",
+                                      "key": "includeAllVersions",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include package manager URLs",
+                                      "key": "includeUrls",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Filter versions by listed status",
+                                      "key": "isListed",
+                                      "value": "<boolean>"
+                                    },
+                                    {
+                                      "description": "Whether to include deleted versions",
+                                      "key": "isDeleted",
+                                      "value": "<boolean>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "feedId"
+                                    },
+                                    {
+                                      "key": "packageId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                              "createdAt": "2026-06-05T15:11:22.000Z",
+                              "updatedAt": "2026-06-05T15:11:22.000Z",
+                              "uid": "35240-f5156d1b-4f20-426c-8c2a-9aae1c022be5"
+                            }
+                          ],
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-73aefcff-4bb1-41d9-8644-6327308916df"
+                        }
+                      ],
+                      "id": "bfc29156-edfa-4d91-8060-3a5b6c0c9aa4",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-bfc29156-edfa-4d91-8060-3a5b6c0c9aa4"
+                    },
+                    {
+                      "name": "Azure DevOps List packages in a feed",
+                      "id": "4282efd0-752c-4267-8f23-78085166ea6a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages?api-version=7.1&protocolType=pypi&packageNameQuery=<string>&normalizedPackageName=<string>&includeUrls=<boolean>&includeAllVersions=<boolean>&isListed=<boolean>&getTopPackageVersions=<boolean>&isDeleted=<boolean>&$top=<integer>&$skip=<integer>&continuationToken=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId",
+                            "packages"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            },
+                            {
+                              "description": "Filter packages by protocol type",
+                              "key": "protocolType",
+                              "value": "pypi"
+                            },
+                            {
+                              "description": "Filter packages whose names contain this string",
+                              "key": "packageNameQuery",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Exact package name match (normalized form)",
+                              "key": "normalizedPackageName",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Whether to include package manager URLs in the response",
+                              "key": "includeUrls",
+                              "value": "<boolean>"
+                            },
+                            {
+                              "description": "Whether to include all versions or only the latest",
+                              "key": "includeAllVersions",
+                              "value": "<boolean>"
+                            },
+                            {
+                              "description": "Filter by listed status (true=published, false=unlisted)",
+                              "key": "isListed",
+                              "value": "<boolean>"
+                            },
+                            {
+                              "description": "Whether to include the top versions for each package",
+                              "key": "getTopPackageVersions",
+                              "value": "<boolean>"
+                            },
+                            {
+                              "description": "Whether to include deleted packages",
+                              "key": "isDeleted",
+                              "value": "<boolean>"
+                            },
+                            {
+                              "description": "Maximum number of packages to return",
+                              "key": "$top",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Number of packages to skip (for pagination)",
+                              "key": "$skip",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Continuation token for paginated results",
+                              "key": "continuationToken",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "daa2d2be-6b95-4372-bf20-bb592f61d50d",
+                              "key": "feedId",
+                              "value": "<string>",
+                              "description": "(Required) Feed GUID or feed name"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.\n"
+                      },
+                      "response": [
+                        {
+                          "id": "9b343ce1-b094-48a1-bd0e-1699e68c8d12",
+                          "name": "List of packages returned successfully",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages?api-version=7.1&protocolType=pypi&packageNameQuery=<string>&normalizedPackageName=<string>&includeUrls=<boolean>&includeAllVersions=<boolean>&isListed=<boolean>&getTopPackageVersions=<boolean>&isDeleted=<boolean>&$top=<integer>&$skip=<integer>&continuationToken=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "packaging",
+                                "feeds",
+                                ":feedId",
+                                "packages"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                },
+                                {
+                                  "description": "Filter packages by protocol type",
+                                  "key": "protocolType",
+                                  "value": "pypi"
+                                },
+                                {
+                                  "description": "Filter packages whose names contain this string",
+                                  "key": "packageNameQuery",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Exact package name match (normalized form)",
+                                  "key": "normalizedPackageName",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Whether to include package manager URLs in the response",
+                                  "key": "includeUrls",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include all versions or only the latest",
+                                  "key": "includeAllVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Filter by listed status (true=published, false=unlisted)",
+                                  "key": "isListed",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include the top versions for each package",
+                                  "key": "getTopPackageVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include deleted packages",
+                                  "key": "isDeleted",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Maximum number of packages to return",
+                                  "key": "$top",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Number of packages to skip (for pagination)",
+                                  "key": "$skip",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Continuation token for paginated results",
+                                  "key": "continuationToken",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "feedId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"normalizedName\": \"<string>\",\n      \"protocolType\": \"swift\",\n      \"versions\": [\n        {\n          \"id\": \"<uuid>\",\n          \"version\": \"<string>\",\n          \"normalizedVersion\": \"<string>\",\n          \"isLatest\": \"<boolean>\",\n          \"isListed\": \"<boolean>\",\n          \"storageId\": \"<string>\",\n          \"views\": [\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"release\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"nisi_9\": {\n                  \"href\": \"<uri>\"\n                },\n                \"sed_dda\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            },\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"none\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"adipisicing3\": {\n                  \"href\": \"<uri>\"\n                },\n                \"est_9\": {\n                  \"href\": \"<uri>\"\n                },\n                \"do_23\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            }\n          ],\n          \"deletedDate\": \"<dateTime>\",\n          \"publishDate\": \"<dateTime>\",\n          \"sourceChain\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            }\n          ],\n          \"url\": \"<uri>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"version\": \"<string>\",\n          \"normalizedVersion\": \"<string>\",\n          \"isLatest\": \"<boolean>\",\n          \"isListed\": \"<boolean>\",\n          \"storageId\": \"<string>\",\n          \"views\": [\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"none\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"velit_11\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            },\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"implicit\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"dolor_6\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            }\n          ],\n          \"deletedDate\": \"<dateTime>\",\n          \"publishDate\": \"<dateTime>\",\n          \"sourceChain\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            }\n          ],\n          \"url\": \"<uri>\"\n        }\n      ],\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"amet_dfe\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"normalizedName\": \"<string>\",\n      \"protocolType\": \"nuget\",\n      \"versions\": [\n        {\n          \"id\": \"<uuid>\",\n          \"version\": \"<string>\",\n          \"normalizedVersion\": \"<string>\",\n          \"isLatest\": \"<boolean>\",\n          \"isListed\": \"<boolean>\",\n          \"storageId\": \"<string>\",\n          \"views\": [\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"release\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"anim_2e7\": {\n                  \"href\": \"<uri>\"\n                },\n                \"magna_2f\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            },\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"release\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"amet5\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            }\n          ],\n          \"deletedDate\": \"<dateTime>\",\n          \"publishDate\": \"<dateTime>\",\n          \"sourceChain\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            }\n          ],\n          \"url\": \"<uri>\"\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"version\": \"<string>\",\n          \"normalizedVersion\": \"<string>\",\n          \"isLatest\": \"<boolean>\",\n          \"isListed\": \"<boolean>\",\n          \"storageId\": \"<string>\",\n          \"views\": [\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"none\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"cupidatat_bb\": {\n                  \"href\": \"<uri>\"\n                },\n                \"est_1bc\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            },\n            {\n              \"id\": \"<uuid>\",\n              \"name\": \"<string>\",\n              \"type\": \"release\",\n              \"url\": \"<uri>\",\n              \"_links\": {\n                \"nulla_8\": {\n                  \"href\": \"<uri>\"\n                },\n                \"aute75\": {\n                  \"href\": \"<uri>\"\n                },\n                \"sunt53\": {\n                  \"href\": \"<uri>\"\n                }\n              }\n            }\n          ],\n          \"deletedDate\": \"<dateTime>\",\n          \"publishDate\": \"<dateTime>\",\n          \"sourceChain\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"upstreamSourceType\": \"<string>\",\n              \"protocol\": \"<string>\",\n              \"location\": \"<uri>\"\n            }\n          ],\n          \"url\": \"<uri>\"\n        }\n      ],\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"dolore83\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ]\n}",
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-9b343ce1-b094-48a1-bd0e-1699e68c8d12"
+                        },
+                        {
+                          "id": "e1c65c04-6bdc-4e82-b51e-0a0a7f5a34fb",
+                          "name": "Unauthorized - missing or invalid authentication credentials",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages?api-version=7.1&protocolType=pypi&packageNameQuery=<string>&normalizedPackageName=<string>&includeUrls=<boolean>&includeAllVersions=<boolean>&isListed=<boolean>&getTopPackageVersions=<boolean>&isDeleted=<boolean>&$top=<integer>&$skip=<integer>&continuationToken=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "packaging",
+                                "feeds",
+                                ":feedId",
+                                "packages"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                },
+                                {
+                                  "description": "Filter packages by protocol type",
+                                  "key": "protocolType",
+                                  "value": "pypi"
+                                },
+                                {
+                                  "description": "Filter packages whose names contain this string",
+                                  "key": "packageNameQuery",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Exact package name match (normalized form)",
+                                  "key": "normalizedPackageName",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Whether to include package manager URLs in the response",
+                                  "key": "includeUrls",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include all versions or only the latest",
+                                  "key": "includeAllVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Filter by listed status (true=published, false=unlisted)",
+                                  "key": "isListed",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include the top versions for each package",
+                                  "key": "getTopPackageVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include deleted packages",
+                                  "key": "isDeleted",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Maximum number of packages to return",
+                                  "key": "$top",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Number of packages to skip (for pagination)",
+                                  "key": "$skip",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Continuation token for paginated results",
+                                  "key": "continuationToken",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "feedId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-e1c65c04-6bdc-4e82-b51e-0a0a7f5a34fb"
+                        },
+                        {
+                          "id": "41c209c0-35c5-47a7-b042-e7eb5a9e35aa",
+                          "name": "Forbidden - insufficient permissions to perform this operation",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages?api-version=7.1&protocolType=pypi&packageNameQuery=<string>&normalizedPackageName=<string>&includeUrls=<boolean>&includeAllVersions=<boolean>&isListed=<boolean>&getTopPackageVersions=<boolean>&isDeleted=<boolean>&$top=<integer>&$skip=<integer>&continuationToken=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "packaging",
+                                "feeds",
+                                ":feedId",
+                                "packages"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                },
+                                {
+                                  "description": "Filter packages by protocol type",
+                                  "key": "protocolType",
+                                  "value": "pypi"
+                                },
+                                {
+                                  "description": "Filter packages whose names contain this string",
+                                  "key": "packageNameQuery",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Exact package name match (normalized form)",
+                                  "key": "normalizedPackageName",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Whether to include package manager URLs in the response",
+                                  "key": "includeUrls",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include all versions or only the latest",
+                                  "key": "includeAllVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Filter by listed status (true=published, false=unlisted)",
+                                  "key": "isListed",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include the top versions for each package",
+                                  "key": "getTopPackageVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include deleted packages",
+                                  "key": "isDeleted",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Maximum number of packages to return",
+                                  "key": "$top",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Number of packages to skip (for pagination)",
+                                  "key": "$skip",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Continuation token for paginated results",
+                                  "key": "continuationToken",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "feedId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-41c209c0-35c5-47a7-b042-e7eb5a9e35aa"
+                        },
+                        {
+                          "id": "6080aa19-7345-4677-a09c-7b6e9b6fa5ea",
+                          "name": "Not found - the requested resource does not exist",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/packaging/feeds/:feedId/packages?api-version=7.1&protocolType=pypi&packageNameQuery=<string>&normalizedPackageName=<string>&includeUrls=<boolean>&includeAllVersions=<boolean>&isListed=<boolean>&getTopPackageVersions=<boolean>&isDeleted=<boolean>&$top=<integer>&$skip=<integer>&continuationToken=<string>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "packaging",
+                                "feeds",
+                                ":feedId",
+                                "packages"
+                              ],
+                              "query": [
+                                {
+                                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                                  "key": "api-version",
+                                  "value": "7.1"
+                                },
+                                {
+                                  "description": "Filter packages by protocol type",
+                                  "key": "protocolType",
+                                  "value": "pypi"
+                                },
+                                {
+                                  "description": "Filter packages whose names contain this string",
+                                  "key": "packageNameQuery",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Exact package name match (normalized form)",
+                                  "key": "normalizedPackageName",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Whether to include package manager URLs in the response",
+                                  "key": "includeUrls",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include all versions or only the latest",
+                                  "key": "includeAllVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Filter by listed status (true=published, false=unlisted)",
+                                  "key": "isListed",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include the top versions for each package",
+                                  "key": "getTopPackageVersions",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Whether to include deleted packages",
+                                  "key": "isDeleted",
+                                  "value": "<boolean>"
+                                },
+                                {
+                                  "description": "Maximum number of packages to return",
+                                  "key": "$top",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Number of packages to skip (for pagination)",
+                                  "key": "$skip",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "Continuation token for paginated results",
+                                  "key": "continuationToken",
+                                  "value": "<string>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "feedId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                          "createdAt": "2026-06-05T15:11:22.000Z",
+                          "updatedAt": "2026-06-05T15:11:22.000Z",
+                          "uid": "35240-6080aa19-7345-4677-a09c-7b6e9b6fa5ea"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-4282efd0-752c-4267-8f23-78085166ea6a"
+                    }
+                  ],
+                  "id": "e758ee1d-19b3-4203-afbd-e79d5e9fad82",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-e758ee1d-19b3-4203-afbd-e79d5e9fad82"
+                },
+                {
+                  "name": "Azure DevOps Get a feed",
+                  "id": "ecf0fd2c-9f1d-40b6-9143-6d9de9c5295a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1&includeDeletedUpstreams=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds",
+                        ":feedId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Whether to include deleted upstream sources in the response",
+                          "key": "includeDeletedUpstreams",
+                          "value": "<boolean>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "bec50026-e08d-443f-8f75-4d6dde7eb6b2",
+                          "key": "feedId",
+                          "value": "<string>",
+                          "description": "(Required) Feed GUID or feed name"
+                        }
+                      ]
+                    },
+                    "description": "Returns detailed information about a specific feed, including its configuration, upstream sources, and visibility settings. The feedId can be either the feed GUID or its name.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "6f39cf6a-2479-4ac4-9030-b940517450b3",
+                      "name": "Feed returned successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1&includeDeletedUpstreams=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            },
+                            {
+                              "description": "Whether to include deleted upstream sources in the response",
+                              "key": "includeDeletedUpstreams",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"maven\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"defaultViewId\": \"<uuid>\",\n  \"views\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"est_96\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"pariatur_99\": {\n          \"href\": \"<uri>\"\n        },\n        \"aliquab2a\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ],\n  \"isReadOnly\": \"<boolean>\",\n  \"deletedDate\": \"<dateTime>\",\n  \"project\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\"\n  },\n  \"_links\": {\n    \"commodoa\": {\n      \"href\": \"<uri>\"\n    },\n    \"laboris_\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-6f39cf6a-2479-4ac4-9030-b940517450b3"
+                    },
+                    {
+                      "id": "b6a69613-32b8-49c9-babf-1cac173147ee",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1&includeDeletedUpstreams=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            },
+                            {
+                              "description": "Whether to include deleted upstream sources in the response",
+                              "key": "includeDeletedUpstreams",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-b6a69613-32b8-49c9-babf-1cac173147ee"
+                    },
+                    {
+                      "id": "492d47af-ac08-433c-a144-1d4965782d22",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1&includeDeletedUpstreams=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            },
+                            {
+                              "description": "Whether to include deleted upstream sources in the response",
+                              "key": "includeDeletedUpstreams",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-492d47af-ac08-433c-a144-1d4965782d22"
+                    },
+                    {
+                      "id": "29c08da6-2bd1-4270-95e0-146b10040093",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1&includeDeletedUpstreams=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            },
+                            {
+                              "description": "Whether to include deleted upstream sources in the response",
+                              "key": "includeDeletedUpstreams",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-29c08da6-2bd1-4270-95e0-146b10040093"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-ecf0fd2c-9f1d-40b6-9143-6d9de9c5295a"
+                },
+                {
+                  "name": "Azure DevOps Update a feed",
+                  "id": "b8b9bd3a-54ba-453c-b01d-46ce162f1d9c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds",
+                        ":feedId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "11ca207c-b77d-4ea5-a0d9-31faf87cd91c",
+                          "key": "feedId",
+                          "value": "<string>",
+                          "description": "(Required) Feed GUID or feed name"
+                        }
+                      ]
+                    },
+                    "description": "Updates properties of a feed such as its name, description, upstream sources, and retention policy. Only fields provided in the request body will be changed.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "c0ab5781-c7f6-44c6-b13b-b8bd8fca1c32",
+                      "name": "Feed updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"maven\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"defaultViewId\": \"<uuid>\",\n  \"views\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"est_96\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"pariatur_99\": {\n          \"href\": \"<uri>\"\n        },\n        \"aliquab2a\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ],\n  \"isReadOnly\": \"<boolean>\",\n  \"deletedDate\": \"<dateTime>\",\n  \"project\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\"\n  },\n  \"_links\": {\n    \"commodoa\": {\n      \"href\": \"<uri>\"\n    },\n    \"laboris_\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-c0ab5781-c7f6-44c6-b13b-b8bd8fca1c32"
+                    },
+                    {
+                      "id": "e5eda0b0-374a-4036-830d-50ae9cf8d05c",
+                      "name": "Bad request - invalid parameters or request body",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-e5eda0b0-374a-4036-830d-50ae9cf8d05c"
+                    },
+                    {
+                      "id": "6d1fc5a0-4a8a-48e1-a036-946220b39c2e",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-6d1fc5a0-4a8a-48e1-a036-946220b39c2e"
+                    },
+                    {
+                      "id": "73d458d6-322a-461f-a699-4f8d40525104",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-73d458d6-322a-461f-a699-4f8d40525104"
+                    },
+                    {
+                      "id": "f36b78c8-edf0-4e94-b83f-5e3aecab588e",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"badgesEnabled\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-f36b78c8-edf0-4e94-b83f-5e3aecab588e"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-b8b9bd3a-54ba-453c-b01d-46ce162f1d9c"
+                },
+                {
+                  "name": "Azure DevOps Delete a feed",
+                  "id": "ae81ace6-df84-4ed6-892a-02bc1468ee9f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds",
+                        ":feedId"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "6a2fb7c1-45ad-446c-bb8b-63d9da05c1b2",
+                          "key": "feedId",
+                          "value": "<string>",
+                          "description": "(Required) Feed GUID or feed name"
+                        }
+                      ]
+                    },
+                    "description": "Permanently deletes a feed and all packages it contains. This operation cannot be undone. All packages will be permanently removed from the feed. Consumers of packages from this feed will lose access immediately.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "4bd376dd-e68b-4ef5-8b4c-a37c6d61fe35",
+                      "name": "Feed deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-4bd376dd-e68b-4ef5-8b4c-a37c6d61fe35"
+                    },
+                    {
+                      "id": "b3027fc2-71e6-4ed9-859c-da92873f0386",
+                      "name": "Unauthorized - missing or invalid authentication credentials",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-b3027fc2-71e6-4ed9-859c-da92873f0386"
+                    },
+                    {
+                      "id": "6f7414d5-8bab-4b2f-9aed-d34a8971ad43",
+                      "name": "Forbidden - insufficient permissions to perform this operation",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-6f7414d5-8bab-4b2f-9aed-d34a8971ad43"
+                    },
+                    {
+                      "id": "83f0dca9-afed-4314-b5ce-428f441aa025",
+                      "name": "Not found - the requested resource does not exist",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/packaging/feeds/:feedId?api-version=7.1",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "packaging",
+                            "feeds",
+                            ":feedId"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                              "key": "api-version",
+                              "value": "7.1"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "feedId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                      "createdAt": "2026-06-05T15:11:22.000Z",
+                      "updatedAt": "2026-06-05T15:11:22.000Z",
+                      "uid": "35240-83f0dca9-afed-4314-b5ce-428f441aa025"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-ae81ace6-df84-4ed6-892a-02bc1468ee9f"
+                }
+              ],
+              "id": "78bc2751-4e07-4015-86f6-3e0691752b72",
+              "createdAt": "2026-06-05T15:11:22.000Z",
+              "updatedAt": "2026-06-05T15:11:22.000Z",
+              "uid": "35240-78bc2751-4e07-4015-86f6-3e0691752b72"
+            },
+            {
+              "name": "Azure DevOps List feeds",
+              "id": "0f03e900-7e9b-4f90-91b6-7ee86732c304",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1&feedRole=administrator&includeDeletedUpstreams=<boolean>&includeUrls=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "packaging",
+                    "feeds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "description": "Filter feeds by the current user's role",
+                      "key": "feedRole",
+                      "value": "administrator"
+                    },
+                    {
+                      "description": "Whether to include feeds with deleted upstream sources",
+                      "key": "includeDeletedUpstreams",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Whether to include package manager endpoint URLs",
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    }
+                  ]
+                },
+                "description": "Returns a list of package feeds accessible within the organization or project. Feeds are the primary containers for packages in Azure Artifacts. A project can have multiple feeds with different visibility and upstream source settings.\n"
+              },
+              "response": [
+                {
+                  "id": "6e986727-07bb-47a2-995f-df55b463da01",
+                  "name": "List of feeds returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1&feedRole=administrator&includeDeletedUpstreams=<boolean>&includeUrls=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter feeds by the current user's role",
+                          "key": "feedRole",
+                          "value": "administrator"
+                        },
+                        {
+                          "description": "Whether to include feeds with deleted upstream sources",
+                          "key": "includeDeletedUpstreams",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Whether to include package manager endpoint URLs",
+                          "key": "includeUrls",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"count\": \"<integer>\",\n  \"value\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"upstreamEnabled\": \"<boolean>\",\n      \"upstreamSources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"internal\",\n          \"protocol\": \"npm\",\n          \"location\": \"<uri>\",\n          \"status\": \"disabled\",\n          \"deletedDate\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"internal\",\n          \"protocol\": \"nuget\",\n          \"location\": \"<uri>\",\n          \"status\": \"ok\",\n          \"deletedDate\": \"<dateTime>\"\n        }\n      ],\n      \"hideDeletedPackageVersions\": \"<boolean>\",\n      \"defaultViewId\": \"<uuid>\",\n      \"views\": [\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"release\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"consequat_ee\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"implicit\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"dolor_c7\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        }\n      ],\n      \"isReadOnly\": \"<boolean>\",\n      \"deletedDate\": \"<dateTime>\",\n      \"project\": {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\"\n      },\n      \"_links\": {\n        \"id_57\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"upstreamEnabled\": \"<boolean>\",\n      \"upstreamSources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"internal\",\n          \"protocol\": \"nuget\",\n          \"location\": \"<uri>\",\n          \"status\": \"disabled\",\n          \"deletedDate\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"upstreamSourceType\": \"public\",\n          \"protocol\": \"maven\",\n          \"location\": \"<uri>\",\n          \"status\": \"ok\",\n          \"deletedDate\": \"<dateTime>\"\n        }\n      ],\n      \"hideDeletedPackageVersions\": \"<boolean>\",\n      \"defaultViewId\": \"<uuid>\",\n      \"views\": [\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"implicit\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"nisif54\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        },\n        {\n          \"id\": \"<uuid>\",\n          \"name\": \"<string>\",\n          \"type\": \"none\",\n          \"url\": \"<uri>\",\n          \"_links\": {\n            \"et_c3d\": {\n              \"href\": \"<uri>\"\n            }\n          }\n        }\n      ],\n      \"isReadOnly\": \"<boolean>\",\n      \"deletedDate\": \"<dateTime>\",\n      \"project\": {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\"\n      },\n      \"_links\": {\n        \"laborum11\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ]\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-6e986727-07bb-47a2-995f-df55b463da01"
+                },
+                {
+                  "id": "83cd9f49-5550-44f7-a9ad-62c2dfa48889",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1&feedRole=administrator&includeDeletedUpstreams=<boolean>&includeUrls=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter feeds by the current user's role",
+                          "key": "feedRole",
+                          "value": "administrator"
+                        },
+                        {
+                          "description": "Whether to include feeds with deleted upstream sources",
+                          "key": "includeDeletedUpstreams",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Whether to include package manager endpoint URLs",
+                          "key": "includeUrls",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-83cd9f49-5550-44f7-a9ad-62c2dfa48889"
+                },
+                {
+                  "id": "b2c7d310-3e1e-4713-a2ec-c3947bbe25e3",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1&feedRole=administrator&includeDeletedUpstreams=<boolean>&includeUrls=<boolean>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        },
+                        {
+                          "description": "Filter feeds by the current user's role",
+                          "key": "feedRole",
+                          "value": "administrator"
+                        },
+                        {
+                          "description": "Whether to include feeds with deleted upstream sources",
+                          "key": "includeDeletedUpstreams",
+                          "value": "<boolean>"
+                        },
+                        {
+                          "description": "Whether to include package manager endpoint URLs",
+                          "key": "includeUrls",
+                          "value": "<boolean>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-b2c7d310-3e1e-4713-a2ec-c3947bbe25e3"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:22.000Z",
+              "updatedAt": "2026-06-05T15:11:22.000Z",
+              "uid": "35240-0f03e900-7e9b-4f90-91b6-7ee86732c304"
+            },
+            {
+              "name": "Azure DevOps Create a feed",
+              "id": "e08473b9-441a-46d0-ab30-2c0c37325835",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": true,\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"cargo\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": true,\n  \"badgesEnabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "packaging",
+                    "feeds"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ]
+                },
+                "description": "Creates a new artifact feed. You can configure whether the feed allows upstream sources (for fetching public packages), its visibility (project-wide or organization-wide), and whether the feed is public or requires authentication.\n"
+              },
+              "response": [
+                {
+                  "id": "c7c4854c-37d6-4ec4-8f66-c338b96fa4aa",
+                  "name": "Feed created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": true,\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"cargo\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": true,\n  \"badgesEnabled\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"upstreamEnabled\": \"<boolean>\",\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"maven\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"upack\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": \"<boolean>\",\n  \"defaultViewId\": \"<uuid>\",\n  \"views\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"est_96\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"type\": \"release\",\n      \"url\": \"<uri>\",\n      \"_links\": {\n        \"pariatur_99\": {\n          \"href\": \"<uri>\"\n        },\n        \"aliquab2a\": {\n          \"href\": \"<uri>\"\n        }\n      }\n    }\n  ],\n  \"isReadOnly\": \"<boolean>\",\n  \"deletedDate\": \"<dateTime>\",\n  \"project\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\"\n  },\n  \"_links\": {\n    \"commodoa\": {\n      \"href\": \"<uri>\"\n    },\n    \"laboris_\": {\n      \"href\": \"<uri>\"\n    }\n  }\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-c7c4854c-37d6-4ec4-8f66-c338b96fa4aa"
+                },
+                {
+                  "id": "d2668c86-bfbd-4942-9402-9b227977ae08",
+                  "name": "Bad request - invalid parameters or request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": true,\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"cargo\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": true,\n  \"badgesEnabled\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-d2668c86-bfbd-4942-9402-9b227977ae08"
+                },
+                {
+                  "id": "4ccc5340-692d-4ca3-8286-12b116a8c010",
+                  "name": "Unauthorized - missing or invalid authentication credentials",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": true,\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"cargo\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": true,\n  \"badgesEnabled\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-4ccc5340-692d-4ca3-8286-12b116a8c010"
+                },
+                {
+                  "id": "80b0b6fd-4b9d-47bc-b212-ed093fefaa51",
+                  "name": "Forbidden - insufficient permissions to perform this operation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"upstreamEnabled\": true,\n  \"upstreamSources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"internal\",\n      \"protocol\": \"cargo\",\n      \"location\": \"<uri>\",\n      \"status\": \"disabled\",\n      \"deletedDate\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"upstreamSourceType\": \"public\",\n      \"protocol\": \"pypi\",\n      \"location\": \"<uri>\",\n      \"status\": \"ok\",\n      \"deletedDate\": \"<dateTime>\"\n    }\n  ],\n  \"hideDeletedPackageVersions\": true,\n  \"badgesEnabled\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/packaging/feeds?api-version=7.1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "packaging",
+                        "feeds"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version.",
+                          "key": "api-version",
+                          "value": "7.1"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<uuid>\",\n  \"message\": \"<string>\",\n  \"typeName\": \"<string>\",\n  \"typeKey\": \"<string>\",\n  \"errorCode\": \"<integer>\",\n  \"eventId\": \"<integer>\"\n}",
+                  "createdAt": "2026-06-05T15:11:22.000Z",
+                  "updatedAt": "2026-06-05T15:11:22.000Z",
+                  "uid": "35240-80b0b6fd-4b9d-47bc-b212-ed093fefaa51"
+                }
+              ],
+              "createdAt": "2026-06-05T15:11:22.000Z",
+              "updatedAt": "2026-06-05T15:11:22.000Z",
+              "uid": "35240-e08473b9-441a-46d0-ab30-2c0c37325835"
+            }
+          ],
+          "id": "617fd46d-3a8f-47ed-921f-81cc76f91b86",
+          "createdAt": "2026-06-05T15:11:22.000Z",
+          "updatedAt": "2026-06-05T15:11:22.000Z",
+          "uid": "35240-617fd46d-3a8f-47ed-921f-81cc76f91b86"
+        }
+      ],
+      "id": "3260b6b4-b63f-48ec-924e-e6f1e15c79a7",
+      "createdAt": "2026-06-05T15:11:22.000Z",
+      "updatedAt": "2026-06-05T15:11:22.000Z",
+      "uid": "35240-3260b6b4-b63f-48ec-924e-e6f1e15c79a7"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "organization",
+      "value": "myorganization"
+    },
+    {
+      "key": "project",
+      "value": "myproject"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis"
+    }
+  ]
+}
