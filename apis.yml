@@ -593,63 +593,60 @@ apis:
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/azure-devops/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-      - url: arazzo/microsoft-azure-devops-board-bug-comment-workflow.yml
-        name: Azure DevOps Board Bug Acknowledgement
-        summary: Query a board column with WIQL, fetch the work item type, and acknowledge the top bug.
-      - url: arazzo/microsoft-azure-devops-build-artifacts-retrieval-workflow.yml
-        name: Azure DevOps Retrieve Artifacts of the Latest Successful Build
-        summary: Find the latest succeeded build for a definition, confirm it, and list its artifacts.
-      - url: arazzo/microsoft-azure-devops-build-definition-provision-workflow.yml
-        name: Azure DevOps Provision a Build Definition and Run It
-        summary: Create a build definition, confirm it, and queue its first build.
-      - url: arazzo/microsoft-azure-devops-build-queue-monitor-workflow.yml
-        name: Azure DevOps Queue and Monitor a Build
-        summary: Queue a build, poll until it completes, and fetch its timeline.
-      - url: arazzo/microsoft-azure-devops-git-push-commit-workflow.yml
-        name: Azure DevOps Commit a File via a Git Push
-        summary: Resolve the tip of a branch, push a new commit, and confirm the push.
-      - url: arazzo/microsoft-azure-devops-pipeline-create-run-workflow.yml
-        name: Azure DevOps Create a YAML Pipeline and Start Its First Run
-        summary: Create a YAML pipeline from a repo file, confirm it, and trigger a run.
-      - url: arazzo/microsoft-azure-devops-pipeline-run-monitor-workflow.yml
-        name: Azure DevOps Run and Monitor a Pipeline
-        summary: Run a YAML pipeline, poll the run until it finishes, and list its artifacts.
-      - url: arazzo/microsoft-azure-devops-project-repository-inventory-workflow.yml
-        name: Azure DevOps Project Repository Inventory
-        summary: List a project's repositories, pick the first, and inventory its branches and pull requests.
-      - url: arazzo/microsoft-azure-devops-pull-request-complete-workflow.yml
-        name: Azure DevOps Complete a Pull Request
-        summary: Fetch a pull request, verify it can merge, and complete it.
-      - url: arazzo/microsoft-azure-devops-pull-request-create-comment-workflow.yml
-        name: Azure DevOps Open a Pull Request and Start a Review Thread
-        summary: Create a pull request, confirm it, and add an opening review comment thread.
-      - url: arazzo/microsoft-azure-devops-pull-request-review-cycle-workflow.yml
-        name: Azure DevOps Review the Oldest Active Pull Request
-        summary: List active pull requests, open the oldest, and add a review comment.
-      - url: arazzo/microsoft-azure-devops-release-create-monitor-workflow.yml
-        name: Azure DevOps Create and Monitor a Release
-        summary: Create a release from a definition, poll it active, and fetch environments.
-      - url: arazzo/microsoft-azure-devops-release-definition-provision-workflow.yml
-        name: Azure DevOps Provision a Release Definition and Cut a Release
-        summary: Create a release definition, confirm it, and create a first release from it.
-      - url: arazzo/microsoft-azure-devops-release-from-definition-workflow.yml
-        name: Azure DevOps Inspect a Release Definition and Cut a Release
-        summary: Read a release definition, create a release from it, and confirm the release.
-      - url: arazzo/microsoft-azure-devops-repository-provision-init-workflow.yml
-        name: Azure DevOps Provision and Inspect a Git Repository
-        summary: Create a Git repository, confirm it, and list its branches.
-      - url: arazzo/microsoft-azure-devops-work-item-bug-triage-workflow.yml
-        name: Azure DevOps Bug Triage by WIQL Query
-        summary: Find open bugs with a WIQL query, fetch the top result, and triage it.
-      - url: arazzo/microsoft-azure-devops-work-item-create-linked-child-workflow.yml
-        name: Azure DevOps Create a Parent and Linked Child Work Item
-        summary: Create a parent work item, create a child, and link them hierarchically.
-      - url: arazzo/microsoft-azure-devops-work-item-create-update-comment-workflow.yml
-        name: Azure DevOps Create, Update, and Comment on a Work Item
-        summary: Create a work item, transition its state, and append a comment in one flow.
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-board-bug-comment-workflow.yml
+    name: Azure DevOps Board Bug Acknowledgement
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-build-artifacts-retrieval-workflow.yml
+    name: Azure DevOps Retrieve Artifacts of the Latest Successful Build
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-build-definition-provision-workflow.yml
+    name: Azure DevOps Provision a Build Definition and Run It
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-build-queue-monitor-workflow.yml
+    name: Azure DevOps Queue and Monitor a Build
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-git-push-commit-workflow.yml
+    name: Azure DevOps Commit a File via a Git Push
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-pipeline-create-run-workflow.yml
+    name: Azure DevOps Create a YAML Pipeline and Start Its First Run
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-pipeline-run-monitor-workflow.yml
+    name: Azure DevOps Run and Monitor a Pipeline
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-project-repository-inventory-workflow.yml
+    name: Azure DevOps Project Repository Inventory
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-pull-request-complete-workflow.yml
+    name: Azure DevOps Complete a Pull Request
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-pull-request-create-comment-workflow.yml
+    name: Azure DevOps Open a Pull Request and Start a Review Thread
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-pull-request-review-cycle-workflow.yml
+    name: Azure DevOps Review the Oldest Active Pull Request
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-release-create-monitor-workflow.yml
+    name: Azure DevOps Create and Monitor a Release
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-release-definition-provision-workflow.yml
+    name: Azure DevOps Provision a Release Definition and Cut a Release
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-release-from-definition-workflow.yml
+    name: Azure DevOps Inspect a Release Definition and Cut a Release
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-repository-provision-init-workflow.yml
+    name: Azure DevOps Provision and Inspect a Git Repository
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-work-item-bug-triage-workflow.yml
+    name: Azure DevOps Bug Triage by WIQL Query
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-work-item-create-linked-child-workflow.yml
+    name: Azure DevOps Create a Parent and Linked Child Work Item
+  - type: Arazzo
+    url: arazzo/microsoft-azure-devops-work-item-create-update-comment-workflow.yml
+    name: Azure DevOps Create, Update, and Comment on a Work Item
   - type: Portal
     url: https://dev.azure.com
   - type: Documentation
@@ -674,7 +671,7 @@ common:
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Pricing
     url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
-  - type: SignUp
+  - type: Signup
     url: https://azure.microsoft.com/en-us/services/devops/
   - type: Community
     url: https://developercommunity.visualstudio.com/AzureDevOps
