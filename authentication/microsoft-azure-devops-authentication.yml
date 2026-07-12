@@ -1,0 +1,40 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/azure-devops-artifacts-api-openapi.yml, openapi/azure-devops-builds-api-openapi.yml,
+  openapi/azure-devops-git-api-openapi.yml, openapi/azure-devops-pipelines-api-openapi.yml,
+  openapi/azure-devops-releases-api-openapi.yml, openapi/azure-devops-service-hooks-api-openapi.yml,
+  openapi/azure-devops-test-plans-api-openapi.yml, openapi/azure-devops-wiki-api-openapi.yml,
+  openapi/azure-devops-work-items-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Azure AD OAuth 2.0 bearer token
+  sources:
+  - openapi/azure-devops-artifacts-api-openapi.yml
+  - openapi/azure-devops-builds-api-openapi.yml
+  - openapi/azure-devops-git-api-openapi.yml
+  - openapi/azure-devops-pipelines-api-openapi.yml
+  - openapi/azure-devops-releases-api-openapi.yml
+  - openapi/azure-devops-service-hooks-api-openapi.yml
+  - openapi/azure-devops-test-plans-api-openapi.yml
+  - openapi/azure-devops-wiki-api-openapi.yml
+  - openapi/azure-devops-work-items-api-openapi.yml
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Basic authentication using a Personal Access Token (PAT). Use any string as the
+    username and the PAT as the password, then base64-encode the result.
+  sources:
+  - openapi/azure-devops-artifacts-api-openapi.yml
+  - openapi/azure-devops-builds-api-openapi.yml
+  - openapi/azure-devops-git-api-openapi.yml
+  - openapi/azure-devops-pipelines-api-openapi.yml
+  - openapi/azure-devops-releases-api-openapi.yml
+  - openapi/azure-devops-service-hooks-api-openapi.yml
+  - openapi/azure-devops-test-plans-api-openapi.yml
+  - openapi/azure-devops-wiki-api-openapi.yml
+  - openapi/azure-devops-work-items-api-openapi.yml

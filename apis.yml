@@ -591,6 +591,10 @@ apis:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/
 common:
+  - type: DomainSecurity
+    url: security/microsoft-azure-devops-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-azure-devops-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/azure-devops/overview
   - type: Arazzo
