@@ -591,6 +591,8 @@ apis:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-azure-devops-agentic-access.yml
   - type: DomainSecurity
     url: security/microsoft-azure-devops-domain-security.yml
   - type: Authentication
