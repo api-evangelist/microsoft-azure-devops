@@ -1,0 +1,233 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Commits API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Commits
+  description: Operations for accessing commits and commit history
+paths:
+  /git/repositories/{repositoryId}/commits:
+    get:
+      operationId: commits_list
+      summary: Azure DevOps List commits
+      description: 'Returns a list of commits in a repository. Supports filtering by branch, author, date range, file path, and commit message text. Results are sorted by commit date (newest first by default).
+
+        '
+      tags:
+      - Commits
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: searchCriteria.itemVersion.version
+        in: query
+        required: false
+        description: Branch, tag, or commit SHA to start listing from
+        schema:
+          type: string
+      - name: searchCriteria.author
+        in: query
+        required: false
+        description: Filter by commit author name or email
+        schema:
+          type: string
+      - name: searchCriteria.fromDate
+        in: query
+        required: false
+        description: Return commits after this date
+        schema:
+          type: string
+          format: date-time
+      - name: searchCriteria.toDate
+        in: query
+        required: false
+        description: Return commits before this date
+        schema:
+          type: string
+          format: date-time
+      - name: searchCriteria.itemPath
+        in: query
+        required: false
+        description: Filter commits that touched this file or folder path
+        schema:
+          type: string
+      - name: searchCriteria.$top
+        in: query
+        required: false
+        description: Maximum number of commits to return
+        schema:
+          type: integer
+      - name: searchCriteria.$skip
+        in: query
+        required: false
+        description: Number of commits to skip (for pagination)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of commits returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitCommitRef'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

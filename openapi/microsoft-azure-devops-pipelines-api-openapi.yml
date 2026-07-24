@@ -1,0 +1,369 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Pipelines API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Pipelines
+  description: Operations for managing pipeline definitions
+paths:
+  /pipelines:
+    get:
+      operationId: pipelines_list
+      summary: Azure DevOps List pipelines
+      description: 'Returns a list of pipelines in the project. Pipelines are YAML-based CI/CD definitions stored in source repositories. Supports ordering and pagination.
+
+        '
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: orderBy
+        in: query
+        required: false
+        description: Sort order for pipelines (e.g., name, createdDate)
+        schema:
+          type: string
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of pipelines to return
+        schema:
+          type: integer
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of pipelines returned successfully
+          headers:
+            x-ms-continuationtoken:
+              description: Token for retrieving the next page of results
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of pipelines in this response
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pipeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: pipelines_create
+      summary: Azure DevOps Create a pipeline
+      description: 'Creates a new pipeline definition in the project. The pipeline references a YAML file in a source repository. After creation, the pipeline can be run manually or triggered by code changes.
+
+        '
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Pipeline creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipelineParameters'
+            example:
+              name: CI Pipeline
+              folder: \CI
+              configuration:
+                type: yaml
+                path: /azure-pipelines.yml
+                repository:
+                  id: a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4
+                  type: azureReposGit
+      responses:
+        '200':
+          description: Pipeline created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /pipelines/{pipelineId}:
+    get:
+      operationId: pipelines_get
+      summary: Azure DevOps Get a pipeline
+      description: 'Returns detailed information about a specific pipeline, including its configuration, repository source, and revision. The pipelineId is the numeric identifier assigned when the pipeline was created.
+
+        '
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PipelineId'
+      - name: pipelineVersion
+        in: query
+        required: false
+        description: Specific version of the pipeline to retrieve
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Pipeline returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    PipelineConfiguration:
+      type: object
+      description: Configuration details for a pipeline
+      properties:
+        type:
+          type: string
+          description: Pipeline configuration type
+          enum:
+          - unknown
+          - yaml
+          - designerJson
+          - justInTime
+          - designerHyphenJson
+        path:
+          type: string
+          description: Path to the YAML pipeline file in the repository
+          example: /azure-pipelines.yml
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+    CreatePipelineParameters:
+      type: object
+      description: Parameters for creating a new pipeline
+      required:
+      - name
+      - configuration
+      properties:
+        name:
+          type: string
+          description: Display name for the new pipeline
+          example: My New Pipeline
+        folder:
+          type: string
+          description: Folder path where the pipeline will be created
+          default: \
+        configuration:
+          type: object
+          description: Pipeline configuration specifying the YAML file and repository
+          required:
+          - type
+          - path
+          - repository
+          properties:
+            type:
+              type: string
+              description: Configuration type (yaml for YAML-based pipelines)
+              enum:
+              - unknown
+              - yaml
+              - designerJson
+              - justInTime
+              - designerHyphenJson
+            path:
+              type: string
+              description: Path to the YAML file in the repository
+              example: /azure-pipelines.yml
+            repository:
+              type: object
+              description: Repository where the pipeline YAML file is located
+              required:
+              - id
+              - type
+              properties:
+                id:
+                  type: string
+                  description: Repository GUID for Azure Repos, or full name for GitHub
+                type:
+                  type: string
+                  description: Repository type
+                  enum:
+                  - unknown
+                  - azureReposGit
+                  - gitHub
+                  - azureReposGitHyphenated
+                name:
+                  type: string
+                  description: Repository name (for GitHub repositories)
+    BuildRepository:
+      type: object
+      description: Repository configuration for a pipeline
+      properties:
+        id:
+          type: string
+          description: Repository ID
+        name:
+          type: string
+          description: Repository name
+        type:
+          type: string
+          description: Repository type
+          enum:
+          - TfsGit
+          - TfsVersionControl
+          - GitHub
+          - Bitbucket
+          - GitHubEnterprise
+        url:
+          type: string
+          format: uri
+        defaultBranch:
+          type: string
+          description: Default branch for this repository
+          example: refs/heads/main
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Pipeline:
+      type: object
+      description: An Azure DevOps pipeline definition
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the pipeline
+          example: 15
+        name:
+          type: string
+          description: Display name of the pipeline
+          example: CI Pipeline
+        folder:
+          type: string
+          description: Folder path for organizing pipelines
+          example: \CI
+        revision:
+          type: integer
+          description: Current revision number of the pipeline
+        url:
+          type: string
+          format: uri
+          description: URL to access this pipeline via the REST API
+        _links:
+          type: object
+          description: HAL links for related resources
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+            web:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+        configuration:
+          $ref: '#/components/schemas/PipelineConfiguration'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      description: Numeric ID of the pipeline
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

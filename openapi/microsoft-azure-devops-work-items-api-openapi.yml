@@ -1,0 +1,474 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Work Items API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Work Items
+  description: Operations for managing work items (Bugs, Tasks, User Stories, etc.)
+paths:
+  /wit/workitems:
+    get:
+      operationId: workItems_list
+      summary: Azure DevOps List work items by IDs
+      description: 'Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.
+
+        '
+      tags:
+      - Work Items
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: ids
+        in: query
+        required: true
+        description: Comma-separated list of work item IDs (up to 200)
+        schema:
+          type: string
+        example: 1,2,3,4,5
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to return (e.g., System.Title,System.State)
+        schema:
+          type: string
+      - name: asOf
+        in: query
+        required: false
+        description: Work items as of a specific date and time (ISO 8601 format)
+        schema:
+          type: string
+          format: date-time
+      - name: $expand
+        in: query
+        required: false
+        description: Expand relations, links, or fields in the response
+        schema:
+          type: string
+          enum:
+          - none
+          - relations
+          - links
+          - fields
+          - all
+      responses:
+        '200':
+          description: List of work items returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of work items returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitems/{type}:
+    post:
+      operationId: workItems_create
+      summary: Azure DevOps Create a work item
+      description: 'Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.
+
+        '
+      tags:
+      - Work Items
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: type
+        in: path
+        required: true
+        description: Work item type (e.g., Bug, Task, User Story)
+        schema:
+          type: string
+        example: Bug
+      - name: validateOnly
+        in: query
+        required: false
+        description: Validate the fields without saving the work item
+        schema:
+          type: boolean
+      - name: bypassRules
+        in: query
+        required: false
+        description: Do not enforce the work item type rules on this update
+        schema:
+          type: boolean
+      - name: suppressNotifications
+        in: query
+        required: false
+        description: Do not fire any notifications for this change
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        description: JSON Patch document with field operations for the new work item
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            example:
+            - op: add
+              path: /fields/System.Title
+              value: Fix login button alignment
+            - op: add
+              path: /fields/System.Description
+              value: The login button is misaligned on mobile screens
+      responses:
+        '200':
+          description: Work item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitems/{id}:
+    get:
+      operationId: workItems_get
+      summary: Azure DevOps Get a work item by ID
+      description: 'Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.
+
+        '
+      tags:
+      - Work Items
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: id
+        in: path
+        required: true
+        description: Numeric ID of the work item
+        schema:
+          type: integer
+        example: 42
+      - name: fields
+        in: query
+        required: false
+        description: Comma-separated list of fields to return
+        schema:
+          type: string
+      - name: asOf
+        in: query
+        required: false
+        description: Work item as of a specific date and time
+        schema:
+          type: string
+          format: date-time
+      - name: $expand
+        in: query
+        required: false
+        description: Expand relations, links, or fields
+        schema:
+          type: string
+          enum:
+          - none
+          - relations
+          - links
+          - fields
+          - all
+      responses:
+        '200':
+          description: Work item returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: workItems_update
+      summary: Azure DevOps Update a work item
+      description: 'Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.
+
+        '
+      tags:
+      - Work Items
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: id
+        in: path
+        required: true
+        description: Numeric ID of the work item to update
+        schema:
+          type: integer
+      - name: validateOnly
+        in: query
+        required: false
+        description: Validate fields without saving the work item
+        schema:
+          type: boolean
+      - name: bypassRules
+        in: query
+        required: false
+        description: Do not enforce work item type rules on this update
+        schema:
+          type: boolean
+      - name: suppressNotifications
+        in: query
+        required: false
+        description: Do not fire any notifications for this change
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        description: JSON Patch document with field update operations
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            example:
+            - op: replace
+              path: /fields/System.State
+              value: Active
+            - op: replace
+              path: /fields/System.AssignedTo
+              value: user@example.com
+      responses:
+        '200':
+          description: Work item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: workItems_delete
+      summary: Azure DevOps Delete a work item
+      description: 'Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.
+
+        '
+      tags:
+      - Work Items
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: id
+        in: path
+        required: true
+        description: Numeric ID of the work item to delete
+        schema:
+          type: integer
+      - name: destroy
+        in: query
+        required: false
+        description: Permanently delete the work item instead of moving to recycle bin
+        schema:
+          type: boolean
+      responses:
+        '204':
+          description: Work item deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    JsonPatchOperation:
+      type: object
+      description: A single operation in a JSON Patch document (RFC 6902)
+      required:
+      - op
+      - path
+      properties:
+        op:
+          type: string
+          description: Operation type
+          enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+        path:
+          type: string
+          description: JSON Pointer path (RFC 6901) to the target location
+          example: /fields/System.Title
+        from:
+          type: string
+          description: Source path for move and copy operations
+        value:
+          description: Value to apply (for add, replace, test operations)
+    WorkItem:
+      type: object
+      description: An Azure DevOps work item (Bug, Task, User Story, etc.)
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the work item
+          example: 42
+        rev:
+          type: integer
+          description: Revision number of the work item (increments on each update)
+          example: 3
+        fields:
+          type: object
+          description: 'Dynamic map of field reference names to values. Common fields include System.Title, System.State, System.AssignedTo, System.Description, System.WorkItemType, System.AreaPath, System.IterationPath, etc.
+
+            '
+          additionalProperties: true
+          example:
+            System.Title: Fix login button alignment
+            System.State: Active
+            System.AssignedTo: User Name <user@example.com>
+            System.WorkItemType: Bug
+            System.TeamProject: MyProject
+            System.AreaPath: MyProject\\Frontend
+            System.IterationPath: MyProject\\Sprint 5
+        relations:
+          type: array
+          description: Links and relations to other work items or external resources
+          items:
+            $ref: '#/components/schemas/WorkItemRelation'
+        _links:
+          type: object
+          description: HAL links for navigating related resources
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+        url:
+          type: string
+          format: uri
+          description: URL to access this work item via the REST API
+          example: https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42
+    WorkItemRelation:
+      type: object
+      description: A relation between a work item and another resource
+      properties:
+        rel:
+          type: string
+          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
+          example: System.LinkTypes.Hierarchy-Reverse
+        url:
+          type: string
+          format: uri
+          description: URL of the related resource
+        attributes:
+          type: object
+          description: Additional attributes for the relation (e.g., comment, isLocked)
+          additionalProperties: true
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

@@ -1,0 +1,482 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Pushes API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Pushes
+  description: Operations for managing pushes and commits
+paths:
+  /git/repositories/{repositoryId}/pushes:
+    get:
+      operationId: pushes_list
+      summary: Azure DevOps List pushes
+      description: 'Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.
+
+        '
+      tags:
+      - Pushes
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of pushes to return
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        required: false
+        description: Number of pushes to skip
+        schema:
+          type: integer
+      - name: searchCriteria.fromDate
+        in: query
+        required: false
+        description: Return pushes from after this date
+        schema:
+          type: string
+          format: date-time
+      - name: searchCriteria.toDate
+        in: query
+        required: false
+        description: Return pushes before this date
+        schema:
+          type: string
+          format: date-time
+      - name: searchCriteria.refName
+        in: query
+        required: false
+        description: Filter by branch or ref name
+        schema:
+          type: string
+      - name: searchCriteria.pusherId
+        in: query
+        required: false
+        description: Filter pushes by user who pushed
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: List of pushes returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPush'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: pushes_create
+      summary: Azure DevOps Create a push
+      description: 'Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.
+
+        '
+      tags:
+      - Pushes
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      requestBody:
+        required: true
+        description: Push data including commits and ref updates
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitPushCreateRequest'
+      responses:
+        '201':
+          description: Push created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPush'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    GitRepository:
+      type: object
+      description: An Azure DevOps Git repository
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the repository
+        name:
+          type: string
+          description: Repository name
+          example: my-application
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this repository
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        defaultBranch:
+          type: string
+          description: Default branch of the repository
+          example: refs/heads/main
+        size:
+          type: integer
+          description: Size of the repository in bytes
+        remoteUrl:
+          type: string
+          format: uri
+          description: Remote URL for cloning (HTTPS)
+          example: https://dev.azure.com/myorg/myproject/_git/my-application
+        sshUrl:
+          type: string
+          description: SSH URL for cloning
+          example: git@ssh.dev.azure.com:v3/myorg/myproject/my-application
+        webUrl:
+          type: string
+          format: uri
+          description: Web browser URL for the repository
+        parentRepository:
+          type: object
+          nullable: true
+          description: Parent repository (if this is a fork)
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        isFork:
+          type: boolean
+          description: Whether this repository is a fork of another
+        isDisabled:
+          type: boolean
+          description: Whether this repository is disabled
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    GitRefUpdate:
+      type: object
+      description: A ref update in a push
+      properties:
+        name:
+          type: string
+          description: The ref name (e.g., refs/heads/main)
+        oldObjectId:
+          type: string
+          description: Previous SHA the ref pointed to (zeros for new ref)
+        newObjectId:
+          type: string
+          description: New SHA the ref now points to (zeros to delete)
+        repositoryId:
+          type: string
+          format: uuid
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
+    GitPushCreateRequest:
+      type: object
+      description: Request to create a push with new commits
+      required:
+      - refUpdates
+      - commits
+      properties:
+        refUpdates:
+          type: array
+          description: Branch updates to apply in this push
+          items:
+            $ref: '#/components/schemas/GitRefUpdate'
+        commits:
+          type: array
+          description: Commits to push
+          items:
+            type: object
+            required:
+            - comment
+            - changes
+            properties:
+              comment:
+                type: string
+                description: Commit message
+              changes:
+                type: array
+                description: File changes in this commit
+                items:
+                  type: object
+                  properties:
+                    changeType:
+                      type: string
+                      enum:
+                      - add
+                      - edit
+                      - delete
+                      - rename
+                      - sourceRename
+                      - targetRename
+                    item:
+                      type: object
+                      properties:
+                        path:
+                          type: string
+                    newContent:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                        contentType:
+                          type: string
+                          enum:
+                          - rawText
+                          - base64Encoded
+    GitPush:
+      type: object
+      description: A push to a Git repository
+      properties:
+        pushId:
+          type: integer
+          description: Unique numeric push ID
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the push
+        pushedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        commits:
+          type: array
+          description: Commits included in this push
+          items:
+            $ref: '#/components/schemas/GitCommitRef'
+        refUpdates:
+          type: array
+          description: Ref updates (branch changes) in this push
+          items:
+            $ref: '#/components/schemas/GitRefUpdate'
+        repository:
+          $ref: '#/components/schemas/GitRepository'
+        url:
+          type: string
+          format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

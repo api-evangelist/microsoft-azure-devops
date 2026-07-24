@@ -1,0 +1,367 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Work Item Types API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Work Item Types
+  description: Operations for work item type definitions and fields
+paths:
+  /wit/workitemtypes:
+    get:
+      operationId: workItemTypes_list
+      summary: Azure DevOps List work item types
+      description: 'Returns a list of all work item types defined in the project. Work item types include Bug, Task, User Story, Feature, Epic, and any custom types defined in the process template.
+
+        '
+      tags:
+      - Work Item Types
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of work item types returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /wit/workitemtypes/{type}:
+    get:
+      operationId: workItemTypes_get
+      summary: Azure DevOps Get a work item type
+      description: 'Returns detailed information about a specific work item type, including its fields, transitions, states, and rules. The type name is case-sensitive and must match exactly (e.g., ''Bug'', ''Task'', ''User Story'').
+
+        '
+      tags:
+      - Work Item Types
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: type
+        in: path
+        required: true
+        description: Name of the work item type
+        schema:
+          type: string
+        example: Bug
+      responses:
+        '200':
+          description: Work item type returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wit/fields:
+    get:
+      operationId: fields_list
+      summary: Azure DevOps List work item fields
+      description: 'Returns a list of all work item fields available in the project. Includes both system fields (System.*) and custom fields, with their types, reference names, and whether they are read-only.
+
+        '
+      tags:
+      - Work Item Types
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: $expand
+        in: query
+        required: false
+        description: Include additional details such as allowed values
+        schema:
+          type: string
+          enum:
+          - none
+          - extensionFields
+          - includeDeleted
+      responses:
+        '200':
+          description: List of fields returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemField'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    WorkItemField:
+      type: object
+      description: Definition of a work item field
+      properties:
+        name:
+          type: string
+          description: Display name of the field
+          example: Assigned To
+        referenceName:
+          type: string
+          description: Reference name used in WIQL and API (e.g., System.AssignedTo)
+          example: System.AssignedTo
+        description:
+          type: string
+          description: Description of what the field stores
+        type:
+          type: string
+          description: Data type of the field
+          enum:
+          - string
+          - integer
+          - dateTime
+          - plainText
+          - html
+          - treePath
+          - history
+          - double
+          - guid
+          - boolean
+          - identity
+          - picklistString
+          - picklistInteger
+          - picklistDouble
+        usage:
+          type: string
+          description: Whether the field is used for work items or work item links
+          enum:
+          - none
+          - workItem
+          - workItemLink
+          - tree
+          - workItemTypeExtension
+        readOnly:
+          type: boolean
+          description: Whether the field is read-only
+        canSortBy:
+          type: boolean
+          description: Whether work items can be sorted by this field
+        isQueryable:
+          type: boolean
+          description: Whether this field can be used in WIQL queries
+        isIdentity:
+          type: boolean
+          description: Whether this field stores an identity (user) value
+        isPicklist:
+          type: boolean
+          description: Whether this field has a picklist of allowed values
+        isPicklistSuggested:
+          type: boolean
+          description: Whether the picklist values are suggested (non-exclusive)
+        url:
+          type: string
+          format: uri
+    WorkItemTypeFieldInstance:
+      type: object
+      description: A field instance within a work item type
+      properties:
+        fieldName:
+          type: string
+          description: Display name of the field
+        field:
+          type: object
+          properties:
+            name:
+              type: string
+            referenceName:
+              type: string
+            url:
+              type: string
+              format: uri
+        referenceName:
+          type: string
+          description: Reference name (e.g., System.Title)
+        defaultValue:
+          description: Default value for the field
+        allowedValues:
+          type: array
+          items:
+            type: string
+          description: Allowed values for fields with a restricted set of values
+        helpText:
+          type: string
+        alwaysRequired:
+          type: boolean
+        readOnly:
+          type: boolean
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
+    WorkItemType:
+      type: object
+      description: Definition of a work item type
+      properties:
+        name:
+          type: string
+          description: Display name of the work item type
+          example: Bug
+        referenceName:
+          type: string
+          description: Reference name used in WIQL queries
+          example: Microsoft.VSTS.WorkItemTypes.Bug
+        description:
+          type: string
+          description: Description of the work item type and its intended use
+        color:
+          type: string
+          description: Hex color code for the work item type icon
+          example: CC293D
+        icon:
+          type: object
+          description: Icon information for the work item type
+          properties:
+            id:
+              type: string
+            url:
+              type: string
+              format: uri
+        isDisabled:
+          type: boolean
+          description: Whether the work item type is disabled
+        xmlForm:
+          type: string
+          description: XML definition of the work item type form
+        fields:
+          type: array
+          description: Fields defined for this work item type
+          items:
+            $ref: '#/components/schemas/WorkItemTypeFieldInstance'
+        fieldInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkItemTypeFieldInstance'
+        transitions:
+          type: object
+          description: Map of allowed state transitions
+          additionalProperties:
+            type: array
+            items:
+              type: object
+              properties:
+                to:
+                  type: string
+                actions:
+                  type: array
+                  items:
+                    type: string
+        states:
+          type: array
+          description: Valid states for this work item type
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              color:
+                type: string
+              category:
+                type: string
+        url:
+          type: string
+          format: uri
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

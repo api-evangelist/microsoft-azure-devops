@@ -1,0 +1,237 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Refs API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Refs
+  description: Operations for managing branches and tags (refs)
+paths:
+  /git/repositories/{repositoryId}/refs:
+    get:
+      operationId: refs_list
+      summary: Azure DevOps List branches and refs
+      description: 'Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., "heads/" for branches, "tags/" for tags).
+
+        '
+      tags:
+      - Refs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: filter
+        in: query
+        required: false
+        description: Prefix filter for ref names (e.g., 'heads/' returns branches)
+        schema:
+          type: string
+        example: heads/
+      - name: includeLinks
+        in: query
+        required: false
+        description: Whether to include _links
+        schema:
+          type: boolean
+      - name: includeStatuses
+        in: query
+        required: false
+        description: Whether to include commit status information
+        schema:
+          type: boolean
+      - name: includeMyBranches
+        in: query
+        required: false
+        description: Whether to prioritize branches created by the current user
+        schema:
+          type: boolean
+      - name: latestStatusesOnly
+        in: query
+        required: false
+        description: Return only the latest status for each ref
+        schema:
+          type: boolean
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of refs to return
+        schema:
+          type: integer
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paging
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of refs returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRef'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+  schemas:
+    GitRef:
+      type: object
+      description: A Git ref (branch or tag)
+      properties:
+        name:
+          type: string
+          description: Full ref name (e.g., refs/heads/main)
+          example: refs/heads/main
+        objectId:
+          type: string
+          description: The commit SHA this ref points to
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        creator:
+          $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+        statuses:
+          type: array
+          description: Commit status checks for this ref
+          items:
+            type: object
+            properties:
+              state:
+                type: string
+                enum:
+                - error
+                - failed
+                - notApplicable
+                - notSet
+                - pending
+                - succeeded
+              description:
+                type: string
+              context:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  genre:
+                    type: string
+              targetUrl:
+                type: string
+                format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

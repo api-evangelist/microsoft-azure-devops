@@ -1,0 +1,596 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Repositories API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Repositories
+  description: Operations for managing Git repositories
+paths:
+  /git/repositories:
+    get:
+      operationId: repositories_list
+      summary: Azure DevOps List repositories
+      description: 'Returns a list of Git repositories in the project. Each repository includes its ID, name, default branch, clone URL, and remote URL.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: includeLinks
+        in: query
+        required: false
+        description: Whether to include _links in the response
+        schema:
+          type: boolean
+      - name: includeAllUrls
+        in: query
+        required: false
+        description: Whether to include all remote URLs (fetch and push)
+        schema:
+          type: boolean
+      - name: includeHidden
+        in: query
+        required: false
+        description: Whether to include hidden repositories
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of repositories returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRepository'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: repositories_create
+      summary: Azure DevOps Create a repository
+      description: 'Creates a new Git repository in the project. Optionally can initialize the repository with a README and specify its visibility. After creation, the repository is empty unless a source URL is provided.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: sourceRef
+        in: query
+        required: false
+        description: Initial branch name for the repository
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: Repository creation parameters
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - project
+              properties:
+                name:
+                  type: string
+                  description: Name of the new repository
+                  example: my-new-repo
+                project:
+                  type: object
+                  description: Project in which to create the repository
+                  required:
+                  - id
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: Project ID
+                parentRepository:
+                  type: object
+                  description: Fork this repository from a parent (optional)
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                    project:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+      responses:
+        '201':
+          description: Repository created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /git/repositories/{repositoryId}:
+    get:
+      operationId: repositories_get
+      summary: Azure DevOps Get a repository
+      description: 'Returns detailed information about a specific Git repository, including its default branch, clone URL, and project association. The repositoryId can be either the GUID or the repository name.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: includeParent
+        in: query
+        required: false
+        description: Whether to include the parent repository (for forks)
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Repository returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: repositories_update
+      summary: Azure DevOps Update a repository
+      description: 'Updates properties of a repository such as its name or default branch. Only the fields provided in the request body will be changed.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      requestBody:
+        required: true
+        description: Repository properties to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name for the repository
+                defaultBranch:
+                  type: string
+                  description: New default branch (e.g., refs/heads/main)
+                isDisabled:
+                  type: boolean
+                  description: Whether to disable the repository
+      responses:
+        '200':
+          description: Repository updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: repositories_delete
+      summary: Azure DevOps Delete a repository
+      description: 'Permanently deletes a repository and all its contents. This action cannot be undone. The repository and all pull requests, branches, and history will be permanently removed.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      responses:
+        '204':
+          description: Repository deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /git/repositories/{repositoryId}/items:
+    get:
+      operationId: items_list
+      summary: Azure DevOps List repository items
+      description: 'Returns a list of items (files and folders) in the repository at a specified path and version. Use this to browse the repository tree and download file contents.
+
+        '
+      tags:
+      - Repositories
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: scopePath
+        in: query
+        required: false
+        description: Path to the folder or file to list
+        schema:
+          type: string
+        example: /src
+      - name: recursionLevel
+        in: query
+        required: false
+        description: How deep to recurse into subfolders
+        schema:
+          type: string
+          enum:
+          - none
+          - oneLevel
+          - oneLevelPlusNestedEmptyFolders
+          - full
+      - name: includeContentMetadata
+        in: query
+        required: false
+        description: Whether to include content metadata (size, encoding) for files
+        schema:
+          type: boolean
+      - name: latestProcessedChange
+        in: query
+        required: false
+        description: Whether to include the latest commit that changed each item
+        schema:
+          type: boolean
+      - name: download
+        in: query
+        required: false
+        description: Whether to return file content as a download
+        schema:
+          type: boolean
+      - name: versionDescriptor.version
+        in: query
+        required: false
+        description: Branch, tag, or commit to retrieve items at
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Repository items returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    GitRepository:
+      type: object
+      description: An Azure DevOps Git repository
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the repository
+        name:
+          type: string
+          description: Repository name
+          example: my-application
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this repository
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        defaultBranch:
+          type: string
+          description: Default branch of the repository
+          example: refs/heads/main
+        size:
+          type: integer
+          description: Size of the repository in bytes
+        remoteUrl:
+          type: string
+          format: uri
+          description: Remote URL for cloning (HTTPS)
+          example: https://dev.azure.com/myorg/myproject/_git/my-application
+        sshUrl:
+          type: string
+          description: SSH URL for cloning
+          example: git@ssh.dev.azure.com:v3/myorg/myproject/my-application
+        webUrl:
+          type: string
+          format: uri
+          description: Web browser URL for the repository
+        parentRepository:
+          type: object
+          nullable: true
+          description: Parent repository (if this is a fork)
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        isFork:
+          type: boolean
+          description: Whether this repository is a fork of another
+        isDisabled:
+          type: boolean
+          description: Whether this repository is disabled
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    GitItem:
+      type: object
+      description: A file or folder in a Git repository
+      properties:
+        objectId:
+          type: string
+          description: Git blob or tree SHA
+        gitObjectType:
+          type: string
+          description: Git object type
+          enum:
+          - bad
+          - commit
+          - tree
+          - blob
+          - tag
+          - ext2
+          - offsetDelta
+          - refDelta
+        commitId:
+          type: string
+          description: SHA of the commit this item belongs to
+        path:
+          type: string
+          description: Path to the item within the repository
+          example: /src/main.ts
+        isFolder:
+          type: boolean
+          description: Whether this item is a folder (tree)
+        isSymLink:
+          type: boolean
+          description: Whether this item is a symbolic link
+        url:
+          type: string
+          format: uri
+        content:
+          type: string
+          description: File content (if requested and item is a file)
+        contentMetadata:
+          type: object
+          description: Metadata about the file content
+          properties:
+            encoding:
+              type: integer
+              description: Text encoding (code page)
+            extension:
+              type: string
+            fileName:
+              type: string
+            isBinary:
+              type: boolean
+            isImage:
+              type: boolean
+        latestProcessedChange:
+          $ref: '#/components/schemas/GitCommitRef'
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

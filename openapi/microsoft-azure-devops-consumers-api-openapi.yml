@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Consumers API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Consumers
+  description: Operations for listing consumers (webhook, service bus, etc.)
+paths:
+  /hooks/consumers:
+    get:
+      operationId: consumers_list
+      summary: Azure DevOps List consumers
+      description: 'Returns a list of all available consumers that can receive service hook notifications. Consumers include webhooks (httpRequest), Azure Service Bus, Azure Storage, Microsoft Teams, and other integration targets.
+
+        '
+      tags:
+      - Consumers
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of consumers returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    ConsumerAction:
+      type: object
+      description: An action available in a consumer
+      properties:
+        id:
+          type: string
+          description: Action identifier
+          example: httpRequest
+        name:
+          type: string
+          description: Action display name
+          example: Send a generic HTTP request with a JSON payload
+        description:
+          type: string
+          description: Description of what this action does
+        consumerId:
+          type: string
+          description: Parent consumer ID
+        inputs:
+          type: array
+          description: Input parameters required for this action
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Consumer:
+      type: object
+      description: A consumer that can receive service hook notifications
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the consumer
+          example: webHooks
+        name:
+          type: string
+          description: Display name of the consumer
+          example: Web Hooks
+        description:
+          type: string
+          description: Description of this consumer type
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the consumer's icon
+        informationUrl:
+          type: string
+          format: uri
+          description: Documentation URL for this consumer
+        actions:
+          type: array
+          description: Available actions for this consumer
+          items:
+            $ref: '#/components/schemas/ConsumerAction'
+        inputs:
+          type: array
+          description: Configuration inputs for this consumer
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    InputDescriptor:
+      type: object
+      description: Descriptor for a configurable input parameter
+      properties:
+        id:
+          type: string
+          description: Input identifier
+        name:
+          type: string
+          description: Display name
+        description:
+          type: string
+          description: Help text
+        inputMode:
+          type: string
+          description: How the input is presented in UI
+          enum:
+          - none
+          - textBox
+          - passwordBox
+          - combo
+          - radioButtons
+          - checkBox
+          - textArea
+        isConfidential:
+          type: boolean
+          description: Whether the value is treated as a secret
+        isRequired:
+          type: boolean
+          description: Whether this input is required
+        values:
+          type: object
+          description: Allowed values for combo/radio inputs
+          properties:
+            defaultValue:
+              type: string
+            possibleValues:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  displayValue:
+                    type: string
+        validation:
+          type: object
+          description: Validation rules for this input
+          properties:
+            dataType:
+              type: string
+              enum:
+              - none
+              - string
+              - number
+              - boolean
+              - guid
+              - uri
+            isRequired:
+              type: boolean
+            pattern:
+              type: string
+              description: Regex pattern for validation
+            patternMismatchErrorMessage:
+              type: string
+            minLength:
+              type: integer
+            maxLength:
+              type: integer
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

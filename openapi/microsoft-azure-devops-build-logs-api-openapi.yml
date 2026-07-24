@@ -1,0 +1,294 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Build Logs API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Build Logs
+  description: Operations for accessing build logs and timelines
+paths:
+  /build/builds/{buildId}/logs:
+    get:
+      operationId: builds_getLogs
+      summary: Azure DevOps Get build logs
+      description: 'Returns the list of log entries for a build. Each log entry corresponds to a step or phase in the build pipeline. Use the log ID to retrieve the content of a specific log.
+
+        '
+      tags:
+      - Build Logs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: buildId
+        in: path
+        required: true
+        description: Numeric ID of the build
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Build logs returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BuildLog'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /build/builds/{buildId}/timeline:
+    get:
+      operationId: builds_getTimeline
+      summary: Azure DevOps Get build timeline
+      description: 'Returns the detailed timeline for a build, showing all phases, jobs, tasks, and their individual statuses, start times, and durations. Useful for understanding which steps in the pipeline passed or failed.
+
+        '
+      tags:
+      - Build Logs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: buildId
+        in: path
+        required: true
+        description: Numeric ID of the build
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Build timeline returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeline'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    BuildLog:
+      type: object
+      description: Metadata about a single build log
+      properties:
+        id:
+          type: integer
+          description: Log entry ID
+        type:
+          type: string
+          description: Storage type of the log
+        url:
+          type: string
+          format: uri
+          description: URL to retrieve the log content
+        createdOn:
+          type: string
+          format: date-time
+        lastChangedOn:
+          type: string
+          format: date-time
+        lineCount:
+          type: integer
+          description: Number of log lines
+    TimelineRecord:
+      type: object
+      description: A single record in the build timeline
+      properties:
+        id:
+          type: string
+          format: uuid
+        parentId:
+          type: string
+          format: uuid
+          description: ID of the parent record (e.g., job's parent is a stage)
+        type:
+          type: string
+          description: Record type (Phase, Job, Task, Checkpoint)
+        name:
+          type: string
+          description: Display name of the record
+        startTime:
+          type: string
+          format: date-time
+        finishTime:
+          type: string
+          format: date-time
+        state:
+          type: string
+          enum:
+          - pending
+          - inProgress
+          - completed
+        result:
+          type: string
+          enum:
+          - succeeded
+          - succeededWithIssues
+          - failed
+          - canceled
+          - skipped
+          - abandoned
+        resultCode:
+          type: string
+        changeId:
+          type: integer
+        lastModified:
+          type: string
+          format: date-time
+        workerName:
+          type: string
+          description: Name of the agent that executed this record
+        order:
+          type: integer
+          description: Display order within the parent
+        errorCount:
+          type: integer
+          description: Number of errors in this record
+        warningCount:
+          type: integer
+          description: Number of warnings in this record
+        url:
+          type: string
+          format: uri
+        log:
+          type: object
+          description: Log reference for this record
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+            url:
+              type: string
+              format: uri
+        issues:
+          type: array
+          description: Issues (errors/warnings) encountered in this record
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - error
+                - warning
+              category:
+                type: string
+              message:
+                type: string
+              data:
+                type: object
+                additionalProperties: true
+    Timeline:
+      type: object
+      description: Build timeline showing all records (phases, jobs, tasks)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Timeline ID
+        changeId:
+          type: integer
+          description: Change ID for real-time timeline updates
+        lastChangedBy:
+          type: string
+          format: uuid
+        lastChangedOn:
+          type: string
+          format: date-time
+        records:
+          type: array
+          description: List of timeline records (phases, jobs, tasks)
+          items:
+            $ref: '#/components/schemas/TimelineRecord'
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

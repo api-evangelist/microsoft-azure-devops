@@ -1,0 +1,964 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Pull Requests API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Pull Requests
+  description: Operations for creating and managing pull requests
+paths:
+  /git/repositories/{repositoryId}/pullrequests:
+    get:
+      operationId: pullRequests_list
+      summary: Azure DevOps List pull requests
+      description: 'Returns a list of pull requests in a repository. Supports filtering by status, target branch, source branch, creator, and reviewer.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: searchCriteria.status
+        in: query
+        required: false
+        description: Filter pull requests by status
+        schema:
+          type: string
+          enum:
+          - notSet
+          - active
+          - abandoned
+          - completed
+          - all
+      - name: searchCriteria.targetRefName
+        in: query
+        required: false
+        description: Filter by target branch (e.g., refs/heads/main)
+        schema:
+          type: string
+      - name: searchCriteria.sourceRefName
+        in: query
+        required: false
+        description: Filter by source branch
+        schema:
+          type: string
+      - name: searchCriteria.creatorId
+        in: query
+        required: false
+        description: Filter pull requests by creator's user ID
+        schema:
+          type: string
+          format: uuid
+      - name: searchCriteria.reviewerId
+        in: query
+        required: false
+        description: Filter pull requests by reviewer's user ID
+        schema:
+          type: string
+          format: uuid
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of pull requests to return
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        required: false
+        description: Number of pull requests to skip (for pagination)
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of pull requests returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPullRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: pullRequests_create
+      summary: Azure DevOps Create a pull request
+      description: 'Creates a new pull request to merge changes from a source branch into a target branch. Supports specifying reviewers, work item links, labels, and whether to complete the PR automatically on all approvals.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: supportsIterations
+        in: query
+        required: false
+        description: Whether the PR should support iterations (diff views)
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        description: Pull request creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitPullRequestCreateRequest'
+            example:
+              title: Add new login feature
+              description: This PR adds the new OAuth 2.0 login flow
+              sourceRefName: refs/heads/feature/login
+              targetRefName: refs/heads/main
+              reviewers:
+              - id: 8c8c7d32-6b1b-47f4-b2e9-30209d6d62be
+      responses:
+        '201':
+          description: Pull request created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}:
+    get:
+      operationId: pullRequests_get
+      summary: Azure DevOps Get a pull request
+      description: 'Returns detailed information about a specific pull request, including its status, reviewers, commits, merge status, and associated work items.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: pullRequestId
+        in: path
+        required: true
+        description: Numeric ID of the pull request
+        schema:
+          type: integer
+      - name: maxCommentLength
+        in: query
+        required: false
+        description: Maximum character count in returned comments
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        required: false
+        description: Number of items to skip in collections
+        schema:
+          type: integer
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of items in collections
+        schema:
+          type: integer
+      - name: includeCommits
+        in: query
+        required: false
+        description: Whether to include commit details
+        schema:
+          type: boolean
+      - name: includeWorkItemRefs
+        in: query
+        required: false
+        description: Whether to include linked work item references
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Pull request returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: pullRequests_update
+      summary: Azure DevOps Update a pull request
+      description: 'Updates a pull request. Use this to change the title, description, status (abandon or complete), target branch, and auto-complete settings. To complete a PR, set status to ''completed'' and provide a lastMergeSourceCommit.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: pullRequestId
+        in: path
+        required: true
+        description: Numeric ID of the pull request to update
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        description: Pull request fields to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: New title for the pull request
+                description:
+                  type: string
+                  description: New description for the pull request
+                status:
+                  type: string
+                  description: New status for the pull request
+                  enum:
+                  - notSet
+                  - active
+                  - abandoned
+                  - completed
+                autoCompleteSetBy:
+                  $ref: '#/components/schemas/IdentityRef'
+                targetRefName:
+                  type: string
+                  description: New target branch (only if not yet completed)
+                lastMergeSourceCommit:
+                  type: object
+                  description: Required when completing the PR - the head commit of the source branch
+                  properties:
+                    commitId:
+                      type: string
+                completionOptions:
+                  type: object
+                  description: Options for completing the PR
+                  properties:
+                    deleteSourceBranch:
+                      type: boolean
+                    squashMerge:
+                      type: boolean
+                    mergeStrategy:
+                      type: string
+                      enum:
+                      - noFastForward
+                      - squash
+                      - rebase
+                      - rebaseMerge
+                    transitionWorkItems:
+                      type: boolean
+      responses:
+        '200':
+          description: Pull request updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads:
+    get:
+      operationId: pullRequests_listThreads
+      summary: Azure DevOps Get pull request threads
+      description: 'Returns all comment threads on a pull request, including code review comments tied to specific file positions and general conversation threads.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: pullRequestId
+        in: path
+        required: true
+        description: Numeric ID of the pull request
+        schema:
+          type: integer
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of threads to return
+        schema:
+          type: integer
+      - name: $skip
+        in: query
+        required: false
+        description: Number of threads to skip
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Pull request threads returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: pullRequests_addComment
+      summary: Azure DevOps Add a pull request comment thread
+      description: 'Adds a new comment thread to a pull request. Threads can be general comments or code review comments tied to a specific file and line number.
+
+        '
+      tags:
+      - Pull Requests
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/RepositoryId'
+      - name: pullRequestId
+        in: path
+        required: true
+        description: Numeric ID of the pull request
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        description: Comment thread to add to the pull request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitPullRequestCommentThreadCreateRequest'
+            example:
+              comments:
+              - parentCommentId: 0
+                content: Please add unit tests for this change
+                commentType: text
+              status: active
+      responses:
+        '200':
+          description: Comment thread created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    GitRepository:
+      type: object
+      description: An Azure DevOps Git repository
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the repository
+        name:
+          type: string
+          description: Repository name
+          example: my-application
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this repository
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        defaultBranch:
+          type: string
+          description: Default branch of the repository
+          example: refs/heads/main
+        size:
+          type: integer
+          description: Size of the repository in bytes
+        remoteUrl:
+          type: string
+          format: uri
+          description: Remote URL for cloning (HTTPS)
+          example: https://dev.azure.com/myorg/myproject/_git/my-application
+        sshUrl:
+          type: string
+          description: SSH URL for cloning
+          example: git@ssh.dev.azure.com:v3/myorg/myproject/my-application
+        webUrl:
+          type: string
+          format: uri
+          description: Web browser URL for the repository
+        parentRepository:
+          type: object
+          nullable: true
+          description: Parent repository (if this is a fork)
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        isFork:
+          type: boolean
+          description: Whether this repository is a fork of another
+        isDisabled:
+          type: boolean
+          description: Whether this repository is disabled
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    GitPullRequest:
+      type: object
+      description: An Azure DevOps Git pull request
+      properties:
+        pullRequestId:
+          type: integer
+          description: Unique numeric ID of the pull request
+          example: 42
+        title:
+          type: string
+          description: Title of the pull request
+          example: Add new login feature
+        description:
+          type: string
+          description: Description of the changes in this pull request
+        status:
+          type: string
+          description: Current status of the pull request
+          enum:
+          - notSet
+          - active
+          - abandoned
+          - completed
+          - all
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+          description: Date and time the pull request was created
+        closedDate:
+          type: string
+          format: date-time
+          description: Date and time the pull request was completed or abandoned
+        targetRefName:
+          type: string
+          description: Target branch for the merge
+          example: refs/heads/main
+        sourceRefName:
+          type: string
+          description: Source branch containing the changes
+          example: refs/heads/feature/login
+        mergeId:
+          type: string
+          format: uuid
+          description: ID of the merge operation
+        mergeStatus:
+          type: string
+          description: Current merge status
+          enum:
+          - notSet
+          - queued
+          - conflicts
+          - succeeded
+          - rejectedByPolicy
+          - failure
+        lastMergeSourceCommit:
+          type: object
+          description: Latest commit in the source branch
+          properties:
+            commitId:
+              type: string
+            url:
+              type: string
+              format: uri
+        lastMergeTargetCommit:
+          type: object
+          description: Latest commit in the target branch
+          properties:
+            commitId:
+              type: string
+            url:
+              type: string
+              format: uri
+        lastMergeCommit:
+          type: object
+          description: The merge commit (if the PR has been merged)
+          properties:
+            commitId:
+              type: string
+            url:
+              type: string
+              format: uri
+        reviewers:
+          type: array
+          description: Reviewers assigned to this pull request
+          items:
+            $ref: '#/components/schemas/IdentityRefWithVote'
+        url:
+          type: string
+          format: uri
+        repository:
+          $ref: '#/components/schemas/GitRepository'
+        isDraft:
+          type: boolean
+          description: Whether this is a draft pull request
+        autoCompleteSetBy:
+          $ref: '#/components/schemas/IdentityRef'
+        completionOptions:
+          type: object
+          description: Options for auto-completing the PR
+          properties:
+            deleteSourceBranch:
+              type: boolean
+            squashMerge:
+              type: boolean
+            mergeStrategy:
+              type: string
+              enum:
+              - noFastForward
+              - squash
+              - rebase
+              - rebaseMerge
+            transitionWorkItems:
+              type: boolean
+        workItemRefs:
+          type: array
+          description: Work items associated with this pull request
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              url:
+                type: string
+                format: uri
+        labels:
+          type: array
+          description: Labels attached to this pull request
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              active:
+                type: boolean
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    GitPullRequestCommentThread:
+      type: object
+      description: A comment thread on a pull request
+      properties:
+        id:
+          type: integer
+          description: Thread ID
+        publishedDate:
+          type: string
+          format: date-time
+        lastUpdatedDate:
+          type: string
+          format: date-time
+        comments:
+          type: array
+          description: Comments in this thread
+          items:
+            $ref: '#/components/schemas/Comment'
+        status:
+          type: string
+          description: Thread status
+          enum:
+          - unknown
+          - active
+          - byDesign
+          - closed
+          - fixed
+          - wontFix
+          - pending
+        threadContext:
+          type: object
+          description: Location in the diff where this thread was created
+          properties:
+            filePath:
+              type: string
+            rightFileStart:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+            rightFileEnd:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+        pullRequestThreadContext:
+          type: object
+          description: Pull request context for the thread
+        isDeleted:
+          type: boolean
+        url:
+          type: string
+          format: uri
+    IdentityRefWithVote:
+      type: object
+      description: A reviewer identity with their vote on a pull request
+      allOf:
+      - $ref: '#/components/schemas/IdentityRef'
+      properties:
+        vote:
+          type: integer
+          description: 'Vote value: 10 = approved, 5 = approved with suggestions, 0 = no vote, -5 = waiting for author, -10 = rejected
+
+            '
+          enum:
+          - 10
+          - 5
+          - 0
+          - -5
+          - -10
+        hasDeclined:
+          type: boolean
+          description: Whether the reviewer has declined
+        isFlagged:
+          type: boolean
+          description: Whether the reviewer has flagged the PR
+        isRequired:
+          type: boolean
+          description: Whether this reviewer's approval is required
+        reviewerUrl:
+          type: string
+          format: uri
+    Comment:
+      type: object
+      description: A comment in a pull request thread
+      properties:
+        id:
+          type: integer
+        parentCommentId:
+          type: integer
+        content:
+          type: string
+        publishedDate:
+          type: string
+          format: date-time
+        lastUpdatedDate:
+          type: string
+          format: date-time
+        lastContentUpdatedDate:
+          type: string
+          format: date-time
+        commentType:
+          type: string
+          enum:
+          - unknown
+          - text
+          - codeChange
+          - system
+        author:
+          $ref: '#/components/schemas/IdentityRef'
+        isDeleted:
+          type: boolean
+        usersLiked:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+    GitPullRequestCreateRequest:
+      type: object
+      description: Request to create a new pull request
+      required:
+      - title
+      - sourceRefName
+      - targetRefName
+      properties:
+        title:
+          type: string
+          description: Title for the pull request
+        description:
+          type: string
+          description: Description of the changes
+        sourceRefName:
+          type: string
+          description: Source branch containing the changes
+          example: refs/heads/feature/my-feature
+        targetRefName:
+          type: string
+          description: Target branch for the merge
+          example: refs/heads/main
+        reviewers:
+          type: array
+          description: Initial reviewers to assign
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+        isDraft:
+          type: boolean
+          description: Whether to create as a draft pull request
+          default: false
+        workItemRefs:
+          type: array
+          description: Work items to associate with this pull request
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+        labels:
+          type: array
+          description: Labels to attach to this pull request
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    GitPullRequestCommentThreadCreateRequest:
+      type: object
+      description: Request to create a new pull request comment thread
+      required:
+      - comments
+      properties:
+        comments:
+          type: array
+          description: Initial comments for the thread
+          items:
+            type: object
+            required:
+            - content
+            properties:
+              parentCommentId:
+                type: integer
+                description: Parent comment ID (0 for root comment)
+              content:
+                type: string
+                description: Comment text
+              commentType:
+                type: string
+                enum:
+                - unknown
+                - text
+                - codeChange
+                - system
+        status:
+          type: string
+          enum:
+          - unknown
+          - active
+          - byDesign
+          - closed
+          - fixed
+          - wontFix
+          - pending
+        threadContext:
+          type: object
+          description: File location context for code review comments
+          properties:
+            filePath:
+              type: string
+            rightFileStart:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+            rightFileEnd:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

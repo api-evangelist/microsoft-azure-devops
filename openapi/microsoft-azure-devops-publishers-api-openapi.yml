@@ -1,0 +1,305 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Publishers API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Publishers
+  description: Operations for listing event publishers and their event types
+paths:
+  /hooks/publishers:
+    get:
+      operationId: publishers_list
+      summary: Azure DevOps List publishers
+      description: 'Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is ''tfs''. Each publisher defines what event types it can produce.
+
+        '
+      tags:
+      - Publishers
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: List of publishers returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Publisher'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /hooks/publishers/{publisherId}/eventTypes:
+    get:
+      operationId: publishers_listEventTypes
+      summary: Azure DevOps List event types for a publisher
+      description: 'Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.
+
+        '
+      tags:
+      - Publishers
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: publisherId
+        in: path
+        required: true
+        description: Publisher identifier (e.g., 'tfs')
+        schema:
+          type: string
+        example: tfs
+      responses:
+        '200':
+          description: List of event types returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    EventType:
+      type: object
+      description: An event type that a publisher can produce
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the event type
+          example: workitem.created
+        name:
+          type: string
+          description: Display name of the event type
+          example: Work item created
+        description:
+          type: string
+          description: Detailed description of when this event fires
+        publisherId:
+          type: string
+          description: ID of the publisher that produces this event
+        supportedResourceVersions:
+          type: array
+          description: Supported versions of the event resource schema
+          items:
+            type: string
+        fields:
+          type: object
+          description: Fields available in the event payload
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              fieldType:
+                type: string
+              isFilterable:
+                type: boolean
+              isQueryable:
+                type: boolean
+    Publisher:
+      type: object
+      description: An event publisher (source) that can produce service hook events
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the publisher
+          example: tfs
+        name:
+          type: string
+          description: Display name of the publisher
+          example: Azure DevOps
+        description:
+          type: string
+          description: Description of the publisher and the events it produces
+        supportedEvents:
+          type: array
+          description: List of event types this publisher supports
+          items:
+            $ref: '#/components/schemas/EventTypeReference'
+        inputs:
+          type: array
+          description: Input parameters for filtering publisher events
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    EventTypeReference:
+      type: object
+      description: Minimal reference to an event type
+      properties:
+        id:
+          type: string
+          description: Event type identifier
+        name:
+          type: string
+          description: Event type display name
+    InputDescriptor:
+      type: object
+      description: Descriptor for a configurable input parameter
+      properties:
+        id:
+          type: string
+          description: Input identifier
+        name:
+          type: string
+          description: Display name
+        description:
+          type: string
+          description: Help text
+        inputMode:
+          type: string
+          description: How the input is presented in UI
+          enum:
+          - none
+          - textBox
+          - passwordBox
+          - combo
+          - radioButtons
+          - checkBox
+          - textArea
+        isConfidential:
+          type: boolean
+          description: Whether the value is treated as a secret
+        isRequired:
+          type: boolean
+          description: Whether this input is required
+        values:
+          type: object
+          description: Allowed values for combo/radio inputs
+          properties:
+            defaultValue:
+              type: string
+            possibleValues:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  displayValue:
+                    type: string
+        validation:
+          type: object
+          description: Validation rules for this input
+          properties:
+            dataType:
+              type: string
+              enum:
+              - none
+              - string
+              - number
+              - boolean
+              - guid
+              - uri
+            isRequired:
+              type: boolean
+            pattern:
+              type: string
+              description: Regex pattern for validation
+            patternMismatchErrorMessage:
+              type: string
+            minLength:
+              type: integer
+            maxLength:
+              type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

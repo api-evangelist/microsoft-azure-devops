@@ -1,0 +1,344 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Wiki Pages API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Wiki Pages
+  description: Operations for managing wiki page content
+paths:
+  /wiki/wikis/{wikiIdentifier}/pages:
+    get:
+      operationId: pages_get
+      summary: Azure DevOps Get a wiki page
+      description: 'Returns the content and metadata for a wiki page at a given path. The path parameter is required to specify which page to retrieve. Returns the Markdown content of the page and optional metadata such as git commit information.
+
+        '
+      tags:
+      - Wiki Pages
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/WikiIdentifier'
+      - name: path
+        in: query
+        required: false
+        description: Wiki page path (e.g., /MyPage or /Folder/SubPage)
+        schema:
+          type: string
+        example: /Getting-Started
+      - name: recursionLevel
+        in: query
+        required: false
+        description: Recursion level for subpages
+        schema:
+          type: string
+          enum:
+          - none
+          - oneLevel
+          - oneLevelPlusNestedEmptyFolders
+          - full
+      - name: versionDescriptor
+        in: query
+        required: false
+        description: Version descriptor (branch or tag) to read the page from
+        schema:
+          type: string
+      - name: includeContent
+        in: query
+        required: false
+        description: Whether to include the page content in the response
+        schema:
+          type: boolean
+        default: true
+      responses:
+        '200':
+          description: Wiki page returned successfully
+          headers:
+            ETag:
+              description: Entity tag for the current version of the page (version hash)
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: pages_createOrUpdate
+      summary: Azure DevOps Create or update a wiki page
+      description: 'Creates a new wiki page or updates an existing page at the specified path. The request body must contain the Markdown content for the page. To update an existing page, include the current page version in the If-Match header to prevent overwriting concurrent changes.
+
+        '
+      tags:
+      - Wiki Pages
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/WikiIdentifier'
+      - name: path
+        in: query
+        required: true
+        description: Path of the wiki page to create or update
+        schema:
+          type: string
+        example: /Getting-Started
+      - name: comment
+        in: query
+        required: false
+        description: Comment for the commit creating this page update
+        schema:
+          type: string
+      - name: versionDescriptor
+        in: query
+        required: false
+        description: Branch to create or update the page on
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: Page content in Markdown format
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - content
+              properties:
+                content:
+                  type: string
+                  description: Markdown content for the wiki page
+            example:
+              content: '# Getting Started
+
+
+                Welcome to the project wiki!
+
+
+                ## Prerequisites
+
+
+                - Node.js 18+
+
+                - npm or yarn
+
+                '
+      responses:
+        '200':
+          description: Wiki page updated successfully
+          headers:
+            ETag:
+              description: Entity tag for the new version of the page
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '201':
+          description: Wiki page created successfully
+          headers:
+            ETag:
+              description: Entity tag for the new page version
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: pages_delete
+      summary: Azure DevOps Delete a wiki page
+      description: 'Deletes a wiki page at the specified path. This commits a deletion to the backing Git repository. Deleted pages cannot be recovered except through the backing repository''s Git history.
+
+        '
+      tags:
+      - Wiki Pages
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/WikiIdentifier'
+      - name: path
+        in: query
+        required: true
+        description: Path of the wiki page to delete
+        schema:
+          type: string
+        example: /Old-Page
+      - name: comment
+        in: query
+        required: false
+        description: Comment for the deletion commit
+        schema:
+          type: string
+      - name: versionDescriptor
+        in: query
+        required: false
+        description: Branch to delete the page from
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Wiki page deleted successfully, returns the deleted page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WikiPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    WikiIdentifier:
+      name: wikiIdentifier
+      in: path
+      required: true
+      description: Wiki GUID or wiki name
+      schema:
+        type: string
+  schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    WikiPage:
+      type: object
+      description: A wiki page with its content and metadata
+      properties:
+        id:
+          type: integer
+          description: Numeric ID of the page in the wiki repository
+        path:
+          type: string
+          description: Path of the wiki page
+          example: /Getting-Started
+        content:
+          type: string
+          description: Markdown content of the page
+        order:
+          type: integer
+          description: Display order of the page among siblings
+        isNonConformant:
+          type: boolean
+          description: Whether the page violates wiki naming conventions
+        isParentPage:
+          type: boolean
+          description: Whether this page has child pages
+        gitItemPath:
+          type: string
+          description: Path of the corresponding file in the Git repository
+          example: /Getting-Started.md
+        url:
+          type: string
+          format: uri
+          description: URL to access this page via the REST API
+        remoteUrl:
+          type: string
+          format: uri
+          description: URL to view the page in a web browser
+        subPages:
+          type: array
+          description: Child pages of this page (if recursion was requested)
+          items:
+            $ref: '#/components/schemas/WikiPage'
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

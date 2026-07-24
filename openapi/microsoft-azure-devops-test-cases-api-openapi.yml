@@ -1,0 +1,348 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Test Cases API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Test Cases
+  description: Operations for managing test cases within test suites
+paths:
+  /testplan/plans/{planId}/suites/{suiteId}/testcases:
+    get:
+      operationId: testCases_list
+      summary: Azure DevOps List test cases in a suite
+      description: 'Returns a list of test cases within a specific test suite. Test cases are work items of type Test Case that contain the test steps and expected results for manual or automated tests.
+
+        '
+      tags:
+      - Test Cases
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      - name: suiteId
+        in: path
+        required: true
+        description: Numeric ID of the test suite
+        schema:
+          type: integer
+      - name: testIds
+        in: query
+        required: false
+        description: Comma-separated list of test case IDs to filter
+        schema:
+          type: string
+      - name: configurationIds
+        in: query
+        required: false
+        description: Comma-separated list of configuration IDs to filter
+        schema:
+          type: string
+      - name: witFields
+        in: query
+        required: false
+        description: Comma-separated work item field reference names to include
+        schema:
+          type: string
+      - name: $expand
+        in: query
+        required: false
+        description: Expand additional test case details
+        schema:
+          type: string
+          enum:
+          - none
+          - wiFields
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      - name: returnIdentityRef
+        in: query
+        required: false
+        description: Whether to return identity fields as full IdentityRef objects
+        schema:
+          type: boolean
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of test cases to return
+        schema:
+          type: integer
+      - name: isRecursive
+        in: query
+        required: false
+        description: Whether to include test cases from child suites
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of test cases returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCase'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: testCases_add
+      summary: Azure DevOps Add test cases to a suite
+      description: 'Adds existing test case work items to a test suite. Test cases must be existing work items of type Test Case. Provide a list of work item IDs to add to the suite.
+
+        '
+      tags:
+      - Test Cases
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      - name: suiteId
+        in: path
+        required: true
+        description: Numeric ID of the test suite to add test cases to
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        description: List of test case IDs and configuration assignments to add
+        content:
+          application/json:
+            schema:
+              type: array
+              description: Array of work item to suite mappings
+              items:
+                type: object
+                required:
+                - workItem
+                - pointAssignments
+                properties:
+                  workItem:
+                    type: object
+                    description: The test case work item to add
+                    required:
+                    - id
+                    properties:
+                      id:
+                        type: integer
+                        description: Work item ID of the test case
+                  pointAssignments:
+                    type: array
+                    description: Configuration and tester assignments for this test case
+                    items:
+                      type: object
+                      properties:
+                        configuration:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              description: Configuration ID
+                            name:
+                              type: string
+                        tester:
+                          $ref: '#/components/schemas/IdentityRef'
+            example:
+            - workItem:
+                id: 101
+              pointAssignments:
+              - configuration:
+                  id: 1
+                  name: Default Configuration
+      responses:
+        '200':
+          description: Test cases added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCase'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    TestCase:
+      type: object
+      description: A test case within a test suite
+      properties:
+        testCase:
+          type: object
+          description: The work item representing this test case
+          properties:
+            id:
+              type: string
+              description: Work item ID (as string)
+            url:
+              type: string
+              format: uri
+            workItemFields:
+              type: array
+              description: Work item fields (if requested via witFields parameter)
+              items:
+                type: object
+                additionalProperties: true
+        pointAssignments:
+          type: array
+          description: Configuration and tester assignments for this test case
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Test point ID
+              configuration:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+              tester:
+                $ref: '#/components/schemas/IdentityRef'
+        order:
+          type: integer
+          description: Display order within the suite
+        links:
+          type: object
+          description: HAL links for this test case
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  parameters:
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

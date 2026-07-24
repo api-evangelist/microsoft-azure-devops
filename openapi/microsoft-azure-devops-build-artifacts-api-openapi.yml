@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Build Artifacts API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Build Artifacts
+  description: Operations for accessing build artifacts
+paths:
+  /build/builds/{buildId}/artifacts:
+    get:
+      operationId: builds_listArtifacts
+      summary: Azure DevOps List build artifacts
+      description: 'Returns a list of artifacts published by a specific build. Artifacts can be downloaded individually and include their name, type, and download URL.
+
+        '
+      tags:
+      - Build Artifacts
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: buildId
+        in: path
+        required: true
+        description: Numeric ID of the build
+        schema:
+          type: integer
+      - name: artifactName
+        in: query
+        required: false
+        description: Filter by a specific artifact name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Build artifacts returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BuildArtifact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    BuildArtifact:
+      type: object
+      description: An artifact published by a build
+      properties:
+        id:
+          type: integer
+          description: Artifact ID
+        name:
+          type: string
+          description: Name of the artifact (e.g., 'drop', 'packages')
+          example: drop
+        resource:
+          type: object
+          description: Resource details for downloading the artifact
+          properties:
+            type:
+              type: string
+              description: Type of artifact storage (e.g., Container, FilePath, VersionControl)
+            url:
+              type: string
+              format: uri
+              description: URL to download the artifact
+            downloadUrl:
+              type: string
+              format: uri
+              description: Direct download URL
+            properties:
+              type: object
+              additionalProperties: true
+        source:
+          type: string
+          description: Source of the artifact
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

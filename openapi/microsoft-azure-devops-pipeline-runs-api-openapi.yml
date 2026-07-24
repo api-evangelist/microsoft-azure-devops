@@ -1,0 +1,408 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Pipeline Runs API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Pipeline Runs
+  description: Operations for triggering and monitoring pipeline runs
+paths:
+  /pipelines/{pipelineId}/runs:
+    get:
+      operationId: runs_list
+      summary: Azure DevOps List pipeline runs
+      description: 'Returns a list of runs (executions) for a specific pipeline. Includes the run state, result, timing, and template parameters used. Supports pagination through the continuationToken.
+
+        '
+      tags:
+      - Pipeline Runs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PipelineId'
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of runs to return
+        schema:
+          type: integer
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of pipeline runs returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Run'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: runs_run
+      summary: Azure DevOps Run a pipeline
+      description: 'Triggers a new run of a pipeline. You can override template parameters, variables, the repository branch, and specify which stages to skip or include. The run is queued and executed when an agent becomes available.
+
+        '
+      tags:
+      - Pipeline Runs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PipelineId'
+      - name: pipelineVersion
+        in: query
+        required: false
+        description: Specific version of the pipeline to run
+        schema:
+          type: integer
+      requestBody:
+        required: false
+        description: Optional run parameters to override defaults
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunPipelineParameters'
+            example:
+              stagesToSkip: []
+              resources:
+                repositories:
+                  self:
+                    refName: refs/heads/main
+              variables:
+                MyVariable:
+                  value: custom-value
+                  isSecret: false
+              templateParameters:
+                environment: staging
+      responses:
+        '200':
+          description: Pipeline run started successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /pipelines/{pipelineId}/runs/{runId}:
+    get:
+      operationId: runs_get
+      summary: Azure DevOps Get a pipeline run
+      description: 'Returns detailed information about a specific pipeline run, including its state, result, template parameters, variables used, and timing. Poll this endpoint to monitor run progress.
+
+        '
+      tags:
+      - Pipeline Runs
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PipelineId'
+      - name: runId
+        in: path
+        required: true
+        description: Numeric ID of the pipeline run
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Pipeline run returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      description: Numeric ID of the pipeline
+      schema:
+        type: integer
+  schemas:
+    RunPipelineParameters:
+      type: object
+      description: Parameters for running a pipeline
+      properties:
+        stagesToSkip:
+          type: array
+          description: Stages to skip in this run
+          items:
+            type: string
+        resources:
+          type: object
+          description: Resource versions to use for this run
+          properties:
+            repositories:
+              type: object
+              description: Repository resource versions (keyed by repository alias)
+              additionalProperties:
+                type: object
+                properties:
+                  refName:
+                    type: string
+                    description: Branch or tag to check out
+                    example: refs/heads/feature/my-feature
+                  version:
+                    type: string
+                    description: Specific commit SHA to use
+            pipelines:
+              type: object
+              description: Pipeline resource versions (keyed by pipeline alias)
+              additionalProperties:
+                type: object
+                properties:
+                  version:
+                    type: string
+            builds:
+              type: object
+              description: Build resource versions
+              additionalProperties:
+                type: object
+        variables:
+          type: object
+          description: Variable overrides for this run (keyed by variable name)
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+                description: Variable value override
+              isSecret:
+                type: boolean
+                description: Whether this variable value should be treated as secret
+        templateParameters:
+          type: object
+          description: Template parameter overrides for YAML pipelines
+          additionalProperties:
+            type: string
+          example:
+            environment: production
+            deployRegion: eastus
+    Run:
+      type: object
+      description: A pipeline run (execution instance)
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the run
+          example: 1001
+        name:
+          type: string
+          description: Auto-generated run name (usually the build number)
+          example: '20240315.1'
+        state:
+          type: string
+          description: Current state of the run
+          enum:
+          - unknown
+          - inProgress
+          - canceling
+          - completed
+        result:
+          type: string
+          description: Final result of the run (set when state is completed)
+          enum:
+          - unknown
+          - succeeded
+          - failed
+          - canceled
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+          description: Date and time the run was created
+        finishedDate:
+          type: string
+          format: date-time
+          description: Date and time the run finished
+          nullable: true
+        url:
+          type: string
+          format: uri
+          description: URL to access this run via the REST API
+        pipeline:
+          type: object
+          description: The pipeline this run belongs to
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            folder:
+              type: string
+            revision:
+              type: integer
+            url:
+              type: string
+              format: uri
+        resources:
+          type: object
+          description: Resources used in this run
+          properties:
+            repositories:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  refName:
+                    type: string
+                  version:
+                    type: string
+            pipelines:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  version:
+                    type: string
+        variables:
+          type: object
+          description: Variables used in this run
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+        templateParameters:
+          type: object
+          description: Template parameters used in this run
+          additionalProperties:
+            type: string
+        _links:
+          type: object
+          description: HAL links for related resources
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+            web:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+            pipeline:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+            pipeline.web:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

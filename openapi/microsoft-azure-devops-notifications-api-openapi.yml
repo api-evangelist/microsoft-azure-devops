@@ -1,0 +1,254 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Notifications API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Notifications
+  description: Operations for sending test notifications
+paths:
+  /hooks/testnotifications:
+    post:
+      operationId: notifications_sendTest
+      summary: Azure DevOps Send a test notification
+      description: 'Sends a test notification to verify that a service hook subscription is correctly configured and the consumer endpoint is reachable. Returns the result of the delivery attempt including HTTP status code and response body.
+
+        '
+      tags:
+      - Notifications
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: useRealData
+        in: query
+        required: false
+        description: Whether to use real event data or synthetic test data
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        description: Subscription configuration to test
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionCreateRequest'
+            example:
+              publisherId: tfs
+              eventType: workitem.created
+              resourceVersion: '1.0'
+              consumerId: webHooks
+              consumerActionId: httpRequest
+              publisherInputs:
+                projectId: a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4
+              consumerInputs:
+                url: https://myserver.example.com/webhook
+      responses:
+        '200':
+          description: Test notification sent, result returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+      - publisherId
+      - eventType
+      - consumerId
+      - consumerActionId
+      - publisherInputs
+      - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: tfs
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: workitem.created
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: webHooks
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: httpRequest
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    NotificationResult:
+      type: object
+      description: Result of a test notification delivery attempt
+      properties:
+        id:
+          type: integer
+          description: Notification ID
+        subscriptionId:
+          type: string
+          format: uuid
+          description: ID of the subscription used for the test
+        result:
+          type: string
+          description: Delivery result status
+          enum:
+          - pending
+          - processing
+          - requestInProgress
+          - delivered
+          - dequeued
+          - abandoned
+          - error
+          - filteredBySubscriber
+        status:
+          type: string
+          description: HTTP status description from the consumer
+        createdDate:
+          type: string
+          format: date-time
+        modifiedDate:
+          type: string
+          format: date-time
+        details:
+          type: object
+          description: Detailed delivery attempt information
+          properties:
+            errorMessage:
+              type: string
+            errorDetail:
+              type: string
+            deliveryAttempts:
+              type: array
+              items:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  status:
+                    type: string
+                  requestData:
+                    type: object
+                    properties:
+                      headers:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      body:
+                        type: string
+                  responseData:
+                    type: object
+                    properties:
+                      statusCode:
+                        type: integer
+                      headers:
+                        type: object
+                        additionalProperties:
+                          type: string
+                      body:
+                        type: string
+                  startTime:
+                    type: string
+                    format: date-time
+                  endTime:
+                    type: string
+                    format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

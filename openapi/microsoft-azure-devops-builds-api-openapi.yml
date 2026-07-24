@@ -1,0 +1,604 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Builds API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Builds
+  description: Operations for managing and queuing builds
+paths:
+  /build/builds:
+    get:
+      operationId: builds_list
+      summary: Azure DevOps List builds
+      description: 'Returns a list of builds for the project. Supports filtering by definition, build number, status, result, and branch. Results can be paginated using continuationToken.
+
+        '
+      tags:
+      - Builds
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: definitions
+        in: query
+        required: false
+        description: Comma-separated list of definition IDs to filter builds
+        schema:
+          type: string
+      - name: buildNumber
+        in: query
+        required: false
+        description: Filter builds by build number
+        schema:
+          type: string
+      - name: statusFilter
+        in: query
+        required: false
+        description: Filter builds by status
+        schema:
+          type: string
+          enum:
+          - none
+          - inProgress
+          - completed
+          - cancelling
+          - postponed
+          - notStarted
+          - all
+      - name: resultFilter
+        in: query
+        required: false
+        description: Filter builds by result
+        schema:
+          type: string
+          enum:
+          - none
+          - succeeded
+          - partiallySucceeded
+          - failed
+          - canceled
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of builds to return
+        schema:
+          type: integer
+          maximum: 5000
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      - name: branchName
+        in: query
+        required: false
+        description: Filter builds by branch name
+        schema:
+          type: string
+      - name: reasonFilter
+        in: query
+        required: false
+        description: Filter builds by trigger reason
+        schema:
+          type: string
+          enum:
+          - none
+          - manual
+          - individualCI
+          - batchedCI
+          - schedule
+          - userCreated
+          - validateShelveset
+          - checkInShelveset
+          - pullRequest
+          - buildCompletion
+          - resourceTrigger
+          - triggered
+          - all
+      - name: requestedFor
+        in: query
+        required: false
+        description: Filter builds requested by a specific user (email or descriptor)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of builds returned successfully
+          headers:
+            x-ms-continuationtoken:
+              description: Continuation token for paging through results
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of builds in this response
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Build'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: builds_queue
+      summary: Azure DevOps Queue a new build
+      description: 'Queues a new build by specifying the build definition and optional parameters such as source branch, build parameters, and demands. The build will be scheduled and executed based on agent availability.
+
+        '
+      tags:
+      - Builds
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: ignoreWarnings
+        in: query
+        required: false
+        description: Ignore warnings when queuing the build
+        schema:
+          type: boolean
+      - name: checkInTicket
+        in: query
+        required: false
+        description: Check-in ticket for gated check-in builds
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: Build queue request with definition and optional overrides
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildQueueRequest'
+            example:
+              definition:
+                id: 5
+              sourceBranch: refs/heads/main
+              parameters: '{"system.debug":"false"}'
+      responses:
+        '200':
+          description: Build queued successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /build/builds/{buildId}:
+    get:
+      operationId: builds_get
+      summary: Azure DevOps Get a build
+      description: 'Returns detailed information about a specific build, including its status, result, timing, source information, and links to logs and artifacts.
+
+        '
+      tags:
+      - Builds
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: buildId
+        in: path
+        required: true
+        description: Numeric ID of the build
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Build returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Build'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: builds_delete
+      summary: Azure DevOps Delete a build
+      description: 'Deletes a build record and its associated data, including logs and artifacts. This operation cannot be undone. The build must not be in progress to be deleted.
+
+        '
+      tags:
+      - Builds
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: buildId
+        in: path
+        required: true
+        description: Numeric ID of the build to delete
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: Build deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  schemas:
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Project ID
+        name:
+          type: string
+          description: Project name
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    BuildQueueRequest:
+      type: object
+      description: Request to queue a new build
+      required:
+      - definition
+      properties:
+        definition:
+          type: object
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              description: ID of the build definition to queue
+        sourceBranch:
+          type: string
+          description: Override the source branch for this build
+          example: refs/heads/feature/my-feature
+        sourceVersion:
+          type: string
+          description: Override the source version (commit ID) for this build
+        parameters:
+          type: string
+          description: JSON-serialized key-value pairs of build parameters to override
+          example: '{"system.debug":"false","BuildConfiguration":"Release"}'
+        demands:
+          type: array
+          description: Agent demands for this build
+          items:
+            type: string
+        priority:
+          type: string
+          description: Queue priority for this build
+          enum:
+          - low
+          - belowNormal
+          - normal
+          - aboveNormal
+          - high
+        queue:
+          type: object
+          description: Agent queue override
+          properties:
+            id:
+              type: integer
+    Build:
+      type: object
+      description: An Azure DevOps build instance
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the build
+          example: 1234
+        buildNumber:
+          type: string
+          description: The build number assigned at queue time
+          example: '20240315.1'
+        buildNumberRevision:
+          type: integer
+          description: Revision of the build number if duplicates exist
+        status:
+          type: string
+          description: Current status of the build
+          enum:
+          - none
+          - inProgress
+          - completed
+          - cancelling
+          - postponed
+          - notStarted
+          - all
+          example: completed
+        result:
+          type: string
+          description: Final result of a completed build
+          enum:
+          - none
+          - succeeded
+          - partiallySucceeded
+          - failed
+          - canceled
+          example: succeeded
+        queueTime:
+          type: string
+          format: date-time
+          description: Date and time the build was queued
+        startTime:
+          type: string
+          format: date-time
+          description: Date and time the build started executing
+        finishTime:
+          type: string
+          format: date-time
+          description: Date and time the build finished
+        url:
+          type: string
+          format: uri
+          description: URL to access this build via the REST API
+        definition:
+          $ref: '#/components/schemas/BuildDefinitionReference'
+        buildNumberRevisions:
+          type: integer
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        sourceBranch:
+          type: string
+          description: Branch that triggered the build (e.g., refs/heads/main)
+          example: refs/heads/main
+        sourceVersion:
+          type: string
+          description: Commit ID or changeset number used for the build
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        requestedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        requestedFor:
+          $ref: '#/components/schemas/IdentityRef'
+        reason:
+          type: string
+          description: Reason the build was triggered
+          enum:
+          - none
+          - manual
+          - individualCI
+          - batchedCI
+          - schedule
+          - userCreated
+          - validateShelveset
+          - checkInShelveset
+          - pullRequest
+          - buildCompletion
+          - resourceTrigger
+          - triggered
+          - all
+        priority:
+          type: string
+          description: Build queue priority
+          enum:
+          - low
+          - belowNormal
+          - normal
+          - aboveNormal
+          - high
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+        logs:
+          type: object
+          description: Reference to the build logs container
+          properties:
+            id:
+              type: integer
+            type:
+              type: string
+            url:
+              type: string
+              format: uri
+        retainedByRelease:
+          type: boolean
+          description: Whether this build is retained by a release
+        triggeredByBuild:
+          type: object
+          nullable: true
+          description: The build that triggered this build (for completion triggers)
+          properties:
+            id:
+              type: integer
+            buildNumber:
+              type: string
+            url:
+              type: string
+              format: uri
+            definition:
+              $ref: '#/components/schemas/BuildDefinitionReference'
+            project:
+              $ref: '#/components/schemas/TeamProjectReference'
+    BuildDefinitionReference:
+      type: object
+      description: Reference to a build definition (minimal representation)
+      properties:
+        id:
+          type: integer
+          description: Definition ID
+        name:
+          type: string
+          description: Definition name
+        path:
+          type: string
+          description: Folder path of the definition
+        url:
+          type: string
+          format: uri
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+    BuildRepository:
+      type: object
+      description: Repository configuration for a build
+      properties:
+        id:
+          type: string
+          description: Repository ID (GUID for Git, name for TFVC)
+        name:
+          type: string
+          description: Repository name
+        type:
+          type: string
+          description: Repository type
+          enum:
+          - TfsGit
+          - TfsVersionControl
+          - GitHub
+          - Bitbucket
+          - GitHubEnterprise
+        url:
+          type: string
+          format: uri
+          description: URL of the repository
+        defaultBranch:
+          type: string
+          description: Default branch for this repository
+          example: refs/heads/main
+        checkoutSubmodules:
+          type: boolean
+          description: Whether to checkout Git submodules
+        clean:
+          type: string
+          description: Whether to clean the working directory before each build
+          enum:
+          - 'true'
+          - 'false'
+          - null
+        properties:
+          type: object
+          additionalProperties: true
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

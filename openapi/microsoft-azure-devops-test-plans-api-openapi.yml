@@ -1,0 +1,476 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Test Plans API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Test Plans
+  description: Operations for managing test plans
+paths:
+  /testplan/plans:
+    get:
+      operationId: testPlans_list
+      summary: Azure DevOps List test plans
+      description: 'Returns a list of test plans in the project. Test plans are the top-level containers for organizing test suites and test cases. They are typically associated with a release milestone or sprint.
+
+        '
+      tags:
+      - Test Plans
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: owner
+        in: query
+        required: false
+        description: Filter test plans by owner (user display name or email)
+        schema:
+          type: string
+      - name: includePlanDetails
+        in: query
+        required: false
+        description: Whether to return full plan details or just IDs and names
+        schema:
+          type: boolean
+      - name: filterActivePlans
+        in: query
+        required: false
+        description: Return only active (non-completed) test plans
+        schema:
+          type: boolean
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      - name: isLastUpdatedSet
+        in: query
+        required: false
+        description: Whether to return plans sorted by last update
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of test plans returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Number of test plans returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: testPlans_create
+      summary: Azure DevOps Create a test plan
+      description: 'Creates a new test plan in the project. A test plan defines the scope of testing for a release, milestone, or sprint. It can be associated with an area path and iteration path to align with the project structure.
+
+        '
+      tags:
+      - Test Plans
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      requestBody:
+        required: true
+        description: Test plan creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanCreateParams'
+            example:
+              name: Sprint 5 Test Plan
+              areaPath: MyProject\Frontend
+              iteration: MyProject\Sprint 5
+              description: Test plan for Sprint 5 user stories
+              startDate: '2024-03-01T00:00:00Z'
+              endDate: '2024-03-15T00:00:00Z'
+      responses:
+        '200':
+          description: Test plan created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /testplan/plans/{planId}:
+    get:
+      operationId: testPlans_get
+      summary: Azure DevOps Get a test plan
+      description: 'Returns detailed information about a specific test plan, including its area path, iteration, owner, and date range. Use the plan ID to retrieve test suites associated with this plan.
+
+        '
+      tags:
+      - Test Plans
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      responses:
+        '200':
+          description: Test plan returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: testPlans_update
+      summary: Azure DevOps Update a test plan
+      description: 'Updates properties of an existing test plan such as its name, description, area path, iteration, start date, and end date.
+
+        '
+      tags:
+      - Test Plans
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      requestBody:
+        required: true
+        description: Test plan properties to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestPlanUpdateParams'
+      responses:
+        '200':
+          description: Test plan updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestPlan'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: testPlans_delete
+      summary: Azure DevOps Delete a test plan
+      description: 'Permanently deletes a test plan and all its suites and configurations. This operation cannot be undone. All associated test results and run data will also be deleted.
+
+        '
+      tags:
+      - Test Plans
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      responses:
+        '204':
+          description: Test plan deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestPlanCreateParams:
+      type: object
+      description: Parameters for creating a new test plan
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name for the new test plan
+        description:
+          type: string
+          description: Description of the test plan
+        areaPath:
+          type: string
+          description: Area path to associate with the test plan
+        iteration:
+          type: string
+          description: Iteration path (sprint) to associate with the test plan
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the test plan
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the test plan
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        buildDefinition:
+          type: object
+          description: Build definition to associate for automated testing
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+          description: Specific build ID to test against
+    TestPlan:
+      type: object
+      description: A test plan in Azure Test Plans
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the test plan
+          example: 1
+        name:
+          type: string
+          description: Display name of the test plan
+          example: Sprint 5 Test Plan
+        description:
+          type: string
+          description: Description of the test plan's scope and purpose
+        state:
+          type: string
+          description: Current state of the test plan
+          enum:
+          - active
+          - inactive
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the test plan
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the test plan
+        area:
+          $ref: '#/components/schemas/TestSuiteReference'
+        areaPath:
+          type: string
+          description: Area path this test plan is associated with
+          example: MyProject\Frontend
+        iteration:
+          type: string
+          description: Iteration path (sprint) this test plan is associated with
+          example: MyProject\Sprint 5
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        revision:
+          type: integer
+          description: Current revision of the test plan
+        buildDefinition:
+          type: object
+          description: Build definition associated with this test plan
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        buildId:
+          type: integer
+          description: Specific build ID to test against
+        updatedDate:
+          type: string
+          format: date-time
+          description: Date and time the test plan was last updated
+        updatedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        project:
+          type: object
+          description: Project this test plan belongs to
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        rootSuite:
+          $ref: '#/components/schemas/TestSuiteReference'
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    TestPlanUpdateParams:
+      type: object
+      description: Parameters for updating an existing test plan
+      properties:
+        name:
+          type: string
+          description: New name for the test plan
+        description:
+          type: string
+          description: New description for the test plan
+        areaPath:
+          type: string
+          description: Updated area path
+        iteration:
+          type: string
+          description: Updated iteration path
+        startDate:
+          type: string
+          format: date-time
+          description: Updated start date
+        endDate:
+          type: string
+          format: date-time
+          description: Updated end date
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        buildDefinition:
+          type: object
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+        revision:
+          type: integer
+          description: Current revision number (required for update to prevent conflicts)
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

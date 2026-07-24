@@ -1,0 +1,374 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Deployments API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Deployments
+  description: Operations for managing and monitoring deployments to environments
+paths:
+  /release/deployments:
+    get:
+      operationId: deployments_list
+      summary: Azure DevOps List deployments
+      description: 'Returns a list of deployments across all release definitions and environments in the project. Supports filtering by definition, environment, and deployment status. Useful for auditing and monitoring deployment activity.
+
+        '
+      tags:
+      - Deployments
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: definitionId
+        in: query
+        required: false
+        description: Filter deployments by release definition ID
+        schema:
+          type: integer
+      - name: definitionEnvironmentId
+        in: query
+        required: false
+        description: Filter deployments by environment ID within the definition
+        schema:
+          type: integer
+      - name: createdBy
+        in: query
+        required: false
+        description: Filter deployments triggered by a specific user
+        schema:
+          type: string
+      - name: minModifiedTime
+        in: query
+        required: false
+        description: Returns deployments modified after this date
+        schema:
+          type: string
+          format: date-time
+      - name: maxModifiedTime
+        in: query
+        required: false
+        description: Returns deployments modified before this date
+        schema:
+          type: string
+          format: date-time
+      - name: deploymentStatus
+        in: query
+        required: false
+        description: Filter by deployment status
+        schema:
+          type: string
+          enum:
+          - undefined
+          - notDeployed
+          - inProgress
+          - succeeded
+          - partiallySucceeded
+          - failed
+          - all
+      - name: operationStatus
+        in: query
+        required: false
+        description: Filter by operation status
+        schema:
+          type: string
+          enum:
+          - undefined
+          - queued
+          - scheduled
+          - pending
+          - approved
+          - rejected
+          - deferred
+          - queuedForAgent
+          - phaseInProgress
+          - phaseSucceeded
+          - phasePartiallySucceeded
+          - phaseFailed
+          - canceled
+          - phaseCanceled
+          - manualInterventionPending
+          - queued
+          - all
+      - name: latestAttemptsOnly
+        in: query
+        required: false
+        description: Return only the latest deployment attempt for each environment
+        schema:
+          type: boolean
+      - name: queryOrder
+        in: query
+        required: false
+        description: Sort order for results
+        schema:
+          type: string
+          enum:
+          - descending
+          - ascending
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of deployments to return
+        schema:
+          type: integer
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: integer
+      - name: projectName
+        in: query
+        required: false
+        description: Project name filter
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of deployments returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Deployment:
+      type: object
+      description: A deployment of a release to an environment
+      properties:
+        id:
+          type: integer
+          description: Unique deployment ID
+        releaseId:
+          type: integer
+          description: ID of the release associated with this deployment
+        releaseDefinitionId:
+          type: integer
+          description: ID of the release definition
+        releaseEnvironmentId:
+          type: integer
+          description: ID of the environment within the release
+        definitionEnvironmentId:
+          type: integer
+          description: ID of the environment definition
+        attempt:
+          type: integer
+          description: Deployment attempt number
+        reason:
+          type: string
+          description: Reason for the deployment
+          enum:
+          - none
+          - manual
+          - automated
+          - scheduled
+          - redeployTrigger
+        deploymentStatus:
+          type: string
+          description: Current deployment status
+          enum:
+          - undefined
+          - notDeployed
+          - inProgress
+          - succeeded
+          - partiallySucceeded
+          - failed
+          - all
+        operationStatus:
+          type: string
+          description: Current operation status
+          enum:
+          - undefined
+          - queued
+          - scheduled
+          - pending
+          - approved
+          - rejected
+          - deferred
+          - queuedForAgent
+          - phaseInProgress
+          - phaseSucceeded
+          - phasePartiallySucceeded
+          - phaseFailed
+          - canceled
+          - phaseCanceled
+          - manualInterventionPending
+          - queued
+          - all
+        requestedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        requestedFor:
+          $ref: '#/components/schemas/IdentityRef'
+        queuedOn:
+          type: string
+          format: date-time
+        startedOn:
+          type: string
+          format: date-time
+        completedOn:
+          type: string
+          format: date-time
+        lastModifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        lastModifiedOn:
+          type: string
+          format: date-time
+        release:
+          type: object
+          description: Minimal release reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        releaseDefinition:
+          $ref: '#/components/schemas/ReleaseDefinitionShallowReference'
+        releaseEnvironment:
+          type: object
+          description: Minimal environment reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        projectReference:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        url:
+          type: string
+          format: uri
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

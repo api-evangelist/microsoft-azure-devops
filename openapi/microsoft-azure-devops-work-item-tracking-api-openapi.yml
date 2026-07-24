@@ -1,0 +1,197 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Work Item Tracking API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Work Item Tracking
+  description: Operations for querying and tracking work items using WIQL
+paths:
+  /wit/wiql:
+    post:
+      operationId: workItems_queryByWiql
+      summary: Azure DevOps Execute a WIQL query
+      description: 'Executes a Work Item Query Language (WIQL) query and returns a list of work item references that match the query criteria. WIQL is a SQL-like language specific to Azure DevOps work item querying.
+
+        '
+      tags:
+      - Work Item Tracking
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - name: $top
+        in: query
+        required: false
+        description: Maximum number of results to return
+        schema:
+          type: integer
+          maximum: 20000
+      - name: timePrecision
+        in: query
+        required: false
+        description: Whether or not to use time precision
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        description: WIQL query object
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  description: The WIQL query string
+            example:
+              query: SELECT [System.Id], [System.Title], [System.State] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.WorkItemType] = 'Bug' ORDER BY [System.CreatedDate] DESC
+      responses:
+        '200':
+          description: Query results returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItemQueryResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    WorkItemQueryResult:
+      type: object
+      description: Results from a WIQL query execution
+      properties:
+        queryType:
+          type: string
+          description: Type of query (flat, oneHop, tree)
+          enum:
+          - flat
+          - oneHop
+          - tree
+        queryResultType:
+          type: string
+          description: Result type (workItem, workItemLink)
+          enum:
+          - workItem
+          - workItemLink
+        asOf:
+          type: string
+          format: date-time
+          description: Date and time when the query was executed
+        columns:
+          type: array
+          description: Columns returned by the query
+          items:
+            type: object
+            properties:
+              referenceName:
+                type: string
+              name:
+                type: string
+              url:
+                type: string
+                format: uri
+        workItems:
+          type: array
+          description: List of work item references matching the query
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              url:
+                type: string
+                format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.

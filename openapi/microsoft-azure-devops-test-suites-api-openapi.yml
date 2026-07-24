@@ -1,0 +1,384 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Artifacts Attachments Test Suites API
+  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+
+    '
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Artifacts API (project-scoped)
+  variables:
+    organization:
+      description: Azure DevOps organization name or ID
+      default: myorganization
+    project:
+      description: Azure DevOps project name or ID
+      default: myproject
+security:
+- bearerAuth: []
+- basicAuth: []
+tags:
+- name: Test Suites
+  description: Operations for managing test suites within test plans
+paths:
+  /testplan/plans/{planId}/suites:
+    get:
+      operationId: testSuites_list
+      summary: Azure DevOps List test suites
+      description: 'Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.
+
+        '
+      tags:
+      - Test Suites
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      - name: $expand
+        in: query
+        required: false
+        description: Expand additional suite details
+        schema:
+          type: string
+          enum:
+          - none
+          - children
+          - defaultTesters
+      - name: continuationToken
+        in: query
+        required: false
+        description: Continuation token for paginated results
+        schema:
+          type: string
+      - name: asTreeView
+        in: query
+        required: false
+        description: Return suites in a tree structure
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: List of test suites returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestSuite'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: testSuites_create
+      summary: Azure DevOps Create a test suite
+      description: 'Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).
+
+        '
+      tags:
+      - Test Suites
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      requestBody:
+        required: true
+        description: Test suite creation parameters
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestSuiteCreateParams'
+            example:
+              name: Login Tests
+              suiteType: staticTestSuite
+              parentSuite:
+                id: 1
+      responses:
+        '200':
+          description: Test suite created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuite'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /testplan/plans/{planId}/suites/{suiteId}:
+    get:
+      operationId: testSuites_get
+      summary: Azure DevOps Get a test suite
+      description: 'Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.
+
+        '
+      tags:
+      - Test Suites
+      parameters:
+      - $ref: '#/components/parameters/ApiVersion'
+      - $ref: '#/components/parameters/PlanId'
+      - name: suiteId
+        in: path
+        required: true
+        description: Numeric ID of the test suite
+        schema:
+          type: integer
+      - name: $expand
+        in: query
+        required: false
+        description: Expand additional suite details
+        schema:
+          type: string
+          enum:
+          - none
+          - children
+          - defaultTesters
+      responses:
+        '200':
+          description: Test suite returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestSuite'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestSuiteCreateParams:
+      type: object
+      description: Parameters for creating a new test suite
+      required:
+      - name
+      - suiteType
+      - parentSuite
+      properties:
+        name:
+          type: string
+          description: Name of the new test suite
+        suiteType:
+          type: string
+          description: Type of test suite to create
+          enum:
+          - none
+          - dynamicTestSuite
+          - staticTestSuite
+          - requirementTestSuite
+        parentSuite:
+          type: object
+          description: Parent suite to nest this suite under
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              description: ID of the parent suite
+        requirementId:
+          type: integer
+          description: Work item ID to link (for requirementTestSuite type)
+        queryString:
+          type: string
+          description: WIQL query string (for dynamicTestSuite type)
+        defaultTesters:
+          type: array
+          description: Default testers for test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+    TestSuite:
+      type: object
+      description: A test suite within a test plan
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the test suite
+          example: 5
+        name:
+          type: string
+          description: Display name of the test suite
+          example: Login Tests
+        suiteType:
+          type: string
+          description: Type of test suite
+          enum:
+          - none
+          - dynamicTestSuite
+          - staticTestSuite
+          - requirementTestSuite
+        planId:
+          type: integer
+          description: ID of the test plan this suite belongs to
+        children:
+          type: array
+          description: Child test suites (if requested via expand)
+          items:
+            $ref: '#/components/schemas/TestSuite'
+        defaultTesters:
+          type: array
+          description: Default testers assigned to test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+        parentSuite:
+          $ref: '#/components/schemas/TestSuiteReference'
+        requirementId:
+          type: integer
+          description: Work item ID this suite is linked to (for requirement suites)
+        queryString:
+          type: string
+          description: WIQL query for dynamic suites
+        state:
+          type: string
+          description: Suite state
+          enum:
+          - inProgress
+          - completed
+        testCaseCount:
+          type: integer
+          description: Number of test cases in this suite
+        isActive:
+          type: boolean
+          description: Whether this suite is active
+        lastUpdatedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        lastUpdatedDate:
+          type: string
+          format: date-time
+        project:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Azure AD OAuth 2.0 bearer token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
