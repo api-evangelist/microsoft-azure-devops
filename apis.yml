@@ -1732,6 +1732,17 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
 common:
+  - type: IssueTracker
+    url: https://github.com/microsoft/azure-devops-python-api/issues
+  - type: Releases
+    url: https://github.com/microsoft/azure-devops-python-api/releases
+  - type: SecurityPolicy
+    url: https://github.com/microsoft/azure-devops-python-api/blob/dev/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/microsoft/.github/blob/main/CODE_OF_CONDUCT.md
+  - type: License
+    name: MIT
+    url: https://github.com/microsoft/azure-devops-python-api/blob/dev/LICENSE
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-devops-agentic-access.yml
   - type: DomainSecurity
