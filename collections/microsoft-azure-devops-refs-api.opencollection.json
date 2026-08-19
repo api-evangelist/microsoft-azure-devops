@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Refs API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List branches and refs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "filter",
+                "value": "heads/",
+                "type": "query",
+                "description": "Prefix filter for ref names (e.g., 'heads/' returns branches)"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include _links"
+              },
+              {
+                "name": "includeStatuses",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include commit status information"
+              },
+              {
+                "name": "includeMyBranches",
+                "value": "",
+                "type": "query",
+                "description": "Whether to prioritize branches created by the current user"
+              },
+              {
+                "name": "latestStatusesOnly",
+                "value": "",
+                "type": "query",
+                "description": "Return only the latest status for each ref"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of refs to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paging"
+              }
+            ]
+          },
+          "docs": "Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., \"heads/\" for branches, \"tags/\" for tags).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Test Suites API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Suites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional suite details"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "asTreeView",
+                "value": "",
+                "type": "query",
+                "description": "Return suites in a tree structure"
+              }
+            ]
+          },
+          "docs": "Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional suite details"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

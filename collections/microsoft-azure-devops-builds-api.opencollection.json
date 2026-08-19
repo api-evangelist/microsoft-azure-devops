@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Builds API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Builds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List builds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitions",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of definition IDs to filter builds"
+              },
+              {
+                "name": "buildNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by build number"
+              },
+              {
+                "name": "statusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by status"
+              },
+              {
+                "name": "resultFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by result"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of builds to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "branchName",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by branch name"
+              },
+              {
+                "name": "reasonFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds by trigger reason"
+              },
+              {
+                "name": "requestedFor",
+                "value": "",
+                "type": "query",
+                "description": "Filter builds requested by a specific user (email or descriptor)"
+              }
+            ]
+          },
+          "docs": "Returns a list of builds for the project. Supports filtering by definition, build number, status, result, and branch. Results can be paginated using continuationToken.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Queue a new build",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "ignoreWarnings",
+                "value": "",
+                "type": "query",
+                "description": "Ignore warnings when queuing the build"
+              },
+              {
+                "name": "checkInTicket",
+                "value": "",
+                "type": "query",
+                "description": "Check-in ticket for gated check-in builds"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Queues a new build by specifying the build definition and optional parameters such as source branch, build parameters, and demands. The build will be scheduled and executed based on agent availability.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific build, including its status, result, timing, source information, and links to logs and artifacts.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a build",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a build record and its associated data, including logs and artifacts. This operation cannot be undone. The build must not be in progress to be deleted.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

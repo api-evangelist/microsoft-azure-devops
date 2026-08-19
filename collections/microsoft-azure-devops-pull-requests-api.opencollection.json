@@ -1,0 +1,300 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Pull Requests API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by status"
+              },
+              {
+                "name": "searchCriteria.targetRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target branch (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.sourceRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source branch"
+              },
+              {
+                "name": "searchCriteria.creatorId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by creator's user ID"
+              },
+              {
+                "name": "searchCriteria.reviewerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests by reviewer's user ID"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pull requests to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to skip (for pagination)"
+              }
+            ]
+          },
+          "docs": "Returns a list of pull requests in a repository. Supports filtering by status, target branch, source branch, creator, and reviewer.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "supportsIterations",
+                "value": "",
+                "type": "query",
+                "description": "Whether the PR should support iterations (diff views)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new pull request to merge changes from a source branch into a target branch. Supports specifying reviewers, work item links, labels, and whether to complete the PR automatically on all approvals.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              },
+              {
+                "name": "maxCommentLength",
+                "value": "",
+                "type": "query",
+                "description": "Maximum character count in returned comments"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip in collections"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items in collections"
+              },
+              {
+                "name": "includeCommits",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include commit details"
+              },
+              {
+                "name": "includeWorkItemRefs",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include linked work item references"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific pull request, including its status, reviewers, commits, merge status, and associated work items.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a pull request. Use this to change the title, description, status (abandon or complete), target branch, and auto-complete settings. To complete a PR, set status to 'completed' and provide a lastMergeSourceCommit.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get pull request threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of threads to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of threads to skip"
+              }
+            ]
+          },
+          "docs": "Returns all comment threads on a pull request, including code review comments tied to specific file positions and general conversation threads.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Add a pull request comment thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a new comment thread to a pull request. Threads can be general comments or code review comments tied to a specific file and line number.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

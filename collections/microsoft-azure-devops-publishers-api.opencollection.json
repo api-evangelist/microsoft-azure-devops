@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Publishers API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Publishers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List publishers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/publishers",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ]
+          },
+          "docs": "Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is 'tfs'. Each publisher defines what event types it can produce.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps List event types for a publisher",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/publishers/:publisherId/eventTypes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "publisherId",
+                "value": "tfs",
+                "type": "path",
+                "description": "Publisher identifier (e.g., 'tfs')"
+              }
+            ]
+          },
+          "docs": "Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

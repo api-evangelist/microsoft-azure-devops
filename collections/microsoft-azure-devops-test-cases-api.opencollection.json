@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Test Cases API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Cases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List test cases in a suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId/testcases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite"
+              },
+              {
+                "name": "testIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of test case IDs to filter"
+              },
+              {
+                "name": "configurationIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of configuration IDs to filter"
+              },
+              {
+                "name": "witFields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated work item field reference names to include"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional test case details"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "returnIdentityRef",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return identity fields as full IdentityRef objects"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of test cases to return"
+              },
+              {
+                "name": "isRecursive",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include test cases from child suites"
+              }
+            ]
+          },
+          "docs": "Returns a list of test cases within a specific test suite. Test cases are work items of type Test Case that contain the test steps and expected results for manual or automated tests.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Add test cases to a suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/testplan/plans/:planId/suites/:suiteId/testcases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test plan"
+              },
+              {
+                "name": "suiteId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the test suite to add test cases to"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds existing test case work items to a test suite. Test cases must be existing work items of type Test Case. Provide a list of work item IDs to add to the suite.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Build Logs API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Build Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get build logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/logs",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns the list of log entries for a build. Each log entry corresponds to a step or phase in the build pipeline. Use the log ID to retrieve the content of a specific log.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get build timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/timeline",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              }
+            ]
+          },
+          "docs": "Returns the detailed timeline for a build, showing all phases, jobs, tasks, and their individual statuses, start times, and durations. Useful for understanding which steps in the pipeline passed or failed.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

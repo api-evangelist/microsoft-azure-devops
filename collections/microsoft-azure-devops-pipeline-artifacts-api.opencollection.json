@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Pipeline Artifacts API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pipeline Artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List run artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/pipelines/:pipelineId/runs/:runId/artifacts",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pipeline"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the pipeline run"
+              },
+              {
+                "name": "artifactName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by a specific artifact name"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional artifact details"
+              }
+            ]
+          },
+          "docs": "Returns a list of artifacts published by a specific pipeline run. Artifacts can include compiled binaries, test results, container images, or any other files published using the PublishBuildArtifacts or PublishPipelineArtifact task.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Wikis API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wikis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List wikis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ]
+          },
+          "docs": "Returns a list of all wikis in the project. A project typically has one project wiki and may have additional code wikis that are backed by specific Git repository folders.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a wiki",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new wiki for a project. You can create a project wiki (backed by a dedicated wiki repository) or a code wiki (backed by an existing Git repository and folder path). Only one project wiki can exist per project.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a wiki",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              },
+              {
+                "name": "versionDescriptor",
+                "value": "",
+                "type": "query",
+                "description": "Version descriptor for the wiki (branch or tag)"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific wiki, including its backing Git repository ID, mapped path (for code wikis), and current version. The wikiIdentifier can be either the wiki GUID or its name.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a wiki",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the wiki by changing the default branch for a code wiki's backed repository. This is useful when the main branch of the backing repository has been renamed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a wiki",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              }
+            ]
+          },
+          "docs": "Deletes a wiki. For a project wiki, this deletes the wiki and the backing Git repository. For a code wiki, this removes the wiki but leaves the backing repository intact. This operation cannot be undone.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,2031 @@
+{
+  "item": [
+    {
+      "id": "0b8cf185-a52a-48fa-9ee3-14aa3bd48d81",
+      "name": "Build Definitions",
+      "description": {
+        "content": "Operations for managing build pipeline definitions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "009e3341-4108-4318-beba-d5d4ddb29d56",
+          "name": "Azure DevOps List build definitions",
+          "request": {
+            "name": "Azure DevOps List build definitions",
+            "description": {
+              "content": "Returns a list of build definitions (pipelines) in the project. Supports filtering by name and path, and returns summary information for each definition.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build",
+                "definitions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter definitions by name (supports wildcards with *)"
+                },
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "Filter definitions by folder path"
+                },
+                {
+                  "disabled": false,
+                  "key": "builtAfter",
+                  "value": "<dateTime>",
+                  "description": "Return definitions that were built after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of definitions to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b72a8593-f812-482f-b7af-d44927f623f6",
+              "name": "List of build definitions returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "builtAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7034,\n  \"value\": [\n    {\n      \"id\": 5,\n      \"name\": \"CI-Pipeline\",\n      \"path\": \"\\\\MyFolder\",\n      \"type\": \"build\",\n      \"revision\": 1425,\n      \"quality\": \"draft\",\n      \"authoredBy\": {\n        \"id\": \"8b4ad25f-ffdb-1509-b3ca-63f37067c627\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://Rui.mrdrWRILNu+Xl-9\",\n        \"imageUrl\": \"http://EmTFhbgJCzFdtEhDyCjx.zygbsMD66k0WUvvMBk6aJzY.,ba.fvfwtFAtz,KjnB2HCbW\",\n        \"descriptor\": \"string\"\n      },\n      \"queue\": {\n        \"id\": 1103,\n        \"name\": \"string\",\n        \"pool\": {\n          \"id\": 5792,\n          \"name\": \"string\",\n          \"isHosted\": true\n        }\n      },\n      \"project\": {\n        \"id\": \"c6e55903-6906-4b84-03f1-122834bc7fac\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"url\": \"https://esNCmzJqIFURJQBcmusoMKKKADmZP.ahynCGnA8sSQmw9thr5sG\",\n        \"state\": \"deleted\",\n        \"visibility\": \"public\",\n        \"revision\": 5089\n      },\n      \"url\": \"http://gQAhI.yahCOfTtJFEqEVnH9PlsUgH4bzZ\",\n      \"uri\": \"string\",\n      \"createdDate\": \"1971-02-02T04:33:55.479Z\",\n      \"queueStatus\": \"paused\",\n      \"variables\": {\n        \"key_0\": {\n          \"value\": \"string\",\n          \"allowOverride\": false,\n          \"isSecret\": true\n        }\n      },\n      \"triggers\": [\n        {\n          \"triggerType\": \"batchedContinuousIntegration\"\n        },\n        {\n          \"triggerType\": \"pullRequest\"\n        }\n      ],\n      \"repository\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"GitHubEnterprise\",\n        \"url\": \"http://AiyHecNex.lplhlvY,xLQaaqtjcZbhuKdmrWv2hmlyzskWo3Gr3jjKj6pWSsRWznk4adC+WVax7I4B\",\n        \"defaultBranch\": \"refs/heads/main\",\n        \"checkoutSubmodules\": false,\n        \"clean\": \"false\",\n        \"properties\": {\n          \"key_0\": 1937\n        }\n      },\n      \"process\": {\n        \"yamlFilename\": \"string\",\n        \"type\": 1871\n      }\n    },\n    {\n      \"id\": 5,\n      \"name\": \"CI-Pipeline\",\n      \"path\": \"\\\\MyFolder\",\n      \"type\": \"build\",\n      \"revision\": 821,\n      \"quality\": \"draft\",\n      \"authoredBy\": {\n        \"id\": \"40ca3bf3-85cf-ac86-f7dd-6b82ae3c2fa4\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://qyghxgsel.rcGorjcEngPmOGHCXS7HafWp4LonrtK4hEy5GxgUUskJgF9hFNzzNg1K\",\n        \"imageUrl\": \"http://OQPFwoLxfdTaDzWlIvOw.ebqoSBP2KZ1psTJ7Z6L0LJn8xNirFKzy\",\n        \"descriptor\": \"string\"\n      },\n      \"queue\": {\n        \"id\": 7195,\n        \"name\": \"string\",\n        \"pool\": {\n          \"id\": 710,\n          \"name\": \"string\",\n          \"isHosted\": true\n        }\n      },\n      \"project\": {\n        \"id\": \"9dd20e01-50fe-6ac0-8d6b-004ee80cd57e\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"url\": \"http://QrILViqgvrWXvWAgUXecuJK.iwxcN.hqwbll6LNvrWT6nCOUDPsAr5rdNNzFPM,UPCaSKrYBe,9dElpECl7yKfyV,\",\n        \"state\": \"deleting\",\n        \"visibility\": \"private\",\n        \"revision\": 2502\n      },\n      \"url\": \"http://xiNgpdKqWApHrEcO.scvmvdAplfZC.hbVT9hSOb\",\n      \"uri\": \"string\",\n      \"createdDate\": \"1993-08-18T01:03:50.037Z\",\n      \"queueStatus\": \"disabled\",\n      \"variables\": {\n        \"key_0\": {\n          \"value\": \"string\",\n          \"allowOverride\": false,\n          \"isSecret\": true\n        },\n        \"key_1\": {\n          \"value\": \"string\",\n          \"allowOverride\": false,\n          \"isSecret\": false\n        }\n      },\n      \"triggers\": [\n        {\n          \"triggerType\": \"buildCompletion\"\n        },\n        {\n          \"triggerType\": \"batchedContinuousIntegration\"\n        }\n      ],\n      \"repository\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"Bitbucket\",\n        \"url\": \"https://Lwmj.nwPNujXtfyiSPDxQsL.4P5YhqfPD33IHg+m\",\n        \"defaultBranch\": \"refs/heads/main\",\n        \"checkoutSubmodules\": true,\n        \"clean\": \"true\",\n        \"properties\": {\n          \"key_0\": 8277,\n          \"key_1\": \"string\"\n        }\n      },\n      \"process\": {\n        \"yamlFilename\": \"string\",\n        \"type\": 2981\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de2323b6-3ad7-4d54-b712-41963e2d1233",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "builtAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1118dee-6f70-42ed-8531-8d8306b7a239",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "builtAfter",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6acd353-5ecc-4a36-a38f-5a90f0aa177b",
+          "name": "Azure DevOps Create a build definition",
+          "request": {
+            "name": "Azure DevOps Create a build definition",
+            "description": {
+              "content": "Creates a new build definition (pipeline) in the project. The definition specifies the build steps, triggers, variables, and agent requirements.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build",
+                "definitions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "definitionToCloneId",
+                  "value": "<integer>",
+                  "description": "ID of an existing definition to clone"
+                },
+                {
+                  "disabled": false,
+                  "key": "definitionToCloneRevision",
+                  "value": "<integer>",
+                  "description": "Revision number of the definition to clone"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"repository\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"defaultBranch\": \"<string>\",\n    \"checkoutSubmodules\": \"<boolean>\",\n    \"clean\": \"<string>\",\n    \"properties\": {\n      \"key_0\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\"\n  },\n  \"path\": \"\\\\\",\n  \"type\": \"build\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_2\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_3\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eec39527-9b67-475c-b5b3-1f55d1897924",
+              "name": "Build definition created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionToCloneId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionToCloneRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://WVTEByRbLnFneGyBfYuEB.mkRWQMtc255XWhLM7DZkB8L-L6BB1vyo9s9PnGTOn+9CymJy4tq-xN0ih+dKyVkNxNMdUil0QEae6m\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": false,\n    \"clean\": \"true\",\n    \"properties\": {\n      \"key_0\": 5628.461748547846,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\"\n  },\n  \"path\": \"\\\\\",\n  \"type\": \"build\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"xaml\",\n  \"revision\": 4293,\n  \"quality\": \"definition\",\n  \"authoredBy\": {\n    \"id\": \"51661d92-0610-9be5-73f6-c8674ffde7c9\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://LRaVGHEqrPfpjSxkxrFqsbfJYFfJKhg.usogqIga1c.esiR4\",\n    \"imageUrl\": \"http://QOWuQwibXUbzVtkRwNoODix.glcwuzl3AzUpxI4R-wh7UHYn\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": 5636,\n    \"name\": \"string\",\n    \"pool\": {\n      \"id\": 7359,\n      \"name\": \"string\",\n      \"isHosted\": false\n    }\n  },\n  \"project\": {\n    \"id\": \"00fb47c9-6bc0-6f33-d56d-223403159b90\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"http://DEyriTyZzVL.gavsiHCbUbP82DrxPw+z5mPWzZXTqs,3z9lYccA2rgyDgoouaB+ozTYNFblkhfITRZGiob\",\n    \"state\": \"deleted\",\n    \"visibility\": \"private\",\n    \"revision\": 8811\n  },\n  \"url\": \"http://gWFVyOqRQBksxinwczCqCStwbborsCT.nqPr96hr7QlFs.UfzwweieH3h0EIeypO72Tf1QPJiqC6ESvz2O8wkhsHMQmChoNBJI\",\n  \"uri\": \"string\",\n  \"createdDate\": \"2022-10-02T06:20:51.341Z\",\n  \"queueStatus\": \"paused\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_1\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_2\": {\n      \"value\": \"string\",\n      \"allowOverride\": true,\n      \"isSecret\": true\n    },\n    \"key_3\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"schedule\"\n    },\n    {\n      \"triggerType\": \"none\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://CecMhoMlWVnHEbwndhrmDUfppOUNEDSR.jdIyeUKMOYV9gZSwaTQFQYI8adW+rJZ,XYkmt6oyeT19C.z1LE\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4269.885994620483,\n      \"key_1\": \"string\"\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"string\",\n    \"type\": 7177\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "407de9cc-0b37-4a34-bd14-5a4d1ed4d92e",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionToCloneId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionToCloneRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://WVTEByRbLnFneGyBfYuEB.mkRWQMtc255XWhLM7DZkB8L-L6BB1vyo9s9PnGTOn+9CymJy4tq-xN0ih+dKyVkNxNMdUil0QEae6m\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": false,\n    \"clean\": \"true\",\n    \"properties\": {\n      \"key_0\": 5628.461748547846,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\"\n  },\n  \"path\": \"\\\\\",\n  \"type\": \"build\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3bcb168-e207-470f-822a-0aee650f5baa",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionToCloneId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionToCloneRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://WVTEByRbLnFneGyBfYuEB.mkRWQMtc255XWhLM7DZkB8L-L6BB1vyo9s9PnGTOn+9CymJy4tq-xN0ih+dKyVkNxNMdUil0QEae6m\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": false,\n    \"clean\": \"true\",\n    \"properties\": {\n      \"key_0\": 5628.461748547846,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\"\n  },\n  \"path\": \"\\\\\",\n  \"type\": \"build\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9846e649-f671-4550-8b55-ad4af0b1ef36",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionToCloneId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionToCloneRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://WVTEByRbLnFneGyBfYuEB.mkRWQMtc255XWhLM7DZkB8L-L6BB1vyo9s9PnGTOn+9CymJy4tq-xN0ih+dKyVkNxNMdUil0QEae6m\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": false,\n    \"clean\": \"true\",\n    \"properties\": {\n      \"key_0\": 5628.461748547846,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\"\n  },\n  \"path\": \"\\\\\",\n  \"type\": \"build\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b4cf63e-aa8f-4a5a-88d9-a65467427933",
+          "name": "Azure DevOps Get a build definition",
+          "request": {
+            "name": "Azure DevOps Get a build definition",
+            "description": {
+              "content": "Returns detailed information about a specific build definition, including all steps, triggers, variables, and configuration. You can also request a specific revision of the definition.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build",
+                "definitions",
+                ":definitionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "revision",
+                  "value": "<integer>",
+                  "description": "Specific revision number to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "minMetricsTime",
+                  "value": "<dateTime>",
+                  "description": "Minimum date for including build metrics"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "definitionId",
+                  "description": "(Required) Numeric ID of the build definition"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "686f6999-c11c-4f9e-9fb4-fc2c3aee7699",
+              "name": "Build definition returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "revision",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "minMetricsTime",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"xaml\",\n  \"revision\": 4293,\n  \"quality\": \"definition\",\n  \"authoredBy\": {\n    \"id\": \"51661d92-0610-9be5-73f6-c8674ffde7c9\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://LRaVGHEqrPfpjSxkxrFqsbfJYFfJKhg.usogqIga1c.esiR4\",\n    \"imageUrl\": \"http://QOWuQwibXUbzVtkRwNoODix.glcwuzl3AzUpxI4R-wh7UHYn\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": 5636,\n    \"name\": \"string\",\n    \"pool\": {\n      \"id\": 7359,\n      \"name\": \"string\",\n      \"isHosted\": false\n    }\n  },\n  \"project\": {\n    \"id\": \"00fb47c9-6bc0-6f33-d56d-223403159b90\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"http://DEyriTyZzVL.gavsiHCbUbP82DrxPw+z5mPWzZXTqs,3z9lYccA2rgyDgoouaB+ozTYNFblkhfITRZGiob\",\n    \"state\": \"deleted\",\n    \"visibility\": \"private\",\n    \"revision\": 8811\n  },\n  \"url\": \"http://gWFVyOqRQBksxinwczCqCStwbborsCT.nqPr96hr7QlFs.UfzwweieH3h0EIeypO72Tf1QPJiqC6ESvz2O8wkhsHMQmChoNBJI\",\n  \"uri\": \"string\",\n  \"createdDate\": \"2022-10-02T06:20:51.341Z\",\n  \"queueStatus\": \"paused\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_1\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_2\": {\n      \"value\": \"string\",\n      \"allowOverride\": true,\n      \"isSecret\": true\n    },\n    \"key_3\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"schedule\"\n    },\n    {\n      \"triggerType\": \"none\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://CecMhoMlWVnHEbwndhrmDUfppOUNEDSR.jdIyeUKMOYV9gZSwaTQFQYI8adW+rJZ,XYkmt6oyeT19C.z1LE\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4269.885994620483,\n      \"key_1\": \"string\"\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"string\",\n    \"type\": 7177\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9275786-2477-49b4-b786-ee0f79781288",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "revision",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "minMetricsTime",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04ff1561-84f8-49ec-8da8-db127c72f2f3",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "revision",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "minMetricsTime",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bee98380-0e73-417d-a5a8-10d60cf2fb4b",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "revision",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "minMetricsTime",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab7a9364-f5c5-4a8f-a22b-63cfc25618ec",
+          "name": "Azure DevOps Update a build definition",
+          "request": {
+            "name": "Azure DevOps Update a build definition",
+            "description": {
+              "content": "Replaces an existing build definition with the provided definition. The revision number in the body must match the current revision to prevent concurrent modification conflicts.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build",
+                "definitions",
+                ":definitionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "secretsSourceDefinitionId",
+                  "value": "<integer>",
+                  "description": "ID of the definition to clone secrets from"
+                },
+                {
+                  "disabled": false,
+                  "key": "secretsSourceDefinitionRevision",
+                  "value": "<integer>",
+                  "description": "Revision number to clone secrets from"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "definitionId",
+                  "description": "(Required) Numeric ID of the build definition to update"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"path\": \"<string>\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"state\": \"<string>\",\n    \"visibility\": \"<string>\",\n    \"revision\": \"<integer>\"\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"type\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"defaultBranch\": \"<string>\",\n    \"checkoutSubmodules\": \"<boolean>\",\n    \"clean\": \"<string>\",\n    \"properties\": {\n      \"key_0\": 9157.124423453894,\n      \"key_1\": \"string\",\n      \"key_2\": 2397\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "978617ee-cbe9-48f3-ad83-176c7882bc7f",
+              "name": "Build definition updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"cd330c86-205b-25b3-fa95-6e6f97a9e3e6\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://XxCVXjhlu.dmf7iJ5d2kS-h-vMm8bJ7Vv3e2hCA2GNJzhHqlZtN+El7m32t+ZWBnmCLxVHyl.QW0PtcysI\",\n    \"imageUrl\": \"http://KHWhmaIxLxQPXkv.jqfpwcfhJU74n,1YS0jm8YFj4udEkrxFkp1AQD.mRPqcfL1\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"ffce6a47-03c2-cca6-eb9f-a2d646cec4c2\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://KasFlchdeKuKsbHULohH.jrfa6-Xbe8ZeTFQNAqe4rFV+jcUZQb-H0iWmpouIg5,ufzv.PHspaZz24ngIjZMi5whobQDTn,E8kbD,opt2W\",\n    \"state\": \"new\",\n    \"visibility\": \"private\",\n    \"revision\": 6752\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHub\",\n    \"url\": \"https://mirKBNLUhDfHEt.yxgom02aImK.mQaFDDqcN.VK1tbA6i4yyXzm1hk3mGr7EJsltupqIhBuJK72p\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4438,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"xaml\",\n  \"revision\": 4293,\n  \"quality\": \"definition\",\n  \"authoredBy\": {\n    \"id\": \"51661d92-0610-9be5-73f6-c8674ffde7c9\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://LRaVGHEqrPfpjSxkxrFqsbfJYFfJKhg.usogqIga1c.esiR4\",\n    \"imageUrl\": \"http://QOWuQwibXUbzVtkRwNoODix.glcwuzl3AzUpxI4R-wh7UHYn\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": 5636,\n    \"name\": \"string\",\n    \"pool\": {\n      \"id\": 7359,\n      \"name\": \"string\",\n      \"isHosted\": false\n    }\n  },\n  \"project\": {\n    \"id\": \"00fb47c9-6bc0-6f33-d56d-223403159b90\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"http://DEyriTyZzVL.gavsiHCbUbP82DrxPw+z5mPWzZXTqs,3z9lYccA2rgyDgoouaB+ozTYNFblkhfITRZGiob\",\n    \"state\": \"deleted\",\n    \"visibility\": \"private\",\n    \"revision\": 8811\n  },\n  \"url\": \"http://gWFVyOqRQBksxinwczCqCStwbborsCT.nqPr96hr7QlFs.UfzwweieH3h0EIeypO72Tf1QPJiqC6ESvz2O8wkhsHMQmChoNBJI\",\n  \"uri\": \"string\",\n  \"createdDate\": \"2022-10-02T06:20:51.341Z\",\n  \"queueStatus\": \"paused\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_1\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    },\n    \"key_2\": {\n      \"value\": \"string\",\n      \"allowOverride\": true,\n      \"isSecret\": true\n    },\n    \"key_3\": {\n      \"value\": \"string\",\n      \"allowOverride\": false,\n      \"isSecret\": false\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"schedule\"\n    },\n    {\n      \"triggerType\": \"none\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHubEnterprise\",\n    \"url\": \"https://CecMhoMlWVnHEbwndhrmDUfppOUNEDSR.jdIyeUKMOYV9gZSwaTQFQYI8adW+rJZ,XYkmt6oyeT19C.z1LE\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4269.885994620483,\n      \"key_1\": \"string\"\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"string\",\n    \"type\": 7177\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "212ace11-5a06-4b26-a7df-121099882b5f",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"cd330c86-205b-25b3-fa95-6e6f97a9e3e6\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://XxCVXjhlu.dmf7iJ5d2kS-h-vMm8bJ7Vv3e2hCA2GNJzhHqlZtN+El7m32t+ZWBnmCLxVHyl.QW0PtcysI\",\n    \"imageUrl\": \"http://KHWhmaIxLxQPXkv.jqfpwcfhJU74n,1YS0jm8YFj4udEkrxFkp1AQD.mRPqcfL1\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"ffce6a47-03c2-cca6-eb9f-a2d646cec4c2\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://KasFlchdeKuKsbHULohH.jrfa6-Xbe8ZeTFQNAqe4rFV+jcUZQb-H0iWmpouIg5,ufzv.PHspaZz24ngIjZMi5whobQDTn,E8kbD,opt2W\",\n    \"state\": \"new\",\n    \"visibility\": \"private\",\n    \"revision\": 6752\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHub\",\n    \"url\": \"https://mirKBNLUhDfHEt.yxgom02aImK.mQaFDDqcN.VK1tbA6i4yyXzm1hk3mGr7EJsltupqIhBuJK72p\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4438,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4718face-9d58-4f26-a3f0-82aa5c81b65f",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"cd330c86-205b-25b3-fa95-6e6f97a9e3e6\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://XxCVXjhlu.dmf7iJ5d2kS-h-vMm8bJ7Vv3e2hCA2GNJzhHqlZtN+El7m32t+ZWBnmCLxVHyl.QW0PtcysI\",\n    \"imageUrl\": \"http://KHWhmaIxLxQPXkv.jqfpwcfhJU74n,1YS0jm8YFj4udEkrxFkp1AQD.mRPqcfL1\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"ffce6a47-03c2-cca6-eb9f-a2d646cec4c2\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://KasFlchdeKuKsbHULohH.jrfa6-Xbe8ZeTFQNAqe4rFV+jcUZQb-H0iWmpouIg5,ufzv.PHspaZz24ngIjZMi5whobQDTn,E8kbD,opt2W\",\n    \"state\": \"new\",\n    \"visibility\": \"private\",\n    \"revision\": 6752\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHub\",\n    \"url\": \"https://mirKBNLUhDfHEt.yxgom02aImK.mQaFDDqcN.VK1tbA6i4yyXzm1hk3mGr7EJsltupqIhBuJK72p\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4438,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "030e9cdf-c9e1-48ad-8d13-b7db3c1756f8",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"cd330c86-205b-25b3-fa95-6e6f97a9e3e6\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://XxCVXjhlu.dmf7iJ5d2kS-h-vMm8bJ7Vv3e2hCA2GNJzhHqlZtN+El7m32t+ZWBnmCLxVHyl.QW0PtcysI\",\n    \"imageUrl\": \"http://KHWhmaIxLxQPXkv.jqfpwcfhJU74n,1YS0jm8YFj4udEkrxFkp1AQD.mRPqcfL1\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"ffce6a47-03c2-cca6-eb9f-a2d646cec4c2\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://KasFlchdeKuKsbHULohH.jrfa6-Xbe8ZeTFQNAqe4rFV+jcUZQb-H0iWmpouIg5,ufzv.PHspaZz24ngIjZMi5whobQDTn,E8kbD,opt2W\",\n    \"state\": \"new\",\n    \"visibility\": \"private\",\n    \"revision\": 6752\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHub\",\n    \"url\": \"https://mirKBNLUhDfHEt.yxgom02aImK.mQaFDDqcN.VK1tbA6i4yyXzm1hk3mGr7EJsltupqIhBuJK72p\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4438,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6734be83-8d1e-4740-923e-39728ac73aa5",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "secretsSourceDefinitionRevision",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 5,\n  \"name\": \"CI-Pipeline\",\n  \"path\": \"\\\\MyFolder\",\n  \"type\": \"<string>\",\n  \"revision\": \"<integer>\",\n  \"quality\": \"<string>\",\n  \"authoredBy\": {\n    \"id\": \"cd330c86-205b-25b3-fa95-6e6f97a9e3e6\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://XxCVXjhlu.dmf7iJ5d2kS-h-vMm8bJ7Vv3e2hCA2GNJzhHqlZtN+El7m32t+ZWBnmCLxVHyl.QW0PtcysI\",\n    \"imageUrl\": \"http://KHWhmaIxLxQPXkv.jqfpwcfhJU74n,1YS0jm8YFj4udEkrxFkp1AQD.mRPqcfL1\",\n    \"descriptor\": \"string\"\n  },\n  \"queue\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"pool\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"isHosted\": \"<boolean>\"\n    }\n  },\n  \"project\": {\n    \"id\": \"ffce6a47-03c2-cca6-eb9f-a2d646cec4c2\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://KasFlchdeKuKsbHULohH.jrfa6-Xbe8ZeTFQNAqe4rFV+jcUZQb-H0iWmpouIg5,ufzv.PHspaZz24ngIjZMi5whobQDTn,E8kbD,opt2W\",\n    \"state\": \"new\",\n    \"visibility\": \"private\",\n    \"revision\": 6752\n  },\n  \"url\": \"<uri>\",\n  \"uri\": \"<string>\",\n  \"createdDate\": \"<dateTime>\",\n  \"queueStatus\": \"<string>\",\n  \"variables\": {\n    \"key_0\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    },\n    \"key_1\": {\n      \"value\": \"<string>\",\n      \"allowOverride\": \"<boolean>\",\n      \"isSecret\": \"<boolean>\"\n    }\n  },\n  \"triggers\": [\n    {\n      \"triggerType\": \"<string>\"\n    },\n    {\n      \"triggerType\": \"<string>\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"GitHub\",\n    \"url\": \"https://mirKBNLUhDfHEt.yxgom02aImK.mQaFDDqcN.VK1tbA6i4yyXzm1hk3mGr7EJsltupqIhBuJK72p\",\n    \"defaultBranch\": \"refs/heads/main\",\n    \"checkoutSubmodules\": true,\n    \"clean\": \"null\",\n    \"properties\": {\n      \"key_0\": 4438,\n      \"key_1\": false\n    }\n  },\n  \"process\": {\n    \"yamlFilename\": \"<string>\",\n    \"type\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03663d7f-716c-440d-9e03-df7fa1c80486",
+          "name": "Azure DevOps Delete a build definition",
+          "request": {
+            "name": "Azure DevOps Delete a build definition",
+            "description": {
+              "content": "Deletes a build definition. All associated builds must be deleted first, or you must specify deleteBuilds=true to cascade delete all associated builds.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "build",
+                "definitions",
+                ":definitionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "definitionId",
+                  "description": "(Required) Numeric ID of the build definition to delete"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12dd1731-6c98-48f3-9b06-8e0d98df8f43",
+              "name": "Build definition deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68da3e30-f712-4c2d-8eb3-bdd4f1653644",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d4c7816-3e00-434d-b5f0-54aef7e55022",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2350509-77d4-4116-9219-4980cbdf7722",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "build",
+                    "definitions",
+                    ":definitionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "definitionId",
+                      "description": "(Required) Numeric ID of the build definition to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a478e6b2-27b6-7058-df51-af052302a661\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 8606,\n  \"eventId\": 9474\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "657d51ba-c450-4449-bdc8-855f3692c05e",
+    "name": "Azure DevOps Artifacts Attachments Build Definitions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

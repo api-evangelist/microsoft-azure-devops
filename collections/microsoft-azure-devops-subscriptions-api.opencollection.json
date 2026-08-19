@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Subscriptions API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/subscriptions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "publisherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by publisher ID (e.g., 'tfs')"
+              },
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by event type (e.g., 'workitem.created')"
+              },
+              {
+                "name": "consumerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')"
+              },
+              {
+                "name": "consumerActionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscriptions by consumer action ID"
+              }
+            ]
+          },
+          "docs": "Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/subscriptions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/hooks/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the subscription to delete"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

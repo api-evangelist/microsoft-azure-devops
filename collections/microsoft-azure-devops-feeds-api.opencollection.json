@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Feeds API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feeds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List feeds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedRole",
+                "value": "",
+                "type": "query",
+                "description": "Filter feeds by the current user's role"
+              },
+              {
+                "name": "includeDeletedUpstreams",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include feeds with deleted upstream sources"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager endpoint URLs"
+              }
+            ]
+          },
+          "docs": "Returns a list of package feeds accessible within the organization or project. Feeds are the primary containers for packages in Azure Artifacts. A project can have multiple feeds with different visibility and upstream source settings.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new artifact feed. You can configure whether the feed allows upstream sources (for fetching public packages), its visibility (project-wide or organization-wide), and whether the feed is public or requires authentication.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "includeDeletedUpstreams",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted upstream sources in the response"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific feed, including its configuration, upstream sources, and visibility settings. The feedId can be either the feed GUID or its name.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of a feed such as its name, description, upstream sources, and retention policy. Only fields provided in the request body will be changed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a feed and all packages it contains. This operation cannot be undone. All packages will be permanently removed from the feed. Consumers of packages from this feed will lose access immediately.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

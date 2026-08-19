@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Wiki Pages API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wiki Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get a wiki page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier/pages",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              },
+              {
+                "name": "path",
+                "value": "/Getting-Started",
+                "type": "query",
+                "description": "Wiki page path (e.g., /MyPage or /Folder/SubPage)"
+              },
+              {
+                "name": "recursionLevel",
+                "value": "",
+                "type": "query",
+                "description": "Recursion level for subpages"
+              },
+              {
+                "name": "versionDescriptor",
+                "value": "",
+                "type": "query",
+                "description": "Version descriptor (branch or tag) to read the page from"
+              },
+              {
+                "name": "includeContent",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the page content in the response"
+              }
+            ]
+          },
+          "docs": "Returns the content and metadata for a wiki page at a given path. The path parameter is required to specify which page to retrieve. Returns the Markdown content of the page and optional metadata such as git commit information.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create or update a wiki page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier/pages",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              },
+              {
+                "name": "path",
+                "value": "/Getting-Started",
+                "type": "query",
+                "description": "Path of the wiki page to create or update"
+              },
+              {
+                "name": "comment",
+                "value": "",
+                "type": "query",
+                "description": "Comment for the commit creating this page update"
+              },
+              {
+                "name": "versionDescriptor",
+                "value": "",
+                "type": "query",
+                "description": "Branch to create or update the page on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new wiki page or updates an existing page at the specified path. The request body must contain the Markdown content for the page. To update an existing page, include the current page version in the If-Match header to prevent overwriting concurrent changes.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a wiki page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wiki/wikis/:wikiIdentifier/pages",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "wikiIdentifier",
+                "value": "",
+                "type": "path",
+                "description": "Wiki GUID or wiki name"
+              },
+              {
+                "name": "path",
+                "value": "/Old-Page",
+                "type": "query",
+                "description": "Path of the wiki page to delete"
+              },
+              {
+                "name": "comment",
+                "value": "",
+                "type": "query",
+                "description": "Comment for the deletion commit"
+              },
+              {
+                "name": "versionDescriptor",
+                "value": "",
+                "type": "query",
+                "description": "Branch to delete the page from"
+              }
+            ]
+          },
+          "docs": "Deletes a wiki page at the specified path. This commits a deletion to the backing Git repository. Deleted pages cannot be recovered except through the backing repository's Git history.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

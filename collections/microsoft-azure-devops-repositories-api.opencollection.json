@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Repositories API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include _links in the response"
+              },
+              {
+                "name": "includeAllUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all remote URLs (fetch and push)"
+              },
+              {
+                "name": "includeHidden",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include hidden repositories"
+              }
+            ]
+          },
+          "docs": "Returns a list of Git repositories in the project. Each repository includes its ID, name, default branch, clone URL, and remote URL.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "sourceRef",
+                "value": "",
+                "type": "query",
+                "description": "Initial branch name for the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Git repository in the project. Optionally can initialize the repository with a README and specify its visibility. After creation, the repository is empty unless a source URL is provided.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "includeParent",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the parent repository (for forks)"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific Git repository, including its default branch, clone URL, and project association. The repositoryId can be either the GUID or the repository name.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates properties of a repository such as its name or default branch. Only the fields provided in the request body will be changed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a repository and all its contents. This action cannot be undone. The repository and all pull requests, branches, and history will be permanently removed.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps List repository items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/items",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "scopePath",
+                "value": "/src",
+                "type": "query",
+                "description": "Path to the folder or file to list"
+              },
+              {
+                "name": "recursionLevel",
+                "value": "",
+                "type": "query",
+                "description": "How deep to recurse into subfolders"
+              },
+              {
+                "name": "includeContentMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include content metadata (size, encoding) for files"
+              },
+              {
+                "name": "latestProcessedChange",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the latest commit that changed each item"
+              },
+              {
+                "name": "download",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return file content as a download"
+              },
+              {
+                "name": "versionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch, tag, or commit to retrieve items at"
+              }
+            ]
+          },
+          "docs": "Returns a list of items (files and folders) in the repository at a specified path and version. Use this to browse the repository tree and download file contents.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

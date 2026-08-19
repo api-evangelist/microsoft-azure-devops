@@ -1,0 +1,1827 @@
+{
+  "item": [
+    {
+      "id": "80b2fc57-0d1e-461b-8dd3-2b6b120ccf16",
+      "name": "Wikis",
+      "description": {
+        "content": "Operations for managing wiki instances",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33a57e71-aed4-4ae4-83a3-40fa60ae87e9",
+          "name": "Azure DevOps List wikis",
+          "request": {
+            "name": "Azure DevOps List wikis",
+            "description": {
+              "content": "Returns a list of all wikis in the project. A project typically has one project wiki and may have additional code wikis that are backed by specific Git repository folders.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wiki",
+                "wikis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "412b8c2a-9ab1-4ef9-a9b5-2d06c4f1beee",
+              "name": "List of wikis returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 570,\n  \"value\": [\n    {\n      \"id\": \"2ecb0640-ef7e-cc0f-7e4f-d152a45d8fca\",\n      \"name\": \"Project Wiki\",\n      \"type\": \"projectWiki\",\n      \"projectId\": \"a9b04f08-48fc-b2e6-6672-aef86f2b3c40\",\n      \"repositoryId\": \"8119df83-f7b6-6b47-a282-f80211b2e5a3\",\n      \"mappedPath\": \"/wiki\",\n      \"versions\": [\n        {\n          \"version\": \"main\"\n        },\n        {\n          \"version\": \"main\"\n        }\n      ],\n      \"url\": \"https://wBvFTrhqcZbxBcGJgHRpXsLeQ.ynso8ZuG6Ujo\",\n      \"remoteUrl\": \"https://tPxAQn.loWn9kAOIEGgSuARi8p0u9o.SQM1LvDuuFdW\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://uGCvnDHccFRgyFH.ufn5QGV04.SDOgEf4mMTD4\"\n        },\n        \"key_1\": {\n          \"href\": \"http://yEfKRfyiFgccIrKttIjilzVKT.lgjzXP8hhDhIdU9r,xNF2bChdBO8yzRO4hNjj57rDZ,kjnOsxn\"\n        },\n        \"key_2\": {\n          \"href\": \"http://qsdsGTUnEYvhsErqGPSdqstqkEsIbUSBR.nclQEdoA+W+HdAO02w\"\n        }\n      }\n    },\n    {\n      \"id\": \"1a9a77bf-814a-0bc0-5273-6f90347db0a6\",\n      \"name\": \"Project Wiki\",\n      \"type\": \"codeWiki\",\n      \"projectId\": \"d28c205c-4ba9-9e4b-fba7-dd7f3ad149d6\",\n      \"repositoryId\": \"c50f353f-ed66-5c69-05e4-3e94cf6519b8\",\n      \"mappedPath\": \"/wiki\",\n      \"versions\": [\n        {\n          \"version\": \"main\"\n        },\n        {\n          \"version\": \"main\"\n        }\n      ],\n      \"url\": \"http://zJIRhVwQXIuJkZZeuLDSEYgAG.mmsqHjMsusFMphLFa\",\n      \"remoteUrl\": \"http://XJvoSrTGIEOTapqVDWhHp.pnO3q5EMrU.F++5bjP9kuyZzjEFuDKgScrUy\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://HqqCBlKiEqOpxSxawfCsIoonQ.egF9g\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1162b3d8-9bb7-4dc1-8589-87b7087af970",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8894bc2-155f-45fd-a43e-b00321405ab3",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9243aa59-01e9-489d-9c78-052955922d62",
+          "name": "Azure DevOps Create a wiki",
+          "request": {
+            "name": "Azure DevOps Create a wiki",
+            "description": {
+              "content": "Creates a new wiki for a project. You can create a project wiki (backed by a dedicated wiki repository) or a code wiki (backed by an existing Git repository and folder path). Only one project wiki can exist per project.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wiki",
+                "wikis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"projectId\": \"<uuid>\",\n  \"repositoryId\": \"<uuid>\",\n  \"mappedPath\": \"<string>\",\n  \"version\": {\n    \"version\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99e956f5-626a-464b-82b9-f89200c35f69",
+              "name": "Wiki created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Project Wiki\",\n  \"type\": \"projectWiki\",\n  \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"46f08267-0928-0498-3e7a-fba758acb4fb\",\n  \"name\": \"Project Wiki\",\n  \"type\": \"codeWiki\",\n  \"projectId\": \"b7344def-ac3d-d7d1-fc83-2f0e9181a623\",\n  \"repositoryId\": \"0afaf079-bdd1-bdd5-bad0-8b52bf16bbd6\",\n  \"mappedPath\": \"/wiki\",\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    },\n    {\n      \"version\": \"main\"\n    }\n  ],\n  \"url\": \"https://rpdJtDr.pybZaSwFXcL3d6L+VnjkxqUyjDJCrVnJ\",\n  \"remoteUrl\": \"http://cunPfe.imbfntoWzkOZzcxIsOw6nQhUPOqerF2yfHjZ0Uuc32,\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://tPLlwCSB.trxlZHNA9n2nRG-dWOJ5jF5oxK9,ebiWQ67z1KGeSdnnAIvX5VfCUIYAs\"\n    },\n    \"key_1\": {\n      \"href\": \"http://LtFGtnhLkGkxFoc.rhsbSltjzoyzywIgRZ+RUIDLVRaFGEfpOopO,8y2z.chGKLdFZ\"\n    },\n    \"key_2\": {\n      \"href\": \"http://NLsZKObATurXYdWQ.zdaLvD7Pa.,6uELjEBUYxlw4y.fbl8cxOXWxaxilNBW2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8541c20b-f74e-46bf-9d59-85a593f64e80",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Project Wiki\",\n  \"type\": \"projectWiki\",\n  \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8cf87570-f542-46b3-a813-e4c8f6458a1e",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Project Wiki\",\n  \"type\": \"projectWiki\",\n  \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee08cb08-d8c4-491f-9c4c-d40aeabd5449",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Project Wiki\",\n  \"type\": \"projectWiki\",\n  \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "563bd5de-772d-4041-b2b2-d64de0564930",
+          "name": "Azure DevOps Get a wiki",
+          "request": {
+            "name": "Azure DevOps Get a wiki",
+            "description": {
+              "content": "Returns detailed information about a specific wiki, including its backing Git repository ID, mapped path (for code wikis), and current version. The wikiIdentifier can be either the wiki GUID or its name.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wiki",
+                "wikis",
+                ":wikiIdentifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "versionDescriptor",
+                  "value": "<string>",
+                  "description": "Version descriptor for the wiki (branch or tag)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wikiIdentifier",
+                  "description": "(Required) Wiki GUID or wiki name"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0a8a911-2e76-4a0d-bf39-617afd7f6479",
+              "name": "Wiki returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "versionDescriptor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"46f08267-0928-0498-3e7a-fba758acb4fb\",\n  \"name\": \"Project Wiki\",\n  \"type\": \"codeWiki\",\n  \"projectId\": \"b7344def-ac3d-d7d1-fc83-2f0e9181a623\",\n  \"repositoryId\": \"0afaf079-bdd1-bdd5-bad0-8b52bf16bbd6\",\n  \"mappedPath\": \"/wiki\",\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    },\n    {\n      \"version\": \"main\"\n    }\n  ],\n  \"url\": \"https://rpdJtDr.pybZaSwFXcL3d6L+VnjkxqUyjDJCrVnJ\",\n  \"remoteUrl\": \"http://cunPfe.imbfntoWzkOZzcxIsOw6nQhUPOqerF2yfHjZ0Uuc32,\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://tPLlwCSB.trxlZHNA9n2nRG-dWOJ5jF5oxK9,ebiWQ67z1KGeSdnnAIvX5VfCUIYAs\"\n    },\n    \"key_1\": {\n      \"href\": \"http://LtFGtnhLkGkxFoc.rhsbSltjzoyzywIgRZ+RUIDLVRaFGEfpOopO,8y2z.chGKLdFZ\"\n    },\n    \"key_2\": {\n      \"href\": \"http://NLsZKObATurXYdWQ.zdaLvD7Pa.,6uELjEBUYxlw4y.fbl8cxOXWxaxilNBW2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c962e3d9-0b1a-4180-b2e6-8f4582d8487e",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "versionDescriptor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5612ff9c-6c9f-4ff9-921c-a78fdaf59271",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "versionDescriptor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c01055e-a1ba-41fa-bef8-a79ba753d2a6",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "versionDescriptor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11adc029-1f95-41b9-991c-4a3972d039b4",
+          "name": "Azure DevOps Update a wiki",
+          "request": {
+            "name": "Azure DevOps Update a wiki",
+            "description": {
+              "content": "Updates the wiki by changing the default branch for a code wiki's backed repository. This is useful when the main branch of the backing repository has been renamed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wiki",
+                "wikis",
+                ":wikiIdentifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wikiIdentifier",
+                  "description": "(Required) Wiki GUID or wiki name"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"<string>\"\n    },\n    {\n      \"version\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb5380d7-93e1-44cb-8ef6-ddc4ec920809",
+              "name": "Wiki updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"46f08267-0928-0498-3e7a-fba758acb4fb\",\n  \"name\": \"Project Wiki\",\n  \"type\": \"codeWiki\",\n  \"projectId\": \"b7344def-ac3d-d7d1-fc83-2f0e9181a623\",\n  \"repositoryId\": \"0afaf079-bdd1-bdd5-bad0-8b52bf16bbd6\",\n  \"mappedPath\": \"/wiki\",\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    },\n    {\n      \"version\": \"main\"\n    }\n  ],\n  \"url\": \"https://rpdJtDr.pybZaSwFXcL3d6L+VnjkxqUyjDJCrVnJ\",\n  \"remoteUrl\": \"http://cunPfe.imbfntoWzkOZzcxIsOw6nQhUPOqerF2yfHjZ0Uuc32,\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://tPLlwCSB.trxlZHNA9n2nRG-dWOJ5jF5oxK9,ebiWQ67z1KGeSdnnAIvX5VfCUIYAs\"\n    },\n    \"key_1\": {\n      \"href\": \"http://LtFGtnhLkGkxFoc.rhsbSltjzoyzywIgRZ+RUIDLVRaFGEfpOopO,8y2z.chGKLdFZ\"\n    },\n    \"key_2\": {\n      \"href\": \"http://NLsZKObATurXYdWQ.zdaLvD7Pa.,6uELjEBUYxlw4y.fbl8cxOXWxaxilNBW2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "513935d2-2231-4101-85b9-b2d5865c501c",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3c22c87-3d7e-466d-845f-6544709657e3",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "620eb3c4-1f58-4f67-bbe7-b2a0795c5673",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de0e6e86-27f4-4d18-974a-b53882c91e7d",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "543c9fc9-08f5-4a85-9931-849acf13eeea",
+          "name": "Azure DevOps Delete a wiki",
+          "request": {
+            "name": "Azure DevOps Delete a wiki",
+            "description": {
+              "content": "Deletes a wiki. For a project wiki, this deletes the wiki and the backing Git repository. For a code wiki, this removes the wiki but leaves the backing repository intact. This operation cannot be undone.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wiki",
+                "wikis",
+                ":wikiIdentifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wikiIdentifier",
+                  "description": "(Required) Wiki GUID or wiki name"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c538d0a1-06e8-40ec-9666-2da06033adce",
+              "name": "Wiki deleted successfully, returns the deleted wiki",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"46f08267-0928-0498-3e7a-fba758acb4fb\",\n  \"name\": \"Project Wiki\",\n  \"type\": \"codeWiki\",\n  \"projectId\": \"b7344def-ac3d-d7d1-fc83-2f0e9181a623\",\n  \"repositoryId\": \"0afaf079-bdd1-bdd5-bad0-8b52bf16bbd6\",\n  \"mappedPath\": \"/wiki\",\n  \"versions\": [\n    {\n      \"version\": \"main\"\n    },\n    {\n      \"version\": \"main\"\n    }\n  ],\n  \"url\": \"https://rpdJtDr.pybZaSwFXcL3d6L+VnjkxqUyjDJCrVnJ\",\n  \"remoteUrl\": \"http://cunPfe.imbfntoWzkOZzcxIsOw6nQhUPOqerF2yfHjZ0Uuc32,\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://tPLlwCSB.trxlZHNA9n2nRG-dWOJ5jF5oxK9,ebiWQ67z1KGeSdnnAIvX5VfCUIYAs\"\n    },\n    \"key_1\": {\n      \"href\": \"http://LtFGtnhLkGkxFoc.rhsbSltjzoyzywIgRZ+RUIDLVRaFGEfpOopO,8y2z.chGKLdFZ\"\n    },\n    \"key_2\": {\n      \"href\": \"http://NLsZKObATurXYdWQ.zdaLvD7Pa.,6uELjEBUYxlw4y.fbl8cxOXWxaxilNBW2\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96dd36c2-5bca-45d6-9ef1-54ac4e12eaba",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d55b4cb-8b44-41fc-a043-8249d035b870",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98602608-80bc-4e72-b16a-5917b049b21c",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wiki",
+                    "wikis",
+                    ":wikiIdentifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wikiIdentifier",
+                      "description": "(Required) Wiki GUID or wiki name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e5c62814-bdf8-e19c-55a0-e8fbce61d361\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 6761,\n  \"eventId\": 2879\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "64e89a64-4f0a-4c58-b458-80489deb83cf",
+    "name": "Azure DevOps Artifacts Attachments Wikis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,562 @@
+{
+  "item": [
+    {
+      "id": "a701bad6-6ec7-4b24-b7c7-45d593eb8856",
+      "name": "Refs",
+      "description": {
+        "content": "Operations for managing branches and tags (refs)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87edae42-c19a-4a39-a973-27112be1936f",
+          "name": "Azure DevOps List branches and refs",
+          "request": {
+            "name": "Azure DevOps List branches and refs",
+            "description": {
+              "content": "Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., \"heads/\" for branches, \"tags/\" for tags).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "refs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Prefix filter for ref names (e.g., 'heads/' returns branches)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeLinks",
+                  "value": "<boolean>",
+                  "description": "Whether to include _links"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeStatuses",
+                  "value": "<boolean>",
+                  "description": "Whether to include commit status information"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeMyBranches",
+                  "value": "<boolean>",
+                  "description": "Whether to prioritize branches created by the current user"
+                },
+                {
+                  "disabled": false,
+                  "key": "latestStatusesOnly",
+                  "value": "<boolean>",
+                  "description": "Return only the latest status for each ref"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of refs to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paging"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) GUID or name of the repository"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "968a2536-4064-45e7-b433-5ac37ea22d85",
+              "name": "List of refs returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "refs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "heads/"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMyBranches",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestStatusesOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1430,\n  \"value\": [\n    {\n      \"name\": \"refs/heads/main\",\n      \"objectId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n      \"creator\": {\n        \"id\": \"ce8fdd78-e1bb-4a66-f078-8070298c5b06\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://eQFA.kxcxuVUpv2m7vNE,NF-t-bpAepv0FGR9UPqLLdDUrihaXzJfWFnTVy-BGg,Vr1O+WCF9Fp\",\n        \"imageUrl\": \"http://CHVEbakUdLKcnjXBELMi.bfbd8ZzwO6OmEjEUa2W+.vmrT,Vjx3eh,Kui9.cdHZue.yXwua2nNDdlaGHdaHiJ5QaBJrsBsZOcBCEZaPu\",\n        \"descriptor\": \"string\"\n      },\n      \"url\": \"http://JUNndIdhxnlSyrnp.gcECPAfi6GhCHT7E7N1HklZQyidBjF1p06WxlCo\",\n      \"statuses\": [\n        {\n          \"state\": \"failed\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"https://xUKpXRytqFcYDVLxeElHaCX.wlpdcmx+lErSeaq6jfti1AnLz3gbXr8vJRdwa0HIrFOOjvgQU,AGXWps\"\n        },\n        {\n          \"state\": \"error\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"http://sjZP.jvUS7TzN,+gYlc+uqssIR72Hv6qJi3CK5vH2qyjJS8poz4zAjGLO+QrRcGhS2EG\"\n        }\n      ]\n    },\n    {\n      \"name\": \"refs/heads/main\",\n      \"objectId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n      \"creator\": {\n        \"id\": \"05e1f8f2-cd50-d82a-eeee-e298e3f3c14d\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://MUz.ngmWiVTjDMu\",\n        \"imageUrl\": \"https://LaVgteveltsoO.hkrfpP3zh.fckTfxbMe1FYVkvDXQ8kO0gb\",\n        \"descriptor\": \"string\"\n      },\n      \"url\": \"http://LXdZvyOGtgwvrGhoFZCMu.jtibwF-HMxfkt8rnl+Lb-OceAcmXOCh1baJDg.vKGQEBaJJBMU2HQfW43+.eFCxVxfqmM\",\n      \"statuses\": [\n        {\n          \"state\": \"pending\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"https://BponvPLxMJ.toteJ+l42xNR3N\"\n        },\n        {\n          \"state\": \"notSet\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"http://dqsLBqDdfrcIPPYOKENvRrJ.aqwus0mmn.+QdDXaByEI\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96ebf051-18a2-4b96-93c6-933be15badff",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "refs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "heads/"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMyBranches",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestStatusesOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"94f17f8b-a600-f75d-7888-cd9837d99d3f\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5911,\n  \"eventId\": 4186\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00285e3a-00e3-44bb-9660-31bdc471e5e6",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "refs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "heads/"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMyBranches",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestStatusesOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"94f17f8b-a600-f75d-7888-cd9837d99d3f\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5911,\n  \"eventId\": 4186\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eab17105-9aa2-430d-9d4e-61eac44f453b",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "refs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "heads/"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeStatuses",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeMyBranches",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestStatusesOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"94f17f8b-a600-f75d-7888-cd9837d99d3f\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5911,\n  \"eventId\": 4186\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "547bb7fc-effb-49bc-89a3-8ffdf9da41e9",
+    "name": "Azure DevOps Artifacts Attachments Refs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

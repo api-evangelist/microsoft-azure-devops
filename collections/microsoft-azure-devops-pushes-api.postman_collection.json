@@ -1,0 +1,1013 @@
+{
+  "item": [
+    {
+      "id": "e6a59450-a622-4d80-a840-57a2559184f9",
+      "name": "Pushes",
+      "description": {
+        "content": "Operations for managing pushes and commits",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "198e9ea4-dbb2-4a66-8df6-acf70bc4b253",
+          "name": "Azure DevOps List pushes",
+          "request": {
+            "name": "Azure DevOps List pushes",
+            "description": {
+              "content": "Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "pushes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of pushes to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of pushes to skip"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.fromDate",
+                  "value": "<dateTime>",
+                  "description": "Return pushes from after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.toDate",
+                  "value": "<dateTime>",
+                  "description": "Return pushes before this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.refName",
+                  "value": "<string>",
+                  "description": "Filter by branch or ref name"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.pusherId",
+                  "value": "<uuid>",
+                  "description": "Filter pushes by user who pushed"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) GUID or name of the repository"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d9c7ea1-2747-479e-a331-2e10f07e7439",
+              "name": "List of pushes returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.refName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.pusherId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3308,\n  \"value\": [\n    {\n      \"pushId\": 7877,\n      \"date\": \"1947-10-20T14:07:23.146Z\",\n      \"pushedBy\": {\n        \"id\": \"1067595a-ac75-9e90-8979-7e7b6b189403\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://Cu.cnIRNyC8pIJl.imMVudJHiwRXQFX.Fr8Pb6HC0vye0INFcjJc3\",\n        \"imageUrl\": \"https://njhPqFtR.zxtjpUJqbPN.p+iz\",\n        \"descriptor\": \"string\"\n      },\n      \"commits\": [\n        {\n          \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n          \"comment\": \"Fix login button alignment\",\n          \"commentTruncated\": true,\n          \"author\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"1976-02-20T11:30:37.752Z\",\n            \"imageUrl\": \"http://EQdOdNBYjIqrpGIbMDz.yndwD7WkZmzht17kcgu2dtwbOB36B0DSn2zo1F1S\"\n          },\n          \"committer\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"2020-08-06T12:22:17.758Z\",\n            \"imageUrl\": \"https://iMUMxIPwTs.cawBX+DDNjoWHLxu+oo-W\"\n          },\n          \"parents\": [\n            \"string\",\n            \"string\"\n          ],\n          \"url\": \"https://GMABAvYrPxgrVsZRPRtMk.ruakNGHeRM29XMfw0IRk-AyhODgyZ+HwBSYge\",\n          \"remoteUrl\": \"https://WwFqDZWeMBMktKMfkJVfhXHPd.uxdxLffKElvwy0\",\n          \"changeCounts\": {\n            \"Add\": 7049,\n            \"Edit\": 4940,\n            \"Delete\": 8259\n          }\n        },\n        {\n          \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n          \"comment\": \"Fix login button alignment\",\n          \"commentTruncated\": true,\n          \"author\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"1967-07-09T20:11:41.601Z\",\n            \"imageUrl\": \"https://CFjMmsiFStOElCMZcnvYDXrvNyd.ktawe9JUM\"\n          },\n          \"committer\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"1950-04-21T22:10:46.109Z\",\n            \"imageUrl\": \"http://QDYvrLbNDNGyBWPaJmzcNiFsm.furJpqo,i1t\"\n          },\n          \"parents\": [\n            \"string\",\n            \"string\"\n          ],\n          \"url\": \"https://zeaffGHSxIiJZ.pzvAS,3fssEkgDs\",\n          \"remoteUrl\": \"http://Yg.ypK6H2-g2XfkeeJnfjp62.V67dJnB7P1nBakRS9gk\",\n          \"changeCounts\": {\n            \"Add\": 908,\n            \"Edit\": 1329,\n            \"Delete\": 2718\n          }\n        }\n      ],\n      \"refUpdates\": [\n        {\n          \"name\": \"string\",\n          \"oldObjectId\": \"string\",\n          \"newObjectId\": \"string\",\n          \"repositoryId\": \"5144e6fa-f6af-4855-cc96-31f712971406\"\n        },\n        {\n          \"name\": \"string\",\n          \"oldObjectId\": \"string\",\n          \"newObjectId\": \"string\",\n          \"repositoryId\": \"e1957996-ca44-a8fd-3621-1dc9bf9a47fb\"\n        }\n      ],\n      \"repository\": {\n        \"id\": \"d66da01e-2463-345c-6277-3c08b858d0e4\",\n        \"name\": \"my-application\",\n        \"url\": \"https://mjlrYrBm.jicyDVHRA1Xww3Fof2HiIUZkL76QWpT+SWilrBUTW3DnemL4+MojvA67WV5LkKLXbhfypSXcXat70S5iU\",\n        \"project\": {\n          \"id\": \"fd71ddf4-01c7-280f-a048-cb29414914d7\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"url\": \"https://ibsBclNCVGKFQBQwUdrryuDjpIGS.wyaSk\",\n          \"state\": \"new\",\n          \"visibility\": \"private\",\n          \"revision\": 2846\n        },\n        \"defaultBranch\": \"refs/heads/main\",\n        \"size\": 7753,\n        \"remoteUrl\": \"https://dev.azure.com/myorg/myproject/_git/my-application\",\n        \"sshUrl\": \"git@ssh.dev.azure.com:v3/myorg/myproject/my-application\",\n        \"webUrl\": \"http://ocij.cyodaomOdqT,nRBm2mj3TWl07.A\",\n        \"parentRepository\": {\n          \"id\": \"a30040c4-f191-aefa-ec6e-5b1bc276fa12\",\n          \"name\": \"string\",\n          \"url\": \"http://uYdMOckGBYukSItPUqGuQ.enjlbo5ZKjuvPkNgnJ5\"\n        },\n        \"isFork\": false,\n        \"isDisabled\": false,\n        \"_links\": {\n          \"key_0\": {\n            \"href\": \"https://LCZokvAVmUjKeMEeHeDyBX.rewtHkxgO6yU8MbZnK2gnUq1kt-xxPtLw+Ij8Cg8a5.7-RPtS3Y.3K\"\n          }\n        }\n      },\n      \"url\": \"http://YqjVkjzORYbUY.kqzJi0-72fQPxwASHtMZhYhIgkTdK6iTvMqzW0EdiqJyc+Ms.4k-75Z0K1pVWWE\"\n    },\n    {\n      \"pushId\": 6612,\n      \"date\": \"2024-03-22T11:03:40.637Z\",\n      \"pushedBy\": {\n        \"id\": \"56c4a519-8461-1ab8-e6c8-4dcfa0c8642e\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://XdKXUvpHCaWogb.iugjkQUsZc\",\n        \"imageUrl\": \"https://MrEtyvqpCzfKIDFUSobPigodfaPSpu.hssoYoQrKsiYpK6Bq2iiaQdsrKQntwPHLheGViSz+j8YBMCmyNL32C\",\n        \"descriptor\": \"string\"\n      },\n      \"commits\": [\n        {\n          \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n          \"comment\": \"Fix login button alignment\",\n          \"commentTruncated\": true,\n          \"author\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"2012-05-13T18:01:43.385Z\",\n            \"imageUrl\": \"http://emtgHqVXwZa.fhvedJNz9dLij-LHmQz-mWzpWAWaK-yaO8,H4gqmj6GB4NepCEz\"\n          },\n          \"committer\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"2005-08-16T04:03:32.694Z\",\n            \"imageUrl\": \"https://OjMIqiTExKSHTf.xwvnXGy8tGe.vKsSQEBAFQO0kigqEQmCiKRJarU-ZE4m,9dCkJziSIeVd-Q5H01\"\n          },\n          \"parents\": [\n            \"string\",\n            \"string\"\n          ],\n          \"url\": \"http://FJdqmcvfLUhRz.hkxaheKuS.NhIwzNudn2V9DnIUbW7Nk.lrqZwmh2N+ZaKwDeqayrfMsQtDy2KwVoSzfp\",\n          \"remoteUrl\": \"http://qIXLAsFjaILYYuyCkMmbDHN.thTCJtzumETaYXb2Kr-ZLm1UPsWvI3wPdwx0x2\",\n          \"changeCounts\": {\n            \"Add\": 4094,\n            \"Edit\": 7219,\n            \"Delete\": 4897\n          }\n        },\n        {\n          \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n          \"comment\": \"Fix login button alignment\",\n          \"commentTruncated\": false,\n          \"author\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"1958-08-02T00:29:41.838Z\",\n            \"imageUrl\": \"http://fRjOjObvXyVNexXNIKfnNdOaCXnGQ.odAlrMt6JyGw7K6ftCPBpy1wgDPR+xCczrjYrVmb4NcdjN\"\n          },\n          \"committer\": {\n            \"name\": \"John Doe\",\n            \"email\": \"john.doe@example.com\",\n            \"date\": \"1991-01-17T01:12:37.032Z\",\n            \"imageUrl\": \"http://EjysJDDhuhFQTIXiMFtczZQKGF.akDO7X,CxGDeOUDBahdt-rlmvl,P,qv+AFPqIOhIgKnVb0XT-ua1kFmFMZ5EMyb\"\n          },\n          \"parents\": [\n            \"string\",\n            \"string\"\n          ],\n          \"url\": \"https://JKFeqLJtggDDWrjHFMb.meyQSUltxNbyCL7cqyFp3HL4QETe6502owBP7Bz1uZc\",\n          \"remoteUrl\": \"https://OupogaHPXxAmKgWQPdNYuhgpHrI.lyciI6M2oFZvPLquNX-XKlGh+3k\",\n          \"changeCounts\": {\n            \"Add\": 5881,\n            \"Edit\": 7513,\n            \"Delete\": 3716\n          }\n        }\n      ],\n      \"refUpdates\": [\n        {\n          \"name\": \"string\",\n          \"oldObjectId\": \"string\",\n          \"newObjectId\": \"string\",\n          \"repositoryId\": \"cd6afa90-fdd0-63df-8827-e899595a29f9\"\n        },\n        {\n          \"name\": \"string\",\n          \"oldObjectId\": \"string\",\n          \"newObjectId\": \"string\",\n          \"repositoryId\": \"6a30ec71-dfc7-e5ef-ad46-721d17e536d9\"\n        }\n      ],\n      \"repository\": {\n        \"id\": \"cef0739b-2ae0-7f0e-91fc-812577898ca5\",\n        \"name\": \"my-application\",\n        \"url\": \"https://GiwJwneDdbbGVopYw.juwhr0Nz4Bk5KTXcXyHO.fkLZoLXdURqVIch\",\n        \"project\": {\n          \"id\": \"a7a87516-9fbf-ecb0-75a7-acafaf6d1262\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"url\": \"http://iTmRZOxXrBJddehgsjNsaQxSG.usmtCghy7AlCvVUk-0cklO4Ofl5h6-1hcHmK.jwGJ+ZML1OfeqOmfoFu7R0IuoPPMAESO+Xs+\",\n          \"state\": \"deleting\",\n          \"visibility\": \"private\",\n          \"revision\": 2765\n        },\n        \"defaultBranch\": \"refs/heads/main\",\n        \"size\": 7701,\n        \"remoteUrl\": \"https://dev.azure.com/myorg/myproject/_git/my-application\",\n        \"sshUrl\": \"git@ssh.dev.azure.com:v3/myorg/myproject/my-application\",\n        \"webUrl\": \"http://McbrEGBMBwMlxvAv.gggzPhaaLr0Ln0KMoYJDfPGbJMxVRESrLhp.5klTfhsNxtmD-lmsL1PWqxCLu\",\n        \"parentRepository\": {\n          \"id\": \"facc7cf0-de1c-9f34-f9a9-128b78440e7b\",\n          \"name\": \"string\",\n          \"url\": \"http://IUIpvuuogf.knlbRrgIWRaToWRysDNFLl2g+O+FDLZeg82AwQ2.C\"\n        },\n        \"isFork\": true,\n        \"isDisabled\": true,\n        \"_links\": {\n          \"key_0\": {\n            \"href\": \"https://dw.xypxyC-InChWooiMWDISI0hTDze8XsSBztB6\"\n          },\n          \"key_1\": {\n            \"href\": \"https://GCPWqniAVZlNjHHPCdLeHIuqwu.ztf0LndBqkFIsmRJ66IDK8dNBFRVn6sfBzBsrHBwLHRLltcVa2OVXr\"\n          }\n        }\n      },\n      \"url\": \"http://MHgKqYJcSqgpEHGaQsNFQdeqgaLMY.vpxG+LGkjMLJppb04Gq.wnV7v6ykC.b7q0RXes9jSeMBWtiG6mEgAvHKFbXjvA-Pg9Hr4RZ0\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4d186cc-1794-4f05-b8e9-838fdb962971",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.refName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.pusherId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e93e39f2-2053-4174-8153-47ec50aa7bd3",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.refName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.pusherId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8010673b-c9c1-49d8-ae9d-d7ec0e6e9136",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.refName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.pusherId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "436d09e0-fa02-4aad-b541-ed595aca94cb",
+          "name": "Azure DevOps Create a push",
+          "request": {
+            "name": "Azure DevOps Create a push",
+            "description": {
+              "content": "Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "pushes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) GUID or name of the repository"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"<string>\",\n      \"oldObjectId\": \"<string>\",\n      \"newObjectId\": \"<string>\",\n      \"repositoryId\": \"<uuid>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"oldObjectId\": \"<string>\",\n      \"newObjectId\": \"<string>\",\n      \"repositoryId\": \"<uuid>\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f028b8b1-600f-43c5-9834-9b483d35b5d0",
+              "name": "Push created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"97711108-7025-ecd9-ea2f-60e4c1c653bd\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"2a2a0919-c928-11db-1d08-20ec501c1c08\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pushId\": 5948,\n  \"date\": \"1983-01-19T23:48:02.906Z\",\n  \"pushedBy\": {\n    \"id\": \"7582f12d-5877-bd33-8927-e0181923ce82\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://YkVmjHvUflZBzkGklnSeBBRGwrB.ucwk6Rb5t.UlAGM7hw\",\n    \"imageUrl\": \"https://vazSocoHmQhuCxygwzpygUGGMTglZE.bajsg,LgQGQ6f6NhqTi-PljEToScOLEa4Gk\",\n    \"descriptor\": \"string\"\n  },\n  \"commits\": [\n    {\n      \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n      \"comment\": \"Fix login button alignment\",\n      \"commentTruncated\": true,\n      \"author\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"date\": \"1972-03-14T06:51:05.205Z\",\n        \"imageUrl\": \"http://iUIJjGrEfQxZHfH.tbpBCAwtBN-2JVb91J4v3,qzz61YS+ioxzomntbwCY\"\n      },\n      \"committer\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"date\": \"2007-10-28T17:07:27.207Z\",\n        \"imageUrl\": \"https://YdWAeANXdsEMOqlAdkh.qwhQz,NHAt0KwCTPAuy-2pCML,L-mWT-bKgB+.JbT,DA7e\"\n      },\n      \"parents\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"https://iUNWWpZkvHU.vul3OZEqnpOH-LtsJQIYHhbbGNz9FAdecE0v8N.Y4cIFAlE6QzHWW5rgnDi.f\",\n      \"remoteUrl\": \"http://RQatAu.iyNvCGxHrQmCC7Cik9WGQKDgJlIX08M5AoM\",\n      \"changeCounts\": {\n        \"Add\": 3215,\n        \"Edit\": 6720,\n        \"Delete\": 9552\n      }\n    },\n    {\n      \"commitId\": \"a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\",\n      \"comment\": \"Fix login button alignment\",\n      \"commentTruncated\": true,\n      \"author\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"date\": \"2019-07-09T21:19:04.784Z\",\n        \"imageUrl\": \"http://CynqaWIcttmZvQIiKtBmbBl.axtLaVIFNXvS3dWvmjrmCVDY7hj9Tpmdo6iDYHQp0LrXqTBc2zfQs2MY.bYfn7fu5Lxl4bdQRbVgSoKBhYCFYNr\"\n      },\n      \"committer\": {\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"date\": \"1961-02-12T07:54:38.290Z\",\n        \"imageUrl\": \"http://k.tgB+DI2BbIqo,c33+d8HsdwDLiTiQeHPA\"\n      },\n      \"parents\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"http://wtJBTaAjemmoPnUOpL.hlxyliyLSB9Lwa9afmRpBMguIgwJdL,mFH7\",\n      \"remoteUrl\": \"http://fcgGOrSPgjaWMDlFuWbGFrAOXBDkFVM.lsoyORMlINE+-G6F+sMw1NlnaOdWkFfHlg,jwgDHFd5\",\n      \"changeCounts\": {\n        \"Add\": 630,\n        \"Edit\": 6027,\n        \"Delete\": 2590\n      }\n    }\n  ],\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"1eaa088d-3a43-a6e9-59d0-1a68f24d9668\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"9729eb74-26c6-d904-b3ed-963448df0ac3\"\n    }\n  ],\n  \"repository\": {\n    \"id\": \"eafe8e3f-733c-c826-ae0e-47cdeef03270\",\n    \"name\": \"my-application\",\n    \"url\": \"https://NfheLkTrZWeYqkrPDeCKwBpiYcLur.morE4HRQzYEcrYshq-Es\",\n    \"project\": {\n      \"id\": \"ba6d4aa3-01cf-8fdf-b13a-3d2070e3fa2d\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://HafJO.wzrgbfMOHGWLY4fMjZ9TOD,Zp54J.dseJb-A0XIlUMtd04tZtoTno\",\n      \"state\": \"deleting\",\n      \"visibility\": \"public\",\n      \"revision\": 9466\n    },\n    \"defaultBranch\": \"refs/heads/main\",\n    \"size\": 8269,\n    \"remoteUrl\": \"https://dev.azure.com/myorg/myproject/_git/my-application\",\n    \"sshUrl\": \"git@ssh.dev.azure.com:v3/myorg/myproject/my-application\",\n    \"webUrl\": \"https://BkPzbplfIhxdvOiqMGwgbiZaYN.vlo1\",\n    \"parentRepository\": {\n      \"id\": \"36f58af0-293b-dc8d-9a99-3efad004ff59\",\n      \"name\": \"string\",\n      \"url\": \"http://nBvcdfQokIVLgaEVJFMuNjSgs.xuzcO9jNVzu9ykNh0AWcVkwAozGaUnlwglMnnkh4ji\"\n    },\n    \"isFork\": true,\n    \"isDisabled\": false,\n    \"_links\": {\n      \"key_0\": {\n        \"href\": \"https://WwYfCNeDxAIx.lslnAMremluFkpKX\"\n      },\n      \"key_1\": {\n        \"href\": \"http://gSMY.ngszEsyeQ2U3l6cltahJvTqW\"\n      },\n      \"key_2\": {\n        \"href\": \"https://iprx.kbff2QyZE\"\n      }\n    }\n  },\n  \"url\": \"https://Lqlf.vbyimGtBrueol+cbgsHVu9BUncBV5AkwjxkP0of56BO1,sWlC2KOeq4scCfU4segmrf\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e77063d-02d3-4962-a8e8-dcfe301aedd4",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"97711108-7025-ecd9-ea2f-60e4c1c653bd\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"2a2a0919-c928-11db-1d08-20ec501c1c08\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3982b741-3db0-49ac-a5f7-41c5826285b1",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"97711108-7025-ecd9-ea2f-60e4c1c653bd\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"2a2a0919-c928-11db-1d08-20ec501c1c08\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60aeb7f5-745b-4e57-938b-7b5807228a75",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"97711108-7025-ecd9-ea2f-60e4c1c653bd\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"2a2a0919-c928-11db-1d08-20ec501c1c08\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b60e21f-b36c-4dfc-b898-fa3132ff0c39",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pushes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) GUID or name of the repository"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refUpdates\": [\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"97711108-7025-ecd9-ea2f-60e4c1c653bd\"\n    },\n    {\n      \"name\": \"string\",\n      \"oldObjectId\": \"string\",\n      \"newObjectId\": \"string\",\n      \"repositoryId\": \"2a2a0919-c928-11db-1d08-20ec501c1c08\"\n    }\n  ],\n  \"commits\": [\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    },\n    {\n      \"comment\": \"<string>\",\n      \"changes\": [\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        },\n        {\n          \"changeType\": \"<string>\",\n          \"item\": {\n            \"path\": \"<string>\"\n          },\n          \"newContent\": {\n            \"content\": \"<string>\",\n            \"contentType\": \"<string>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f1263236-e8a5-f665-0bb4-da35afbb30e3\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4777,\n  \"eventId\": 7818\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "13ea1a7a-0468-4552-bf8f-51a616259202",
+    "name": "Azure DevOps Artifacts Attachments Pushes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

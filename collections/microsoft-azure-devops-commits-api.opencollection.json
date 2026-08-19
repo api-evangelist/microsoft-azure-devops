@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Commits API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.itemVersion.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch, tag, or commit SHA to start listing from"
+              },
+              {
+                "name": "searchCriteria.author",
+                "value": "",
+                "type": "query",
+                "description": "Filter by commit author name or email"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return commits after this date"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return commits before this date"
+              },
+              {
+                "name": "searchCriteria.itemPath",
+                "value": "",
+                "type": "query",
+                "description": "Filter commits that touched this file or folder path"
+              },
+              {
+                "name": "searchCriteria.$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of commits to return"
+              },
+              {
+                "name": "searchCriteria.$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to skip (for pagination)"
+              }
+            ]
+          },
+          "docs": "Returns a list of commits in a repository. Supports filtering by branch, author, date range, file path, and commit message text. Results are sorted by commit date (newest first by default).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

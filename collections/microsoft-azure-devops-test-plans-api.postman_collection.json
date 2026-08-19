@@ -1,0 +1,1973 @@
+{
+  "item": [
+    {
+      "id": "58b11824-c63c-4ff2-ab45-23a3b0b36ca5",
+      "name": "Test Plans",
+      "description": {
+        "content": "Operations for managing test plans",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "71046b4b-bb47-420a-ab0a-d87d381b559f",
+          "name": "Azure DevOps List test plans",
+          "request": {
+            "name": "Azure DevOps List test plans",
+            "description": {
+              "content": "Returns a list of test plans in the project. Test plans are the top-level containers for organizing test suites and test cases. They are typically associated with a release milestone or sprint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "owner",
+                  "value": "<string>",
+                  "description": "Filter test plans by owner (user display name or email)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includePlanDetails",
+                  "value": "<boolean>",
+                  "description": "Whether to return full plan details or just IDs and names"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterActivePlans",
+                  "value": "<boolean>",
+                  "description": "Return only active (non-completed) test plans"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "isLastUpdatedSet",
+                  "value": "<boolean>",
+                  "description": "Whether to return plans sorted by last update"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "01d1f5ba-6c6f-482d-ab3c-3face483da23",
+              "name": "List of test plans returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includePlanDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filterActivePlans",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isLastUpdatedSet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 5660,\n  \"value\": [\n    {\n      \"id\": 1,\n      \"name\": \"Sprint 5 Test Plan\",\n      \"description\": \"string\",\n      \"state\": \"inactive\",\n      \"startDate\": \"2007-03-26T10:29:21.273Z\",\n      \"endDate\": \"1986-01-27T21:23:41.948Z\",\n      \"area\": {\n        \"id\": 1689,\n        \"name\": \"string\",\n        \"url\": \"http://pmKpcnCIFkStiS.guQhh6Almsnv2CERm3XvJYyM7iR+n4XvZgXFHctt-a\"\n      },\n      \"areaPath\": \"MyProject\\\\Frontend\",\n      \"iteration\": \"MyProject\\\\Sprint 5\",\n      \"owner\": {\n        \"id\": \"084f892f-3a6d-d3a5-d267-458ded3897bd\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://rQzLquPsNKaqdE.opmlmhfye3zBxAxFAY\",\n        \"imageUrl\": \"https://EtPPznWwJninoJeDoN.fwhfr.-SeU-.wQdeqaWQY\",\n        \"descriptor\": \"string\"\n      },\n      \"revision\": 8190,\n      \"buildDefinition\": {\n        \"id\": 2119,\n        \"name\": \"string\",\n        \"url\": \"https://i.xieQJ8q0mqPMYDMJVsg.EJIfNQWu-bS.+\"\n      },\n      \"buildId\": 874,\n      \"updatedDate\": \"1986-11-10T06:33:50.756Z\",\n      \"updatedBy\": {\n        \"id\": \"ebba4c09-e9c8-c598-07b7-35113c2a64a4\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://MoBjVBanvdOSBixiUXZk.ifyfj6umii2zHhorlpgzDukOvap-iAG6dh,jZOM2\",\n        \"imageUrl\": \"http://UojVRoTvhGsOLMjV.fyoo.vsoBhlnJ7npdI-PgyMSveMmnpnQsFKZICCvqiIXstVyAo38gGRITBKKKJHHCKgiVvwipAo\",\n        \"descriptor\": \"string\"\n      },\n      \"project\": {\n        \"id\": \"387fbdec-e1cf-7124-3466-859bf605c601\",\n        \"name\": \"string\"\n      },\n      \"rootSuite\": {\n        \"id\": 5297,\n        \"name\": \"string\",\n        \"url\": \"https://KYoHpmXLJTHvuZa.ebMDcB4NgNYQTNufZHFZ8AElnBJ,7Dq6mMEEY0ES27L\"\n      },\n      \"url\": \"https://uUQqZQLWkNku.iyUDXpD8UbUuLkufV.3rgbSO8aegJX9ZpfwlZz+zd3SL3D3io7AV41MpAAnZ73lpsXYRUXiDs\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://IMPNhMWrFafrEOsCmKLpH.zjDZIA2SBtrbE.n57xjH\"\n        },\n        \"key_1\": {\n          \"href\": \"http://ijWKWYdkiZcJhutSDSTvGMcH.zfnAWksXuc-jxhAHOQSP+6SV\"\n        },\n        \"key_2\": {\n          \"href\": \"http://eOnfbAGzPbhyLvpYgM.bcpwKOrtmj6PGquROy8aaGBiAFbafwXTBEnzvFMJa,R+\"\n        },\n        \"key_3\": {\n          \"href\": \"http://AHekkAvqfQFmtdAJbaNTKNtajnGtia.zbxe7n7YhdhyAdb3Ni6eWRWNMqMSnA1OYGDd12wgT.0nW+EPKkpyS6VC9K\"\n        }\n      }\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Sprint 5 Test Plan\",\n      \"description\": \"string\",\n      \"state\": \"inactive\",\n      \"startDate\": \"1964-04-25T21:15:37.996Z\",\n      \"endDate\": \"2018-02-06T16:23:54.788Z\",\n      \"area\": {\n        \"id\": 3711,\n        \"name\": \"string\",\n        \"url\": \"http://UoFceRxJpFvvwhs.uqikhH3XX3UQRA\"\n      },\n      \"areaPath\": \"MyProject\\\\Frontend\",\n      \"iteration\": \"MyProject\\\\Sprint 5\",\n      \"owner\": {\n        \"id\": \"ed78c48a-96b5-2b6b-0f40-d923909a4dec\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://virLDR.nwV+sc7IPcNDUtBE6OT09Rg5xih.YpO293DZoeu7XUNJQgRpRjBysnifG3Ivb2Wm\",\n        \"imageUrl\": \"https://ocTFVTQNZDpGURPR.edKFmEiC9Jio.ZuHucZkK0Ibrm5mxc3C+j5SwGKCW.,ZM\",\n        \"descriptor\": \"string\"\n      },\n      \"revision\": 4862,\n      \"buildDefinition\": {\n        \"id\": 9031,\n        \"name\": \"string\",\n        \"url\": \"http://KvzVTLKGkPwuzsbcXFbE.paax3+iGE+H5BNgfUTkJvP1ds\"\n      },\n      \"buildId\": 6541,\n      \"updatedDate\": \"1959-10-07T02:25:02.457Z\",\n      \"updatedBy\": {\n        \"id\": \"be8f9b05-a98f-851f-f5d9-d13dd5e1243a\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://dJoobPDk.ahzwcePK5dhCCg,,E0urNw1URLlm6x0FQWGCMrcXUOYupwm0hu7ACaAAuTmMOpW2uNVijvl\",\n        \"imageUrl\": \"http://JFegTMnPlHbVIBJkhFUEyrgnrqbfsb.pdvqWZZJp7XoVpY\",\n        \"descriptor\": \"string\"\n      },\n      \"project\": {\n        \"id\": \"1bfe02f1-3521-765f-ec78-9e5a6d9274b3\",\n        \"name\": \"string\"\n      },\n      \"rootSuite\": {\n        \"id\": 6145,\n        \"name\": \"string\",\n        \"url\": \"http://yzsyRCFScrBjNLMGRGQseXkZHjpNgo.xwVax,vNwFuJusySc3eMcECPp7DtJfqrg,ILbJXggM0ScmsiwY6OGlP\"\n      },\n      \"url\": \"https://UJM.ampgVhtEG0y0IkVPqqW.bbLyDWDilmHQ4N1Ca0b5cuX-a1q\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://lqaN.wuQqEe5fMiwiRIjZaSO,x82CCB\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9778cbf-be58-423a-a1e0-bf82e42f69d5",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includePlanDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filterActivePlans",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isLastUpdatedSet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8944e617-4e67-4be2-b15f-0a1cef1e52c2",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includePlanDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filterActivePlans",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isLastUpdatedSet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0db6c71-f8f3-4e27-8dd8-2b973eb2727b",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includePlanDetails",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filterActivePlans",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isLastUpdatedSet",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e8aa5bb-61ff-4c42-b3da-66e01ee3ed5b",
+          "name": "Azure DevOps Create a test plan",
+          "request": {
+            "name": "Azure DevOps Create a test plan",
+            "description": {
+              "content": "Creates a new test plan in the project. A test plan defines the scope of testing for a release, milestone, or sprint. It can be associated with an area path and iteration path to align with the project structure.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96a08688-044e-4cad-acb6-7cd3704809f1",
+              "name": "Test plan created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sprint 5 Test Plan\",\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"description\": \"Test plan for Sprint 5 user stories\",\n  \"startDate\": \"2024-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-15T00:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Sprint 5 Test Plan\",\n  \"description\": \"string\",\n  \"state\": \"inactive\",\n  \"startDate\": \"1987-02-21T13:41:47.398Z\",\n  \"endDate\": \"1968-11-08T09:20:49.716Z\",\n  \"area\": {\n    \"id\": 6145,\n    \"name\": \"string\",\n    \"url\": \"https://RudCntFnDGNCL.egxwcUtSiGRQ-4y\"\n  },\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"owner\": {\n    \"id\": \"0684026e-b52a-395a-7dcd-d1150798bdb2\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://AohvcBGcbdrRXShMk.rcimEkLRNV0z\",\n    \"imageUrl\": \"http://jKAcTDQUpYHvdS.ijcqaw0M5BFCphYzht3nyxUfhWli3ubbgE+ViWUBJEN7HasTAqriDSa4Qiu3LieThkpECCu79y3iqa\",\n    \"descriptor\": \"string\"\n  },\n  \"revision\": 6183,\n  \"buildDefinition\": {\n    \"id\": 9725,\n    \"name\": \"string\",\n    \"url\": \"http://XSARgyImaINITvqChcZ.zjfZas41v+CV7UezKO7itm67CbKM+Ru4wpjCaN8AXu,EhNv\"\n  },\n  \"buildId\": 9231,\n  \"updatedDate\": \"1957-06-08T09:37:57.640Z\",\n  \"updatedBy\": {\n    \"id\": \"51156fae-6dd2-de51-b476-2acb405115ee\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://zffvP.hjiuLk5Xy.IdZsGWTxUcqyHkkmd9T+QOxT7G90XYZUs7-HsTMhWBVdc\",\n    \"imageUrl\": \"http://Cwn.rpwqvnBO\",\n    \"descriptor\": \"string\"\n  },\n  \"project\": {\n    \"id\": \"660e6387-1375-864e-a0b7-7a5c17ec2452\",\n    \"name\": \"string\"\n  },\n  \"rootSuite\": {\n    \"id\": 3536,\n    \"name\": \"string\",\n    \"url\": \"https://fQKLZagQOmGObhhutWivPY.dekT5oILLbaRBFW9idGN84G\"\n  },\n  \"url\": \"http://GHvORmrEgWFTMnVnrELLKUe.qwo-xfaj83fMzF9pzYkUihtUh\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://lVgAIcUUHfroQrGsXLKGUTDBVxTnLbZ.taRFth9.EUGuZOYCQ+Ttxc3VDDUPRIKjUi719tIftLSFrJY,rTvBNzO\"\n    },\n    \"key_1\": {\n      \"href\": \"https://MJZHvdN.gybD7yriFVfXYOd-f,Shj0Gb5J5hF\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fa024a8-4c07-4c9e-9e8e-a4e1cee3327f",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sprint 5 Test Plan\",\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"description\": \"Test plan for Sprint 5 user stories\",\n  \"startDate\": \"2024-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-15T00:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b47a445b-c6d8-4c0e-9d12-ea09b0d6f346",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sprint 5 Test Plan\",\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"description\": \"Test plan for Sprint 5 user stories\",\n  \"startDate\": \"2024-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-15T00:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daa49fe0-f444-414c-b37f-8674c9291f1b",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sprint 5 Test Plan\",\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"description\": \"Test plan for Sprint 5 user stories\",\n  \"startDate\": \"2024-03-01T00:00:00Z\",\n  \"endDate\": \"2024-03-15T00:00:00Z\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12cef178-626f-44cc-a01b-53cd5fceb44c",
+          "name": "Azure DevOps Get a test plan",
+          "request": {
+            "name": "Azure DevOps Get a test plan",
+            "description": {
+              "content": "Returns detailed information about a specific test plan, including its area path, iteration, owner, and date range. Use the plan ID to retrieve test suites associated with this plan.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "947e043e-9aa2-4e6f-a1a5-2e9d8f865fa7",
+              "name": "Test plan returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Sprint 5 Test Plan\",\n  \"description\": \"string\",\n  \"state\": \"inactive\",\n  \"startDate\": \"1987-02-21T13:41:47.398Z\",\n  \"endDate\": \"1968-11-08T09:20:49.716Z\",\n  \"area\": {\n    \"id\": 6145,\n    \"name\": \"string\",\n    \"url\": \"https://RudCntFnDGNCL.egxwcUtSiGRQ-4y\"\n  },\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"owner\": {\n    \"id\": \"0684026e-b52a-395a-7dcd-d1150798bdb2\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://AohvcBGcbdrRXShMk.rcimEkLRNV0z\",\n    \"imageUrl\": \"http://jKAcTDQUpYHvdS.ijcqaw0M5BFCphYzht3nyxUfhWli3ubbgE+ViWUBJEN7HasTAqriDSa4Qiu3LieThkpECCu79y3iqa\",\n    \"descriptor\": \"string\"\n  },\n  \"revision\": 6183,\n  \"buildDefinition\": {\n    \"id\": 9725,\n    \"name\": \"string\",\n    \"url\": \"http://XSARgyImaINITvqChcZ.zjfZas41v+CV7UezKO7itm67CbKM+Ru4wpjCaN8AXu,EhNv\"\n  },\n  \"buildId\": 9231,\n  \"updatedDate\": \"1957-06-08T09:37:57.640Z\",\n  \"updatedBy\": {\n    \"id\": \"51156fae-6dd2-de51-b476-2acb405115ee\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://zffvP.hjiuLk5Xy.IdZsGWTxUcqyHkkmd9T+QOxT7G90XYZUs7-HsTMhWBVdc\",\n    \"imageUrl\": \"http://Cwn.rpwqvnBO\",\n    \"descriptor\": \"string\"\n  },\n  \"project\": {\n    \"id\": \"660e6387-1375-864e-a0b7-7a5c17ec2452\",\n    \"name\": \"string\"\n  },\n  \"rootSuite\": {\n    \"id\": 3536,\n    \"name\": \"string\",\n    \"url\": \"https://fQKLZagQOmGObhhutWivPY.dekT5oILLbaRBFW9idGN84G\"\n  },\n  \"url\": \"http://GHvORmrEgWFTMnVnrELLKUe.qwo-xfaj83fMzF9pzYkUihtUh\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://lVgAIcUUHfroQrGsXLKGUTDBVxTnLbZ.taRFth9.EUGuZOYCQ+Ttxc3VDDUPRIKjUi719tIftLSFrJY,rTvBNzO\"\n    },\n    \"key_1\": {\n      \"href\": \"https://MJZHvdN.gybD7yriFVfXYOd-f,Shj0Gb5J5hF\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8c8be80-055e-4064-9be9-333770256d6d",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80a05a92-adf8-4f37-9d9b-84294bc406b9",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a98b09d3-8853-447c-b534-ea831f795798",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8beea3bc-b1db-495c-8873-a1a683f6804c",
+          "name": "Azure DevOps Update a test plan",
+          "request": {
+            "name": "Azure DevOps Update a test plan",
+            "description": {
+              "content": "Updates properties of an existing test plan such as its name, description, area path, iteration, start date, and end date.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "20a1a7af-0a87-4289-9021-70206a0cabc4",
+              "name": "Test plan updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"f44ef155-d9df-e40e-d6db-58f7e9ca73ca\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://hJKhwfsBnbjOewkQHrftHRpZhZH.osnjbtL0PsWN6ZwDU.FbpNyvwBQprlrwp4NRYmTXkPjwprbwa.cl+FwcrIUj6nqV\",\n    \"imageUrl\": \"https://jhuvEIWOhtw.nuboE\",\n    \"descriptor\": \"string\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Sprint 5 Test Plan\",\n  \"description\": \"string\",\n  \"state\": \"inactive\",\n  \"startDate\": \"1987-02-21T13:41:47.398Z\",\n  \"endDate\": \"1968-11-08T09:20:49.716Z\",\n  \"area\": {\n    \"id\": 6145,\n    \"name\": \"string\",\n    \"url\": \"https://RudCntFnDGNCL.egxwcUtSiGRQ-4y\"\n  },\n  \"areaPath\": \"MyProject\\\\Frontend\",\n  \"iteration\": \"MyProject\\\\Sprint 5\",\n  \"owner\": {\n    \"id\": \"0684026e-b52a-395a-7dcd-d1150798bdb2\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://AohvcBGcbdrRXShMk.rcimEkLRNV0z\",\n    \"imageUrl\": \"http://jKAcTDQUpYHvdS.ijcqaw0M5BFCphYzht3nyxUfhWli3ubbgE+ViWUBJEN7HasTAqriDSa4Qiu3LieThkpECCu79y3iqa\",\n    \"descriptor\": \"string\"\n  },\n  \"revision\": 6183,\n  \"buildDefinition\": {\n    \"id\": 9725,\n    \"name\": \"string\",\n    \"url\": \"http://XSARgyImaINITvqChcZ.zjfZas41v+CV7UezKO7itm67CbKM+Ru4wpjCaN8AXu,EhNv\"\n  },\n  \"buildId\": 9231,\n  \"updatedDate\": \"1957-06-08T09:37:57.640Z\",\n  \"updatedBy\": {\n    \"id\": \"51156fae-6dd2-de51-b476-2acb405115ee\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://zffvP.hjiuLk5Xy.IdZsGWTxUcqyHkkmd9T+QOxT7G90XYZUs7-HsTMhWBVdc\",\n    \"imageUrl\": \"http://Cwn.rpwqvnBO\",\n    \"descriptor\": \"string\"\n  },\n  \"project\": {\n    \"id\": \"660e6387-1375-864e-a0b7-7a5c17ec2452\",\n    \"name\": \"string\"\n  },\n  \"rootSuite\": {\n    \"id\": 3536,\n    \"name\": \"string\",\n    \"url\": \"https://fQKLZagQOmGObhhutWivPY.dekT5oILLbaRBFW9idGN84G\"\n  },\n  \"url\": \"http://GHvORmrEgWFTMnVnrELLKUe.qwo-xfaj83fMzF9pzYkUihtUh\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://lVgAIcUUHfroQrGsXLKGUTDBVxTnLbZ.taRFth9.EUGuZOYCQ+Ttxc3VDDUPRIKjUi719tIftLSFrJY,rTvBNzO\"\n    },\n    \"key_1\": {\n      \"href\": \"https://MJZHvdN.gybD7yriFVfXYOd-f,Shj0Gb5J5hF\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2896cf47-2f82-444b-9f26-2cf1ed217baf",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"f44ef155-d9df-e40e-d6db-58f7e9ca73ca\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://hJKhwfsBnbjOewkQHrftHRpZhZH.osnjbtL0PsWN6ZwDU.FbpNyvwBQprlrwp4NRYmTXkPjwprbwa.cl+FwcrIUj6nqV\",\n    \"imageUrl\": \"https://jhuvEIWOhtw.nuboE\",\n    \"descriptor\": \"string\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e830ec4-5398-45c9-b80d-aca81b1037d6",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"f44ef155-d9df-e40e-d6db-58f7e9ca73ca\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://hJKhwfsBnbjOewkQHrftHRpZhZH.osnjbtL0PsWN6ZwDU.FbpNyvwBQprlrwp4NRYmTXkPjwprbwa.cl+FwcrIUj6nqV\",\n    \"imageUrl\": \"https://jhuvEIWOhtw.nuboE\",\n    \"descriptor\": \"string\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db413237-3ee6-4d25-b09f-6c2416c324b5",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"f44ef155-d9df-e40e-d6db-58f7e9ca73ca\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://hJKhwfsBnbjOewkQHrftHRpZhZH.osnjbtL0PsWN6ZwDU.FbpNyvwBQprlrwp4NRYmTXkPjwprbwa.cl+FwcrIUj6nqV\",\n    \"imageUrl\": \"https://jhuvEIWOhtw.nuboE\",\n    \"descriptor\": \"string\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f8a480d-4d6e-422f-a5e8-0cecba4f9fed",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"areaPath\": \"<string>\",\n  \"iteration\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"owner\": {\n    \"id\": \"f44ef155-d9df-e40e-d6db-58f7e9ca73ca\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://hJKhwfsBnbjOewkQHrftHRpZhZH.osnjbtL0PsWN6ZwDU.FbpNyvwBQprlrwp4NRYmTXkPjwprbwa.cl+FwcrIUj6nqV\",\n    \"imageUrl\": \"https://jhuvEIWOhtw.nuboE\",\n    \"descriptor\": \"string\"\n  },\n  \"status\": \"<string>\",\n  \"buildDefinition\": {\n    \"id\": \"<integer>\"\n  },\n  \"buildId\": \"<integer>\",\n  \"revision\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "201cd7ab-98b9-40b8-b34b-ad02e03c0d4f",
+          "name": "Azure DevOps Delete a test plan",
+          "request": {
+            "name": "Azure DevOps Delete a test plan",
+            "description": {
+              "content": "Permanently deletes a test plan and all its suites and configurations. This operation cannot be undone. All associated test results and run data will also be deleted.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1ae1a06-eebf-47e9-9790-51b466a3e14f",
+              "name": "Test plan deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "88ee42cc-433c-4084-bbf7-10ff7442a7ee",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc2d41f5-f404-4ea7-b032-69153eb1bbc6",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d388e30-194d-4d3a-b977-76eb9de99166",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"15ce0a0c-7e22-a0e5-d696-00e386c669bc\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 3502,\n  \"eventId\": 1425\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8f861e71-51b4-4f6e-8dcc-9179cec07d32",
+    "name": "Azure DevOps Artifacts Attachments Test Plans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

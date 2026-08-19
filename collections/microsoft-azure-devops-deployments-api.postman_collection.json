@@ -1,0 +1,517 @@
+{
+  "item": [
+    {
+      "id": "e84be17c-b514-4353-8b8e-b7cc3c5a4990",
+      "name": "Deployments",
+      "description": {
+        "content": "Operations for managing and monitoring deployments to environments",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82205dc1-bd1c-46a6-8133-1a8ceedae482",
+          "name": "Azure DevOps List deployments",
+          "request": {
+            "name": "Azure DevOps List deployments",
+            "description": {
+              "content": "Returns a list of deployments across all release definitions and environments in the project. Supports filtering by definition, environment, and deployment status. Useful for auditing and monitoring deployment activity.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "release",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "definitionId",
+                  "value": "<integer>",
+                  "description": "Filter deployments by release definition ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "definitionEnvironmentId",
+                  "value": "<integer>",
+                  "description": "Filter deployments by environment ID within the definition"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBy",
+                  "value": "<string>",
+                  "description": "Filter deployments triggered by a specific user"
+                },
+                {
+                  "disabled": false,
+                  "key": "minModifiedTime",
+                  "value": "<dateTime>",
+                  "description": "Returns deployments modified after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxModifiedTime",
+                  "value": "<dateTime>",
+                  "description": "Returns deployments modified before this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "deploymentStatus",
+                  "value": "<string>",
+                  "description": "Filter by deployment status"
+                },
+                {
+                  "disabled": false,
+                  "key": "operationStatus",
+                  "value": "<string>",
+                  "description": "Filter by operation status"
+                },
+                {
+                  "disabled": false,
+                  "key": "latestAttemptsOnly",
+                  "value": "<boolean>",
+                  "description": "Return only the latest deployment attempt for each environment"
+                },
+                {
+                  "disabled": false,
+                  "key": "queryOrder",
+                  "value": "<string>",
+                  "description": "Sort order for results"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of deployments to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<integer>",
+                  "description": "Continuation token for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectName",
+                  "value": "<string>",
+                  "description": "Project name filter"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72c647f9-bb25-482a-847a-dfdf1417091c",
+              "name": "List of deployments returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "release",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionEnvironmentId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "minModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "maxModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "deploymentStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operationStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "latestAttemptsOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "queryOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "projectName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7706,\n  \"value\": [\n    {\n      \"id\": 3580,\n      \"releaseId\": 3367,\n      \"releaseDefinitionId\": 6099,\n      \"releaseEnvironmentId\": 235,\n      \"definitionEnvironmentId\": 8370,\n      \"attempt\": 1015,\n      \"reason\": \"redeployTrigger\",\n      \"deploymentStatus\": \"notDeployed\",\n      \"operationStatus\": \"queuedForAgent\",\n      \"requestedBy\": {\n        \"id\": \"dd801ac0-6a8b-c5d1-98ed-365b339b2af3\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://sTIGUkwscdVZtoXNoAXwCpwwmzbH.galmob0GMrk18wa5eLE3CD8i.yqu+59cVdLNFaMkq.famXck.\",\n        \"imageUrl\": \"http://ZSXDhcTjLYezJ.qpcgKtxj24FuNJbmhdgOv2X9AIm1sIzZZyt.CJOn6f\",\n        \"descriptor\": \"string\"\n      },\n      \"requestedFor\": {\n        \"id\": \"d08ab9e4-bc31-d880-787c-c32d36dfca08\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://F.pwfoAd+Y7\",\n        \"imageUrl\": \"http://gEeGaGfpXbNEidlwSAVFbvbSrHWt.rtZKuBbLHLuMGA-SKmDWQ+u7CgFSGI1\",\n        \"descriptor\": \"string\"\n      },\n      \"queuedOn\": \"1962-08-31T21:50:21.552Z\",\n      \"startedOn\": \"2008-08-18T18:51:36.402Z\",\n      \"completedOn\": \"2007-06-06T13:55:18.878Z\",\n      \"lastModifiedBy\": {\n        \"id\": \"92311e12-ff5c-d8f2-2a12-e8e8cc720a89\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://fihDwswVLPgkqMpbtjXnQdyjbjtnt.fxP\",\n        \"imageUrl\": \"https://FcBqh.cvpHIWNDpZVA.CSt.Ef\",\n        \"descriptor\": \"string\"\n      },\n      \"lastModifiedOn\": \"1981-02-18T19:03:03.712Z\",\n      \"release\": {\n        \"id\": 8298,\n        \"name\": \"string\",\n        \"url\": \"https://Kh.ghfouhuGQa5FP4zmOHl1Ub1lBXgofv+JMUY\"\n      },\n      \"releaseDefinition\": {\n        \"id\": 894,\n        \"name\": \"string\",\n        \"path\": \"string\",\n        \"url\": \"http://PTrDDMIXYrszKHYggkliKReNnHZQ.qfyAVwR-npASwT2EXZU\",\n        \"_links\": {\n          \"key_0\": {\n            \"href\": \"https://TAEZZvMvipVvhehCS.llhnOwOOX0sGzXmeRehT6Ya5ZjXCCuoihjdr7putR.DpZOVe988U\"\n          },\n          \"key_1\": {\n            \"href\": \"http://FDckEiOfpdrLBEufXkybbiiuVgrtKeC.zkgT0YbZegVTms3+5zZkx11rJ\"\n          }\n        }\n      },\n      \"releaseEnvironment\": {\n        \"id\": 4303,\n        \"name\": \"string\",\n        \"url\": \"https://BImMLCzMJgHKy.bdyG4bwTN24LuADl5YnVpSs8V6iCRz,K5Mp3dLQInuQzo6DjoBrd9RuDBEsLejaAlE0J4\"\n      },\n      \"projectReference\": {\n        \"id\": \"207fc6fb-9f9c-4ad6-6682-51fd1bce0f4c\",\n        \"name\": \"string\"\n      },\n      \"url\": \"http://mqDoIjClPmlCavEy.tterOFGzXA6DSXPSgY,0fDNXPOYfP+qtQ3.2Swaf.MLwnRV1f\"\n    },\n    {\n      \"id\": 1408,\n      \"releaseId\": 1865,\n      \"releaseDefinitionId\": 9851,\n      \"releaseEnvironmentId\": 6387,\n      \"definitionEnvironmentId\": 266,\n      \"attempt\": 1197,\n      \"reason\": \"none\",\n      \"deploymentStatus\": \"notDeployed\",\n      \"operationStatus\": \"queued\",\n      \"requestedBy\": {\n        \"id\": \"34621c03-bcf0-4996-82b9-33409b48fe1c\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://kKxYNSPJWJZSgPO.lprbWKBrCKwE,cAy2vfUk,DzshO5M6Z\",\n        \"imageUrl\": \"http://DRyqVHKbAYtpxONnKiMzQZvH.dgoSpLytcToyHmrpGn0oLXG-feuA5Wn65.+GiIGaWEhh9LO-RaYcVPari+\",\n        \"descriptor\": \"string\"\n      },\n      \"requestedFor\": {\n        \"id\": \"7b2f85a2-2e75-2164-0643-8f5419aa80d6\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://SfkmygEhigucRParzqVOYlqammdPlwjKP.gormmhEXefJ+Pr,cBAuH0uicxa-Np\",\n        \"imageUrl\": \"https://WnODVUJzfddM.ipbiwlMLS2Y-gW,Kv1SRMM7jDbzJ\",\n        \"descriptor\": \"string\"\n      },\n      \"queuedOn\": \"2020-01-01T13:02:44.598Z\",\n      \"startedOn\": \"1973-07-16T23:30:20.556Z\",\n      \"completedOn\": \"2015-05-05T14:15:21.390Z\",\n      \"lastModifiedBy\": {\n        \"id\": \"846b7564-cf1a-1951-9d7a-b09d456caa38\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://aISBwTHmycnTtdvcxwDMONluCfkPz.bfiKgXSR,vqpGc+MAeHpM3pBmA2\",\n        \"imageUrl\": \"https://jOZVCFojLMB.vhatF3BdgA6yDzkqvtbxL+9PSG.84XA3hjESaeopS8oyEvr8B79rWX8H-I2clINm\",\n        \"descriptor\": \"string\"\n      },\n      \"lastModifiedOn\": \"1997-07-13T09:30:03.863Z\",\n      \"release\": {\n        \"id\": 5469,\n        \"name\": \"string\",\n        \"url\": \"http://XiBLt.jpyqRaNdJsaQRO9ePKVOWzjki-1f8DSsfLU0R57HFfY+Vl.l0rGk\"\n      },\n      \"releaseDefinition\": {\n        \"id\": 5489,\n        \"name\": \"string\",\n        \"path\": \"string\",\n        \"url\": \"https://JcBSAUZrYPZZAzgIyGFCLjVmcUOQldB.jqzSCwirlE,GPCOJXG0KgZYFrFhai2\",\n        \"_links\": {\n          \"key_0\": {\n            \"href\": \"https://YRefymAPnAHJwMwdkrvnIbmNegeqdqEd.fyhFTvZH8OOyxh1o,xlE6hiBJ+-tpJxCV9Vcz4YH9FvRIUo\"\n          },\n          \"key_1\": {\n            \"href\": \"http://yhnWkspKHgmaaGRaHBpFlceiFhcK.xlvZYE,1YKudAhmGLx5ogHDDB\"\n          }\n        }\n      },\n      \"releaseEnvironment\": {\n        \"id\": 243,\n        \"name\": \"string\",\n        \"url\": \"https://wIuTudLbaWAzaJUCdxnlDmJVxNZSasJbL.dgdjF8lEUGoWl4+P+oDMaP3fV6avoI.Hpxgj7WG-NWmy0uwz0qoZ6b4F,i3B5BrXm0JADtN-,-lZ\"\n      },\n      \"projectReference\": {\n        \"id\": \"4fdbb854-622c-34b2-f96d-52df4cefba54\",\n        \"name\": \"string\"\n      },\n      \"url\": \"http://GKuoGmJpJ.wfwrV35Nti0trkoDB+ZaRZkDiBXxIWepzAMZ9\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf076d48-afa4-4688-812d-e175a012f571",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "release",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionEnvironmentId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "minModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "maxModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "deploymentStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operationStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "latestAttemptsOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "queryOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "projectName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ff82b6bd-1109-5a39-317f-55ae1ad8f1ce\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5384,\n  \"eventId\": 7665\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d558a1d-df4c-4edd-b938-a30152e88e4c",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "release",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "definitionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "definitionEnvironmentId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "minModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "maxModifiedTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "deploymentStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "operationStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "latestAttemptsOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "queryOrder",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "projectName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ff82b6bd-1109-5a39-317f-55ae1ad8f1ce\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5384,\n  \"eventId\": 7665\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5bb9b2e4-41c5-40ff-b639-4adf8b0b3ac8",
+    "name": "Azure DevOps Artifacts Attachments Deployments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

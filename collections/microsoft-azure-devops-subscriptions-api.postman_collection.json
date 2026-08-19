@@ -1,0 +1,1951 @@
+{
+  "item": [
+    {
+      "id": "84915430-586a-44e0-9987-d943f45762da",
+      "name": "Subscriptions",
+      "description": {
+        "content": "Operations for managing service hook subscriptions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59b49a85-f748-4527-b3f0-7adf13d06b1b",
+          "name": "Azure DevOps List subscriptions",
+          "request": {
+            "name": "Azure DevOps List subscriptions",
+            "description": {
+              "content": "Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hooks",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "publisherId",
+                  "value": "<string>",
+                  "description": "Filter subscriptions by publisher ID (e.g., 'tfs')"
+                },
+                {
+                  "disabled": false,
+                  "key": "eventType",
+                  "value": "<string>",
+                  "description": "Filter subscriptions by event type (e.g., 'workitem.created')"
+                },
+                {
+                  "disabled": false,
+                  "key": "consumerId",
+                  "value": "<string>",
+                  "description": "Filter subscriptions by consumer ID (e.g., 'webHooks')"
+                },
+                {
+                  "disabled": false,
+                  "key": "consumerActionId",
+                  "value": "<string>",
+                  "description": "Filter subscriptions by consumer action ID"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "711406f3-8fad-486a-aac2-5c8884017407",
+              "name": "List of subscriptions returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "publisherId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerActionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7973,\n  \"value\": [\n    {\n      \"id\": \"a3061eed-d190-aade-02b8-5d72ff310902\",\n      \"status\": \"disabledByUser\",\n      \"publisherId\": \"tfs\",\n      \"eventType\": \"workitem.created\",\n      \"resourceVersion\": \"1.0\",\n      \"consumerId\": \"webHooks\",\n      \"consumerActionId\": \"httpRequest\",\n      \"publisherInputs\": {\n        \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n        \"workItemType\": \"Bug\",\n        \"areaPath\": \"MyProject\"\n      },\n      \"consumerInputs\": {\n        \"url\": \"https://myserver.example.com/webhook\",\n        \"resourceDetailsToSend\": \"all\"\n      },\n      \"modifiedBy\": {\n        \"id\": \"ddfce7a6-b25d-0dd8-dc91-9241f21af55a\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://UgUTK.zgeRYyD0bErQJO-Hz-RY+fYBfXHlJSTc2vb5uDJUVINt\",\n        \"imageUrl\": \"http://DmUtgkU.kbjVszQv4\",\n        \"descriptor\": \"string\"\n      },\n      \"modifiedDate\": \"1983-03-11T20:00:36.935Z\",\n      \"createdBy\": {\n        \"id\": \"d64a23e3-22af-6343-3445-ae634cc93c04\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://augvhVvlInmzlSW.jnfPDit9aAterQXapx0jsPIT,zzrYtJHV\",\n        \"imageUrl\": \"http://rWjBnoLcHvunelfgFXzesycOGaAcbex.xzikKFS,Rgf9847TjAYIyfoJKJOObT+AvfWnVxk\",\n        \"descriptor\": \"string\"\n      },\n      \"createdDate\": \"2004-11-22T14:32:53.204Z\",\n      \"url\": \"https://C.hazq3fz4gMZ39HKijrEVO7qaXaWvQhaWv1IvLwfwTOZL6h2GM30rvhEzx1rPztdesRaHBtOb247Koo\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://QEMxc.afmiE0BMQX9TRF3AEA.LdqOUv9qH,zcAl0.LeiO\"\n        }\n      }\n    },\n    {\n      \"id\": \"dc2280b5-78e5-2a64-30ca-4e38cca56719\",\n      \"status\": \"disabledByUser\",\n      \"publisherId\": \"tfs\",\n      \"eventType\": \"workitem.created\",\n      \"resourceVersion\": \"1.0\",\n      \"consumerId\": \"webHooks\",\n      \"consumerActionId\": \"httpRequest\",\n      \"publisherInputs\": {\n        \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n        \"workItemType\": \"Bug\",\n        \"areaPath\": \"MyProject\"\n      },\n      \"consumerInputs\": {\n        \"url\": \"https://myserver.example.com/webhook\",\n        \"resourceDetailsToSend\": \"all\"\n      },\n      \"modifiedBy\": {\n        \"id\": \"872b89dc-26e3-6683-d9a6-f85df50abdb9\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://xiAIxmXzcyQgqabyHjY.ybmM-kILfT4V9UNiCC\",\n        \"imageUrl\": \"https://xruJeNMfAMsfNFDRh.llSdJ8UhU3,NIyxoVdiiy9DhF+gFp\",\n        \"descriptor\": \"string\"\n      },\n      \"modifiedDate\": \"1958-11-10T22:08:21.858Z\",\n      \"createdBy\": {\n        \"id\": \"e500b692-bbcb-1299-9d17-f673f7980da1\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"http://uQmlYfjWmSluzOvySzxXPjePDoQ.jdbckkPojvtX++cVza8fuasWbP.aDf1vFPxCu1U2V09cAaqkwoXv96kMoDKtkuTy5XBx\",\n        \"imageUrl\": \"https://iCoNtlp.ozKTuvV1cv7L7UqZZr3yA1RWVaHUY4PC93BGfcUAWsKNJe7bENg\",\n        \"descriptor\": \"string\"\n      },\n      \"createdDate\": \"1954-04-18T17:13:16.315Z\",\n      \"url\": \"http://dQSEIRdtBcVcfkc.pvxucJF3GB3gJZPVQrOMdzMq7qm,yCn-h,g1AmjQtZgHux7sQ.ZsZ\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://ezUYaeksyMnoF.ojqurx1WTN1uMX.wxvCmEgR1g\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b36b430f-4b6d-41e8-b86e-dcf2b89fee5a",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "publisherId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerActionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abb3bc2f-0d60-4153-b21c-3660ef934783",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "publisherId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerActionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "512faa95-4236-428f-b9d1-4d05b6172627",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "publisherId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "consumerActionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c65b5ff-7160-46b3-82a1-1bc52b1953e1",
+          "name": "Azure DevOps Create a subscription",
+          "request": {
+            "name": "Azure DevOps Create a subscription",
+            "description": {
+              "content": "Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hooks",
+                "subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0715554-f309-4735-baa9-50d4e673cb40",
+              "name": "Subscription created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"httpHeaders\": \"X-Custom-Header: my-value\",\n    \"messagesToSend\": \"none\",\n    \"detailedMessagesToSend\": \"all\",\n    \"resourceDetailsToSend\": \"all\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"de9ea97f-d9f2-d474-cc76-36666872f4ce\",\n  \"status\": \"disabledByUser\",\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"resourceDetailsToSend\": \"all\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"6393f178-6cde-c380-3963-6e40b6c9d6fe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://kWNlQcIkngEDFnqoWwLntFuQvOwEzK.qjjrFSDnC\",\n    \"imageUrl\": \"http://eBOpOfBmMOEDcQIvZfUKOHDoDnFNBY.gednnN6imVEYZ-XD\",\n    \"descriptor\": \"string\"\n  },\n  \"modifiedDate\": \"1991-04-13T08:51:33.099Z\",\n  \"createdBy\": {\n    \"id\": \"28ef298d-61c5-4a42-bb23-517146ce0dfe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://ohyTrGMftvh.nsocsLuLVk85uLkr9vfWnnG1jN.zeWuMyHby45Plv4uILYOIn34rtftC\",\n    \"imageUrl\": \"http://AQCkMTmYppnMLtL.ygto6t0x,emMoDgVJPWJ++hHKGdwZKzYiYRC-pjAcr,E,9Wgc6el7S6mbQcmEq5Krf\",\n    \"descriptor\": \"string\"\n  },\n  \"createdDate\": \"2015-10-06T05:26:55.998Z\",\n  \"url\": \"https://lOgePoZnqIFVLLemukY.oxVvcAv4dvxwl+m3bBu2cO2X8boTXJCWjDnieL4\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://AQYqFRKekRckLoNYnocOFXphXuUyXGJk.lgxNFa.UGeNM2xMBMf7pAiyCzcIJST1T1RhUI8v6HSr\"\n    },\n    \"key_1\": {\n      \"href\": \"http://XNFdf.hygBmDncF+Y8cYExmzYWz\"\n    },\n    \"key_2\": {\n      \"href\": \"http://td.waRgw.Xs8sR7qjPIjZwW,sa,EvAcRF2aCmaDsibnEKScBJkQNj7Z79.dYLyszolN-jL1Zmk\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12e6fd0e-0788-4a35-b226-825a8f15eedf",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"httpHeaders\": \"X-Custom-Header: my-value\",\n    \"messagesToSend\": \"none\",\n    \"detailedMessagesToSend\": \"all\",\n    \"resourceDetailsToSend\": \"all\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c332ba1e-402b-4763-9408-d4994e0fcceb",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"httpHeaders\": \"X-Custom-Header: my-value\",\n    \"messagesToSend\": \"none\",\n    \"detailedMessagesToSend\": \"all\",\n    \"resourceDetailsToSend\": \"all\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dccd3c1a-7360-4c1f-8ccd-badc4c77e171",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"httpHeaders\": \"X-Custom-Header: my-value\",\n    \"messagesToSend\": \"none\",\n    \"detailedMessagesToSend\": \"all\",\n    \"resourceDetailsToSend\": \"all\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03138246-456d-4f16-aef3-153ef6019a18",
+          "name": "Azure DevOps Get a subscription",
+          "request": {
+            "name": "Azure DevOps Get a subscription",
+            "description": {
+              "content": "Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hooks",
+                "subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subscriptionId",
+                  "description": "(Required) GUID of the subscription"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6f74bd6d-add5-4b49-9588-20b769574154",
+              "name": "Subscription returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"de9ea97f-d9f2-d474-cc76-36666872f4ce\",\n  \"status\": \"disabledByUser\",\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"resourceDetailsToSend\": \"all\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"6393f178-6cde-c380-3963-6e40b6c9d6fe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://kWNlQcIkngEDFnqoWwLntFuQvOwEzK.qjjrFSDnC\",\n    \"imageUrl\": \"http://eBOpOfBmMOEDcQIvZfUKOHDoDnFNBY.gednnN6imVEYZ-XD\",\n    \"descriptor\": \"string\"\n  },\n  \"modifiedDate\": \"1991-04-13T08:51:33.099Z\",\n  \"createdBy\": {\n    \"id\": \"28ef298d-61c5-4a42-bb23-517146ce0dfe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://ohyTrGMftvh.nsocsLuLVk85uLkr9vfWnnG1jN.zeWuMyHby45Plv4uILYOIn34rtftC\",\n    \"imageUrl\": \"http://AQCkMTmYppnMLtL.ygto6t0x,emMoDgVJPWJ++hHKGdwZKzYiYRC-pjAcr,E,9Wgc6el7S6mbQcmEq5Krf\",\n    \"descriptor\": \"string\"\n  },\n  \"createdDate\": \"2015-10-06T05:26:55.998Z\",\n  \"url\": \"https://lOgePoZnqIFVLLemukY.oxVvcAv4dvxwl+m3bBu2cO2X8boTXJCWjDnieL4\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://AQYqFRKekRckLoNYnocOFXphXuUyXGJk.lgxNFa.UGeNM2xMBMf7pAiyCzcIJST1T1RhUI8v6HSr\"\n    },\n    \"key_1\": {\n      \"href\": \"http://XNFdf.hygBmDncF+Y8cYExmzYWz\"\n    },\n    \"key_2\": {\n      \"href\": \"http://td.waRgw.Xs8sR7qjPIjZwW,sa,EvAcRF2aCmaDsibnEKScBJkQNj7Z79.dYLyszolN-jL1Zmk\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b61a6356-7743-401a-8063-3d3de7d31d99",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1e58dd1-d343-4f61-9a52-41177d8fb26b",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f313fbfe-9b49-4322-bf28-8b4e07bec4e5",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6bdfafa-d590-44db-82c9-beeab83bdfeb",
+          "name": "Azure DevOps Update a subscription",
+          "request": {
+            "name": "Azure DevOps Update a subscription",
+            "description": {
+              "content": "Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hooks",
+                "subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subscriptionId",
+                  "description": "(Required) GUID of the subscription to update"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publisherId\": \"<string>\",\n  \"eventType\": \"<string>\",\n  \"consumerId\": \"<string>\",\n  \"consumerActionId\": \"<string>\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f94ed52-f076-485f-9ea4-a354f7b9a580",
+              "name": "Subscription updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"de9ea97f-d9f2-d474-cc76-36666872f4ce\",\n  \"status\": \"disabledByUser\",\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"resourceVersion\": \"1.0\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"projectId\": \"a1b2c3d4-e5f6-a1b2-c3d4-e5f6a1b2c3d4\",\n    \"workItemType\": \"Bug\",\n    \"areaPath\": \"MyProject\"\n  },\n  \"consumerInputs\": {\n    \"url\": \"https://myserver.example.com/webhook\",\n    \"resourceDetailsToSend\": \"all\"\n  },\n  \"modifiedBy\": {\n    \"id\": \"6393f178-6cde-c380-3963-6e40b6c9d6fe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"http://kWNlQcIkngEDFnqoWwLntFuQvOwEzK.qjjrFSDnC\",\n    \"imageUrl\": \"http://eBOpOfBmMOEDcQIvZfUKOHDoDnFNBY.gednnN6imVEYZ-XD\",\n    \"descriptor\": \"string\"\n  },\n  \"modifiedDate\": \"1991-04-13T08:51:33.099Z\",\n  \"createdBy\": {\n    \"id\": \"28ef298d-61c5-4a42-bb23-517146ce0dfe\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://ohyTrGMftvh.nsocsLuLVk85uLkr9vfWnnG1jN.zeWuMyHby45Plv4uILYOIn34rtftC\",\n    \"imageUrl\": \"http://AQCkMTmYppnMLtL.ygto6t0x,emMoDgVJPWJ++hHKGdwZKzYiYRC-pjAcr,E,9Wgc6el7S6mbQcmEq5Krf\",\n    \"descriptor\": \"string\"\n  },\n  \"createdDate\": \"2015-10-06T05:26:55.998Z\",\n  \"url\": \"https://lOgePoZnqIFVLLemukY.oxVvcAv4dvxwl+m3bBu2cO2X8boTXJCWjDnieL4\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://AQYqFRKekRckLoNYnocOFXphXuUyXGJk.lgxNFa.UGeNM2xMBMf7pAiyCzcIJST1T1RhUI8v6HSr\"\n    },\n    \"key_1\": {\n      \"href\": \"http://XNFdf.hygBmDncF+Y8cYExmzYWz\"\n    },\n    \"key_2\": {\n      \"href\": \"http://td.waRgw.Xs8sR7qjPIjZwW,sa,EvAcRF2aCmaDsibnEKScBJkQNj7Z79.dYLyszolN-jL1Zmk\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8feb9994-216e-4c1d-8245-22191934d5e9",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3afdb8b-2f04-4725-ba07-f176fdce6d8f",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9c103d6-bf04-4f87-ae52-652c59acba6f",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "384738d1-8dc8-42ae-9c7b-5ba454f2fcf9",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"publisherId\": \"tfs\",\n  \"eventType\": \"workitem.created\",\n  \"consumerId\": \"webHooks\",\n  \"consumerActionId\": \"httpRequest\",\n  \"publisherInputs\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"consumerInputs\": {\n    \"key_0\": \"<string>\"\n  },\n  \"resourceVersion\": \"1.0\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66208ea0-a267-4f16-aa51-840493ecf033",
+          "name": "Azure DevOps Delete a subscription",
+          "request": {
+            "name": "Azure DevOps Delete a subscription",
+            "description": {
+              "content": "Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hooks",
+                "subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "subscriptionId",
+                  "description": "(Required) GUID of the subscription to delete"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a142490-c5a4-4c1a-a1dd-72a38c166927",
+              "name": "Subscription deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e86a30a6-f2db-4d8a-920f-b32a9a011d6a",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63aeeab2-2a22-4126-8d53-d632795a5a64",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df96ddbf-dc9e-456f-b8c9-1b46972b7443",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hooks",
+                    "subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "subscriptionId",
+                      "description": "(Required) GUID of the subscription to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0c7b9825-7c02-1f62-520a-8dd50f5d8ce6\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5773,\n  \"eventId\": 1608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "31f1a694-37e8-47c4-8d77-6cb6e5db3cef",
+    "name": "Azure DevOps Artifacts Attachments Subscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Packages API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Packages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List packages in a feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "protocolType",
+                "value": "",
+                "type": "query",
+                "description": "Filter packages by protocol type"
+              },
+              {
+                "name": "packageNameQuery",
+                "value": "",
+                "type": "query",
+                "description": "Filter packages whose names contain this string"
+              },
+              {
+                "name": "normalizedPackageName",
+                "value": "",
+                "type": "query",
+                "description": "Exact package name match (normalized form)"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager URLs in the response"
+              },
+              {
+                "name": "includeAllVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all versions or only the latest"
+              },
+              {
+                "name": "isListed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by listed status (true=published, false=unlisted)"
+              },
+              {
+                "name": "getTopPackageVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the top versions for each package"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted packages"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of packages to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of packages to skip (for pagination)"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              }
+            ]
+          },
+          "docs": "Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get package details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages/:packageId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package"
+              },
+              {
+                "name": "includeAllVersions",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include all versions or only the latest"
+              },
+              {
+                "name": "includeUrls",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include package manager URLs"
+              },
+              {
+                "name": "isListed",
+                "value": "",
+                "type": "query",
+                "description": "Filter versions by listed status"
+              },
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted versions"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

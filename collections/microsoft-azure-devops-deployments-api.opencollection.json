@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Deployments API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/deployments",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter deployments by release definition ID"
+              },
+              {
+                "name": "definitionEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter deployments by environment ID within the definition"
+              },
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "query",
+                "description": "Filter deployments triggered by a specific user"
+              },
+              {
+                "name": "minModifiedTime",
+                "value": "",
+                "type": "query",
+                "description": "Returns deployments modified after this date"
+              },
+              {
+                "name": "maxModifiedTime",
+                "value": "",
+                "type": "query",
+                "description": "Returns deployments modified before this date"
+              },
+              {
+                "name": "deploymentStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter by deployment status"
+              },
+              {
+                "name": "operationStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter by operation status"
+              },
+              {
+                "name": "latestAttemptsOnly",
+                "value": "",
+                "type": "query",
+                "description": "Return only the latest deployment attempt for each environment"
+              },
+              {
+                "name": "queryOrder",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of deployments to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "projectName",
+                "value": "",
+                "type": "query",
+                "description": "Project name filter"
+              }
+            ]
+          },
+          "docs": "Returns a list of deployments across all release definitions and environments in the project. Supports filtering by definition, environment, and deployment status. Useful for auditing and monitoring deployment activity.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

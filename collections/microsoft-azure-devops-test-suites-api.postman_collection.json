@@ -1,0 +1,1358 @@
+{
+  "item": [
+    {
+      "id": "9cf4e483-7689-43d8-8e52-824ebb8ceeb4",
+      "name": "Test Suites",
+      "description": {
+        "content": "Operations for managing test suites within test plans",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b65e4b6-b8d6-475f-9e7b-0ae896910437",
+          "name": "Azure DevOps List test suites",
+          "request": {
+            "name": "Azure DevOps List test suites",
+            "description": {
+              "content": "Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId",
+                "suites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand additional suite details"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                },
+                {
+                  "disabled": false,
+                  "key": "asTreeView",
+                  "value": "<boolean>",
+                  "description": "Return suites in a tree structure"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "845a0d35-2e03-4bf3-b4fb-23afac431b3a",
+              "name": "List of test suites returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asTreeView",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1328,\n  \"value\": [\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 6994,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"9b6aedad-1281-fd7a-7747-ee7079beefac\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"http://iRMSrccnUyRqGXw.wiP9ZNSxBs\",\n          \"imageUrl\": \"http://FmMMN.xlbf6VmUt8gBYEJ1euiAxqlFlIa.Bs0hNFnxAgV+GdGKR,PW\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"ccdc81bb-e233-2406-cdfc-0fbf4ef0676c\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://VWnePlshjkhkFF.tgtQsSK+j11N\",\n          \"imageUrl\": \"http://ZdcTDEmsY.bchdXlmUO,ppJKt\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 7180,\n        \"name\": \"string\",\n        \"url\": \"http://hhRslH.euwipDt\"\n      },\n      \"requirementId\": 8726,\n      \"queryString\": \"string\",\n      \"state\": \"inProgress\",\n      \"testCaseCount\": 8972,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"477986e2-239c-7bd4-0f88-41e8800fa6cb\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://GZcIDmpVhdupOCDnHUmpiInVjv.xleFvm0nuC7+\",\n        \"imageUrl\": \"https://QUYtmgCUJIkfxttzcV.mogwVfK5b3te0CK7WgUS8as,mAoOdu.hL1l9bcOC\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1958-11-23T15:14:32.165Z\",\n      \"project\": {\n        \"id\": \"319bd2d9-4d1c-e35c-ab3d-b2f7bfa3f6ec\",\n        \"name\": \"string\"\n      },\n      \"url\": \"https://gPlBxt.hrmyrfGy+Iz-+rmlGYS\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://TBWKqZEdEYAB.vigkEL3wyH9kxp\"\n        },\n        \"key_1\": {\n          \"href\": \"http://tCwBgmWSFIGXNzMwoDbFBYjCPUgzMdM.pbpvQBUvDcgjjRDYO5xHYWL2Uwu37VL6Gy\"\n        },\n        \"key_2\": {\n          \"href\": \"http://kEVhVxfrJqNfiPTqfsdun.gfS7W0y2L0uAw+3JaOccAvwVFxEEUi6fd8+DfL\"\n        }\n      }\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 6208,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"d9e9143f-2243-6319-3135-656de9cfe968\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"http://wgfufMjR.zxD\",\n          \"imageUrl\": \"http://wvuMrWviLibiQtTOkEnOXzYKkvoncrF.sbumC07Yah0RzIZF2,cvaoVUYR67+FN1M52ZdYF5UpneLFcPj8giKqhkAt.mQ5tW\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"3be3cf0d-0dc1-7b28-6d29-90e24b836712\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://VVLsbzufntzUIxWVWbcKfq.keVZna1h\",\n          \"imageUrl\": \"https://GRdTBhtgNXxhjOLBKqHfDhMFuMhoqL.mvzyYbIWEOQrLhLqplsVo9pcr\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 9806,\n        \"name\": \"string\",\n        \"url\": \"http://g.njol3ScjM,y2I1Xy090O.l0rhtbqkRBlicjutcI54rhziZFi3QIptMYrXqsF9PV\"\n      },\n      \"requirementId\": 7865,\n      \"queryString\": \"string\",\n      \"state\": \"inProgress\",\n      \"testCaseCount\": 5255,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"d6ca21a0-21ee-2c7e-5cc4-f7a6fed2a99f\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://FbEYqKIWhQELMwo.ktstJQsPtiWh4OUrrDZY2DDsBu+.dKHAV-JW0zkS14ZVETxKpXCAKE+Gs\",\n        \"imageUrl\": \"http://FrkhvksAQYZfyE.rmzuBAqEtIdwMNiNb-vnFXVo\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1976-01-29T06:39:27.713Z\",\n      \"project\": {\n        \"id\": \"d4bb3559-c58e-ea71-f119-6733bd65d3a4\",\n        \"name\": \"string\"\n      },\n      \"url\": \"http://DQMHudybldEJYBjrIQY.jmntM-ReCut,Uq-1oNRD0V6UX3D2dvk0DB02up8MWd1GYsL.gEnf7-0unsZllrK3\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://xmXylECGYUegNyMAOhX.gxgZnNVJJmOBE7OaEt1nHLrhT7kYIBrPT73tbn7W,ypmOXhC+3ghM44\"\n        },\n        \"key_1\": {\n          \"href\": \"http://EfxRBaVXWxGpJVoFsCwcWgfycTLtTsXqJ.dejoykT\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96a4bab0-9e92-4239-bb77-ae2f4b8a3cfe",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asTreeView",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c32658da-f7d0-4815-aa99-074a20ffbf94",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asTreeView",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "578df0c2-8a73-4a53-87b5-6e5df3168d43",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asTreeView",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af10da94-9339-4788-8ac0-936b41199ab0",
+          "name": "Azure DevOps Create a test suite",
+          "request": {
+            "name": "Azure DevOps Create a test suite",
+            "description": {
+              "content": "Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId",
+                "suites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"suiteType\": \"<string>\",\n  \"parentSuite\": {\n    \"id\": \"<integer>\"\n  },\n  \"requirementId\": \"<integer>\",\n  \"queryString\": \"<string>\",\n  \"defaultTesters\": [\n    {\n      \"id\": \"<uuid>\",\n      \"displayName\": \"<string>\",\n      \"uniqueName\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"imageUrl\": \"<uri>\",\n      \"descriptor\": \"<string>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"displayName\": \"<string>\",\n      \"uniqueName\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"imageUrl\": \"<uri>\",\n      \"descriptor\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "baa4d2db-820f-46a7-9256-28cc1cd4fde8",
+              "name": "Test suite created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"staticTestSuite\",\n  \"parentSuite\": {\n    \"id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"none\",\n  \"planId\": 2323,\n  \"children\": [\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 9572,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"5dffe007-3e68-ca63-1703-3edaa07fd286\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://GHPUyqNpAqeHlPGw.ywwuynT+uxVXpUYubTRxdizroNkVIF\",\n          \"imageUrl\": \"https://vZBg.gjqZWlRHmeX6sM3CA1d5YOJ-wS42UMJeKxGcRVQAN4tJO+x6BFJ5H\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"44951ce1-aaa8-2e32-1219-f99b3dd25dd1\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://uHuuNxbWVdrZ.isqTlwv3u9\",\n          \"imageUrl\": \"http://puYsUgVKMVQWnpwrvse.gwrJtVcnkZ\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 3556,\n        \"name\": \"string\",\n        \"url\": \"https://MyzIiufPBPeyLnAXxRWhRTEHakQICyWQE.agncwmnGfsRf.U4NJk,-pVL1.C.ahNOUPR-i,oj8lsNDMJmr5muA0,VBeIzOwR\"\n      },\n      \"requirementId\": 7903,\n      \"queryString\": \"string\",\n      \"state\": \"inProgress\",\n      \"testCaseCount\": 1414,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"0a968930-8531-4a99-7cf1-d3ba51a21e7c\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://NYGFtupIepmmQYxBdwlYJspaANwqNRrt.dsoE3OUjWoNEX4mVsE\",\n        \"imageUrl\": \"https://vrHuVOBCv.rmBAVfLDuo8xEHKii.hdhstZxuJ6ZypMXSSCb+AZROqJMUolwVGyMCaE-IiiJeKgm4CO+Ccw7Xzi\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1970-10-24T11:45:40.408Z\",\n      \"project\": {\n        \"id\": \"606b8827-0dd0-8c1c-6eaf-eea608883650\",\n        \"name\": \"string\"\n      },\n      \"url\": \"https://NyTteEKxuzwdLSKcarXpdCkrXCKyl.qqlxH,.fh-fPmaZeY5jTHwXYA3JtoBv2YXTSCM80cOy96M\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://AbxvCDmVC.mpswsgErrFGfaZ99HNSxbSUj4mP5Tzil0nrJC-\"\n        },\n        \"key_1\": {\n          \"href\": \"https://EqqRvyGbtsWKJmVPDQ.xahxPvj49qjqw72MYu6lJASJ60c8JXrezsOz.fDmvBc5Ia4IWSv.TulwCayAOF\"\n        },\n        \"key_2\": {\n          \"href\": \"https://BZfwjUmRslYXQi.cqtnv1l7oNkkgDVOFG7VrRQ3LEpRPv0cntpMLQ3E95zC\"\n        }\n      }\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 3969,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"7dcd605c-f05c-e657-81b6-7a0485dc3480\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"http://EcAcfrGfTjlxxBfILcIfNBcF.fhzM9S5CbiCzlWLygpsnp\",\n          \"imageUrl\": \"https://zjeRFTkEYEtWzWsQKubLvNQbmMsI.txxUp-btBNGq\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"072d2ba9-8cc1-9c55-e41f-e38f60e024e7\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://EuNXZIYBCJLeO.fudsx7.AyyZE\",\n          \"imageUrl\": \"http://iggxKiHRySxMibrELF.wtdks\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 9982,\n        \"name\": \"string\",\n        \"url\": \"http://AjvZatFqovlRpkWsklVFBigH.nbpsejD+zs.O7Qy6P\"\n      },\n      \"requirementId\": 1548,\n      \"queryString\": \"string\",\n      \"state\": \"completed\",\n      \"testCaseCount\": 2786,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"db82ba00-0ed0-1d38-6783-2fd50332ad50\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://ifwUqPDabuXipMLWXgWuloFaIGxKtuq.egslrSnreK-P5ufD8zUg\",\n        \"imageUrl\": \"https://DGFSX.zxwpGnQS+Wmt+zc8kOYFoX2G4iXPsbie7+LRM+aGtBUciZhpb,wj.m\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1979-03-04T07:42:55.701Z\",\n      \"project\": {\n        \"id\": \"7f80ac6d-3da8-b5ad-af6b-f44ab8323a79\",\n        \"name\": \"string\"\n      },\n      \"url\": \"http://CGrjPoFzLHk.agcQSX,R.yGRjw0P2s9ki\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://CTkOZnrPUIHMIJmBEj.lddd0IYaGmbw8,pUb\"\n        },\n        \"key_1\": {\n          \"href\": \"https://YBsNRxyImymIB.veycPSCxfC0N0tJho2kfUUMH,dBdprexEVJKpXZIG.JNSRKjI.a6u9IG\"\n        },\n        \"key_2\": {\n          \"href\": \"http://WIgy.uwqwYDUFa6cCukZMFfk0XTNwBLTvHSmVDXCKEjuwfAK-k,Nu\"\n        },\n        \"key_3\": {\n          \"href\": \"https://JMHNtamLSOCalqgnXeDtYKb.hvbsgM0kZII5RExE6whBDLlzPDy82CeB6wBr9ghWAJoVpN58m4,O7cSVGK9Plbx\"\n        }\n      }\n    }\n  ],\n  \"defaultTesters\": [\n    {\n      \"id\": \"4b1fa2d0-35a2-1997-a238-93692afd5b01\",\n      \"displayName\": \"John Doe\",\n      \"uniqueName\": \"john.doe@example.com\",\n      \"url\": \"http://naUKlEHbXeHhvYYGkYmirTz.wqUzis0cuW0GbInoEx7kihzxLaQB3pCnoVA2,KuG11hw4r4r5-qxE8\",\n      \"imageUrl\": \"http://KgtHLTRqDIUhCR.ymbRFc8RpVUdEYlWdyhKUM5d,xHKSMAGmwy-eV2UD4paDyunN8ZMShWr2FlQZ0wjt\",\n      \"descriptor\": \"string\"\n    },\n    {\n      \"id\": \"ee199657-0732-c0f0-76af-c94eaf920f3c\",\n      \"displayName\": \"John Doe\",\n      \"uniqueName\": \"john.doe@example.com\",\n      \"url\": \"https://enMOKuTZ.lwrHErYycIPkQQ7CrYthYIpmLOQvcX-aNHWBowBSZaG,JmHz12Bv-iVyqD8FGpE3\",\n      \"imageUrl\": \"https://OFlksYdxaFMuzqIfklB.egyWOqvXGBgzJKeOJ\",\n      \"descriptor\": \"string\"\n    }\n  ],\n  \"parentSuite\": {\n    \"id\": 954,\n    \"name\": \"string\",\n    \"url\": \"https://xCwFOLwLZANWyeMVQNwbWEvOtiPaqDQK.ojmJeXZXX-eJWxaXYJj2Gpc+-hzA\"\n  },\n  \"requirementId\": 9127,\n  \"queryString\": \"string\",\n  \"state\": \"inProgress\",\n  \"testCaseCount\": 4327,\n  \"isActive\": true,\n  \"lastUpdatedBy\": {\n    \"id\": \"6caf9985-2426-ac33-2f06-d1adb33ca124\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://FsfZsZNxYnhQJJgWEVqXGFkIQoWR.wxkkAk4WUsWR4A-,AolFPOwgvuiEuN4yebfk76bAJ,sas-NEiqdWL\",\n    \"imageUrl\": \"http://jdrgxqeauMeewOrebnTGJTtNQpajnk.bfOKxHiS0xvBEILUsQHjMiSkeWb.O8eO4FLQGM5AKzlmBCz8YkT47MJE.EeF\",\n    \"descriptor\": \"string\"\n  },\n  \"lastUpdatedDate\": \"2013-02-13T02:26:30.559Z\",\n  \"project\": {\n    \"id\": \"f5996b9d-f4e6-578d-11b4-c97af022f252\",\n    \"name\": \"string\"\n  },\n  \"url\": \"https://i.yhrwst5lFMZZV\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://NgpaLSkBmVJsztRuVt.xaZBVti1.5CrpS3FwlrXmzEUMqRLfz6pTUIto.fx5eAtY+i8vUFvFyWh2YNIwfsIjn5C\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03931ba8-0c1b-48a3-a642-6e191de06d50",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"staticTestSuite\",\n  \"parentSuite\": {\n    \"id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee036957-bc4c-4926-b59e-6acd86b8672e",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"staticTestSuite\",\n  \"parentSuite\": {\n    \"id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48755cf2-cd23-4ffe-b821-a15768dcdcbd",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"staticTestSuite\",\n  \"parentSuite\": {\n    \"id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e18eda6e-90cf-4ee5-a2ea-81f0474d9ce3",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"staticTestSuite\",\n  \"parentSuite\": {\n    \"id\": 1\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce8b9745-2f73-4766-87b6-23eb7d36bbcc",
+          "name": "Azure DevOps Get a test suite",
+          "request": {
+            "name": "Azure DevOps Get a test suite",
+            "description": {
+              "content": "Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "testplan",
+                "plans",
+                ":planId",
+                "suites",
+                ":suiteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand additional suite details"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "planId",
+                  "description": "(Required) Numeric ID of the test plan"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "suiteId",
+                  "description": "(Required) Numeric ID of the test suite"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c388157a-b44c-4561-9279-6a182bb0335f",
+              "name": "Test suite returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites",
+                    ":suiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "suiteId",
+                      "description": "(Required) Numeric ID of the test suite"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5,\n  \"name\": \"Login Tests\",\n  \"suiteType\": \"none\",\n  \"planId\": 2323,\n  \"children\": [\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 9572,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"5dffe007-3e68-ca63-1703-3edaa07fd286\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://GHPUyqNpAqeHlPGw.ywwuynT+uxVXpUYubTRxdizroNkVIF\",\n          \"imageUrl\": \"https://vZBg.gjqZWlRHmeX6sM3CA1d5YOJ-wS42UMJeKxGcRVQAN4tJO+x6BFJ5H\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"44951ce1-aaa8-2e32-1219-f99b3dd25dd1\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://uHuuNxbWVdrZ.isqTlwv3u9\",\n          \"imageUrl\": \"http://puYsUgVKMVQWnpwrvse.gwrJtVcnkZ\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 3556,\n        \"name\": \"string\",\n        \"url\": \"https://MyzIiufPBPeyLnAXxRWhRTEHakQICyWQE.agncwmnGfsRf.U4NJk,-pVL1.C.ahNOUPR-i,oj8lsNDMJmr5muA0,VBeIzOwR\"\n      },\n      \"requirementId\": 7903,\n      \"queryString\": \"string\",\n      \"state\": \"inProgress\",\n      \"testCaseCount\": 1414,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"0a968930-8531-4a99-7cf1-d3ba51a21e7c\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://NYGFtupIepmmQYxBdwlYJspaANwqNRrt.dsoE3OUjWoNEX4mVsE\",\n        \"imageUrl\": \"https://vrHuVOBCv.rmBAVfLDuo8xEHKii.hdhstZxuJ6ZypMXSSCb+AZROqJMUolwVGyMCaE-IiiJeKgm4CO+Ccw7Xzi\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1970-10-24T11:45:40.408Z\",\n      \"project\": {\n        \"id\": \"606b8827-0dd0-8c1c-6eaf-eea608883650\",\n        \"name\": \"string\"\n      },\n      \"url\": \"https://NyTteEKxuzwdLSKcarXpdCkrXCKyl.qqlxH,.fh-fPmaZeY5jTHwXYA3JtoBv2YXTSCM80cOy96M\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://AbxvCDmVC.mpswsgErrFGfaZ99HNSxbSUj4mP5Tzil0nrJC-\"\n        },\n        \"key_1\": {\n          \"href\": \"https://EqqRvyGbtsWKJmVPDQ.xahxPvj49qjqw72MYu6lJASJ60c8JXrezsOz.fDmvBc5Ia4IWSv.TulwCayAOF\"\n        },\n        \"key_2\": {\n          \"href\": \"https://BZfwjUmRslYXQi.cqtnv1l7oNkkgDVOFG7VrRQ3LEpRPv0cntpMLQ3E95zC\"\n        }\n      }\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Login Tests\",\n      \"suiteType\": \"requirementTestSuite\",\n      \"planId\": 3969,\n      \"children\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/TestSuite detected>\"\n        }\n      ],\n      \"defaultTesters\": [\n        {\n          \"id\": \"7dcd605c-f05c-e657-81b6-7a0485dc3480\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"http://EcAcfrGfTjlxxBfILcIfNBcF.fhzM9S5CbiCzlWLygpsnp\",\n          \"imageUrl\": \"https://zjeRFTkEYEtWzWsQKubLvNQbmMsI.txxUp-btBNGq\",\n          \"descriptor\": \"string\"\n        },\n        {\n          \"id\": \"072d2ba9-8cc1-9c55-e41f-e38f60e024e7\",\n          \"displayName\": \"John Doe\",\n          \"uniqueName\": \"john.doe@example.com\",\n          \"url\": \"https://EuNXZIYBCJLeO.fudsx7.AyyZE\",\n          \"imageUrl\": \"http://iggxKiHRySxMibrELF.wtdks\",\n          \"descriptor\": \"string\"\n        }\n      ],\n      \"parentSuite\": {\n        \"id\": 9982,\n        \"name\": \"string\",\n        \"url\": \"http://AjvZatFqovlRpkWsklVFBigH.nbpsejD+zs.O7Qy6P\"\n      },\n      \"requirementId\": 1548,\n      \"queryString\": \"string\",\n      \"state\": \"completed\",\n      \"testCaseCount\": 2786,\n      \"isActive\": false,\n      \"lastUpdatedBy\": {\n        \"id\": \"db82ba00-0ed0-1d38-6783-2fd50332ad50\",\n        \"displayName\": \"John Doe\",\n        \"uniqueName\": \"john.doe@example.com\",\n        \"url\": \"https://ifwUqPDabuXipMLWXgWuloFaIGxKtuq.egslrSnreK-P5ufD8zUg\",\n        \"imageUrl\": \"https://DGFSX.zxwpGnQS+Wmt+zc8kOYFoX2G4iXPsbie7+LRM+aGtBUciZhpb,wj.m\",\n        \"descriptor\": \"string\"\n      },\n      \"lastUpdatedDate\": \"1979-03-04T07:42:55.701Z\",\n      \"project\": {\n        \"id\": \"7f80ac6d-3da8-b5ad-af6b-f44ab8323a79\",\n        \"name\": \"string\"\n      },\n      \"url\": \"http://CGrjPoFzLHk.agcQSX,R.yGRjw0P2s9ki\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://CTkOZnrPUIHMIJmBEj.lddd0IYaGmbw8,pUb\"\n        },\n        \"key_1\": {\n          \"href\": \"https://YBsNRxyImymIB.veycPSCxfC0N0tJho2kfUUMH,dBdprexEVJKpXZIG.JNSRKjI.a6u9IG\"\n        },\n        \"key_2\": {\n          \"href\": \"http://WIgy.uwqwYDUFa6cCukZMFfk0XTNwBLTvHSmVDXCKEjuwfAK-k,Nu\"\n        },\n        \"key_3\": {\n          \"href\": \"https://JMHNtamLSOCalqgnXeDtYKb.hvbsgM0kZII5RExE6whBDLlzPDy82CeB6wBr9ghWAJoVpN58m4,O7cSVGK9Plbx\"\n        }\n      }\n    }\n  ],\n  \"defaultTesters\": [\n    {\n      \"id\": \"4b1fa2d0-35a2-1997-a238-93692afd5b01\",\n      \"displayName\": \"John Doe\",\n      \"uniqueName\": \"john.doe@example.com\",\n      \"url\": \"http://naUKlEHbXeHhvYYGkYmirTz.wqUzis0cuW0GbInoEx7kihzxLaQB3pCnoVA2,KuG11hw4r4r5-qxE8\",\n      \"imageUrl\": \"http://KgtHLTRqDIUhCR.ymbRFc8RpVUdEYlWdyhKUM5d,xHKSMAGmwy-eV2UD4paDyunN8ZMShWr2FlQZ0wjt\",\n      \"descriptor\": \"string\"\n    },\n    {\n      \"id\": \"ee199657-0732-c0f0-76af-c94eaf920f3c\",\n      \"displayName\": \"John Doe\",\n      \"uniqueName\": \"john.doe@example.com\",\n      \"url\": \"https://enMOKuTZ.lwrHErYycIPkQQ7CrYthYIpmLOQvcX-aNHWBowBSZaG,JmHz12Bv-iVyqD8FGpE3\",\n      \"imageUrl\": \"https://OFlksYdxaFMuzqIfklB.egyWOqvXGBgzJKeOJ\",\n      \"descriptor\": \"string\"\n    }\n  ],\n  \"parentSuite\": {\n    \"id\": 954,\n    \"name\": \"string\",\n    \"url\": \"https://xCwFOLwLZANWyeMVQNwbWEvOtiPaqDQK.ojmJeXZXX-eJWxaXYJj2Gpc+-hzA\"\n  },\n  \"requirementId\": 9127,\n  \"queryString\": \"string\",\n  \"state\": \"inProgress\",\n  \"testCaseCount\": 4327,\n  \"isActive\": true,\n  \"lastUpdatedBy\": {\n    \"id\": \"6caf9985-2426-ac33-2f06-d1adb33ca124\",\n    \"displayName\": \"John Doe\",\n    \"uniqueName\": \"john.doe@example.com\",\n    \"url\": \"https://FsfZsZNxYnhQJJgWEVqXGFkIQoWR.wxkkAk4WUsWR4A-,AolFPOwgvuiEuN4yebfk76bAJ,sas-NEiqdWL\",\n    \"imageUrl\": \"http://jdrgxqeauMeewOrebnTGJTtNQpajnk.bfOKxHiS0xvBEILUsQHjMiSkeWb.O8eO4FLQGM5AKzlmBCz8YkT47MJE.EeF\",\n    \"descriptor\": \"string\"\n  },\n  \"lastUpdatedDate\": \"2013-02-13T02:26:30.559Z\",\n  \"project\": {\n    \"id\": \"f5996b9d-f4e6-578d-11b4-c97af022f252\",\n    \"name\": \"string\"\n  },\n  \"url\": \"https://i.yhrwst5lFMZZV\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://NgpaLSkBmVJsztRuVt.xaZBVti1.5CrpS3FwlrXmzEUMqRLfz6pTUIto.fx5eAtY+i8vUFvFyWh2YNIwfsIjn5C\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b6a2a72-2278-4f3a-9844-8abe8240f144",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites",
+                    ":suiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "suiteId",
+                      "description": "(Required) Numeric ID of the test suite"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c97cce35-20bf-4b8c-94ff-339195997fb5",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites",
+                    ":suiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "suiteId",
+                      "description": "(Required) Numeric ID of the test suite"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4978df25-3849-4fb3-a84f-9cc52705fd88",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "testplan",
+                    "plans",
+                    ":planId",
+                    "suites",
+                    ":suiteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "planId",
+                      "description": "(Required) Numeric ID of the test plan"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "suiteId",
+                      "description": "(Required) Numeric ID of the test suite"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"4ae1a3f4-fb77-a18a-77fa-a70d646881c2\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 7674,\n  \"eventId\": 9017\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a090e0bb-917b-41dc-9307-41313cd9097c",
+    "name": "Azure DevOps Artifacts Attachments Test Suites API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2223 @@
+{
+  "item": [
+    {
+      "id": "a01a9486-cb5d-4997-bd6e-b26b02d62bee",
+      "name": "Work Items",
+      "description": {
+        "content": "Operations for managing work items (Bugs, Tasks, User Stories, etc.)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a891a0ce-8e12-48b4-9dfb-7a16ad4f875a",
+          "name": "Azure DevOps List work items by IDs",
+          "request": {
+            "name": "Azure DevOps List work items by IDs",
+            "description": {
+              "content": "Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wit",
+                "workitems"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of work item IDs (up to 200)"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to return (e.g., System.Title,System.State)"
+                },
+                {
+                  "disabled": false,
+                  "key": "asOf",
+                  "value": "<dateTime>",
+                  "description": "Work items as of a specific date and time (ISO 8601 format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand relations, links, or fields in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46a3ca47-40fe-41fc-85e0-6dd4de061ee8",
+              "name": "List of work items returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "1,2,3,4,5"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 5946,\n  \"value\": [\n    {\n      \"id\": 42,\n      \"rev\": 3,\n      \"fields\": {\n        \"System.Title\": \"Fix login button alignment\",\n        \"System.State\": \"Active\",\n        \"System.AssignedTo\": \"User Name <user@example.com>\",\n        \"System.WorkItemType\": \"Bug\",\n        \"System.TeamProject\": \"MyProject\",\n        \"System.AreaPath\": \"MyProject\\\\\\\\Frontend\",\n        \"System.IterationPath\": \"MyProject\\\\\\\\Sprint 5\"\n      },\n      \"relations\": [\n        {\n          \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n          \"url\": \"https://SfkTnkRqQEchWsEe.ggpzGxIjdSct.WC,by2yqrG3z0Jc+ThbEn.b2-X\",\n          \"attributes\": {\n            \"key_0\": false,\n            \"key_1\": 4804\n          }\n        },\n        {\n          \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n          \"url\": \"http://tzytlkuyQZzbvAS.bjB0djhG8UDSAGgzcB2VttWj1IFajdGM6j\",\n          \"attributes\": {\n            \"key_0\": 4302\n          }\n        }\n      ],\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://QUrsDS.ndWw29C-P4NSI+TpJSO-VgnminvpfJiHTkqrI+WO7y,0XF7Dzly-N.tZVZbB3IyibLvdgcc6\"\n        },\n        \"key_1\": {\n          \"href\": \"http://UxNVYfcCKtCAzXHpSAeOBMALSVhjv.invEp1O,RgIjN3rS.J0UCMyrlU8n4KQvhMIgjXnxKJFmvbEDaZckXE,M\"\n        }\n      },\n      \"url\": \"https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42\"\n    },\n    {\n      \"id\": 42,\n      \"rev\": 3,\n      \"fields\": {\n        \"System.Title\": \"Fix login button alignment\",\n        \"System.State\": \"Active\",\n        \"System.AssignedTo\": \"User Name <user@example.com>\",\n        \"System.WorkItemType\": \"Bug\",\n        \"System.TeamProject\": \"MyProject\",\n        \"System.AreaPath\": \"MyProject\\\\\\\\Frontend\",\n        \"System.IterationPath\": \"MyProject\\\\\\\\Sprint 5\"\n      },\n      \"relations\": [\n        {\n          \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n          \"url\": \"http://OPrQEdBnc.njeMljWQV+qhRVXQBP8XFUh+NvYC\",\n          \"attributes\": {\n            \"key_0\": 9696\n          }\n        },\n        {\n          \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n          \"url\": \"https://NPFKGgiWRTuPXPJVQgxHAQ.rvgtfUv-CZ5T..Pt183EgEcSU5nVE\",\n          \"attributes\": {\n            \"key_0\": 2747,\n            \"key_1\": \"string\"\n          }\n        }\n      ],\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://vPMMg.yjkMLohK+TGAFBAzLMOfWj,iE\"\n        }\n      },\n      \"url\": \"https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd4da3e0-d3c8-45b5-9fd3-f2e7a57fe3fe",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "1,2,3,4,5"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ef5de1b-db66-48c8-ae10-eff298fc5c0a",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "1,2,3,4,5"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aa2de20-cb74-41ff-9749-c67099e44dd8",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "1,2,3,4,5"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09f68b91-0c35-4c37-b833-f8d8c80ec900",
+          "name": "Azure DevOps Create a work item",
+          "request": {
+            "name": "Azure DevOps Create a work item",
+            "description": {
+              "content": "Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wit",
+                "workitems",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "validateOnly",
+                  "value": "<boolean>",
+                  "description": "Validate the fields without saving the work item"
+                },
+                {
+                  "disabled": false,
+                  "key": "bypassRules",
+                  "value": "<boolean>",
+                  "description": "Do not enforce the work item type rules on this update"
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressNotifications",
+                  "value": "<boolean>",
+                  "description": "Do not fire any notifications for this change"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) Work item type (e.g., Bug, Task, User Story)"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"<string>\",\n    \"path\": \"<string>\",\n    \"from\": \"<string>\",\n    \"value\": {}\n  },\n  {\n    \"op\": \"<string>\",\n    \"path\": \"<string>\",\n    \"from\": \"<string>\",\n    \"value\": {}\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3c68668a-f9d4-4193-80de-a1fc7ee00c43",
+              "name": "Work item created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Work item type (e.g., Bug, Task, User Story)"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Title\",\n    \"value\": \"Fix login button alignment\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Description\",\n    \"value\": \"The login button is misaligned on mobile screens\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 42,\n  \"rev\": 3,\n  \"fields\": {\n    \"System.Title\": \"Fix login button alignment\",\n    \"System.State\": \"Active\",\n    \"System.AssignedTo\": \"User Name <user@example.com>\",\n    \"System.WorkItemType\": \"Bug\",\n    \"System.TeamProject\": \"MyProject\",\n    \"System.AreaPath\": \"MyProject\\\\\\\\Frontend\",\n    \"System.IterationPath\": \"MyProject\\\\\\\\Sprint 5\"\n  },\n  \"relations\": [\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://SyzQXezStrNxsPaAArqsJDELzHmu.eako-6L+WttjPEKPVz8\",\n      \"attributes\": {\n        \"key_0\": true,\n        \"key_1\": 5421.943750098099\n      }\n    },\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://YLTeddLSdvglUeuZKTgdS.feIIu261mw778VguCBfR\",\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2898,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://FzUlyrQRFrlpnZmeYOk.snwqJAHX\"\n    },\n    \"key_1\": {\n      \"href\": \"https://pWrnxUmAJKgwZI.nrk5Aemv+,xt0+yAIFELqZJdq4qh.zdAmj+PnbHcX.xOevwK7Bi\"\n    }\n  },\n  \"url\": \"https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20e208e6-7fba-4b97-8f51-454498af7688",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Work item type (e.g., Bug, Task, User Story)"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Title\",\n    \"value\": \"Fix login button alignment\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Description\",\n    \"value\": \"The login button is misaligned on mobile screens\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17921b29-c701-4e83-b70d-472de1f1a662",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Work item type (e.g., Bug, Task, User Story)"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Title\",\n    \"value\": \"Fix login button alignment\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Description\",\n    \"value\": \"The login button is misaligned on mobile screens\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f4c2efb-4ac8-42dc-8255-abad4a637667",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) Work item type (e.g., Bug, Task, User Story)"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Title\",\n    \"value\": \"Fix login button alignment\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/fields/System.Description\",\n    \"value\": \"The login button is misaligned on mobile screens\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d96ea375-35ed-4e86-a3bc-fb41df1969a8",
+          "name": "Azure DevOps Get a work item by ID",
+          "request": {
+            "name": "Azure DevOps Get a work item by ID",
+            "description": {
+              "content": "Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wit",
+                "workitems",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "asOf",
+                  "value": "<dateTime>",
+                  "description": "Work item as of a specific date and time"
+                },
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand relations, links, or fields"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Numeric ID of the work item"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64f645ab-98de-4169-ab22-5abb88513110",
+              "name": "Work item returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 42,\n  \"rev\": 3,\n  \"fields\": {\n    \"System.Title\": \"Fix login button alignment\",\n    \"System.State\": \"Active\",\n    \"System.AssignedTo\": \"User Name <user@example.com>\",\n    \"System.WorkItemType\": \"Bug\",\n    \"System.TeamProject\": \"MyProject\",\n    \"System.AreaPath\": \"MyProject\\\\\\\\Frontend\",\n    \"System.IterationPath\": \"MyProject\\\\\\\\Sprint 5\"\n  },\n  \"relations\": [\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://SyzQXezStrNxsPaAArqsJDELzHmu.eako-6L+WttjPEKPVz8\",\n      \"attributes\": {\n        \"key_0\": true,\n        \"key_1\": 5421.943750098099\n      }\n    },\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://YLTeddLSdvglUeuZKTgdS.feIIu261mw778VguCBfR\",\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2898,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://FzUlyrQRFrlpnZmeYOk.snwqJAHX\"\n    },\n    \"key_1\": {\n      \"href\": \"https://pWrnxUmAJKgwZI.nrk5Aemv+,xt0+yAIFELqZJdq4qh.zdAmj+PnbHcX.xOevwK7Bi\"\n    }\n  },\n  \"url\": \"https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8660d6d-6e3b-48c7-bc40-b72e09942569",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f309aff3-b2bd-4586-9376-dd2c6923895e",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e0c12d7-3911-46c2-93f2-a75fad490292",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "asOf",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a852b7a0-dd12-44c2-b756-611f688ef06d",
+          "name": "Azure DevOps Update a work item",
+          "request": {
+            "name": "Azure DevOps Update a work item",
+            "description": {
+              "content": "Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wit",
+                "workitems",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "validateOnly",
+                  "value": "<boolean>",
+                  "description": "Validate fields without saving the work item"
+                },
+                {
+                  "disabled": false,
+                  "key": "bypassRules",
+                  "value": "<boolean>",
+                  "description": "Do not enforce work item type rules on this update"
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressNotifications",
+                  "value": "<boolean>",
+                  "description": "Do not fire any notifications for this change"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Numeric ID of the work item to update"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"<string>\",\n    \"path\": \"<string>\",\n    \"from\": \"<string>\",\n    \"value\": {}\n  },\n  {\n    \"op\": \"<string>\",\n    \"path\": \"<string>\",\n    \"from\": \"<string>\",\n    \"value\": {}\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e95582ae-0dce-491b-8b37-a4de88b2d9c1",
+              "name": "Work item updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.State\",\n    \"value\": \"Active\"\n  },\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.AssignedTo\",\n    \"value\": \"user@example.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 42,\n  \"rev\": 3,\n  \"fields\": {\n    \"System.Title\": \"Fix login button alignment\",\n    \"System.State\": \"Active\",\n    \"System.AssignedTo\": \"User Name <user@example.com>\",\n    \"System.WorkItemType\": \"Bug\",\n    \"System.TeamProject\": \"MyProject\",\n    \"System.AreaPath\": \"MyProject\\\\\\\\Frontend\",\n    \"System.IterationPath\": \"MyProject\\\\\\\\Sprint 5\"\n  },\n  \"relations\": [\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://SyzQXezStrNxsPaAArqsJDELzHmu.eako-6L+WttjPEKPVz8\",\n      \"attributes\": {\n        \"key_0\": true,\n        \"key_1\": 5421.943750098099\n      }\n    },\n    {\n      \"rel\": \"System.LinkTypes.Hierarchy-Reverse\",\n      \"url\": \"http://YLTeddLSdvglUeuZKTgdS.feIIu261mw778VguCBfR\",\n      \"attributes\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2898,\n        \"key_2\": \"string\"\n      }\n    }\n  ],\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"https://FzUlyrQRFrlpnZmeYOk.snwqJAHX\"\n    },\n    \"key_1\": {\n      \"href\": \"https://pWrnxUmAJKgwZI.nrk5Aemv+,xt0+yAIFELqZJdq4qh.zdAmj+PnbHcX.xOevwK7Bi\"\n    }\n  },\n  \"url\": \"https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52e9148d-1718-44ba-b395-332b8e3836fc",
+              "name": "Bad request - invalid parameters or request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.State\",\n    \"value\": \"Active\"\n  },\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.AssignedTo\",\n    \"value\": \"user@example.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c762cacc-c375-4881-bca3-35b871f1e8f6",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.State\",\n    \"value\": \"Active\"\n  },\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.AssignedTo\",\n    \"value\": \"user@example.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b29e652-7183-434d-8f7e-5a0c8446bb03",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.State\",\n    \"value\": \"Active\"\n  },\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.AssignedTo\",\n    \"value\": \"user@example.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "963e2fb6-3109-4e77-bde7-7299ca7d03c4",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "validateOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bypassRules",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "suppressNotifications",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to update"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.State\",\n    \"value\": \"Active\"\n  },\n  {\n    \"op\": \"replace\",\n    \"path\": \"/fields/System.AssignedTo\",\n    \"value\": \"user@example.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b7a6e4d-93e8-4a36-9ccf-10c1f96f0f3a",
+          "name": "Azure DevOps Delete a work item",
+          "request": {
+            "name": "Azure DevOps Delete a work item",
+            "description": {
+              "content": "Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wit",
+                "workitems",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "destroy",
+                  "value": "<boolean>",
+                  "description": "Permanently delete the work item instead of moving to recycle bin"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Numeric ID of the work item to delete"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d06fb9ca-d63b-47a8-944c-58c07bb2c02e",
+              "name": "Work item deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "destroy",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8a8b0a65-2962-4c63-b082-6756e1096966",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "destroy",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67298eb1-9fbe-4496-b491-ac996542f059",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "destroy",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29ad8b25-f2a9-4840-bb10-b6fbe0b0de2d",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wit",
+                    "workitems",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "destroy",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric ID of the work item to delete"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"0d4fa1ef-0640-8186-be39-763cdf1561f3\",\n  \"innerException\": {},\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 5809,\n  \"eventId\": 4494\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "de09f25e-6d78-4bd4-ab62-1f8c271f38b9",
+    "name": "Azure DevOps Artifacts Attachments Work Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

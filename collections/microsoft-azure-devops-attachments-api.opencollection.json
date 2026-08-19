@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Get attachment info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/attachments/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "GUID of the attachment"
+              }
+            ]
+          },
+          "docs": "Returns metadata about an attachment by its GUID identifier. The response includes the attachment URL, file name, size, and creation date. Use the URL in the response to download the actual attachment content.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Upload an attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/attachments",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the file being uploaded"
+              },
+              {
+                "name": "uploadType",
+                "value": "",
+                "type": "query",
+                "description": "Upload type (simple for files up to 130 MB)"
+              }
+            ]
+          },
+          "docs": "Uploads a new attachment and returns the attachment reference including the ID and URL. After uploading, attach the file to a work item using the work item update operation with a relation of type AttachedFile.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

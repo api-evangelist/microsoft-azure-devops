@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Build Artifacts API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Build Artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List build artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/build/builds/:buildId/artifacts",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "buildId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the build"
+              },
+              {
+                "name": "artifactName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by a specific artifact name"
+              }
+            ]
+          },
+          "docs": "Returns a list of artifacts published by a specific build. Artifacts can be downloaded individually and include their name, type, and download URL.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

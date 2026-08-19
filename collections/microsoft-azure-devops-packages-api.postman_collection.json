@@ -1,0 +1,1127 @@
+{
+  "item": [
+    {
+      "id": "ea893a64-29d1-49b2-af74-092ebca7b40a",
+      "name": "Packages",
+      "description": {
+        "content": "Operations for listing and managing packages within feeds",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4ca7427b-1e33-4e4c-9b3f-c0e8d3c42418",
+          "name": "Azure DevOps List packages in a feed",
+          "request": {
+            "name": "Azure DevOps List packages in a feed",
+            "description": {
+              "content": "Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "packaging",
+                "feeds",
+                ":feedId",
+                "packages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "protocolType",
+                  "value": "<string>",
+                  "description": "Filter packages by protocol type"
+                },
+                {
+                  "disabled": false,
+                  "key": "packageNameQuery",
+                  "value": "<string>",
+                  "description": "Filter packages whose names contain this string"
+                },
+                {
+                  "disabled": false,
+                  "key": "normalizedPackageName",
+                  "value": "<string>",
+                  "description": "Exact package name match (normalized form)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUrls",
+                  "value": "<boolean>",
+                  "description": "Whether to include package manager URLs in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAllVersions",
+                  "value": "<boolean>",
+                  "description": "Whether to include all versions or only the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "isListed",
+                  "value": "<boolean>",
+                  "description": "Filter by listed status (true=published, false=unlisted)"
+                },
+                {
+                  "disabled": false,
+                  "key": "getTopPackageVersions",
+                  "value": "<boolean>",
+                  "description": "Whether to include the top versions for each package"
+                },
+                {
+                  "disabled": false,
+                  "key": "isDeleted",
+                  "value": "<boolean>",
+                  "description": "Whether to include deleted packages"
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of packages to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of packages to skip (for pagination)"
+                },
+                {
+                  "disabled": false,
+                  "key": "continuationToken",
+                  "value": "<string>",
+                  "description": "Continuation token for paginated results"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "feedId",
+                  "description": "(Required) Feed GUID or feed name"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15a2ba0a-c6f8-4562-9918-c04c1c74b2c6",
+              "name": "List of packages returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "protocolType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "packageNameQuery",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "normalizedPackageName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "getTopPackageVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6622,\n  \"value\": [\n    {\n      \"id\": \"351bbea3-3b30-0479-b5db-1d175ef2d414\",\n      \"name\": \"MyCompany.MyLibrary\",\n      \"normalizedName\": \"mycompany.mylibrary\",\n      \"protocolType\": \"swift\",\n      \"versions\": [\n        {\n          \"id\": \"5f89fad4-67cc-9426-02c6-c778e5300f0d\",\n          \"version\": \"1.2.3\",\n          \"normalizedVersion\": \"1.2.3\",\n          \"isLatest\": false,\n          \"isListed\": true,\n          \"storageId\": \"string\",\n          \"views\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"deletedDate\": \"1947-03-25T19:29:47.795Z\",\n          \"publishDate\": \"2013-02-18T21:30:14.749Z\",\n          \"sourceChain\": [\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"http://zCJveiXHJJzuXwBeTPReCGR.hgfsWzY6IWCPG6V8Z6TN7h,2-KDR,Vj,pgKMQj5QwvXeThudRPj2rIrZh\"\n            },\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"https://FOgRBaUVZm.cqsxpfy,hTsiHgBr0VP0JX1kByLdNw5MiEF8L8eWQPLUUwIxW691t\"\n            }\n          ],\n          \"url\": \"http://YUR.umfWI3xNvDHV8rH9bHn8zpn,.ze.SO6t\"\n        },\n        {\n          \"id\": \"2dbebe2c-fd60-4121-c8ab-3ba3a73ac67c\",\n          \"version\": \"1.2.3\",\n          \"normalizedVersion\": \"1.2.3\",\n          \"isLatest\": false,\n          \"isListed\": true,\n          \"storageId\": \"string\",\n          \"views\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"deletedDate\": \"1977-12-24T12:51:08.416Z\",\n          \"publishDate\": \"1957-03-02T07:12:39.824Z\",\n          \"sourceChain\": [\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"http://JLDpKSJDnfTFxpKWjmTDWaojNJmYIit.vfdns8YOR0hUvo2U9hgzhSLCKcg.xyMMyOI7J3dFe2fYykMNpA\"\n            },\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"https://xiq.saijVRKNZlgA5dec7s1FQtZaYmZB2tySgyAjFG7OpePs\"\n            }\n          ],\n          \"url\": \"https://BtNKwudzyvyeOUmVPe.pjayaQDVhAAZ.+PscaRC5lGGrRnVyTbIvCA4Ix2C6OCL,ieGjABgupHnSvbWO4JxDNJuLE8p\"\n        }\n      ],\n      \"url\": \"http://XAqZfQLxzbqicVgsNc.wtPHM.RdG8f\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"https://kwPhedCLfGmvmRYfJTQzrbUFGnCRoogz.zumam7D82J7LRbNOJXd,fh.p3r6D\"\n        },\n        \"key_1\": {\n          \"href\": \"https://HTccJiozlXNTPlraTccOooPX.xtvLnpvJUhPi8z\"\n        }\n      }\n    },\n    {\n      \"id\": \"929af8ce-13f9-f531-1d85-fe5d3c2b021d\",\n      \"name\": \"MyCompany.MyLibrary\",\n      \"normalizedName\": \"mycompany.mylibrary\",\n      \"protocolType\": \"upack\",\n      \"versions\": [\n        {\n          \"id\": \"fcc19973-a1ae-53d3-fc77-2b45bffde02c\",\n          \"version\": \"1.2.3\",\n          \"normalizedVersion\": \"1.2.3\",\n          \"isLatest\": true,\n          \"isListed\": true,\n          \"storageId\": \"string\",\n          \"views\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"deletedDate\": \"2022-03-12T19:22:15.121Z\",\n          \"publishDate\": \"1955-01-14T00:49:58.174Z\",\n          \"sourceChain\": [\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"https://pVaVHKYqxkLVd.nnpWdvoJtwDTOztQNxWSn9xeYzRKrKKaWJVH8aHTPpD\"\n            },\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"http://fixQwVoecxUM.hxeyrJLO6aQpwCTETx.COWhzJlPR2SWbf5\"\n            }\n          ],\n          \"url\": \"https://BvqRMEebrSzlHeOyxSbMqzkXz.fmZMW9LeKN\"\n        },\n        {\n          \"id\": \"34bb6d09-bd94-08e2-c93e-7a56e6bf3832\",\n          \"version\": \"1.2.3\",\n          \"normalizedVersion\": \"1.2.3\",\n          \"isLatest\": false,\n          \"isListed\": false,\n          \"storageId\": \"string\",\n          \"views\": [\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"_links\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"deletedDate\": \"1955-05-28T04:03:26.012Z\",\n          \"publishDate\": \"1969-03-03T01:13:27.868Z\",\n          \"sourceChain\": [\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"https://p.kqarwgGSdQRzan0qGfpwcPlBSV8jZC1Xb2E1XltVw6B+HisLwfWu.0.uY8bBL\"\n            },\n            {\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"upstreamSourceType\": \"string\",\n              \"protocol\": \"string\",\n              \"location\": \"https://CZpJmpfIGCPTmeYyeJRjd.jtzhE0,sW-fEIp+e659oe9TgLk1fYr6gPuAwcbKrOxefLdefxa6kcZibGqZIK-c2ZuEDOR\"\n            }\n          ],\n          \"url\": \"http://BQqSNh.zjbatiPzDSc3cEiipoCz-lz9-faHeLBPO0GTIQH2Z+DN\"\n        }\n      ],\n      \"url\": \"https://ETzPyNZPuKmRHFJkGJVciEtfJTLN.rshuWI\",\n      \"_links\": {\n        \"key_0\": {\n          \"href\": \"http://FUmvCmpPjGTTiVLeVCX.gxsT.Mf07iyrHus,tXL8fypdVQiEJe3xvkt\"\n        },\n        \"key_1\": {\n          \"href\": \"https://iciYaiKVjwweYuCvKEXZtDVelJMVMkxpG.qzqG4k+ef8cijCgA0DdoWUemhgVzDUIBDyykOjPMNCptIQsu8m4+-+jrqqy32XR8U\"\n        },\n        \"key_2\": {\n          \"href\": \"http://sEfwpBHpNzixPyV.ofpFSdNoaBH+gYlqG8y6JnWzwHltC5wHXwwqd\"\n        },\n        \"key_3\": {\n          \"href\": \"https://TeZVKRWpsTNBlLroqXYkAB.bscdpcV9XGD2\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e20f29fa-dc46-4a32-b541-78770b23da99",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "protocolType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "packageNameQuery",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "normalizedPackageName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "getTopPackageVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b1fb610-640d-43df-aa47-ec3deab53293",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "protocolType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "packageNameQuery",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "normalizedPackageName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "getTopPackageVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9aff2955-4d2c-4e8a-9d3d-fe1d732c5173",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "protocolType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "packageNameQuery",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "normalizedPackageName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "getTopPackageVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continuationToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62b1bd2e-cbbf-4ae2-b9e8-69cd263edb54",
+          "name": "Azure DevOps Get package details",
+          "request": {
+            "name": "Azure DevOps Get package details",
+            "description": {
+              "content": "Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "packaging",
+                "feeds",
+                ":feedId",
+                "packages",
+                ":packageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "api-version",
+                  "value": "7.1",
+                  "description": "(Required) Azure DevOps REST API version. Use 7.1 for the latest stable version."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAllVersions",
+                  "value": "<boolean>",
+                  "description": "Whether to include all versions or only the latest"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeUrls",
+                  "value": "<boolean>",
+                  "description": "Whether to include package manager URLs"
+                },
+                {
+                  "disabled": false,
+                  "key": "isListed",
+                  "value": "<boolean>",
+                  "description": "Filter versions by listed status"
+                },
+                {
+                  "disabled": false,
+                  "key": "isDeleted",
+                  "value": "<boolean>",
+                  "description": "Whether to include deleted versions"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "feedId",
+                  "description": "(Required) Feed GUID or feed name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "packageId",
+                  "description": "(Required) GUID identifier of the package"
+                },
+                {
+                  "description": "Azure DevOps organization name or ID",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Azure DevOps project name or ID",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d69cfc42-9031-48a5-ad2b-d27dbcdd108b",
+              "name": "Package details returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages",
+                    ":packageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "packageId",
+                      "description": "(Required) GUID identifier of the package"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"91537fe7-b0e9-1c7d-0023-f1151781e95a\",\n  \"name\": \"MyCompany.MyLibrary\",\n  \"normalizedName\": \"mycompany.mylibrary\",\n  \"protocolType\": \"maven\",\n  \"versions\": [\n    {\n      \"id\": \"3e5bb76b-6eae-a000-9645-76c33fa4958c\",\n      \"version\": \"1.2.3\",\n      \"normalizedVersion\": \"1.2.3\",\n      \"isLatest\": true,\n      \"isListed\": false,\n      \"storageId\": \"string\",\n      \"views\": [\n        {\n          \"id\": \"2e3c2aa2-4686-6f7b-5b3d-81f139ba01ae\",\n          \"name\": \"@release\",\n          \"type\": \"release\",\n          \"url\": \"http://vrmRnpxblcIasdb.rhalA\",\n          \"_links\": {\n            \"key_0\": {\n              \"href\": \"http://hgScTAufWHKXgvfwDMplphc.xsROHs5RRdMk7KnHxR\"\n            }\n          }\n        },\n        {\n          \"id\": \"09804422-2309-79a6-e2e8-071d72a2c83f\",\n          \"name\": \"@release\",\n          \"type\": \"none\",\n          \"url\": \"http://nMbWsWtAfBYLunFqrqjLMUteibSWM.nlcTI2az,KFMOtjRhaNSllFeZKuGpiVrLwPuoICGviILnKgqEr6ljzfS6U0cMvhGxn\",\n          \"_links\": {\n            \"key_0\": {\n              \"href\": \"http://gjSuqvVaXTnuhAtfjJqgxTHUzuPttCHh.luaVa,s3g\"\n            },\n            \"key_1\": {\n              \"href\": \"https://bbhoJCVAGA.bdZ1ggkg7O1\"\n            }\n          }\n        }\n      ],\n      \"deletedDate\": \"2024-06-17T19:35:08.018Z\",\n      \"publishDate\": \"2005-05-07T11:43:11.005Z\",\n      \"sourceChain\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"upstreamSourceType\": \"string\",\n          \"protocol\": \"string\",\n          \"location\": \"http://CWSSQmeMMGJtfy.blyugj1AE00IGo8X+vwoQheUU0dDWaKtBk3J9q2MEH4hX-qQttG3IVWWupUuJAYTJud\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"upstreamSourceType\": \"string\",\n          \"protocol\": \"string\",\n          \"location\": \"http://AhmYvqCkbSTjzPFOzyFWHZxgcQmUIRqC.cqzaCjM1bHuMkm8e468IHyzCtDVELnvsAWBfIH\"\n        }\n      ],\n      \"url\": \"http://jShiHyZovjGLevZpdzNkYuZOSZYvFYAWS.fwaxAaaVXXSo7XqGJjubBTGtG\"\n    },\n    {\n      \"id\": \"30727c8b-f0d9-f181-d148-b5736f415e53\",\n      \"version\": \"1.2.3\",\n      \"normalizedVersion\": \"1.2.3\",\n      \"isLatest\": true,\n      \"isListed\": true,\n      \"storageId\": \"string\",\n      \"views\": [\n        {\n          \"id\": \"e617cc06-ff10-5651-bf14-8df12745b554\",\n          \"name\": \"@release\",\n          \"type\": \"release\",\n          \"url\": \"https://ZrxrqvQUanAABHcyzCyJxA.fqfnHlz4UQ,kX,07ttN6QYFPh75BGmot\",\n          \"_links\": {\n            \"key_0\": {\n              \"href\": \"http://rSPZUaCQMQNpdQCshbzblEsDm.pjhE,V,f2FaCmEvWdzQFdGAreaojlrjj-goV7,jP-r3PM,viyNYo\"\n            },\n            \"key_1\": {\n              \"href\": \"http://uKlClLkbobG.gyhFhvnACNeXHTZS.aeU0B2q+wgKC1lPdeZWxgY\"\n            }\n          }\n        },\n        {\n          \"id\": \"fd95829b-67c0-594e-821c-49c324d86c0d\",\n          \"name\": \"@release\",\n          \"type\": \"implicit\",\n          \"url\": \"http://CIc.ahPrGsytPbRU1jxSdkvRdc.,KRHG8gfAkSNbouBxsCaFLN45gAP\",\n          \"_links\": {\n            \"key_0\": {\n              \"href\": \"https://ECAEpXoCDQlqa.mvmqrGbW2O30sLoCnMYCYhRKaNqOh4U3VRlr\"\n            },\n            \"key_1\": {\n              \"href\": \"https://krRjmLLmzjsuUelYiEuEMFKCS.qnvfPEvtRLZ2F+mwYotRg96cFGgh\"\n            }\n          }\n        }\n      ],\n      \"deletedDate\": \"1995-07-02T16:10:05.082Z\",\n      \"publishDate\": \"2005-05-15T04:41:09.776Z\",\n      \"sourceChain\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"upstreamSourceType\": \"string\",\n          \"protocol\": \"string\",\n          \"location\": \"https://FmvWvvHOSQgTrFRKRIVemu.ijrpGdMrCa.fMHVqACJi4+Q4D1pKKbdv-,yaCRaRCc,OAxU8BAM6EgiP1T-ktvU\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"upstreamSourceType\": \"string\",\n          \"protocol\": \"string\",\n          \"location\": \"https://ZOsXGySwDIV.hzpymms0vjSmr\"\n        }\n      ],\n      \"url\": \"https://XkLFrkGCBluubvdMrsmQTLPlwTij.gspzRQ2p4B0ofdkW3ZN.ufw\"\n    }\n  ],\n  \"url\": \"http://jyPPhaUJUigeJHnxjbsPjr.maBoxIVzyOCqwthWU9AkU1,s20TjQXdyw-fmTPJYkF.3N\",\n  \"_links\": {\n    \"key_0\": {\n      \"href\": \"http://cDaBwCdtJxxlfqStmo.qatKUjAlPvrHuBOUW1LAId\"\n    },\n    \"key_1\": {\n      \"href\": \"http://thdsuWwTUexYFELrir.ptrdbZrNW70irVeIdCzKEHI6JjrwdVoEgtSUAtHjD.ZeLbr\"\n    },\n    \"key_2\": {\n      \"href\": \"http://VuzveYFMjSFwBZuUDQer.zjVEIdvbcc\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4808e01e-74f6-4417-8af3-5c3d241b5909",
+              "name": "Unauthorized - missing or invalid authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages",
+                    ":packageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "packageId",
+                      "description": "(Required) GUID identifier of the package"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40f023f2-5140-44a4-a7f5-d69974766caf",
+              "name": "Forbidden - insufficient permissions to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages",
+                    ":packageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "packageId",
+                      "description": "(Required) GUID identifier of the package"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "673ac858-f2eb-450c-9067-492f47873047",
+              "name": "Not found - the requested resource does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "packaging",
+                    "feeds",
+                    ":feedId",
+                    "packages",
+                    ":packageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "api-version",
+                      "value": "7.1"
+                    },
+                    {
+                      "key": "includeAllVersions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isListed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "isDeleted",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "feedId",
+                      "description": "(Required) Feed GUID or feed name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "packageId",
+                      "description": "(Required) GUID identifier of the package"
+                    },
+                    {
+                      "description": "Azure DevOps organization name or ID",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Azure DevOps project name or ID",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"96608692-060c-f6fb-8492-5cae6b6cde7e\",\n  \"message\": \"string\",\n  \"typeName\": \"string\",\n  \"typeKey\": \"string\",\n  \"errorCode\": 4877,\n  \"eventId\": 534\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Azure DevOps organization name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Azure DevOps project name or ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://feeds.dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "494430b1-3401-4020-8547-a550e0e96edd",
+    "name": "Azure DevOps Artifacts Attachments Packages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.\n\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

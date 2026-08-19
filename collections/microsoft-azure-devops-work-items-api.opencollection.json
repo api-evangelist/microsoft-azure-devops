@@ -1,0 +1,235 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Work Items API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Work Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List work items by IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/workitems",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "ids",
+                "value": "1,2,3,4,5",
+                "type": "query",
+                "description": "Comma-separated list of work item IDs (up to 200)"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return (e.g., System.Title,System.State)"
+              },
+              {
+                "name": "asOf",
+                "value": "",
+                "type": "query",
+                "description": "Work items as of a specific date and time (ISO 8601 format)"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relations, links, or fields in the response"
+              }
+            ]
+          },
+          "docs": "Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/workitems/:type",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "type",
+                "value": "Bug",
+                "type": "path",
+                "description": "Work item type (e.g., Bug, Task, User Story)"
+              },
+              {
+                "name": "validateOnly",
+                "value": "",
+                "type": "query",
+                "description": "Validate the fields without saving the work item"
+              },
+              {
+                "name": "bypassRules",
+                "value": "",
+                "type": "query",
+                "description": "Do not enforce the work item type rules on this update"
+              },
+              {
+                "name": "suppressNotifications",
+                "value": "",
+                "type": "query",
+                "description": "Do not fire any notifications for this change"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a work item by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "42",
+                "type": "path",
+                "description": "Numeric ID of the work item"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return"
+              },
+              {
+                "name": "asOf",
+                "value": "",
+                "type": "query",
+                "description": "Work item as of a specific date and time"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand relations, links, or fields"
+              }
+            ]
+          },
+          "docs": "Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item to update"
+              },
+              {
+                "name": "validateOnly",
+                "value": "",
+                "type": "query",
+                "description": "Validate fields without saving the work item"
+              },
+              {
+                "name": "bypassRules",
+                "value": "",
+                "type": "query",
+                "description": "Do not enforce work item type rules on this update"
+              },
+              {
+                "name": "suppressNotifications",
+                "value": "",
+                "type": "query",
+                "description": "Do not fire any notifications for this change"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a work item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/wit/workitems/:id",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the work item to delete"
+              },
+              {
+                "name": "destroy",
+                "value": "",
+                "type": "query",
+                "description": "Permanently delete the work item instead of moving to recycle bin"
+              }
+            ]
+          },
+          "docs": "Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

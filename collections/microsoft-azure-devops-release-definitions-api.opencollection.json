@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Release Definitions API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Release Definitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List release definitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/definitions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "searchText",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by name (supports wildcards)"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional definition details"
+              },
+              {
+                "name": "artifactType",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by artifact type"
+              },
+              {
+                "name": "artifactSourceId",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by artifact source ID"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of definitions to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paged results"
+              },
+              {
+                "name": "queryOrder",
+                "value": "",
+                "type": "query",
+                "description": "Results ordering"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Filter definitions by folder path"
+              }
+            ]
+          },
+          "docs": "Returns a list of release definitions in the project. Supports filtering by name and path. Definitions represent the release pipeline template including environments, artifacts, approval gates, and deployment steps.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a release definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/definitions",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new release definition specifying environments, artifacts, triggers, variables, and deployment steps. The definition serves as the template for future release instances.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a release definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the release definition"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional definition details"
+              },
+              {
+                "name": "propertyFilters",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific release definition, including all environments, artifact sources, triggers, approvals, and deployment steps.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a release definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the release definition to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces an existing release definition with the provided definition. The revision number in the body must match the current revision to prevent concurrent modification conflicts.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Delete a release definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/definitions/:definitionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the release definition to delete"
+              },
+              {
+                "name": "comment",
+                "value": "",
+                "type": "query",
+                "description": "Comment explaining why the definition is being deleted"
+              },
+              {
+                "name": "forceDelete",
+                "value": "",
+                "type": "query",
+                "description": "Force delete even if there are associated releases"
+              }
+            ]
+          },
+          "docs": "Deletes a release definition. All associated releases must be deleted or abandoned first. This operation cannot be undone.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

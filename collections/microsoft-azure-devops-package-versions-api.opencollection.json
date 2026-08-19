@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Package Versions API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Package Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps Delete a package version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/packaging/feeds/:feedId/packages/:packageId/versions/:packageVersionId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Feed GUID or feed name"
+              },
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package"
+              },
+              {
+                "name": "packageVersionId",
+                "value": "",
+                "type": "path",
+                "description": "GUID identifier of the package version"
+              }
+            ]
+          },
+          "docs": "Deletes a specific version of a package from the feed. By default this moves the version to the recycle bin. Use the permanentlyDelete parameter to permanently remove it. Once permanently deleted, the version cannot be recovered and the same version number cannot be reused.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

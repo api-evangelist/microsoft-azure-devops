@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Pushes API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pushes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List pushes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of pushes to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to skip"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Return pushes from after this date"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "Return pushes before this date"
+              },
+              {
+                "name": "searchCriteria.refName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by branch or ref name"
+              },
+              {
+                "name": "searchCriteria.pusherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter pushes by user who pushed"
+              }
+            ]
+          },
+          "docs": "Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "GUID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

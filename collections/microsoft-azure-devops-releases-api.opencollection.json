@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure DevOps Artifacts Attachments Releases API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Releases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure DevOps List releases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/releases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "definitionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter releases by release definition ID"
+              },
+              {
+                "name": "definitionEnvironmentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter releases by definition environment ID"
+              },
+              {
+                "name": "searchText",
+                "value": "",
+                "type": "query",
+                "description": "Search by release name"
+              },
+              {
+                "name": "createdBy",
+                "value": "",
+                "type": "query",
+                "description": "Filter releases created by a specific user (descriptor)"
+              },
+              {
+                "name": "statusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by release status"
+              },
+              {
+                "name": "environmentStatusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by environment status"
+              },
+              {
+                "name": "minCreatedTime",
+                "value": "",
+                "type": "query",
+                "description": "Returns releases created after this date"
+              },
+              {
+                "name": "maxCreatedTime",
+                "value": "",
+                "type": "query",
+                "description": "Returns releases created before this date"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of releases to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paginated results"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional release details"
+              }
+            ]
+          },
+          "docs": "Returns a list of releases in the project. Supports filtering by definition, status, environment name, and date ranges. Results are paginated using continuationToken.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Create a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/releases",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new release based on a release definition. You can specify which artifacts to use, add a description, override variables, and optionally save as a draft before deployment.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Get a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/releases/:releaseId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "releaseId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the release"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand additional release details"
+              },
+              {
+                "name": "approvalFilters",
+                "value": "",
+                "type": "query",
+                "description": "Filter type for approval details"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific release, including all environments, deployment status, artifacts used, and approval history.\n"
+        },
+        {
+          "info": {
+            "name": "Azure DevOps Update a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://feeds.dev.azure.com/{organization}/{project}/_apis/release/releases/:releaseId",
+            "params": [
+              {
+                "name": "api-version",
+                "value": "",
+                "type": "query",
+                "description": "Azure DevOps REST API version. Use 7.1 for the latest stable version."
+              },
+              {
+                "name": "releaseId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric ID of the release to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a release, such as changing its status from draft to active, updating the description, or modifying environment configurations.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
