@@ -25,7 +25,7 @@ tags:
 created: '2024-01-01'
 modified: '2026-05-19'
 url: https://dev.azure.com
-specificationVersion: '0.18'
+specificationVersion: '0.23'
 apis:
 - name: Azure DevOps Graph API
   description: >-
