@@ -34,6 +34,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
   baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
   tags:
+  - Group
+  - Permissions
+  - User
+  tags_raw:
   - Groups
   - Permissions
   - Users
@@ -47,6 +51,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/core/
   baseURL: https://dev.azure.com/{organization}/_apis
   tags:
+  - Organization
+  - Project
+  - Team
+  tags_raw:
   - Organization
   - Projects
   - Teams
@@ -74,6 +82,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/
   baseURL: https://dev.azure.com/{organization}/_apis/notification
   tags:
+  - Alerts
+  - Notification
+  - Subscription
+  tags_raw:
   - Alerts
   - Notifications
   - Subscriptions
@@ -176,6 +188,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint
   tags:
+  - Integration
+  - Pipelines
+  - Service Connections
+  tags_raw:
   - Integrations
   - Pipelines
   - Service Connections
@@ -219,6 +235,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/account/
   baseURL: https://app.vssps.visualstudio.com/_apis/accounts
   tags:
+  - Account
+  - Administration
+  - Organization
+  tags_raw:
   - Accounts
   - Administration
   - Organizations
@@ -247,6 +267,11 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/
   baseURL: https://pkgs.dev.azure.com/{organization}/_apis/packaging
   tags:
+  - Maven
+  - npm
+  - NuGet
+  - Packages
+  tags_raw:
   - Maven
   - Npm
   - NuGet
@@ -291,6 +316,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/
   baseURL: https://vssps.dev.azure.com/{organization}/_apis/identities
   tags:
+  - Group
+  - Identities
+  - User
+  tags_raw:
   - Groups
   - Identities
   - Users
@@ -333,6 +362,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/
   baseURL: https://app.vssps.visualstudio.com/_apis/profile/profiles
   tags:
+  - Identity
+  - Profile
+  - User
+  tags_raw:
   - Identity
   - Profile
   - Users
@@ -777,6 +810,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/
   baseURL: https://dev.azure.com/{organization}
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -857,6 +892,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/
   baseURL: https://dev.azure.com/{organization}
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -1377,6 +1414,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/
   baseURL: https://dev.azure.com/{organization}
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
