@@ -5,7 +5,7 @@
       "source": "https://devblogs.microsoft.com/devops/feed/",
       "feed_url": "https://devblogs.microsoft.com/devops/feed/",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -13,10 +13,9 @@
       "feed_url": "https://azure.microsoft.com/en-us/support/devops/",
       "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     }
   ],
-  "post_count": 28,
-  "fetched": "2026-08-15T12:11:08Z"
+  "post_count": 29,
+  "fetched": "2026-08-22T20:20:02Z"
 }
