@@ -12,8 +12,11 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: gitApi
-  url: ../openapi/azure-devops-git-api-openapi.yml
+- name: pushesApi
+  url: ../openapi/microsoft-azure-devops-pushes-api-openapi.yml
+  type: openapi
+- name: refsApi
+  url: ../openapi/microsoft-azure-devops-refs-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: commit-file-via-push

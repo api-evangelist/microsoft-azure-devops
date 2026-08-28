@@ -11,8 +11,8 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: gitApi
-  url: ../openapi/azure-devops-git-api-openapi.yml
+- name: pullRequestsApi
+  url: ../openapi/microsoft-azure-devops-pull-requests-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: open-pull-request-and-comment

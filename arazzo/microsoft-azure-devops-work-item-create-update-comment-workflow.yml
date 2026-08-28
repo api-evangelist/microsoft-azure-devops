@@ -13,8 +13,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: commentsApi
+  url: ../openapi/microsoft-azure-devops-comments-api-openapi.yml
+  type: openapi
 - name: workItemsApi
-  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-work-items-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-update-comment-work-item

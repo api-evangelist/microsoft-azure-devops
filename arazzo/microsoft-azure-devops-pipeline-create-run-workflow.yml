@@ -11,8 +11,11 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: pipelineRunsApi
+  url: ../openapi/microsoft-azure-devops-pipeline-runs-api-openapi.yml
+  type: openapi
 - name: pipelinesApi
-  url: ../openapi/azure-devops-pipelines-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-pipelines-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-run-pipeline

@@ -11,8 +11,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
+- name: buildDefinitionsApi
+  url: ../openapi/microsoft-azure-devops-build-definitions-api-openapi.yml
+  type: openapi
 - name: buildsApi
-  url: ../openapi/azure-devops-builds-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-builds-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-build-definition

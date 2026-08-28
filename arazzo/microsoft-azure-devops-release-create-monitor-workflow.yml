@@ -13,7 +13,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: releasesApi
-  url: ../openapi/azure-devops-releases-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-releases-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-monitor-release

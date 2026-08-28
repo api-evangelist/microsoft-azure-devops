@@ -11,8 +11,11 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: buildArtifactsApi
+  url: ../openapi/microsoft-azure-devops-build-artifacts-api-openapi.yml
+  type: openapi
 - name: buildsApi
-  url: ../openapi/azure-devops-builds-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-builds-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: retrieve-latest-build-artifacts

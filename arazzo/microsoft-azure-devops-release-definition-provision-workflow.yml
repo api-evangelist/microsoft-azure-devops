@@ -11,8 +11,11 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: releaseDefinitionsApi
+  url: ../openapi/microsoft-azure-devops-release-definitions-api-openapi.yml
+  type: openapi
 - name: releasesApi
-  url: ../openapi/azure-devops-releases-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-releases-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-release-definition

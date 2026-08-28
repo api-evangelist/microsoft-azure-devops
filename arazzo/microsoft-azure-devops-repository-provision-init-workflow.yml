@@ -12,8 +12,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: gitApi
-  url: ../openapi/azure-devops-git-api-openapi.yml
+- name: refsApi
+  url: ../openapi/microsoft-azure-devops-refs-api-openapi.yml
+  type: openapi
+- name: repositoriesApi
+  url: ../openapi/microsoft-azure-devops-repositories-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: provision-and-inspect-repository

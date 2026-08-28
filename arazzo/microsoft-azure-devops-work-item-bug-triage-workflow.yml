@@ -13,8 +13,11 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
+- name: workItemTrackingApi
+  url: ../openapi/microsoft-azure-devops-work-item-tracking-api-openapi.yml
+  type: openapi
 - name: workItemsApi
-  url: ../openapi/azure-devops-work-items-api-openapi.yml
+  url: ../openapi/microsoft-azure-devops-work-items-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: bug-triage-by-wiql
