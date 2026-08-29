@@ -2,6 +2,20 @@ name: Azure DevOps
 description: >-
   Azure DevOps provides developer services for support teams to plan work, collaborate on code development, and build
   and deploy applications.
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: true
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -1771,6 +1785,9 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
 common:
+  - type: CapabilityMap
+    url: capabilities/microsoft-azure-devops-capability-edges.yml
+    name: Azure DevOps Business Capability Map
   - type: IssueTracker
     url: https://github.com/microsoft/azure-devops-python-api/issues
   - type: Releases
