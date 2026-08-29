@@ -1901,7 +1901,7 @@ common:
     url: https://learn.microsoft.com/en-us/azure/devops/cli/?view=azure-devops
   - type: Versioning
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rest-api-versioning?view=azure-devops
-  - type: Samples
+  - type: Examples
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/rest/samples?view=azure-devops
   - type: Best Practices
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices?view=azure-devops
