@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Work Item Types API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Work Items Work Item Types API
+  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Work Item Tracking API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -128,25 +128,6 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
     WorkItemField:
       type: object
@@ -211,39 +192,6 @@ components:
         url:
           type: string
           format: uri
-    WorkItemTypeFieldInstance:
-      type: object
-      description: A field instance within a work item type
-      properties:
-        fieldName:
-          type: string
-          description: Display name of the field
-        field:
-          type: object
-          properties:
-            name:
-              type: string
-            referenceName:
-              type: string
-            url:
-              type: string
-              format: uri
-        referenceName:
-          type: string
-          description: Reference name (e.g., System.Title)
-        defaultValue:
-          description: Default value for the field
-        allowedValues:
-          type: array
-          items:
-            type: string
-          description: Allowed values for fields with a restricted set of values
-        helpText:
-          type: string
-        alwaysRequired:
-          type: boolean
-        readOnly:
-          type: boolean
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -343,6 +291,58 @@ components:
         url:
           type: string
           format: uri
+    WorkItemTypeFieldInstance:
+      type: object
+      description: A field instance within a work item type
+      properties:
+        fieldName:
+          type: string
+          description: Display name of the field
+        field:
+          type: object
+          properties:
+            name:
+              type: string
+            referenceName:
+              type: string
+            url:
+              type: string
+              format: uri
+        referenceName:
+          type: string
+          description: Reference name (e.g., System.Title)
+        defaultValue:
+          description: Default value for the field
+        allowedValues:
+          type: array
+          items:
+            type: string
+          description: Allowed values for fields with a restricted set of values
+        helpText:
+          type: string
+        alwaysRequired:
+          type: boolean
+        readOnly:
+          type: boolean
+  responses:
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

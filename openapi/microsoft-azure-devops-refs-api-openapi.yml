@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Refs API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Git Repositories Refs API
+  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Git API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -105,6 +105,12 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
       content:
@@ -117,13 +123,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -136,14 +143,45 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
   schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     GitRef:
       type: object
       description: A Git ref (branch or tag)
@@ -188,44 +226,6 @@ components:
               targetUrl:
                 type: string
                 format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
   securitySchemes:
     bearerAuth:
       type: http

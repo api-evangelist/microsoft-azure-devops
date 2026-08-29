@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Release Definitions API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Releases Release Definitions API
+  description: 'REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/release/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://vsrm.dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Release Management API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -278,59 +278,73 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
-    ConfigurationVariableValue:
+    ReleaseDefinitionEnvironment:
       type: object
-      description: A variable value in a release definition or release
+      description: An environment definition within a release pipeline
       properties:
-        value:
+        id:
+          type: integer
+        name:
           type: string
-          description: The variable value
-        isSecret:
-          type: boolean
-          description: Whether the value is treated as a secret
-        allowOverride:
-          type: boolean
-          description: Whether the value can be overridden when creating a release
-    Artifact:
-      type: object
-      description: An artifact used in a release
-      properties:
-        alias:
-          type: string
-          description: Alias for the artifact within the release definition
-          example: _MyBuild
-        type:
-          type: string
-          description: Artifact type
-          enum:
-          - build
-          - jenkins
-          - github
-          - nuget
-          - team
-          - externaltfsbuild
-          - git
-          - tfvc
-        definitionReference:
-          type: object
-          description: Reference to the artifact source definition
-          additionalProperties:
+          description: Name of the environment
+          example: Production
+        rank:
+          type: integer
+          description: Sequence order of the environment in the pipeline
+        deployPhases:
+          type: array
+          description: Deployment phases in this environment
+          items:
             type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-        isPrimary:
-          type: boolean
-          description: Whether this is the primary artifact
-        isRetained:
-          type: boolean
-          description: Whether this artifact is retained
-        sourceId:
-          type: string
-          description: Source identifier for the artifact
+        conditions:
+          type: array
+          description: Conditions that must be met before deploying to this environment
+          items:
+            type: object
+        preDeployApprovals:
+          type: object
+          description: Pre-deployment approval configuration
+        postDeployApprovals:
+          type: object
+          description: Post-deployment approval configuration
+        environmentOptions:
+          type: object
+          description: Environment-level options
+        variables:
+          type: object
+          description: Environment-level variables
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        demands:
+          type: array
+          items:
+            type: object
     ReleaseDefinition:
       type: object
       description: A release pipeline definition
@@ -429,47 +443,58 @@ components:
           format: uri
         descriptor:
           type: string
-    ReleaseDefinitionEnvironment:
+    ConfigurationVariableValue:
       type: object
-      description: An environment definition within a release pipeline
+      description: A variable value in a release definition or release
       properties:
-        id:
-          type: integer
-        name:
+        value:
           type: string
-          description: Name of the environment
-          example: Production
-        rank:
-          type: integer
-          description: Sequence order of the environment in the pipeline
-        deployPhases:
-          type: array
-          description: Deployment phases in this environment
-          items:
-            type: object
-        conditions:
-          type: array
-          description: Conditions that must be met before deploying to this environment
-          items:
-            type: object
-        preDeployApprovals:
+          description: The variable value
+        isSecret:
+          type: boolean
+          description: Whether the value is treated as a secret
+        allowOverride:
+          type: boolean
+          description: Whether the value can be overridden when creating a release
+    Artifact:
+      type: object
+      description: An artifact used in a release
+      properties:
+        alias:
+          type: string
+          description: Alias for the artifact within the release definition
+          example: _MyBuild
+        type:
+          type: string
+          description: Artifact type
+          enum:
+          - build
+          - jenkins
+          - github
+          - nuget
+          - team
+          - externaltfsbuild
+          - git
+          - tfvc
+        definitionReference:
           type: object
-          description: Pre-deployment approval configuration
-        postDeployApprovals:
-          type: object
-          description: Post-deployment approval configuration
-        environmentOptions:
-          type: object
-          description: Environment-level options
-        variables:
-          type: object
-          description: Environment-level variables
+          description: Reference to the artifact source definition
           additionalProperties:
-            $ref: '#/components/schemas/ConfigurationVariableValue'
-        demands:
-          type: array
-          items:
             type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        isPrimary:
+          type: boolean
+          description: Whether this is the primary artifact
+        isRetained:
+          type: boolean
+          description: Whether this artifact is retained
+        sourceId:
+          type: string
+          description: Source identifier for the artifact
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -487,31 +512,6 @@ components:
           type: integer
         eventId:
           type: integer
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

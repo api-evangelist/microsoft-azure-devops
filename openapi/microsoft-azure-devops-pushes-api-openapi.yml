@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Pushes API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Git Repositories Pushes API
+  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Git API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -133,139 +133,73 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
-    GitRepository:
+    IdentityRef:
       type: object
-      description: An Azure DevOps Git repository
+      description: Reference to an Azure DevOps user identity
       properties:
         id:
           type: string
           format: uuid
-          description: Unique GUID identifier of the repository
-        name:
+        displayName:
           type: string
-          description: Repository name
-          example: my-application
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this repository
-        project:
-          $ref: '#/components/schemas/TeamProjectReference'
-        defaultBranch:
-          type: string
-          description: Default branch of the repository
-          example: refs/heads/main
-        size:
-          type: integer
-          description: Size of the repository in bytes
-        remoteUrl:
-          type: string
-          format: uri
-          description: Remote URL for cloning (HTTPS)
-          example: https://dev.azure.com/myorg/myproject/_git/my-application
-        sshUrl:
-          type: string
-          description: SSH URL for cloning
-          example: git@ssh.dev.azure.com:v3/myorg/myproject/my-application
-        webUrl:
-          type: string
-          format: uri
-          description: Web browser URL for the repository
-        parentRepository:
-          type: object
-          nullable: true
-          description: Parent repository (if this is a fork)
-          properties:
-            id:
-              type: string
-              format: uuid
-            name:
-              type: string
-            url:
-              type: string
-              format: uri
-        isFork:
-          type: boolean
-          description: Whether this repository is a fork of another
-        isDisabled:
-          type: boolean
-          description: Whether this repository is disabled
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
-    TeamProjectReference:
-      type: object
-      description: Reference to an Azure DevOps project
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
-    GitRefUpdate:
-      type: object
-      description: A ref update in a push
-      properties:
-        name:
-          type: string
-          description: The ref name (e.g., refs/heads/main)
-        oldObjectId:
-          type: string
-          description: Previous SHA the ref pointed to (zeros for new ref)
-        newObjectId:
-          type: string
-          description: New SHA the ref now points to (zeros to delete)
-        repositoryId:
-          type: string
-          format: uuid
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
           example: John Doe
-        email:
+        uniqueName:
           type: string
-          format: email
-          description: User email address
           example: john.doe@example.com
-        date:
+        url:
           type: string
-          format: date-time
-          description: Date and time of the action
+          format: uri
         imageUrl:
           type: string
           format: uri
+        descriptor:
+          type: string
     GitPushCreateRequest:
       type: object
       description: Request to create a push with new commits
@@ -348,44 +282,91 @@ components:
         url:
           type: string
           format: uri
-    IdentityRef:
+    GitRepository:
       type: object
-      description: Reference to an Azure DevOps user identity
+      description: An Azure DevOps Git repository
       properties:
         id:
           type: string
           format: uuid
-        displayName:
+          description: Unique GUID identifier of the repository
+        name:
           type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
+          description: Repository name
+          example: my-application
         url:
           type: string
           format: uri
+          description: REST API URL for this repository
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        defaultBranch:
+          type: string
+          description: Default branch of the repository
+          example: refs/heads/main
+        size:
+          type: integer
+          description: Size of the repository in bytes
+        remoteUrl:
+          type: string
+          format: uri
+          description: Remote URL for cloning (HTTPS)
+          example: https://dev.azure.com/myorg/myproject/_git/my-application
+        sshUrl:
+          type: string
+          description: SSH URL for cloning
+          example: git@ssh.dev.azure.com:v3/myorg/myproject/my-application
+        webUrl:
+          type: string
+          format: uri
+          description: Web browser URL for the repository
+        parentRepository:
+          type: object
+          nullable: true
+          description: Parent repository (if this is a fork)
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            url:
+              type: string
+              format: uri
+        isFork:
+          type: boolean
+          description: Whether this repository is a fork of another
+        isDisabled:
+          type: boolean
+          description: Whether this repository is disabled
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
         imageUrl:
           type: string
           format: uri
-        descriptor:
-          type: string
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     GitCommitRef:
       type: object
       description: A reference to a Git commit
@@ -426,51 +407,70 @@ components:
               type: integer
             Delete:
               type: integer
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitRefUpdate:
+      type: object
+      description: A ref update in a push
+      properties:
+        name:
+          type: string
+          description: The ref name (e.g., refs/heads/main)
+        oldObjectId:
+          type: string
+          description: Previous SHA the ref pointed to (zeros for new ref)
+        newObjectId:
+          type: string
+          description: New SHA the ref now points to (zeros to delete)
+        repositoryId:
+          type: string
+          format: uuid
   securitySchemes:
     bearerAuth:
       type: http

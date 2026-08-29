@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Build Logs API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Builds Build Logs API
+  description: 'REST API for managing build definitions (pipelines), queuing builds, monitoring build status, accessing build logs, timelines, and artifacts. Supports the full lifecycle of continuous integration builds in Azure DevOps.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/build/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Build API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -97,6 +97,12 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
       content:
@@ -109,36 +115,49 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    BuildLog:
+    ApiError:
       type: object
-      description: Metadata about a single build log
+      description: Error response from the Azure DevOps API
       properties:
         id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
           type: integer
-          description: Log entry ID
-        type:
+        eventId:
+          type: integer
+    Timeline:
+      type: object
+      description: Build timeline showing all records (phases, jobs, tasks)
+      properties:
+        id:
           type: string
-          description: Storage type of the log
-        url:
+          format: uuid
+          description: Timeline ID
+        changeId:
+          type: integer
+          description: Change ID for real-time timeline updates
+        lastChangedBy:
           type: string
-          format: uri
-          description: URL to retrieve the log content
-        createdOn:
-          type: string
-          format: date-time
+          format: uuid
         lastChangedOn:
           type: string
           format: date-time
-        lineCount:
-          type: integer
-          description: Number of log lines
+        records:
+          type: array
+          description: List of timeline records (phases, jobs, tasks)
+          items:
+            $ref: '#/components/schemas/TimelineRecord'
+        url:
+          type: string
+          format: uri
     TimelineRecord:
       type: object
       description: A single record in the build timeline
@@ -228,48 +247,29 @@ components:
               data:
                 type: object
                 additionalProperties: true
-    Timeline:
+    BuildLog:
       type: object
-      description: Build timeline showing all records (phases, jobs, tasks)
+      description: Metadata about a single build log
       properties:
         id:
-          type: string
-          format: uuid
-          description: Timeline ID
-        changeId:
           type: integer
-          description: Change ID for real-time timeline updates
-        lastChangedBy:
+          description: Log entry ID
+        type:
           type: string
-          format: uuid
-        lastChangedOn:
-          type: string
-          format: date-time
-        records:
-          type: array
-          description: List of timeline records (phases, jobs, tasks)
-          items:
-            $ref: '#/components/schemas/TimelineRecord'
+          description: Storage type of the log
         url:
           type: string
           format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
+          description: URL to retrieve the log content
+        createdOn:
           type: string
-          format: uuid
-        message:
+          format: date-time
+        lastChangedOn:
           type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
+          format: date-time
+        lineCount:
           type: integer
-        eventId:
-          type: integer
+          description: Number of log lines
   parameters:
     ApiVersion:
       name: api-version

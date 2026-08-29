@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Azure DevOps Artifacts Attachments Test Suites API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
+  title: Azure DevOps Test Plans Test Suites API
+  description: 'REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
 
     '
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
-    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-- url: https://feeds.dev.azure.com/{organization}/{project}/_apis
-  description: Azure DevOps Artifacts API (project-scoped)
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Test Plans API
   variables:
     organization:
       description: Azure DevOps organization name or ID
@@ -163,18 +163,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     BadRequest:
       description: Bad request - invalid parameters or request body
       content:
@@ -187,115 +175,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-  parameters:
-    PlanId:
-      name: planId
-      in: path
-      required: true
-      description: Numeric ID of the test plan
-      schema:
-        type: integer
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    TestSuiteReference:
-      type: object
-      description: Minimal reference to a test suite
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    TestSuiteCreateParams:
-      type: object
-      description: Parameters for creating a new test suite
-      required:
-      - name
-      - suiteType
-      - parentSuite
-      properties:
-        name:
-          type: string
-          description: Name of the new test suite
-        suiteType:
-          type: string
-          description: Type of test suite to create
-          enum:
-          - none
-          - dynamicTestSuite
-          - staticTestSuite
-          - requirementTestSuite
-        parentSuite:
-          type: object
-          description: Parent suite to nest this suite under
-          required:
-          - id
-          properties:
-            id:
-              type: integer
-              description: ID of the parent suite
-        requirementId:
-          type: integer
-          description: Work item ID to link (for requirementTestSuite type)
-        queryString:
-          type: string
-          description: WIQL query string (for dynamicTestSuite type)
-        defaultTesters:
-          type: array
-          description: Default testers for test cases in this suite
-          items:
-            $ref: '#/components/schemas/IdentityRef'
     TestSuite:
       type: object
       description: A test suite within a test plan
@@ -373,6 +265,114 @@ components:
               href:
                 type: string
                 format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestSuiteCreateParams:
+      type: object
+      description: Parameters for creating a new test suite
+      required:
+      - name
+      - suiteType
+      - parentSuite
+      properties:
+        name:
+          type: string
+          description: Name of the new test suite
+        suiteType:
+          type: string
+          description: Type of test suite to create
+          enum:
+          - none
+          - dynamicTestSuite
+          - staticTestSuite
+          - requirementTestSuite
+        parentSuite:
+          type: object
+          description: Parent suite to nest this suite under
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              description: ID of the parent suite
+        requirementId:
+          type: integer
+          description: Work item ID to link (for requirementTestSuite type)
+        queryString:
+          type: string
+          description: WIQL query string (for dynamicTestSuite type)
+        defaultTesters:
+          type: array
+          description: Default testers for test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+  parameters:
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http
