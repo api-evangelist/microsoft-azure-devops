@@ -282,7 +282,7 @@ apis:
   baseURL: https://pkgs.dev.azure.com/{organization}/_apis/packaging
   tags:
   - Maven
-  - Npm
+  - npm
   - NuGet
   - Packages
   tags_raw:
