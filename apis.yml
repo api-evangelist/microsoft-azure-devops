@@ -23,11 +23,13 @@ accessModel:
   try_now: true
   public: false
   label: Paid (free trial) · Self-serve signup
-  confidence: high
+  confidence: medium
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - security
+  - {url: 'https://dev.azure.com', status: 302, note: 'declared website redirects to https://azure.microsoft.com/en-us/products/devops/?nav=min — a different registrable domain (azure.com -> microsoft.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
+  generated: '2026-09-03'
   method: derived
 image: https://azure.microsoft.com/svghandler/devops/
 tags:
