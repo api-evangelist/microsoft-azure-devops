@@ -1,0 +1,12 @@
+name: azure-devops API Vocabulary
+provider: azure-devops
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 12
+schemas: 11
+tags:
+- Fields
+- Pipelines
+- Queries
+- Runs
+- WorkItems

@@ -1,0 +1,41 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/azure-devops-pipelines-openapi.yml, openapi/azure-devops-work-items-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/azure-devops-pipelines-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+    tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+- name: oauth2
+  source: openapi/azure-devops-work-items-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+    tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+scopes:
+- scope: vso.build
+  description: Read build data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-devops-pipelines-openapi.yml
+- scope: vso.build_execute
+  description: Queue and manage builds
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-devops-pipelines-openapi.yml
+- scope: vso.work
+  description: Read work items
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-devops-work-items-openapi.yml
+- scope: vso.work_write
+  description: Read and write work items
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-devops-work-items-openapi.yml

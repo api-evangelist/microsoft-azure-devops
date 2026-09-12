@@ -1,0 +1,656 @@
+openapi: 3.1.0
+info:
+  title: Azure DevOps Pipelines API
+  description: >-
+    The Azure DevOps Pipelines API provides REST endpoints for managing CI/CD build
+    and release pipelines. APIs support pipeline creation, triggering builds, retrieving
+    build results, managing release definitions, and automating deployment workflows
+    across Azure DevOps organizations.
+  version: "7.2"
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+
+servers:
+- url: https://dev.azure.com/{organization}
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: Azure DevOps organization name
+      default: my-org
+
+security:
+- personalAccessToken: []
+- oauth2: []
+
+tags:
+- name: Pipelines
+  description: Pipeline definition management
+- name: Runs
+  description: Pipeline run execution and monitoring
+paths:
+  /{project}/_apis/pipelines:
+    get:
+      operationId: listPipelines
+      summary: List Pipelines
+      description: List all pipelines in the project.
+      tags: [Pipelines]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: $orderBy
+        in: query
+        schema:
+          type: string
+        example: example_value
+      - name: $top
+        in: query
+        schema:
+          type: integer
+        example: 10
+      - name: continuationToken
+        in: query
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      responses:
+        '200':
+          description: List of pipelines
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pipeline'
+
+              examples:
+                Listpipelines200Example:
+                  summary: Default listPipelines 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 10
+                    value:
+                    - id: abc123
+                      name: Example Title
+                      revision: 10
+                      folder: example_value
+                      configuration:
+                        type: yaml
+                        path: example_value
+                        repository: {}
+                      url: https://www.example.com
+                      links: example_value
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createPipeline
+      summary: Create a Pipeline
+      description: Creates a new pipeline from a YAML definition in a repository.
+      tags: [Pipelines]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipelineRequest'
+            examples:
+              CreatepipelineRequestExample:
+                summary: Default createPipeline request
+                x-microcks-default: true
+                value:
+                  name: Example Title
+                  folder: example_value
+                  configuration:
+                    type: yaml
+                    path: example_value
+                    repository:
+                      id: abc123
+                      type: azureReposGit
+      responses:
+        '200':
+          description: Created pipeline
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+
+              examples:
+                Createpipeline200Example:
+                  summary: Default createPipeline 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    name: Example Title
+                    revision: 10
+                    folder: example_value
+                    configuration:
+                      type: yaml
+                      path: example_value
+                      repository:
+                        id: abc123
+                        type: azureReposGit
+                    url: https://www.example.com
+                    links: example_value
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /{project}/_apis/pipelines/{pipelineId}:
+    get:
+      operationId: getPipeline
+      summary: Get Pipeline
+      description: Get a specific pipeline by ID.
+      tags: [Pipelines]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: '500123'
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      responses:
+        '200':
+          description: Pipeline details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+              examples:
+                Getpipeline200Example:
+                  summary: Default getPipeline 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    name: Example Title
+                    revision: 10
+                    folder: example_value
+                    configuration:
+                      type: yaml
+                      path: example_value
+                      repository:
+                        id: abc123
+                        type: azureReposGit
+                    url: https://www.example.com
+                    links: example_value
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /{project}/_apis/pipelines/{pipelineId}/runs:
+    get:
+      operationId: listPipelineRuns
+      summary: List Pipeline Runs
+      description: List runs for a specific pipeline.
+      tags: [Runs]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: '500123'
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      responses:
+        '200':
+          description: Pipeline runs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PipelineRun'
+
+              examples:
+                Listpipelineruns200Example:
+                  summary: Default listPipelineRuns 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 10
+                    value:
+                    - id: abc123
+                      name: Example Title
+                      state: unknown
+                      result: unknown
+                      createdDate: '2026-01-15T10:30:00Z'
+                      finishedDate: '2026-01-15T10:30:00Z'
+                      pipeline:
+                        id: abc123
+                        name: Example Title
+                      resources:
+                        repositories: example_value
+                      variables: example_value
+                      url: https://www.example.com
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: runPipeline
+      summary: Run a Pipeline
+      description: Triggers a new run of the specified pipeline.
+      tags: [Runs]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: '500123'
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunPipelineRequest'
+            examples:
+              RunpipelineRequestExample:
+                summary: Default runPipeline request
+                x-microcks-default: true
+                value:
+                  resources:
+                    repositories:
+                      self:
+                        refName: example_value
+                  variables: example_value
+                  templateParameters: example_value
+                  stagesToSkip:
+                  - example_value
+      responses:
+        '200':
+          description: Pipeline run started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineRun'
+
+              examples:
+                Runpipeline200Example:
+                  summary: Default runPipeline 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    name: Example Title
+                    state: unknown
+                    result: unknown
+                    createdDate: '2026-01-15T10:30:00Z'
+                    finishedDate: '2026-01-15T10:30:00Z'
+                    pipeline:
+                      id: abc123
+                      name: Example Title
+                    resources:
+                      repositories: example_value
+                    variables: example_value
+                    url: https://www.example.com
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /{project}/_apis/pipelines/{pipelineId}/runs/{runId}:
+    get:
+      operationId: getPipelineRun
+      summary: Get Pipeline Run
+      description: Get the details of a specific pipeline run.
+      tags: [Runs]
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: pipelineId
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: '500123'
+      - name: runId
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: '500123'
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: "7.2-preview.1"
+        example: example_value
+      responses:
+        '200':
+          description: Pipeline run details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineRun'
+
+              examples:
+                Getpipelinerun200Example:
+                  summary: Default getPipelineRun 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    name: Example Title
+                    state: unknown
+                    result: unknown
+                    createdDate: '2026-01-15T10:30:00Z'
+                    finishedDate: '2026-01-15T10:30:00Z'
+                    pipeline:
+                      id: abc123
+                      name: Example Title
+                    resources:
+                      repositories: example_value
+                    variables: example_value
+                    url: https://www.example.com
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    personalAccessToken:
+      type: http
+      scheme: basic
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.build: Read build data
+            vso.build_execute: Queue and manage builds
+
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    Pipeline:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        revision:
+          type: integer
+          example: 10
+        folder:
+          type: string
+          example: example_value
+        configuration:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [yaml, designerJson, justInTime, designerHyphenJson]
+            path:
+              type: string
+            repository:
+              type: object
+              properties:
+                id:
+                  type: string
+                type:
+                  type: string
+                  enum: [azureReposGit, gitHub, bitbucket]
+          example: example_value
+        url:
+          type: string
+          example: https://www.example.com
+        links:
+          type: object
+
+          example: example_value
+    CreatePipelineRequest:
+      type: object
+      required: [name, configuration]
+      properties:
+        name:
+          type: string
+          example: Example Title
+        folder:
+          type: string
+          example: example_value
+        configuration:
+          type: object
+          required: [type, path, repository]
+          properties:
+            type:
+              type: string
+              enum: [yaml]
+            path:
+              type: string
+              description: Path to the YAML file in the repository
+            repository:
+              type: object
+              required: [id, type]
+              properties:
+                id:
+                  type: string
+                type:
+                  type: string
+                  enum: [azureReposGit, gitHub]
+          example: example_value
+
+    PipelineRun:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        state:
+          type: string
+          enum: [unknown, inProgress, canceling, completed]
+          example: unknown
+        result:
+          type: string
+          enum: [unknown, succeeded, failed, canceled]
+          example: unknown
+        createdDate:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        finishedDate:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        pipeline:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          example: example_value
+        resources:
+          type: object
+          properties:
+            repositories:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  repository:
+                    type: object
+                  refName:
+                    type: string
+                  version:
+                    type: string
+          example: example_value
+        variables:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+          example: example_value
+        url:
+          type: string
+
+          example: https://www.example.com
+    RunPipelineRequest:
+      type: object
+      properties:
+        resources:
+          type: object
+          properties:
+            repositories:
+              type: object
+              properties:
+                self:
+                  type: object
+                  properties:
+                    refName:
+                      type: string
+          example: example_value
+        variables:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+          example: example_value
+        templateParameters:
+          type: object
+          additionalProperties: true
+          example: example_value
+        stagesToSkip:
+          type: array
+          items:
+            type: string
+
+          example: []
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: example_value
+        errorCode:
+          type: integer
+          example: 10
