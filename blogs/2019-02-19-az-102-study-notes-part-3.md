@@ -1,0 +1,8 @@
+---
+title: AZ-102 Study notes - Part 3
+url: http://www.azuredevops.com/2019/02/az-102-study-notes-part-3.html
+date: '2019-02-19'
+author: AzureDevops (noreply@blogger.com)
+feed_url: http://www.azuredevops.com/feeds/posts/default
+---
+Continued from a previous series: Configure and manage virtual networks (15-20%) Create connectivity between virtual networks Create and configure VNET peering Vnet peering is private peering across region or subscriptions but not tenants . 10 per vnet by default, but up to 50. Via Powershell: Add-AzureRmVirtualNetworkPeering / az network vnet peering create Create and configure VNET to VNET Vnet to Vnet connections require public IPs Only Vnets in the same subscription from the portal. Add connection under the VNet. Use the New-AzureRMVirtualNetworkGatewayConnection CMDlet to setup via Powershell. Verify virtual network connectivity Get-AzureRmVirtualNetworkGatewayConnection az network vpn-connection show Network Watcher Agent extenion. Flow Logs require NGS rules, a log analytics work-space and a storage account. Create virtual network gateway Requires a DYNAMIC public IP address. Review the SKUs noted in the documentation for gateway : Basic SKU- Max 10 tunnels, others max 30. VPNGw1,2,3 support P2S IKEv2 connection and BGP and each have bandwidth higher then the last. Configure name resolution Configure Azure DNS Create a new DNS zone from the marketplace or use the powershell commands: New-AzureRmDNS zone New-AzureRMDnsRecordSet Configure custom DNS settings Alias records dynamically update if they change in Azure. Configure DNS zones DNS zones contain one or more records for a domain.
