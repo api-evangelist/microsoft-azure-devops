@@ -1787,6 +1787,8 @@ apis:
   - type: Documentation
     url: https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: CapabilityMap
     url: capabilities/microsoft-azure-devops-capability-edges.yml
     name: Azure DevOps Business Capability Map
@@ -1927,3 +1929,5 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-parent: microsoft-azure
+x-relationship: product
