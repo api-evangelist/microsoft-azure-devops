@@ -1869,16 +1869,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/microsoft-azure-devops-runs-api-openapi.yml
-- aid: microsoft-azure-devops:microsoft-azure-devops-workitems-api
-  name: Azure DevOps Work Items API
-  description: Work item CRUD and management
-  humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
-  baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
-  tags:
-  - WorkItems
-  properties:
-  - type: OpenAPI
-    url: openapi/microsoft-azure-devops-workitems-api-openapi.yml
 common:
 - type: MCPDocumentation
   url: https://learn.microsoft.com/en-us/azure/devops/mcp-server/remote-mcp-server
