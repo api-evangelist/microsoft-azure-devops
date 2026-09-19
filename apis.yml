@@ -380,7 +380,7 @@ apis:
   baseURL: https://app.vssps.visualstudio.com/_apis/profile/profiles
   tags:
   - Identity
-  - Profile
+  - Profiles
   - User
   tags_raw:
   - Identity
@@ -397,6 +397,10 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/
   baseURL: https://dev.azure.com/{organization}/_apis/securityroles
   tags:
+  - Access Control
+  - Role Assignments
+  - Security/Roles
+  tags_raw:
   - Access Control
   - Role Assignments
   - Security Roles
@@ -869,6 +873,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/
   baseURL: https://dev.azure.com/{organization}
   tags:
+  - Feed
+  tags_raw:
   - Feeds
   properties:
   - type: OpenAPI
@@ -1855,6 +1861,8 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/
   baseURL: https://vssps.dev.azure.com/{organization}/_apis/graph
   tags:
+  - Query
+  tags_raw:
   - Queries
   properties:
   - type: OpenAPI
