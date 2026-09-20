@@ -1,217 +1,72 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: Azure DevOps
-providerId: microsoft-azure-devops
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: true
-tags:
-  - DevOps
-  - CI/CD
-  - Boards
-  - Repos
-  - Pipelines
-  - Microsoft Azure
-description: Azure DevOps Services is sold via per-user licenses (Basic, Basic + Test Plans, Visual
-  Studio subscriptions) plus paid Microsoft-hosted and self-hosted parallel jobs and Artifacts storage.
-  First 5 Basic users in an organization are free. Stakeholder users (limited access) are free and
-  unlimited.
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
 sources:
-  - https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+- https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+published: true
+note: Azure DevOps Services pricing page; per-user licenses plus individual services (pipelines, artifacts
+  GiB tiers, GHAS per committer). GitHub Copilot code review credit prices shown as '$- /credit' (masked).
+plan_count: 7
+currency: USD
 plans:
-  - id: microsoft-azure-devops-stakeholder
-    name: Stakeholder
-    type: freemium
-    description: Free, unlimited stakeholder access. View progress, work-item creation, and limited
-      access to Boards.
-    entries:
-      - label: Per user / month
-        name: stakeholder
-        type: subscription
-        metric: seat
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: true
-    elements:
-      - name: Free, unlimited
-      - name: Limited Boards access
-      - name: View dashboards
-  - id: microsoft-azure-devops-basic
-    name: Basic
-    type: subscription
-    description: Full access to Repos, Pipelines, Boards, Artifacts. First 5 Basic users free per
-      organization; $6/user/month thereafter.
-    entries:
-      - label: Per user / month (first 5)
-        name: basic_free
-        type: subscription
-        metric: seat
-        limit: 5
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: true
-      - label: Per user / month (6+)
-        name: basic_paid
-        type: subscription
-        metric: seat
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '6.00'
-        userMultiplied: true
-    elements:
-      - name: Repos (unlimited private Git)
-      - name: Pipelines (CI/CD)
-      - name: Boards (Agile + Scrum)
-      - name: Artifacts (2 GB included)
-  - id: microsoft-azure-devops-basic-test-plans
-    name: Basic + Test Plans
-    type: subscription
-    description: Adds Test Plans for manual test case management. No free tier; 30-day free trial.
-    entries:
-      - label: Per user / month
-        name: basic_test_plans
-        type: subscription
-        metric: seat
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '52.00'
-        userMultiplied: true
-    elements:
-      - name: All Basic features
-      - name: Test Plans (manual test case management)
-      - name: Test execution and tracking
-  - id: microsoft-azure-devops-pipelines-microsoft-hosted
-    name: Microsoft-Hosted Parallel Jobs
-    type: usage-based
-    description: Microsoft-hosted CI/CD parallel job slots. Public projects get 10 free. Private
-      projects get the first slot free with 1,800 minutes/month included; additional jobs paid per
-      slot.
-    entries:
-      - label: Public project parallel jobs
-        name: ms_hosted_public
-        type: quota
-        metric: parallel_job
-        limit: 10
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Private project free tier
-        name: ms_hosted_private_free
-        type: quota
-        metric: parallel_job
-        limit: 1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Private project additional parallel job
-        name: ms_hosted_private_paid
-        type: subscription
-        metric: parallel_job
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '40.00'
-        userMultiplied: false
-    elements:
-      - name: Microsoft-managed agents
-      - name: 1,800 free minutes/month on first private parallel job
-      - name: Unlimited minutes on each paid parallel job
-  - id: microsoft-azure-devops-pipelines-self-hosted
-    name: Self-Hosted Parallel Jobs
-    type: usage-based
-    description: Self-hosted parallel jobs (you provide the agent VMs). Public projects are unlimited
-      and free; private projects get the first slot free with additional slots paid per month.
-    entries:
-      - label: Self-hosted private parallel job (additional)
-        name: self_hosted_paid
-        type: subscription
-        metric: parallel_job
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '15.00'
-        userMultiplied: false
-    elements:
-      - name: Customer-provided agents
-      - name: 1 free private parallel job per org
-      - name: Unlimited minutes
-  - id: microsoft-azure-devops-artifacts
-    name: Artifacts
-    type: usage-based
-    description: Universal package management. First 2 GB free per organization, then per-GB pricing.
-    entries:
-      - label: Storage (first 2 GB)
-        name: artifacts_free
-        type: quota
-        metric: gb
-        limit: 2
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Storage (2-10 GB)
-        name: artifacts_2_10gb
-        type: metered
-        metric: gb
-        limit: 10
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '2.00 per GB'
-        userMultiplied: false
-      - label: Storage (10-100 GB)
-        name: artifacts_10_100gb
-        type: metered
-        metric: gb
-        limit: 100
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '1.00 per GB'
-        userMultiplied: false
-      - label: Storage (100-1000 GB)
-        name: artifacts_100_1000gb
-        type: metered
-        metric: gb
-        limit: 1000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.50 per GB'
-        userMultiplied: false
-      - label: Storage (1000+ GB)
-        name: artifacts_over_1000gb
-        type: metered
-        metric: gb
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.25 per GB'
-        userMultiplied: false
-    elements:
-      - name: NuGet, npm, Maven, Python, Cargo, Universal
-      - name: Tiered per-GB pricing
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: Azure Pipelines – Microsoft-hosted parallel job
+  price_text: $40 per extra Microsoft-hosted CI/CD parallel job
+  price: 40
+  currency: USD
+  period: month
+  unit: parallel job
+  included_quota: 1 Microsoft-hosted job with 1,800 minutes per month for CI/CD
+- name: Azure Pipelines – Self-hosted parallel job
+  price_text: $15 per extra self-hosted CI/CD parallel job with unlimited minutes
+  price: 15
+  currency: USD
+  period: month
+  unit: parallel job
+  included_quota: 1 self-hosted job with unlimited minutes per month
+- name: Azure Artifacts
+  price_text: 2 GiB free, then starting at $2 per GiB
+  price: 2
+  currency: USD
+  period: month
+  unit: GiB
+  included_quota: First 2 GiB free
+  overage: 0 - 2 GiB = Free 2 - 10 GiB = $2 per GiB 10 - 100 GiB = $1 per GiB 100 - 1,000 GiB = $0.5 per
+    GiB 1,000+ GiB = $0.25 per GiB
+- name: GitHub Advanced Security for Azure DevOps – Code Security
+  price_text: 'Code Security: $30 per committer per month'
+  price: 30
+  currency: USD
+  period: month
+  unit: committer
+- name: GitHub Advanced Security for Azure DevOps – Secret Protection
+  price_text: 'Secret Protection: $19 per committer per month'
+  price: 19
+  currency: USD
+  period: month
+  unit: committer
+- name: Basic Plan
+  price_text: First 5 users free, then $6 per user per month
+  price: 6
+  currency: USD
+  period: month
+  unit: user
+  included_quota: 'First 5 users free; Azure Artifacts: 2 GiB free per organization'
+- name: Basic + Test Plans
+  price_text: $52 per user per month
+  price: 52
+  currency: USD
+  period: month
+  unit: user
+  included_quota: 30 day free trial; Includes all Basic plan features
+rate_limit_statements:
+- 1 Microsoft-hosted job with 1,800 minutes per month for CI/CD and 1 self-hosted job with unlimited minutes
+  per month
+- Each Azure DevOps organization gets one parallel job with 1,800 minutes (30 hours) of build time every
+  month using Microsoft-hosted agents.
