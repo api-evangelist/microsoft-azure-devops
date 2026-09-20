@@ -1,0 +1,45 @@
+# ESTIMATES computed by API Evangelist — not published by the provider. See `note` and `replace_by`.
+generated: '2026-09-20'
+method: estimated
+estimator: 'planning/api-economics/estimate_prices.py — design: ESTIMATION.md'
+note: ESTIMATES, not quotes. Computed by API Evangelist from the prices this provider publishes on https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+  (transcribed in plans/microsoft-azure-devops-plans-pricing.yml). Nothing here overrides a published
+  price. Each estimate names the figure it came from, the formula, any assumption, and the field the provider
+  can publish to replace it — publish that and the estimate is retired.
+audience_of_source_pricing: business-product
+pricing_basis: per-seat
+estimate_count: 2
+estimates:
+- kind: entry_cost
+  grade: A
+  grade_meaning: quoted — the page states this figure
+  usd_per_month: 6.0
+  meaning: the cheapest published paid tier — a floor on the cost of getting in, NOT the price of the
+    API alone
+  inputs:
+  - file: plans/microsoft-azure-devops-plans-pricing.yml
+    plan: Basic Plan
+    price_text: First 5 users free, then $6 per user per month
+  replace_by: 'API Commons Plans — plans[].entries[] with type: fee, a numeric `price`, `timeFrame: month`
+    and the tier that includes API access stated in `elements`'
+- kind: marginal_cost
+  grade: C
+  grade_meaning: depends on a stated prior — see `priors`
+  usd: 0.006
+  per: request
+  formula: 'C2 seat-implied: seat price per month / calls per seat per month'
+  inputs:
+  - file: plans/microsoft-azure-devops-plans-pricing.yml
+    plan: Basic Plan
+    price_text: First 5 users free, then $6 per user per month
+  replace_by: 'API Commons Plans — plans[].entries[] with type: metered, `metric` (request | token | transaction
+    | message), `unit` and a numeric `price`; and FinOps `primaryUnit` + `meters[]`'
+  range_usd:
+  - 0.0006
+  - 0.06
+  priors:
+    calls_per_seat_month:
+      low: 100
+      point: 1000
+      high: 10000
+  confidence: order-of-magnitude
