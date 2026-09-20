@@ -10,6 +10,12 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: per-seat
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: Azure DevOps Server
+  managed_tier: Basic Plan
 published: true
 note: Azure DevOps Services pricing page; per-user licenses plus individual services (pipelines, artifacts
   GiB tiers, GHAS per committer). GitHub Copilot code review credit prices shown as '$- /credit' (masked).
