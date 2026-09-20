@@ -9,7 +9,8 @@ note: ESTIMATES, not quotes. Computed by API Evangelist from the prices this pro
 audience_of_source_pricing: business-product
 pricing_basis: per-seat
 delivery: managed+licensed
-delivery_method: keyword
+delivery_method: page
+delivery_evidence: Azure DevOps Server
 estimate_count: 2
 estimates:
 - kind: entry_cost
