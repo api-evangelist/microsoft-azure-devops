@@ -1,0 +1,207 @@
+slug: microsoft-azure-devops
+provider: Azure DevOps
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 20
+edges:
+- tag: Pull Requests
+  spec_file: microsoft-azure-devops-pull-requests-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.9
+  evidence: POST /git/repositories/{repositoryId}/pullrequests  pullRequests_create; POST .../threads  pullRequests_addComment  Add
+    a pull request comment thread
+  reason: Pull request creation, review votes (IdentityRefWithVote) and comment threads are exactly code
+    review and collaborative coding practice — software construction management.
+- tag: Build Definitions
+  spec_file: microsoft-azure-devops-build-definitions-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.88
+  evidence: GET /build/definitions definitions_list Azure DevOps List build definitions; POST /build/definitions
+    Create a build definition; schema BuildDefinition
+  reason: CRUD over CI build pipeline definitions — build pipeline configuration is Continuous Integration
+    Management.
+- tag: Builds
+  spec_file: microsoft-azure-devops-builds-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.88
+  evidence: POST /build/builds builds_queue Azure DevOps Queue a new build; schema BuildQueueRequest
+  reason: Queueing and listing build runs is build pipeline execution — Continuous Integration Management.
+- tag: Test Cases
+  spec_file: microsoft-azure-devops-test-cases-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.88
+  evidence: GET /testplan/plans/{planId}/suites/{suiteId}/testcases  testCases_list  Azure DevOps List
+    test cases in a suite
+  reason: Managing test cases within suites is test-asset stewardship under software quality engineering.
+- tag: Test Plans
+  spec_file: microsoft-azure-devops-test-plans-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.88
+  evidence: POST /testplan/plans  testPlans_create  Azure DevOps Create a test plan; schemas TestPlan,
+    TestSuiteReference
+  reason: Test plan and suite lifecycle management is test strategy/suite stewardship, i.e. software quality
+    engineering.
+- tag: Commits
+  spec_file: microsoft-azure-devops-commits-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.85
+  evidence: GET /git/repositories/{repositoryId}/commits commits_list Azure DevOps List commits; schema
+    GitCommitRef
+  reason: Git source-control commit listing = software construction practice (source control).
+- tag: Pushes
+  spec_file: microsoft-azure-devops-pushes-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.85
+  evidence: POST /git/repositories/{repositoryId}/pushes  pushes_create  Azure DevOps Create a push; schemas
+    GitPush, GitCommitRef, GitRefUpdate
+  reason: Git push/commit operations are source-control implementation practice, mapping to software construction
+    management.
+- tag: Repositories
+  spec_file: microsoft-azure-devops-repositories-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.85
+  evidence: POST /git/repositories  repositories_create  Azure DevOps Create a repository; GET .../items  items_list  List
+    repository items
+  reason: Git repository and file-tree management is source-control tooling, i.e. software construction
+    management.
+- tag: Pipeline Runs
+  spec_file: microsoft-azure-devops-pipeline-runs-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.82
+  evidence: GET /pipelines/{pipelineId}/runs  runs_list  Azure DevOps List pipeline runs; POST ... runs_run  Run
+    a pipeline
+  reason: Operations trigger and inspect CI/CD pipeline executions (RunPipelineParameters, Run), which
+    is build-pipeline execution — continuous integration management within software release & deployment.
+- tag: Pipelines
+  spec_file: microsoft-azure-devops-pipelines-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.82
+  evidence: 'POST /pipelines  pipelines_create  Azure DevOps Create a pipeline; schemas: BuildRepository,
+    PipelineConfiguration'
+  reason: Defines and lists build pipelines bound to a repository; this is build/CI pipeline definition
+    management, not artifact packaging as the misleading title suggests.
+- tag: Release Definitions
+  spec_file: microsoft-azure-devops-release-definitions-api-openapi.yml
+  capability_id: BC-4210
+  capability_id_l1: BC-4210
+  capability_name: Software Release & Deployment Management
+  confidence: 0.82
+  evidence: POST /release/definitions  releaseDefinitions_create  Azure DevOps Create a release definition;
+    schemas ReleaseDefinitionEnvironment, Artifact
+  reason: Defines release pipelines with stages/environments and artifacts — clearly software release
+    & deployment management; evidence does not decide between release engineering and deployment orchestration,
+    so L2 withheld.
+- tag: Releases
+  spec_file: microsoft-azure-devops-releases-api-openapi.yml
+  capability_id: BC-4210
+  capability_id_l1: BC-4210
+  capability_name: Software Release & Deployment Management
+  confidence: 0.82
+  evidence: POST /release/releases  releases_create  Azure DevOps Create a release; schemas ReleaseEnvironment,
+    ReleaseApproval
+  reason: Creating and updating releases against defined environments with approvals is release/deployment
+    execution; sub-capability ambiguous between release engineering, deployment orchestration and change
+    authorisation.
+- tag: Test Suites
+  spec_file: microsoft-azure-devops-test-suites-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.82
+  evidence: GET /testplan/plans/{planId}/suites  testSuites_list  'List test suites'; POST 'Create a test
+    suite'; schema TestSuiteCreateParams
+  reason: Operations manage test plans and test suites in Azure Test Plans — test suite stewardship for
+    software, i.e. software quality engineering. Title mentioning Artifacts/Attachments is spurious.
+- tag: Build Artifacts
+  spec_file: microsoft-azure-devops-build-artifacts-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.8
+  evidence: GET /build/builds/{buildId}/artifacts builds_listArtifacts 'List build artifacts'; schema
+    BuildArtifact
+  reason: Retrieval of artefacts produced by CI builds maps to Continuous Integration Management (build
+    pipelines and artefact production).
+- tag: Deployments
+  spec_file: microsoft-azure-devops-deployments-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.8
+  evidence: GET /release/deployments deployments_list Azure DevOps List deployments; schema ReleaseDefinitionShallowReference
+  reason: Release deployment records — deployment orchestration of software changes to environments.
+- tag: Pipeline Artifacts
+  spec_file: microsoft-azure-devops-pipeline-artifacts-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.8
+  evidence: GET /pipelines/{pipelineId}/runs/{runId}/artifacts artifacts_list Azure DevOps List run artifacts
+  reason: Artefacts produced by pipeline runs — artefact production in build pipelines.
+- tag: Refs
+  spec_file: microsoft-azure-devops-refs-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.8
+  evidence: GET /git/repositories/{repositoryId}/refs  refs_list  Azure DevOps List branches and refs
+  reason: Branch/ref listing is source-control (branching) practice within software construction; single
+    read-only operation so slightly lower confidence.
+- tag: Build Logs
+  spec_file: microsoft-azure-devops-build-logs-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.75
+  evidence: GET /build/builds/{buildId}/logs builds_getLogs Azure DevOps Get build logs; GET .../timeline
+    Get build timeline
+  reason: Logs and timeline of CI build runs; artefacts of build pipeline execution rather than production
+    observability.
+- tag: Feeds
+  spec_file: microsoft-azure-devops-feeds-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.7
+  evidence: 'POST /packaging/feeds feeds_create Azure DevOps Create a feed; description: ''managing packages,
+    feeds, and artifact dependencies in Azure Artifacts'''
+  reason: Package feed management is build artefact production/storage within CI; plausible but could
+    also be treated as dependency/open-source stewardship.
+- tag: Subscriptions
+  spec_file: microsoft-azure-devops-subscriptions-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.7
+  evidence: POST /hooks/subscriptions  subscriptions_create  Azure DevOps Create a subscription
+  reason: These are service-hook (webhook) subscriptions, not commercial subscriptions — lifecycle of
+    outbound event subscriptions. Homograph risk explicitly resolved by the /hooks/ path.
