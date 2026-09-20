@@ -1,66 +1,43 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: Azure DevOps
-providerId: microsoft-azure-devops
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: true
-tags:
-  - Rate Limiting
-  - DevOps
-  - Microsoft Azure
-description: Azure DevOps Services rate-limits API consumers via Throughput Service Tokens (TSTUs).
-  TSTUs blend SQL DTU, compute, and storage usage. Each user has a sliding 5-minute window; sustained
-  high consumption triggers delays first (X-RateLimit-Delay), then 429 responses.
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops
 sources:
-  - https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-  - https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices
-headers:
-  rateLimitRemaining: X-RateLimit-Remaining
-  rateLimitDelay: X-RateLimit-Delay
-  rateLimitReset: X-RateLimit-Reset
-  rateLimitLimit: X-RateLimit-Limit
-  retryAfter: Retry-After
-responseCodes:
-  throttled: 429
+- https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits?view=azure-devops
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: true
+note: Limits expressed in abstract TSTUs over sliding five-minute windows; no per-second/minute request
+  rates given.
+limit_count: 4
 limits:
-  - name: Global per-user TSTU window
-    scope: user
-    metric: TSTU_per_5_minutes
-    limit: 200
-    timeFrame: minute
-    notes: 200 TSTUs in any sliding 5-minute window. 1 TSTU ~= average load of one typical user
-      over 5 minutes. Spikes up to 100 TSTUs are tolerated.
-  - name: Typical user spike
-    scope: user
-    metric: TSTU_per_5_minutes
-    limit: 10
-    timeFrame: minute
-    notes: Normal user activity generates spikes of 10 TSTUs or fewer per 5 minutes.
-  - name: Tolerated burst
-    scope: user
-    metric: TSTU_per_5_minutes
-    limit: 100
-    timeFrame: minute
-    notes: Larger but less frequent spikes can reach up to 100 TSTUs before delay/throttle kicks
-      in.
-policies:
-  - name: Honor Retry-After
-    description: When the API returns Retry-After (with HTTP 200 in delayed mode or 429 in blocked
-      mode), wait the specified seconds before sending another request.
-  - name: Monitor X-RateLimit headers
-    description: Track X-RateLimit-Remaining and X-RateLimit-Limit to smooth out request bursts proactively
-      before delays start (Remaining = 0 indicates active delay).
-  - name: Use bulk and webhook patterns
-    description: Use service hooks, batch APIs, and OData reports instead of polling individual work
-      items to reduce TSTU consumption.
-  - name: Personal access token attribution
-    description: Use distinct PATs / app identities per integration so a single misbehaving integration
-      does not consume a user's full quota.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: Global consumption limit
+  limit_text: The global limit is 200 TSTUs within any sliding five-minute window.
+  limit: 200
+  scope: user
+- name: Pipeline consumption limit
+  limit_text: There's a 200 TSTU limit for each pipeline in a sliding 5-minute window.
+  limit: 200
+  scope: endpoint
+  endpoint: Azure Pipelines
+- name: Personal usage threshold
+  limit_text: Their personal usage exceeds 200 times the consumption of a typical user within a sliding
+    five-minute window.
+  limit: 200
+  scope: user
+- name: Wiki file size
+  limit_text: a wiki file in a project can be up to 25 MB
+  limit: 25
+  scope: unclear
+  endpoint: Wiki
+headers:
+- Retry-After
+- X-RateLimit-Resource
+- X-RateLimit-Delay
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset
+- X-RateLimit-Cost
+exceeded_status: 429

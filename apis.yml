@@ -1878,6 +1878,8 @@ apis:
   - type: OpenAPI
     url: openapi/microsoft-azure-devops-runs-api-openapi.yml
 common:
+- type: RateLimits
+  url: rate-limits/microsoft-azure-devops-rate-limits.yml
 - type: Plans
   url: plans/microsoft-azure-devops-plans-pricing.yml
 - type: MCPDocumentation
