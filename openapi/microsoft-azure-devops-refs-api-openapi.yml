@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Git Repositories Refs API
-  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
-
-    '
+  description: REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: refs_list
       summary: Azure DevOps List branches and refs
-      description: 'Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., "heads/" for branches, "tags/" for tags).
-
-        '
+      description: Returns a list of refs (branches and tags) for a repository. Supports filtering by a prefix string (e.g., "heads/" for branches, "tags/" for tags).
       tags:
       - Refs
       parameters:
@@ -104,45 +100,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-  parameters:
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
     IdentityRef:
       type: object
@@ -226,6 +183,45 @@ components:
               targetUrl:
                 type: string
                 format: uri
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

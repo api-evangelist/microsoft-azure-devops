@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Work Items Work Item Types API
-  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
-
-    '
+  description: REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: workItemTypes_list
       summary: Azure DevOps List work item types
-      description: 'Returns a list of all work item types defined in the project. Work item types include Bug, Task, User Story, Feature, Epic, and any custom types defined in the process template.
-
-        '
+      description: Returns a list of all work item types defined in the project. Work item types include Bug, Task, User Story, Feature, Epic, and any custom types defined in the process template.
       tags:
       - Work Item Types
       parameters:
@@ -61,9 +57,7 @@ paths:
     get:
       operationId: workItemTypes_get
       summary: Azure DevOps Get a work item type
-      description: 'Returns detailed information about a specific work item type, including its fields, transitions, states, and rules. The type name is case-sensitive and must match exactly (e.g., ''Bug'', ''Task'', ''User Story'').
-
-        '
+      description: Returns detailed information about a specific work item type, including its fields, transitions, states, and rules. The type name is case-sensitive and must match exactly (e.g., 'Bug', 'Task', 'User Story').
       tags:
       - Work Item Types
       parameters:
@@ -92,9 +86,7 @@ paths:
     get:
       operationId: fields_list
       summary: Azure DevOps List work item fields
-      description: 'Returns a list of all work item fields available in the project. Includes both system fields (System.*) and custom fields, with their types, reference names, and whether they are read-only.
-
-        '
+      description: Returns a list of all work item fields available in the project. Includes both system fields (System.*) and custom fields, with their types, reference names, and whether they are read-only.
       tags:
       - Work Item Types
       parameters:
@@ -128,6 +120,38 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
     WorkItemField:
       type: object
@@ -324,38 +348,6 @@ components:
           type: boolean
         readOnly:
           type: boolean
-  responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

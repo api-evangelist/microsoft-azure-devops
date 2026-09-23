@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Work Items Work Item Tracking API
-  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
-
-    '
+  description: REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     post:
       operationId: workItems_queryByWiql
       summary: Azure DevOps Execute a WIQL query
-      description: 'Executes a Work Item Query Language (WIQL) query and returns a list of work item references that match the query criteria. WIQL is a SQL-like language specific to Azure DevOps work item querying.
-
-        '
+      description: Executes a Work Item Query Language (WIQL) query and returns a list of work item references that match the query criteria. WIQL is a SQL-like language specific to Azure DevOps work item querying.
       tags:
       - Work Item Tracking
       parameters:
@@ -100,7 +96,47 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
     WorkItemQueryResult:
       type: object
       description: Results from a WIQL query execution
@@ -146,46 +182,6 @@ components:
               url:
                 type: string
                 format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
-          type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
-          type: string
-          description: Human-readable error message
-        typeName:
-          type: string
-          description: Type name of the exception
-        typeKey:
-          type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

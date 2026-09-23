@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Builds Build Artifacts API
-  description: 'REST API for managing build definitions (pipelines), queuing builds, monitoring build status, accessing build logs, timelines, and artifacts. Supports the full lifecycle of continuous integration builds in Azure DevOps.
-
-    '
+  description: REST API for managing build definitions (pipelines), queuing builds, monitoring build status, accessing build logs, timelines, and artifacts. Supports the full lifecycle of continuous integration builds in Azure DevOps.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: builds_listArtifacts
       summary: Azure DevOps List build artifacts
-      description: 'Returns a list of artifacts published by a specific build. Artifacts can be downloaded individually and include their name, type, and download URL.
-
-        '
+      description: Returns a list of artifacts published by a specific build. Artifacts can be downloaded individually and include their name, type, and download URL.
       tags:
       - Build Artifacts
       parameters:
@@ -72,43 +68,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     BuildArtifact:
       type: object
       description: An artifact published by a build
@@ -141,6 +101,42 @@ components:
         source:
           type: string
           description: Source of the artifact
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

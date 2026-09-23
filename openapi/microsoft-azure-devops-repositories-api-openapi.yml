@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Git Repositories API
-  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
-
-    '
+  description: REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: repositories_list
       summary: Azure DevOps List repositories
-      description: 'Returns a list of Git repositories in the project. Each repository includes its ID, name, default branch, clone URL, and remote URL.
-
-        '
+      description: Returns a list of Git repositories in the project. Each repository includes its ID, name, default branch, clone URL, and remote URL.
       tags:
       - Repositories
       parameters:
@@ -78,9 +74,7 @@ paths:
     post:
       operationId: repositories_create
       summary: Azure DevOps Create a repository
-      description: 'Creates a new Git repository in the project. Optionally can initialize the repository with a README and specify its visibility. After creation, the repository is empty unless a source URL is provided.
-
-        '
+      description: Creates a new Git repository in the project. Optionally can initialize the repository with a README and specify its visibility. After creation, the repository is empty unless a source URL is provided.
       tags:
       - Repositories
       parameters:
@@ -146,9 +140,7 @@ paths:
     get:
       operationId: repositories_get
       summary: Azure DevOps Get a repository
-      description: 'Returns detailed information about a specific Git repository, including its default branch, clone URL, and project association. The repositoryId can be either the GUID or the repository name.
-
-        '
+      description: Returns detailed information about a specific Git repository, including its default branch, clone URL, and project association. The repositoryId can be either the GUID or the repository name.
       tags:
       - Repositories
       parameters:
@@ -176,9 +168,7 @@ paths:
     patch:
       operationId: repositories_update
       summary: Azure DevOps Update a repository
-      description: 'Updates properties of a repository such as its name or default branch. Only the fields provided in the request body will be changed.
-
-        '
+      description: Updates properties of a repository such as its name or default branch. Only the fields provided in the request body will be changed.
       tags:
       - Repositories
       parameters:
@@ -219,9 +209,7 @@ paths:
     delete:
       operationId: repositories_delete
       summary: Azure DevOps Delete a repository
-      description: 'Permanently deletes a repository and all its contents. This action cannot be undone. The repository and all pull requests, branches, and history will be permanently removed.
-
-        '
+      description: Permanently deletes a repository and all its contents. This action cannot be undone. The repository and all pull requests, branches, and history will be permanently removed.
       tags:
       - Repositories
       parameters:
@@ -240,9 +228,7 @@ paths:
     get:
       operationId: items_list
       summary: Azure DevOps List repository items
-      description: 'Returns a list of items (files and folders) in the repository at a specified path and version. Use this to browse the repository tree and download file contents.
-
-        '
+      description: Returns a list of items (files and folders) in the repository at a specified path and version. Use this to browse the repository tree and download file contents.
       tags:
       - Repositories
       parameters:
@@ -312,8 +298,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -324,39 +310,107 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-  parameters:
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -442,94 +496,6 @@ components:
         imageUrl:
           type: string
           format: uri
-    GitCommitRef:
-      type: object
-      description: A reference to a Git commit
-      properties:
-        commitId:
-          type: string
-          description: Full SHA hash of the commit
-          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
-        comment:
-          type: string
-          description: Commit message
-          example: Fix login button alignment
-        commentTruncated:
-          type: boolean
-          description: Whether the comment has been truncated
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        parents:
-          type: array
-          description: Parent commit SHAs
-          items:
-            type: string
-        url:
-          type: string
-          format: uri
-        remoteUrl:
-          type: string
-          format: uri
-        changeCounts:
-          type: object
-          description: Number of files changed (Add, Edit, Delete)
-          properties:
-            Add:
-              type: integer
-            Edit:
-              type: integer
-            Delete:
-              type: integer
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    TeamProjectReference:
-      type: object
-      description: Reference to an Azure DevOps project
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
     GitItem:
       type: object
       description: A file or folder in a Git repository
@@ -585,6 +551,26 @@ components:
               type: boolean
         latestProcessedChange:
           $ref: '#/components/schemas/GitCommitRef'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

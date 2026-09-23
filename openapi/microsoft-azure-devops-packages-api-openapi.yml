@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Artifacts Packages API
-  description: 'REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
-
-    '
+  description: REST API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal package formats in private or public feeds. Enables programmatic management of package feeds, discovery of packages and their versions, and lifecycle operations such as deprecating or deleting package versions.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: packages_list
       summary: Azure DevOps List packages in a feed
-      description: 'Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.
-
-        '
+      description: Returns a list of packages in a specific feed. Supports filtering by package name, protocol type (nuget, npm, maven, pypi, upack), and whether to include deleted packages.
       tags:
       - Packages
       parameters:
@@ -138,9 +134,7 @@ paths:
     get:
       operationId: packages_get
       summary: Azure DevOps Get package details
-      description: 'Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.
-
-        '
+      description: Returns detailed information about a specific package, including all versions, its protocol type, and normalized name. The packageId is the GUID assigned to the package, not the package name.
       tags:
       - Packages
       parameters:
@@ -192,14 +186,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    NotFound:
+      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
@@ -210,118 +204,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-  parameters:
-    FeedId:
-      name: feedId
-      in: path
-      required: true
-      description: Feed GUID or feed name
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
-    Package:
-      type: object
-      description: A package in an Azure Artifacts feed
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique GUID identifier of the package
-        name:
-          type: string
-          description: Display name of the package
-          example: MyCompany.MyLibrary
-        normalizedName:
-          type: string
-          description: Normalized (lowercase) version of the package name
-          example: mycompany.mylibrary
-        protocolType:
-          type: string
-          description: Package manager protocol type
-          enum:
-          - nuget
-          - npm
-          - maven
-          - pypi
-          - upack
-          - cargo
-          - swift
-        versions:
-          type: array
-          description: List of available versions (if requested)
-          items:
-            $ref: '#/components/schemas/PackageVersion'
-        url:
-          type: string
-          format: uri
-          description: URL to access this package via the REST API
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    FeedView:
-      type: object
-      description: A view of a feed (e.g., @local, @prerelease, @release)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: View ID
-        name:
-          type: string
-          description: View name (e.g., '@local', '@release')
-          example: '@release'
-        type:
-          type: string
-          description: View type
-          enum:
-          - none
-          - release
-          - implicit
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
     PackageVersion:
       type: object
       description: A specific version of a package
@@ -381,6 +264,117 @@ components:
         url:
           type: string
           format: uri
+    FeedView:
+      type: object
+      description: A view of a feed (e.g., @local, @prerelease, @release)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: View ID
+        name:
+          type: string
+          description: View name (e.g., '@local', '@release')
+          example: '@release'
+        type:
+          type: string
+          description: View type
+          enum:
+          - none
+          - release
+          - implicit
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Package:
+      type: object
+      description: A package in an Azure Artifacts feed
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the package
+        name:
+          type: string
+          description: Display name of the package
+          example: MyCompany.MyLibrary
+        normalizedName:
+          type: string
+          description: Normalized (lowercase) version of the package name
+          example: mycompany.mylibrary
+        protocolType:
+          type: string
+          description: Package manager protocol type
+          enum:
+          - nuget
+          - npm
+          - maven
+          - pypi
+          - upack
+          - cargo
+          - swift
+        versions:
+          type: array
+          description: List of available versions (if requested)
+          items:
+            $ref: '#/components/schemas/PackageVersion'
+        url:
+          type: string
+          format: uri
+          description: URL to access this package via the REST API
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    FeedId:
+      name: feedId
+      in: path
+      required: true
+      description: Feed GUID or feed name
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

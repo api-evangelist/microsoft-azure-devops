@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Pipelines Pipeline Artifacts API
-  description: 'REST API for managing pipelines and pipeline runs in Azure DevOps. Provides programmatic access to create, list, run, and monitor CI/CD pipelines defined as YAML files in source repositories. Supports triggering runs with custom variables, parameters, and stage selections.
-
-    '
+  description: REST API for managing pipelines and pipeline runs in Azure DevOps. Provides programmatic access to create, list, run, and monitor CI/CD pipelines defined as YAML files in source repositories. Supports triggering runs with custom variables, parameters, and stage selections.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: artifacts_list
       summary: Azure DevOps List run artifacts
-      description: 'Returns a list of artifacts published by a specific pipeline run. Artifacts can include compiled binaries, test results, container images, or any other files published using the PublishBuildArtifacts or PublishPipelineArtifact task.
-
-        '
+      description: Returns a list of artifacts published by a specific pipeline run. Artifacts can include compiled binaries, test results, container images, or any other files published using the PublishBuildArtifacts or PublishPipelineArtifact task.
       tags:
       - Pipeline Artifacts
       parameters:
@@ -83,14 +79,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    NotFound:
+      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:

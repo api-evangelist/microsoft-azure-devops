@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Releases API
-  description: 'REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
-
-    '
+  description: REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: releases_list
       summary: Azure DevOps List releases
-      description: 'Returns a list of releases in the project. Supports filtering by definition, status, environment name, and date ranges. Results are paginated using continuationToken.
-
-        '
+      description: Returns a list of releases in the project. Supports filtering by definition, status, environment name, and date ranges. Results are paginated using continuationToken.
       tags:
       - Releases
       parameters:
@@ -142,9 +138,7 @@ paths:
     post:
       operationId: releases_create
       summary: Azure DevOps Create a release
-      description: 'Creates a new release based on a release definition. You can specify which artifacts to use, add a description, override variables, and optionally save as a draft before deployment.
-
-        '
+      description: Creates a new release based on a release definition. You can specify which artifacts to use, add a description, override variables, and optionally save as a draft before deployment.
       tags:
       - Releases
       parameters:
@@ -183,9 +177,7 @@ paths:
     get:
       operationId: releases_get
       summary: Azure DevOps Get a release
-      description: 'Returns detailed information about a specific release, including all environments, deployment status, artifacts used, and approval history.
-
-        '
+      description: Returns detailed information about a specific release, including all environments, deployment status, artifacts used, and approval history.
       tags:
       - Releases
       parameters:
@@ -230,9 +222,7 @@ paths:
     put:
       operationId: releases_update
       summary: Azure DevOps Update a release
-      description: 'Updates a release, such as changing its status from draft to active, updating the description, or modifying environment configurations.
-
-        '
+      description: Updates a release, such as changing its status from draft to active, updating the description, or modifying environment configurations.
       tags:
       - Releases
       parameters:
@@ -266,148 +256,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    ReleaseDefinitionShallowReference:
-      type: object
-      description: A minimal reference to a release definition
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        path:
-          type: string
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
-    ReleaseEnvironment:
-      type: object
-      description: An environment (deployment stage) within a release
-      properties:
-        id:
-          type: integer
-        releaseId:
-          type: integer
-          description: ID of the release this environment belongs to
-        name:
-          type: string
-          description: Environment name (e.g., Dev, Staging, Production)
-        status:
-          type: string
-          description: Current deployment status of this environment
-          enum:
-          - undefined
-          - notStarted
-          - inProgress
-          - succeeded
-          - canceled
-          - rejected
-          - queued
-          - scheduled
-          - partiallySucceeded
-        definitionEnvironmentId:
-          type: integer
-          description: ID of the corresponding environment definition
-        createdOn:
-          type: string
-          format: date-time
-        queuedOn:
-          type: string
-          format: date-time
-        lastModifiedOn:
-          type: string
-          format: date-time
-        deployedOn:
-          type: string
-          format: date-time
-        timeToDeploy:
-          type: number
-          description: Time to deploy in minutes
-        deploymentJobs:
-          type: array
-          description: Deployment jobs for this environment
-          items:
-            type: object
-        preDeployApprovals:
-          type: array
-          description: Pre-deployment approval records
-          items:
-            $ref: '#/components/schemas/ReleaseApproval'
-        postDeployApprovals:
-          type: array
-          description: Post-deployment approval records
-          items:
-            $ref: '#/components/schemas/ReleaseApproval'
-        url:
-          type: string
-          format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    ConfigurationVariableValue:
-      type: object
-      description: A variable value in a release definition or release
-      properties:
-        value:
-          type: string
-          description: The variable value
-        isSecret:
-          type: boolean
-          description: Whether the value is treated as a secret
-        allowOverride:
-          type: boolean
-          description: Whether the value can be overridden when creating a release
     ReleaseApproval:
       type: object
       description: An approval record for a release environment
@@ -454,6 +303,148 @@ components:
         url:
           type: string
           format: uri
+    ConfigurationVariableValue:
+      type: object
+      description: A variable value in a release definition or release
+      properties:
+        value:
+          type: string
+          description: The variable value
+        isSecret:
+          type: boolean
+          description: Whether the value is treated as a secret
+        allowOverride:
+          type: boolean
+          description: Whether the value can be overridden when creating a release
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    Release:
+      type: object
+      description: An Azure DevOps release instance
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the release
+          example: 42
+        name:
+          type: string
+          description: Auto-generated release name
+          example: Release-42
+        status:
+          type: string
+          description: Current status of the release
+          enum:
+          - undefined
+          - draft
+          - active
+          - abandoned
+        createdOn:
+          type: string
+          format: date-time
+          description: Date and time the release was created
+        modifiedOn:
+          type: string
+          format: date-time
+          description: Date and time the release was last modified
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        modifiedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        createdFor:
+          $ref: '#/components/schemas/IdentityRef'
+        description:
+          type: string
+          description: Optional description for this release
+        releaseDefinition:
+          $ref: '#/components/schemas/ReleaseDefinitionShallowReference'
+        releaseDefinitionRevision:
+          type: integer
+          description: Revision of the release definition used for this release
+        reason:
+          type: string
+          description: Reason the release was created
+          enum:
+          - none
+          - manual
+          - continuousIntegration
+          - schedule
+          - pullRequest
+        environments:
+          type: array
+          description: Environments in this release with their deployment status
+          items:
+            $ref: '#/components/schemas/ReleaseEnvironment'
+        artifacts:
+          type: array
+          description: Artifacts used in this release
+          items:
+            $ref: '#/components/schemas/Artifact'
+        variables:
+          type: object
+          description: Release-level variable overrides
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        keepForever:
+          type: boolean
+          description: Whether to retain this release indefinitely
+        logsContainerUrl:
+          type: string
+          format: uri
+          description: URL to the logs container for this release
+        url:
+          type: string
+          format: uri
+          description: URL to access this release via the REST API
+        _links:
+          type: object
+          description: HAL links for related resources
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+        tags:
+          type: array
+          description: Tags associated with this release
+          items:
+            type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     Artifact:
       type: object
       description: An artifact used in a release
@@ -546,114 +537,113 @@ components:
           type: object
           description: Additional release properties
           additionalProperties: true
-    ApiError:
+    ReleaseEnvironment:
       type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Release:
-      type: object
-      description: An Azure DevOps release instance
+      description: An environment (deployment stage) within a release
       properties:
         id:
           type: integer
-          description: Unique numeric identifier of the release
-          example: 42
+        releaseId:
+          type: integer
+          description: ID of the release this environment belongs to
         name:
           type: string
-          description: Auto-generated release name
-          example: Release-42
+          description: Environment name (e.g., Dev, Staging, Production)
         status:
           type: string
-          description: Current status of the release
+          description: Current deployment status of this environment
           enum:
           - undefined
-          - draft
-          - active
-          - abandoned
+          - notStarted
+          - inProgress
+          - succeeded
+          - canceled
+          - rejected
+          - queued
+          - scheduled
+          - partiallySucceeded
+        definitionEnvironmentId:
+          type: integer
+          description: ID of the corresponding environment definition
         createdOn:
           type: string
           format: date-time
-          description: Date and time the release was created
-        modifiedOn:
+        queuedOn:
           type: string
           format: date-time
-          description: Date and time the release was last modified
-        createdBy:
-          $ref: '#/components/schemas/IdentityRef'
-        modifiedBy:
-          $ref: '#/components/schemas/IdentityRef'
-        createdFor:
-          $ref: '#/components/schemas/IdentityRef'
-        description:
+        lastModifiedOn:
           type: string
-          description: Optional description for this release
-        releaseDefinition:
-          $ref: '#/components/schemas/ReleaseDefinitionShallowReference'
-        releaseDefinitionRevision:
-          type: integer
-          description: Revision of the release definition used for this release
-        reason:
+          format: date-time
+        deployedOn:
           type: string
-          description: Reason the release was created
-          enum:
-          - none
-          - manual
-          - continuousIntegration
-          - schedule
-          - pullRequest
-        environments:
+          format: date-time
+        timeToDeploy:
+          type: number
+          description: Time to deploy in minutes
+        deploymentJobs:
           type: array
-          description: Environments in this release with their deployment status
+          description: Deployment jobs for this environment
           items:
-            $ref: '#/components/schemas/ReleaseEnvironment'
-        artifacts:
+            type: object
+        preDeployApprovals:
           type: array
-          description: Artifacts used in this release
+          description: Pre-deployment approval records
           items:
-            $ref: '#/components/schemas/Artifact'
-        variables:
-          type: object
-          description: Release-level variable overrides
-          additionalProperties:
-            $ref: '#/components/schemas/ConfigurationVariableValue'
-        keepForever:
-          type: boolean
-          description: Whether to retain this release indefinitely
-        logsContainerUrl:
-          type: string
-          format: uri
-          description: URL to the logs container for this release
+            $ref: '#/components/schemas/ReleaseApproval'
+        postDeployApprovals:
+          type: array
+          description: Post-deployment approval records
+          items:
+            $ref: '#/components/schemas/ReleaseApproval'
         url:
           type: string
           format: uri
-          description: URL to access this release via the REST API
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
         _links:
           type: object
-          description: HAL links for related resources
           additionalProperties:
             type: object
             properties:
               href:
                 type: string
                 format: uri
-        tags:
-          type: array
-          description: Tags associated with this release
-          items:
-            type: string
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

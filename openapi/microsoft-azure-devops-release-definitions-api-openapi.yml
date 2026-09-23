@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Releases Release Definitions API
-  description: 'REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
-
-    '
+  description: REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: releaseDefinitions_list
       summary: Azure DevOps List release definitions
-      description: 'Returns a list of release definitions in the project. Supports filtering by name and path. Definitions represent the release pipeline template including environments, artifacts, approval gates, and deployment steps.
-
-        '
+      description: Returns a list of release definitions in the project. Supports filtering by name and path. Definitions represent the release pipeline template including environments, artifacts, approval gates, and deployment steps.
       tags:
       - Release Definitions
       parameters:
@@ -133,9 +129,7 @@ paths:
     post:
       operationId: releaseDefinitions_create
       summary: Azure DevOps Create a release definition
-      description: 'Creates a new release definition specifying environments, artifacts, triggers, variables, and deployment steps. The definition serves as the template for future release instances.
-
-        '
+      description: Creates a new release definition specifying environments, artifacts, triggers, variables, and deployment steps. The definition serves as the template for future release instances.
       tags:
       - Release Definitions
       parameters:
@@ -164,9 +158,7 @@ paths:
     get:
       operationId: releaseDefinitions_get
       summary: Azure DevOps Get a release definition
-      description: 'Returns detailed information about a specific release definition, including all environments, artifact sources, triggers, approvals, and deployment steps.
-
-        '
+      description: Returns detailed information about a specific release definition, including all environments, artifact sources, triggers, approvals, and deployment steps.
       tags:
       - Release Definitions
       parameters:
@@ -205,9 +197,7 @@ paths:
     put:
       operationId: releaseDefinitions_update
       summary: Azure DevOps Update a release definition
-      description: 'Replaces an existing release definition with the provided definition. The revision number in the body must match the current revision to prevent concurrent modification conflicts.
-
-        '
+      description: Replaces an existing release definition with the provided definition. The revision number in the body must match the current revision to prevent concurrent modification conflicts.
       tags:
       - Release Definitions
       parameters:
@@ -243,9 +233,7 @@ paths:
     delete:
       operationId: releaseDefinitions_delete
       summary: Azure DevOps Delete a release definition
-      description: 'Deletes a release definition. All associated releases must be deleted or abandoned first. This operation cannot be undone.
-
-        '
+      description: Deletes a release definition. All associated releases must be deleted or abandoned first. This operation cannot be undone.
       tags:
       - Release Definitions
       parameters:
@@ -278,32 +266,41 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
+    ConfigurationVariableValue:
+      type: object
+      description: A variable value in a release definition or release
+      properties:
+        value:
+          type: string
+          description: The variable value
+        isSecret:
+          type: boolean
+          description: Whether the value is treated as a secret
+        allowOverride:
+          type: boolean
+          description: Whether the value can be overridden when creating a release
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
     ReleaseDefinitionEnvironment:
       type: object
       description: An environment definition within a release pipeline
@@ -345,6 +342,62 @@ components:
           type: array
           items:
             type: object
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Artifact:
+      type: object
+      description: An artifact used in a release
+      properties:
+        alias:
+          type: string
+          description: Alias for the artifact within the release definition
+          example: _MyBuild
+        type:
+          type: string
+          description: Artifact type
+          enum:
+          - build
+          - jenkins
+          - github
+          - nuget
+          - team
+          - externaltfsbuild
+          - git
+          - tfvc
+        definitionReference:
+          type: object
+          description: Reference to the artifact source definition
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        isPrimary:
+          type: boolean
+          description: Whether this is the primary artifact
+        isRetained:
+          type: boolean
+          description: Whether this artifact is retained
+        sourceId:
+          type: string
+          description: Source identifier for the artifact
     ReleaseDefinition:
       type: object
       description: A release pipeline definition
@@ -422,96 +475,31 @@ components:
               href:
                 type: string
                 format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    ConfigurationVariableValue:
-      type: object
-      description: A variable value in a release definition or release
-      properties:
-        value:
-          type: string
-          description: The variable value
-        isSecret:
-          type: boolean
-          description: Whether the value is treated as a secret
-        allowOverride:
-          type: boolean
-          description: Whether the value can be overridden when creating a release
-    Artifact:
-      type: object
-      description: An artifact used in a release
-      properties:
-        alias:
-          type: string
-          description: Alias for the artifact within the release definition
-          example: _MyBuild
-        type:
-          type: string
-          description: Artifact type
-          enum:
-          - build
-          - jenkins
-          - github
-          - nuget
-          - team
-          - externaltfsbuild
-          - git
-          - tfvc
-        definitionReference:
-          type: object
-          description: Reference to the artifact source definition
-          additionalProperties:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-        isPrimary:
-          type: boolean
-          description: Whether this is the primary artifact
-        isRetained:
-          type: boolean
-          description: Whether this artifact is retained
-        sourceId:
-          type: string
-          description: Source identifier for the artifact
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

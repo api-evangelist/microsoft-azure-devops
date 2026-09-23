@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Builds Build Logs API
-  description: 'REST API for managing build definitions (pipelines), queuing builds, monitoring build status, accessing build logs, timelines, and artifacts. Supports the full lifecycle of continuous integration builds in Azure DevOps.
-
-    '
+  description: REST API for managing build definitions (pipelines), queuing builds, monitoring build status, accessing build logs, timelines, and artifacts. Supports the full lifecycle of continuous integration builds in Azure DevOps.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: builds_getLogs
       summary: Azure DevOps Get build logs
-      description: 'Returns the list of log entries for a build. Each log entry corresponds to a step or phase in the build pipeline. Use the log ID to retrieve the content of a specific log.
-
-        '
+      description: Returns the list of log entries for a build. Each log entry corresponds to a step or phase in the build pipeline. Use the log ID to retrieve the content of a specific log.
       tags:
       - Build Logs
       parameters:
@@ -69,9 +65,7 @@ paths:
     get:
       operationId: builds_getTimeline
       summary: Azure DevOps Get build timeline
-      description: 'Returns the detailed timeline for a build, showing all phases, jobs, tasks, and their individual statuses, start times, and durations. Useful for understanding which steps in the pipeline passed or failed.
-
-        '
+      description: Returns the detailed timeline for a build, showing all phases, jobs, tasks, and their individual statuses, start times, and durations. Useful for understanding which steps in the pipeline passed or failed.
       tags:
       - Build Logs
       parameters:
@@ -97,14 +91,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    NotFound:
+      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
@@ -115,49 +109,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Timeline:
-      type: object
-      description: Build timeline showing all records (phases, jobs, tasks)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Timeline ID
-        changeId:
-          type: integer
-          description: Change ID for real-time timeline updates
-        lastChangedBy:
-          type: string
-          format: uuid
-        lastChangedOn:
-          type: string
-          format: date-time
-        records:
-          type: array
-          description: List of timeline records (phases, jobs, tasks)
-          items:
-            $ref: '#/components/schemas/TimelineRecord'
-        url:
-          type: string
-          format: uri
     TimelineRecord:
       type: object
       description: A single record in the build timeline
@@ -247,6 +212,48 @@ components:
               data:
                 type: object
                 additionalProperties: true
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Timeline:
+      type: object
+      description: Build timeline showing all records (phases, jobs, tasks)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Timeline ID
+        changeId:
+          type: integer
+          description: Change ID for real-time timeline updates
+        lastChangedBy:
+          type: string
+          format: uuid
+        lastChangedOn:
+          type: string
+          format: date-time
+        records:
+          type: array
+          description: List of timeline records (phases, jobs, tasks)
+          items:
+            $ref: '#/components/schemas/TimelineRecord'
+        url:
+          type: string
+          format: uri
     BuildLog:
       type: object
       description: Metadata about a single build log
@@ -270,19 +277,6 @@ components:
         lineCount:
           type: integer
           description: Number of log lines
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

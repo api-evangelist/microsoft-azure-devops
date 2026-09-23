@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Work Items Comments API
-  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
-
-    '
+  description: REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: workItems_listComments
       summary: Azure DevOps Get work item comments
-      description: 'Returns all comments for a specific work item, ordered by creation date. Comments are user-authored notes attached to a work item and are separate from the work item''s history.
-
-        '
+      description: Returns all comments for a specific work item, ordered by creation date. Comments are user-authored notes attached to a work item and are separate from the work item's history.
       tags:
       - Comments
       parameters:
@@ -82,9 +78,7 @@ paths:
     post:
       operationId: workItems_addComment
       summary: Azure DevOps Add a comment to a work item
-      description: 'Adds a new comment to a work item. The comment body supports HTML markup. The new comment is appended to the existing list of comments.
-
-        '
+      description: Adds a new comment to a work item. The comment body supports HTML markup. The new comment is appended to the existing list of comments.
       tags:
       - Comments
       parameters:
@@ -126,31 +120,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
     IdentityRef:
       type: object
@@ -178,6 +147,33 @@ components:
         descriptor:
           type: string
           description: Subject descriptor for the identity
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
     WorkItemComment:
       type: object
       description: A comment on a work item
@@ -209,33 +205,31 @@ components:
         url:
           type: string
           format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
-          type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
-          type: string
-          description: Human-readable error message
-        typeName:
-          type: string
-          description: Type name of the exception
-        typeKey:
-          type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

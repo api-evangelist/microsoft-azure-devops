@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Test Plans Test Suites API
-  description: 'REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
-
-    '
+  description: REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: testSuites_list
       summary: Azure DevOps List test suites
-      description: 'Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.
-
-        '
+      description: Returns a list of test suites within a test plan. Test suites organize test cases into logical groups. A plan always has a root suite, and suites can be nested for hierarchical organization.
       tags:
       - Test Suites
       parameters:
@@ -85,9 +81,7 @@ paths:
     post:
       operationId: testSuites_create
       summary: Azure DevOps Create a test suite
-      description: 'Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).
-
-        '
+      description: Creates a new test suite within a test plan. Suites can be static (manually added test cases), requirement-based (linked to work item queries), or query-based (dynamic results from a work item query).
       tags:
       - Test Suites
       parameters:
@@ -124,9 +118,7 @@ paths:
     get:
       operationId: testSuites_get
       summary: Azure DevOps Get a test suite
-      description: 'Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.
-
-        '
+      description: Returns detailed information about a specific test suite, including its type, parent suite, and associated test cases.
       tags:
       - Test Suites
       parameters:
@@ -162,32 +154,95 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    TestSuiteCreateParams:
+      type: object
+      description: Parameters for creating a new test suite
+      required:
+      - name
+      - suiteType
+      - parentSuite
+      properties:
+        name:
+          type: string
+          description: Name of the new test suite
+        suiteType:
+          type: string
+          description: Type of test suite to create
+          enum:
+          - none
+          - dynamicTestSuite
+          - staticTestSuite
+          - requirementTestSuite
+        parentSuite:
+          type: object
+          description: Parent suite to nest this suite under
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              description: ID of the parent suite
+        requirementId:
+          type: integer
+          description: Work item ID to link (for requirementTestSuite type)
+        queryString:
+          type: string
+          description: WIQL query string (for dynamicTestSuite type)
+        defaultTesters:
+          type: array
+          description: Default testers for test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
     TestSuite:
       type: object
       description: A test suite within a test plan
@@ -265,102 +320,32 @@ components:
               href:
                 type: string
                 format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    TestSuiteCreateParams:
-      type: object
-      description: Parameters for creating a new test suite
-      required:
-      - name
-      - suiteType
-      - parentSuite
-      properties:
-        name:
-          type: string
-          description: Name of the new test suite
-        suiteType:
-          type: string
-          description: Type of test suite to create
-          enum:
-          - none
-          - dynamicTestSuite
-          - staticTestSuite
-          - requirementTestSuite
-        parentSuite:
-          type: object
-          description: Parent suite to nest this suite under
-          required:
-          - id
-          properties:
-            id:
-              type: integer
-              description: ID of the parent suite
-        requirementId:
-          type: integer
-          description: Work item ID to link (for requirementTestSuite type)
-        queryString:
-          type: string
-          description: WIQL query string (for dynamicTestSuite type)
-        defaultTesters:
-          type: array
-          description: Default testers for test cases in this suite
-          items:
-            $ref: '#/components/schemas/IdentityRef'
-    TestSuiteReference:
-      type: object
-      description: Minimal reference to a test suite
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
-    PlanId:
-      name: planId
-      in: path
-      required: true
-      description: Numeric ID of the test plan
-      schema:
-        type: integer
     ApiVersion:
       name: api-version
       in: query
@@ -373,6 +358,13 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

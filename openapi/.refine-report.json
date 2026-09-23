@@ -9,7 +9,9 @@
     "_original/azure-devops-service-hooks-api-openapi.yml",
     "_original/azure-devops-test-plans-api-openapi.yml",
     "_original/azure-devops-wiki-api-openapi.yml",
-    "_original/azure-devops-work-items-api-openapi.yml"
+    "_original/azure-devops-work-items-api-openapi.yml",
+    "_original/microsoft-azure-devops-pipelines-openapi.yml",
+    "_original/microsoft-azure-devops-work-items-openapi.yml"
   ],
   "outputs": [
     "microsoft-azure-devops-feeds-api-openapi.yml",
@@ -43,13 +45,17 @@
     "microsoft-azure-devops-comments-api-openapi.yml",
     "microsoft-azure-devops-work-item-tracking-api-openapi.yml",
     "microsoft-azure-devops-work-item-types-api-openapi.yml",
-    "microsoft-azure-devops-work-items-api-openapi.yml"
+    "microsoft-azure-devops-work-items-api-openapi.yml",
+    "microsoft-azure-devops-runs-api-openapi.yml",
+    "microsoft-azure-devops-fields-api-openapi.yml",
+    "microsoft-azure-devops-queries-api-openapi.yml",
+    "microsoft-azure-devops-workitems-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (9 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (11 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "azure-devops-artifacts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-builds-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-git-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
@@ -58,7 +64,11 @@
     "azure-devops-service-hooks-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-test-plans-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-wiki-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "azure-devops-work-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0"
+    "azure-devops-work-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "microsoft-azure-devops-pipelines-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "microsoft-azure-devops-work-items-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Pipelines' spans 2 source specs (azure-devops-pipelines-api-openapi.yml, microsoft-azure-devops-pipelines-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+1 apis, 68 total)"
   ],
   "skipped": [
     "microsoft-azure-devops-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -71,6 +81,7 @@
     "microsoft-azure-devops-consumers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-deployments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-feeds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-devops-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-notifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-package-versions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-packages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -80,10 +91,12 @@
     "microsoft-azure-devops-publishers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-pull-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-pushes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-devops-queries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-refs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-release-definitions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-releases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-repositories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-devops-runs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-test-cases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "microsoft-azure-devops-test-plans-api-openapi.yml: previously refined output, superseded by openapi/_original/",

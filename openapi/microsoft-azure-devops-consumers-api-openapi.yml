@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Service Hooks Consumers API
-  description: 'REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
-
-    '
+  description: REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -29,9 +27,7 @@ paths:
     get:
       operationId: consumers_list
       summary: Azure DevOps List consumers
-      description: 'Returns a list of all available consumers that can receive service hook notifications. Consumers include webhooks (httpRequest), Azure Service Bus, Azure Storage, Microsoft Teams, and other integration targets.
-
-        '
+      description: Returns a list of all available consumers that can receive service hook notifications. Consumers include webhooks (httpRequest), Azure Service Bus, Azure Storage, Microsoft Teams, and other integration targets.
       tags:
       - Consumers
       parameters:
@@ -55,46 +51,7 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    ConsumerAction:
-      type: object
-      description: An action available in a consumer
-      properties:
-        id:
-          type: string
-          description: Action identifier
-          example: httpRequest
-        name:
-          type: string
-          description: Action display name
-          example: Send a generic HTTP request with a JSON payload
-        description:
-          type: string
-          description: Description of what this action does
-        consumerId:
-          type: string
-          description: Parent consumer ID
-        inputs:
-          type: array
-          description: Input parameters required for this action
-          items:
-            $ref: '#/components/schemas/InputDescriptor'
-        url:
-          type: string
-          format: uri
     Consumer:
       type: object
       description: A consumer that can receive service hook notifications
@@ -131,23 +88,6 @@ components:
         url:
           type: string
           format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     InputDescriptor:
       type: object
       description: Descriptor for a configurable input parameter
@@ -217,6 +157,62 @@ components:
               type: integer
             maxLength:
               type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    ConsumerAction:
+      type: object
+      description: An action available in a consumer
+      properties:
+        id:
+          type: string
+          description: Action identifier
+          example: httpRequest
+        name:
+          type: string
+          description: Action display name
+          example: Send a generic HTTP request with a JSON payload
+        description:
+          type: string
+          description: Description of what this action does
+        consumerId:
+          type: string
+          description: Parent consumer ID
+        inputs:
+          type: array
+          description: Input parameters required for this action
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

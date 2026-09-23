@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Wiki Wiki Pages API
-  description: 'REST API for creating and managing wikis and wiki pages in Azure DevOps projects. Every project wiki is backed by a Git repository, enabling version-controlled documentation. Supports creating, reading, updating, and deleting wikis and pages programmatically with Markdown content.
-
-    '
+  description: REST API for creating and managing wikis and wiki pages in Azure DevOps projects. Every project wiki is backed by a Git repository, enabling version-controlled documentation. Supports creating, reading, updating, and deleting wikis and pages programmatically with Markdown content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: pages_get
       summary: Azure DevOps Get a wiki page
-      description: 'Returns the content and metadata for a wiki page at a given path. The path parameter is required to specify which page to retrieve. Returns the Markdown content of the page and optional metadata such as git commit information.
-
-        '
+      description: Returns the content and metadata for a wiki page at a given path. The path parameter is required to specify which page to retrieve. Returns the Markdown content of the page and optional metadata such as git commit information.
       tags:
       - Wiki Pages
       parameters:
@@ -92,9 +88,7 @@ paths:
     put:
       operationId: pages_createOrUpdate
       summary: Azure DevOps Create or update a wiki page
-      description: 'Creates a new wiki page or updates an existing page at the specified path. The request body must contain the Markdown content for the page. To update an existing page, include the current page version in the If-Match header to prevent overwriting concurrent changes.
-
-        '
+      description: Creates a new wiki page or updates an existing page at the specified path. The request body must contain the Markdown content for the page. To update an existing page, include the current page version in the If-Match header to prevent overwriting concurrent changes.
       tags:
       - Wiki Pages
       parameters:
@@ -181,9 +175,7 @@ paths:
     delete:
       operationId: pages_delete
       summary: Azure DevOps Delete a wiki page
-      description: 'Deletes a wiki page at the specified path. This commits a deletion to the backing Git repository. Deleted pages cannot be recovered except through the backing repository''s Git history.
-
-        '
+      description: Deletes a wiki page at the specified path. This commits a deletion to the backing Git repository. Deleted pages cannot be recovered except through the backing repository's Git history.
       tags:
       - Wiki Pages
       parameters:
@@ -223,8 +215,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -235,19 +227,56 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    WikiIdentifier:
+      name: wikiIdentifier
+      in: path
+      required: true
+      description: Wiki GUID or wiki name
+      schema:
+        type: string
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     WikiPage:
       type: object
       description: A wiki page with its content and metadata
@@ -296,43 +325,6 @@ components:
               href:
                 type: string
                 format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-  parameters:
-    WikiIdentifier:
-      name: wikiIdentifier
-      in: path
-      required: true
-      description: Wiki GUID or wiki name
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

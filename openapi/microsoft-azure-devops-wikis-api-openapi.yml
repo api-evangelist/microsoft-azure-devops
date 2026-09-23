@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Wiki Wikis API
-  description: 'REST API for creating and managing wikis and wiki pages in Azure DevOps projects. Every project wiki is backed by a Git repository, enabling version-controlled documentation. Supports creating, reading, updating, and deleting wikis and pages programmatically with Markdown content.
-
-    '
+  description: REST API for creating and managing wikis and wiki pages in Azure DevOps projects. Every project wiki is backed by a Git repository, enabling version-controlled documentation. Supports creating, reading, updating, and deleting wikis and pages programmatically with Markdown content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: wikis_list
       summary: Azure DevOps List wikis
-      description: 'Returns a list of all wikis in the project. A project typically has one project wiki and may have additional code wikis that are backed by specific Git repository folders.
-
-        '
+      description: Returns a list of all wikis in the project. A project typically has one project wiki and may have additional code wikis that are backed by specific Git repository folders.
       tags:
       - Wikis
       parameters:
@@ -61,9 +57,7 @@ paths:
     post:
       operationId: wikis_create
       summary: Azure DevOps Create a wiki
-      description: 'Creates a new wiki for a project. You can create a project wiki (backed by a dedicated wiki repository) or a code wiki (backed by an existing Git repository and folder path). Only one project wiki can exist per project.
-
-        '
+      description: Creates a new wiki for a project. You can create a project wiki (backed by a dedicated wiki repository) or a code wiki (backed by an existing Git repository and folder path). Only one project wiki can exist per project.
       tags:
       - Wikis
       parameters:
@@ -96,9 +90,7 @@ paths:
     get:
       operationId: wikis_get
       summary: Azure DevOps Get a wiki
-      description: 'Returns detailed information about a specific wiki, including its backing Git repository ID, mapped path (for code wikis), and current version. The wikiIdentifier can be either the wiki GUID or its name.
-
-        '
+      description: Returns detailed information about a specific wiki, including its backing Git repository ID, mapped path (for code wikis), and current version. The wikiIdentifier can be either the wiki GUID or its name.
       tags:
       - Wikis
       parameters:
@@ -126,9 +118,7 @@ paths:
     patch:
       operationId: wikis_update
       summary: Azure DevOps Update a wiki
-      description: 'Updates the wiki by changing the default branch for a code wiki''s backed repository. This is useful when the main branch of the backing repository has been renamed.
-
-        '
+      description: Updates the wiki by changing the default branch for a code wiki's backed repository. This is useful when the main branch of the backing repository has been renamed.
       tags:
       - Wikis
       parameters:
@@ -162,9 +152,7 @@ paths:
     delete:
       operationId: wikis_delete
       summary: Azure DevOps Delete a wiki
-      description: 'Deletes a wiki. For a project wiki, this deletes the wiki and the backing Git repository. For a code wiki, this removes the wiki but leaves the backing repository intact. This operation cannot be undone.
-
-        '
+      description: Deletes a wiki. For a project wiki, this deletes the wiki and the backing Git repository. For a code wiki, this removes the wiki but leaves the backing repository intact. This operation cannot be undone.
       tags:
       - Wikis
       parameters:
@@ -185,8 +173,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -203,8 +191,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    BadRequest:
+      description: Bad request - invalid parameters or request body
       content:
         application/json:
           schema:
@@ -243,61 +231,6 @@ components:
               version:
                 type: string
                 description: Branch name
-    WikiCreateParametersV2:
-      type: object
-      description: Parameters for creating a new wiki
-      required:
-      - name
-      - type
-      - projectId
-      properties:
-        name:
-          type: string
-          description: Name of the wiki
-          example: Project Wiki
-        type:
-          type: string
-          description: Type of wiki to create
-          enum:
-          - projectWiki
-          - codeWiki
-        projectId:
-          type: string
-          format: uuid
-          description: ID of the project to create the wiki in
-        repositoryId:
-          type: string
-          format: uuid
-          description: ID of the repository to back the wiki (required for codeWiki)
-        mappedPath:
-          type: string
-          description: Root folder in the repository to use as wiki content (for codeWiki)
-          example: /docs
-        version:
-          type: object
-          description: Branch to use for the wiki
-          properties:
-            version:
-              type: string
-              description: Branch name
-              example: main
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     WikiV2:
       type: object
       description: An Azure DevOps wiki
@@ -354,6 +287,61 @@ components:
               href:
                 type: string
                 format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    WikiCreateParametersV2:
+      type: object
+      description: Parameters for creating a new wiki
+      required:
+      - name
+      - type
+      - projectId
+      properties:
+        name:
+          type: string
+          description: Name of the wiki
+          example: Project Wiki
+        type:
+          type: string
+          description: Type of wiki to create
+          enum:
+          - projectWiki
+          - codeWiki
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project to create the wiki in
+        repositoryId:
+          type: string
+          format: uuid
+          description: ID of the repository to back the wiki (required for codeWiki)
+        mappedPath:
+          type: string
+          description: Root folder in the repository to use as wiki content (for codeWiki)
+          example: /docs
+        version:
+          type: object
+          description: Branch to use for the wiki
+          properties:
+            version:
+              type: string
+              description: Branch name
+              example: main
   securitySchemes:
     bearerAuth:
       type: http

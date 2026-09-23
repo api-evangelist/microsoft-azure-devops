@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Git Repositories Commits API
-  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
-
-    '
+  description: REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: commits_list
       summary: Azure DevOps List commits
-      description: 'Returns a list of commits in a repository. Supports filtering by branch, author, date range, file path, and commit message text. Results are sorted by commit date (newest first by default).
-
-        '
+      description: Returns a list of commits in a repository. Supports filtering by branch, author, date range, file path, and commit message text. Results are sorted by commit date (newest first by default).
       tags:
       - Commits
       parameters:
@@ -106,14 +102,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    NotFound:
+      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
@@ -125,13 +121,6 @@ components:
           schema:
             $ref: '#/components/schemas/ApiError'
   parameters:
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -144,27 +133,31 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   schemas:
-    GitUserDate:
+    ApiError:
       type: object
-      description: Git user and date information
+      description: Error response from the Azure DevOps API
       properties:
-        name:
+        id:
           type: string
-          description: User display name
-          example: John Doe
-        email:
+          format: uuid
+        message:
           type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
+        typeName:
           type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
+        typeKey:
           type: string
-          format: uri
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     GitCommitRef:
       type: object
       description: A reference to a Git commit
@@ -205,23 +198,26 @@ components:
               type: integer
             Delete:
               type: integer
-    ApiError:
+    GitUserDate:
       type: object
-      description: Error response from the Azure DevOps API
+      description: Git user and date information
       properties:
-        id:
+        name:
           type: string
-          format: uuid
-        message:
+          description: User display name
+          example: John Doe
+        email:
           type: string
-        typeName:
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
           type: string
-        typeKey:
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
           type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
+          format: uri
   securitySchemes:
     bearerAuth:
       type: http

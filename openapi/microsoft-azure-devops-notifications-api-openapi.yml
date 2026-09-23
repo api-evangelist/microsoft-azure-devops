@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Service Hooks Notifications API
-  description: 'REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
-
-    '
+  description: REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -29,9 +27,7 @@ paths:
     post:
       operationId: notifications_sendTest
       summary: Azure DevOps Send a test notification
-      description: 'Sends a test notification to verify that a service hook subscription is correctly configured and the consumer endpoint is reachable. Returns the result of the delivery attempt including HTTP status code and response body.
-
-        '
+      description: Sends a test notification to verify that a service hook subscription is correctly configured and the consumer endpoint is reachable. Returns the result of the delivery attempt including HTTP status code and response body.
       tags:
       - Notifications
       parameters:
@@ -74,12 +70,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
       content:
@@ -92,49 +82,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
-    SubscriptionCreateRequest:
-      type: object
-      description: Request body for creating or updating a service hook subscription
-      required:
-      - publisherId
-      - eventType
-      - consumerId
-      - consumerActionId
-      - publisherInputs
-      - consumerInputs
-      properties:
-        publisherId:
-          type: string
-          description: Publisher ID for the event source
-          example: tfs
-        eventType:
-          type: string
-          description: Event type to subscribe to
-          example: workitem.created
-        resourceVersion:
-          type: string
-          description: Version of the event resource schema to use
-          example: '1.0'
-          default: '1.0'
-        consumerId:
-          type: string
-          description: Consumer ID for the notification target
-          example: webHooks
-        consumerActionId:
-          type: string
-          description: Action ID within the consumer
-          example: httpRequest
-        publisherInputs:
-          type: object
-          description: Filter inputs controlling which events trigger a notification
-          additionalProperties:
-            type: string
-        consumerInputs:
-          type: object
-          description: Configuration for the consumer endpoint
-          additionalProperties:
-            type: string
     NotificationResult:
       type: object
       description: Result of a test notification delivery attempt
@@ -227,19 +194,48 @@ components:
           type: integer
         eventId:
           type: integer
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+      - publisherId
+      - eventType
+      - consumerId
+      - consumerActionId
+      - publisherInputs
+      - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: tfs
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: workitem.created
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: webHooks
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: httpRequest
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
   securitySchemes:
     bearerAuth:
       type: http

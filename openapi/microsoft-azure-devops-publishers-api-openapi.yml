@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Service Hooks Publishers API
-  description: 'REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
-
-    '
+  description: REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -29,9 +27,7 @@ paths:
     get:
       operationId: publishers_list
       summary: Azure DevOps List publishers
-      description: 'Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is ''tfs''. Each publisher defines what event types it can produce.
-
-        '
+      description: Returns a list of all available publishers (event sources) that can be subscribed to. The primary publisher for Azure DevOps events is 'tfs'. Each publisher defines what event types it can produce.
       tags:
       - Publishers
       parameters:
@@ -58,9 +54,7 @@ paths:
     get:
       operationId: publishers_listEventTypes
       summary: Azure DevOps List event types for a publisher
-      description: 'Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.
-
-        '
+      description: Returns all event types defined by a specific publisher. Each event type includes its ID, name, description, and the input parameters that can be used to filter notifications.
       tags:
       - Publishers
       parameters:
@@ -93,25 +87,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
     InputDescriptor:
       type: object
@@ -182,61 +157,6 @@ components:
               type: integer
             maxLength:
               type: integer
-    Publisher:
-      type: object
-      description: An event publisher (source) that can produce service hook events
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the publisher
-          example: tfs
-        name:
-          type: string
-          description: Display name of the publisher
-          example: Azure DevOps
-        description:
-          type: string
-          description: Description of the publisher and the events it produces
-        supportedEvents:
-          type: array
-          description: List of event types this publisher supports
-          items:
-            $ref: '#/components/schemas/EventTypeReference'
-        inputs:
-          type: array
-          description: Input parameters for filtering publisher events
-          items:
-            $ref: '#/components/schemas/InputDescriptor'
-        url:
-          type: string
-          format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    EventTypeReference:
-      type: object
-      description: Minimal reference to an event type
-      properties:
-        id:
-          type: string
-          description: Event type identifier
-        name:
-          type: string
-          description: Event type display name
     EventType:
       type: object
       description: An event type that a publisher can produce
@@ -278,6 +198,80 @@ components:
                 type: boolean
               isQueryable:
                 type: boolean
+    EventTypeReference:
+      type: object
+      description: Minimal reference to an event type
+      properties:
+        id:
+          type: string
+          description: Event type identifier
+        name:
+          type: string
+          description: Event type display name
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Publisher:
+      type: object
+      description: An event publisher (source) that can produce service hook events
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the publisher
+          example: tfs
+        name:
+          type: string
+          description: Display name of the publisher
+          example: Azure DevOps
+        description:
+          type: string
+          description: Description of the publisher and the events it produces
+        supportedEvents:
+          type: array
+          description: List of event types this publisher supports
+          items:
+            $ref: '#/components/schemas/EventTypeReference'
+        inputs:
+          type: array
+          description: Input parameters for filtering publisher events
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

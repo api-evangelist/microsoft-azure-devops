@@ -1,0 +1,126 @@
+openapi: 3.2.0
+info:
+  title: Azure DevOps Work Item Tracking Fields API
+  description: The Azure DevOps Work Item Tracking API provides REST endpoints for creating, updating, querying, and managing work items including bugs, tasks, user stories, epics, and features across Azure Boards. Supports custom fields, area paths, iteration paths, and link types for Agile, Scrum, and CMMI process templates.
+  version: '7.2'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+servers:
+- url: https://dev.azure.com/{organization}
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: Azure DevOps organization name
+      default: my-org
+security:
+- personalAccessToken: []
+- oauth2: []
+tags:
+- name: Fields
+  description: Work item field definitions
+paths:
+  /{project}/_apis/wit/fields:
+    get:
+      operationId: listWorkItemFields
+      summary: List Work Item Fields
+      description: Returns all work item fields defined in the project or organization.
+      tags:
+      - Fields
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.3
+        example: example_value
+      responses:
+        '200':
+          description: Work item fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItemField'
+              examples:
+                Listworkitemfields200Example:
+                  summary: Default listWorkItemFields 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 10
+                    value:
+                    - name: Example Title
+                      referenceName: example_value
+                      type: string
+                      readOnly: true
+                      isQueryable: true
+                      isIdentity: true
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    WorkItemField:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example Title
+        referenceName:
+          type: string
+          example: example_value
+        type:
+          type: string
+          enum:
+          - string
+          - integer
+          - dateTime
+          - plainText
+          - html
+          - treePath
+          - boolean
+          - double
+          - guid
+          example: string
+        readOnly:
+          type: boolean
+          example: true
+        isQueryable:
+          type: boolean
+          example: true
+        isIdentity:
+          type: boolean
+          example: true
+  securitySchemes:
+    personalAccessToken:
+      type: http
+      scheme: basic
+      description: Use empty username and PAT as password (Basic base64(":PAT"))
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.work: Read work items
+            vso.work_write: Read and write work items

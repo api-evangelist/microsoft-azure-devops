@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Releases Deployments API
-  description: 'REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
-
-    '
+  description: REST API for managing release definitions and deployments in Azure Pipelines. Provides programmatic control over continuous delivery pipelines, including creating and managing release definitions, triggering releases, managing deployment approvals, and tracking deployment status across environments.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: deployments_list
       summary: Azure DevOps List deployments
-      description: 'Returns a list of deployments across all release definitions and environments in the project. Supports filtering by definition, environment, and deployment status. Useful for auditing and monitoring deployment activity.
-
-        '
+      description: Returns a list of deployments across all release definitions and environments in the project. Supports filtering by definition, environment, and deployment status. Useful for auditing and monitoring deployment activity.
       tags:
       - Deployments
       parameters:
@@ -278,27 +274,6 @@ components:
         url:
           type: string
           format: uri
-    ReleaseDefinitionShallowReference:
-      type: object
-      description: A minimal reference to a release definition
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        path:
-          type: string
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
     IdentityRef:
       type: object
       description: Reference to an Azure DevOps user identity
@@ -337,6 +312,27 @@ components:
           type: integer
         eventId:
           type: integer
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
   responses:
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation

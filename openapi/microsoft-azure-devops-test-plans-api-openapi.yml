@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Test Plans API
-  description: 'REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
-
-    '
+  description: REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: testPlans_list
       summary: Azure DevOps List test plans
-      description: 'Returns a list of test plans in the project. Test plans are the top-level containers for organizing test suites and test cases. They are typically associated with a release milestone or sprint.
-
-        '
+      description: Returns a list of test plans in the project. Test plans are the top-level containers for organizing test suites and test cases. They are typically associated with a release milestone or sprint.
       tags:
       - Test Plans
       parameters:
@@ -93,9 +89,7 @@ paths:
     post:
       operationId: testPlans_create
       summary: Azure DevOps Create a test plan
-      description: 'Creates a new test plan in the project. A test plan defines the scope of testing for a release, milestone, or sprint. It can be associated with an area path and iteration path to align with the project structure.
-
-        '
+      description: Creates a new test plan in the project. A test plan defines the scope of testing for a release, milestone, or sprint. It can be associated with an area path and iteration path to align with the project structure.
       tags:
       - Test Plans
       parameters:
@@ -131,9 +125,7 @@ paths:
     get:
       operationId: testPlans_get
       summary: Azure DevOps Get a test plan
-      description: 'Returns detailed information about a specific test plan, including its area path, iteration, owner, and date range. Use the plan ID to retrieve test suites associated with this plan.
-
-        '
+      description: Returns detailed information about a specific test plan, including its area path, iteration, owner, and date range. Use the plan ID to retrieve test suites associated with this plan.
       tags:
       - Test Plans
       parameters:
@@ -155,9 +147,7 @@ paths:
     patch:
       operationId: testPlans_update
       summary: Azure DevOps Update a test plan
-      description: 'Updates properties of an existing test plan such as its name, description, area path, iteration, start date, and end date.
-
-        '
+      description: Updates properties of an existing test plan such as its name, description, area path, iteration, start date, and end date.
       tags:
       - Test Plans
       parameters:
@@ -188,9 +178,7 @@ paths:
     delete:
       operationId: testPlans_delete
       summary: Azure DevOps Delete a test plan
-      description: 'Permanently deletes a test plan and all its suites and configurations. This operation cannot be undone. All associated test results and run data will also be deleted.
-
-        '
+      description: Permanently deletes a test plan and all its suites and configurations. This operation cannot be undone. All associated test results and run data will also be deleted.
       tags:
       - Test Plans
       parameters:
@@ -206,31 +194,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
     TestPlanUpdateParams:
       type: object
@@ -294,71 +257,6 @@ components:
           format: uri
         descriptor:
           type: string
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    TestSuiteReference:
-      type: object
-      description: Minimal reference to a test suite
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-    TestPlanCreateParams:
-      type: object
-      description: Parameters for creating a new test plan
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name for the new test plan
-        description:
-          type: string
-          description: Description of the test plan
-        areaPath:
-          type: string
-          description: Area path to associate with the test plan
-        iteration:
-          type: string
-          description: Iteration path (sprint) to associate with the test plan
-        startDate:
-          type: string
-          format: date-time
-          description: Start date of the test plan
-        endDate:
-          type: string
-          format: date-time
-          description: End date of the test plan
-        owner:
-          $ref: '#/components/schemas/IdentityRef'
-        buildDefinition:
-          type: object
-          description: Build definition to associate for automated testing
-          properties:
-            id:
-              type: integer
-        buildId:
-          type: integer
-          description: Specific build ID to test against
     TestPlan:
       type: object
       description: A test plan in Azure Test Plans
@@ -445,14 +343,97 @@ components:
               href:
                 type: string
                 format: uri
+    TestPlanCreateParams:
+      type: object
+      description: Parameters for creating a new test plan
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name for the new test plan
+        description:
+          type: string
+          description: Description of the test plan
+        areaPath:
+          type: string
+          description: Area path to associate with the test plan
+        iteration:
+          type: string
+          description: Iteration path (sprint) to associate with the test plan
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the test plan
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the test plan
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        buildDefinition:
+          type: object
+          description: Build definition to associate for automated testing
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+          description: Specific build ID to test against
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
-    PlanId:
-      name: planId
-      in: path
-      required: true
-      description: Numeric ID of the test plan
-      schema:
-        type: integer
     ApiVersion:
       name: api-version
       in: query
@@ -465,6 +446,13 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

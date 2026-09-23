@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Service Hooks Subscriptions API
-  description: 'REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
-
-    '
+  description: REST API for managing service hook subscriptions, publishers, and consumers in Azure DevOps. Service hooks enable event-driven integrations by delivering notifications to external services (webhooks, Azure Service Bus, Teams, Slack, etc.) when Azure DevOps events occur such as work item changes, build completions, and pull request updates.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -29,9 +27,7 @@ paths:
     get:
       operationId: subscriptions_list
       summary: Azure DevOps List subscriptions
-      description: 'Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.
-
-        '
+      description: Returns a list of all service hook subscriptions in the organization. Each subscription specifies an event type, publisher, consumer (webhook endpoint), and filter conditions. Supports optional filtering by publisher and consumer.
       tags:
       - Subscriptions
       parameters:
@@ -84,9 +80,7 @@ paths:
     post:
       operationId: subscriptions_create
       summary: Azure DevOps Create a subscription
-      description: 'Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.
-
-        '
+      description: Creates a new service hook subscription. The subscription defines which event to listen for (publisher + eventType), filter conditions to narrow the event scope (e.g., a specific project or branch), and the consumer endpoint to deliver the notification to.
       tags:
       - Subscriptions
       parameters:
@@ -131,9 +125,7 @@ paths:
     get:
       operationId: subscriptions_get
       summary: Azure DevOps Get a subscription
-      description: 'Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.
-
-        '
+      description: Returns detailed information about a specific service hook subscription, including its publisher, event type, consumer configuration, filter inputs, and current status.
       tags:
       - Subscriptions
       parameters:
@@ -161,9 +153,7 @@ paths:
     patch:
       operationId: subscriptions_update
       summary: Azure DevOps Update a subscription
-      description: 'Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.
-
-        '
+      description: Updates properties of an existing service hook subscription such as the consumer endpoint URL, filter conditions, or resource detail settings.
       tags:
       - Subscriptions
       parameters:
@@ -200,9 +190,7 @@ paths:
     delete:
       operationId: subscriptions_delete
       summary: Azure DevOps Delete a subscription
-      description: 'Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.
-
-        '
+      description: Permanently deletes a service hook subscription. After deletion, the consumer endpoint will no longer receive notifications for the configured event type.
       tags:
       - Subscriptions
       parameters:
@@ -224,112 +212,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    SubscriptionCreateRequest:
-      type: object
-      description: Request body for creating or updating a service hook subscription
-      required:
-      - publisherId
-      - eventType
-      - consumerId
-      - consumerActionId
-      - publisherInputs
-      - consumerInputs
-      properties:
-        publisherId:
-          type: string
-          description: Publisher ID for the event source
-          example: tfs
-        eventType:
-          type: string
-          description: Event type to subscribe to
-          example: workitem.created
-        resourceVersion:
-          type: string
-          description: Version of the event resource schema to use
-          example: '1.0'
-          default: '1.0'
-        consumerId:
-          type: string
-          description: Consumer ID for the notification target
-          example: webHooks
-        consumerActionId:
-          type: string
-          description: Action ID within the consumer
-          example: httpRequest
-        publisherInputs:
-          type: object
-          description: Filter inputs controlling which events trigger a notification
-          additionalProperties:
-            type: string
-        consumerInputs:
-          type: object
-          description: Configuration for the consumer endpoint
-          additionalProperties:
-            type: string
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     Subscription:
       type: object
       description: A service hook subscription that delivers event notifications to a consumer
@@ -408,6 +291,111 @@ components:
               href:
                 type: string
                 format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+      - publisherId
+      - eventType
+      - consumerId
+      - consumerActionId
+      - publisherInputs
+      - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: tfs
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: workitem.created
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: webHooks
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: httpRequest
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Test Plans Test Cases API
-  description: 'REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
-
-    '
+  description: REST API for managing test plans, test suites, and test cases in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows, enabling teams to create and manage structured test plans, organize tests into suites, and link test cases to work items.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: testCases_list
       summary: Azure DevOps List test cases in a suite
-      description: 'Returns a list of test cases within a specific test suite. Test cases are work items of type Test Case that contain the test steps and expected results for manual or automated tests.
-
-        '
+      description: Returns a list of test cases within a specific test suite. Test cases are work items of type Test Case that contain the test steps and expected results for manual or automated tests.
       tags:
       - Test Cases
       parameters:
@@ -120,9 +116,7 @@ paths:
     post:
       operationId: testCases_add
       summary: Azure DevOps Add test cases to a suite
-      description: 'Adds existing test case work items to a test suite. Test cases must be existing work items of type Test Case. Provide a list of work item IDs to add to the suite.
-
-        '
+      description: Adds existing test case work items to a test suite. Test cases must be existing work items of type Test Case. Provide a list of work item IDs to add to the suite.
       tags:
       - Test Cases
       parameters:
@@ -203,32 +197,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
     TestCase:
       type: object
       description: A test case within a test suite
@@ -279,27 +269,6 @@ components:
               href:
                 type: string
                 format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -317,14 +286,32 @@ components:
           type: integer
         eventId:
           type: integer
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
-    PlanId:
-      name: planId
-      in: path
-      required: true
-      description: Numeric ID of the test plan
-      schema:
-        type: integer
     ApiVersion:
       name: api-version
       in: query
@@ -337,6 +324,13 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Numeric ID of the test plan
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

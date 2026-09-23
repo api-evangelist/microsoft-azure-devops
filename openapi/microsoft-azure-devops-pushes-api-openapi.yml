@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Git Repositories Pushes API
-  description: 'REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
-
-    '
+  description: REST API for managing Git repositories, branches, commits, pull requests, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches, and browsing repository content.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: pushes_list
       summary: Azure DevOps List pushes
-      description: 'Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.
-
-        '
+      description: Returns a list of pushes in a repository. Each push contains references to the commits pushed and the branch or tag updated. Supports filtering by date range and branch.
       tags:
       - Pushes
       parameters:
@@ -102,9 +98,7 @@ paths:
     post:
       operationId: pushes_create
       summary: Azure DevOps Create a push
-      description: 'Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.
-
-        '
+      description: Creates a new push to the repository. This can be used to create commits, update branches, and modify repository contents programmatically. Requires specifying the ref updates and commits with file changes.
       tags:
       - Pushes
       parameters:
@@ -133,51 +127,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-  parameters:
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
     IdentityRef:
       type: object
@@ -200,60 +149,53 @@ components:
           format: uri
         descriptor:
           type: string
-    GitPushCreateRequest:
+    GitRefUpdate:
       type: object
-      description: Request to create a push with new commits
-      required:
-      - refUpdates
-      - commits
+      description: A ref update in a push
       properties:
-        refUpdates:
-          type: array
-          description: Branch updates to apply in this push
-          items:
-            $ref: '#/components/schemas/GitRefUpdate'
-        commits:
-          type: array
-          description: Commits to push
-          items:
-            type: object
-            required:
-            - comment
-            - changes
-            properties:
-              comment:
-                type: string
-                description: Commit message
-              changes:
-                type: array
-                description: File changes in this commit
-                items:
-                  type: object
-                  properties:
-                    changeType:
-                      type: string
-                      enum:
-                      - add
-                      - edit
-                      - delete
-                      - rename
-                      - sourceRename
-                      - targetRename
-                    item:
-                      type: object
-                      properties:
-                        path:
-                          type: string
-                    newContent:
-                      type: object
-                      properties:
-                        content:
-                          type: string
-                        contentType:
-                          type: string
-                          enum:
-                          - rawText
-                          - base64Encoded
+        name:
+          type: string
+          description: The ref name (e.g., refs/heads/main)
+        oldObjectId:
+          type: string
+          description: Previous SHA the ref pointed to (zeros for new ref)
+        newObjectId:
+          type: string
+          description: New SHA the ref now points to (zeros to delete)
+        repositoryId:
+          type: string
+          format: uuid
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
     GitPush:
       type: object
       description: A push to a Git repository
@@ -282,6 +224,63 @@ components:
         url:
           type: string
           format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -347,6 +346,60 @@ components:
               href:
                 type: string
                 format: uri
+    GitPushCreateRequest:
+      type: object
+      description: Request to create a push with new commits
+      required:
+      - refUpdates
+      - commits
+      properties:
+        refUpdates:
+          type: array
+          description: Branch updates to apply in this push
+          items:
+            $ref: '#/components/schemas/GitRefUpdate'
+        commits:
+          type: array
+          description: Commits to push
+          items:
+            type: object
+            required:
+            - comment
+            - changes
+            properties:
+              comment:
+                type: string
+                description: Commit message
+              changes:
+                type: array
+                description: File changes in this commit
+                items:
+                  type: object
+                  properties:
+                    changeType:
+                      type: string
+                      enum:
+                      - add
+                      - edit
+                      - delete
+                      - rename
+                      - sourceRename
+                      - targetRename
+                    item:
+                      type: object
+                      properties:
+                        path:
+                          type: string
+                    newContent:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                        contentType:
+                          type: string
+                          enum:
+                          - rawText
+                          - base64Encoded
     GitUserDate:
       type: object
       description: Git user and date information
@@ -367,110 +420,51 @@ components:
         imageUrl:
           type: string
           format: uri
-    GitCommitRef:
-      type: object
-      description: A reference to a Git commit
-      properties:
-        commitId:
-          type: string
-          description: Full SHA hash of the commit
-          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
-        comment:
-          type: string
-          description: Commit message
-          example: Fix login button alignment
-        commentTruncated:
-          type: boolean
-          description: Whether the comment has been truncated
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        parents:
-          type: array
-          description: Parent commit SHAs
-          items:
-            type: string
-        url:
-          type: string
-          format: uri
-        remoteUrl:
-          type: string
-          format: uri
-        changeCounts:
-          type: object
-          description: Number of files changed (Add, Edit, Delete)
-          properties:
-            Add:
-              type: integer
-            Edit:
-              type: integer
-            Delete:
-              type: integer
-    TeamProjectReference:
-      type: object
-      description: Reference to an Azure DevOps project
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    GitRefUpdate:
-      type: object
-      description: A ref update in a push
-      properties:
-        name:
-          type: string
-          description: The ref name (e.g., refs/heads/main)
-        oldObjectId:
-          type: string
-          description: Previous SHA the ref pointed to (zeros for new ref)
-        newObjectId:
-          type: string
-          description: New SHA the ref now points to (zeros to delete)
-        repositoryId:
-          type: string
-          format: uuid
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

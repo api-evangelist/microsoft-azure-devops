@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Work Items API
-  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
-
-    '
+  description: REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: workItems_list
       summary: Azure DevOps List work items by IDs
-      description: 'Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.
-
-        '
+      description: Returns a list of work items by their IDs. You must provide a comma-separated list of work item IDs. Optionally filter by specific fields, as-of date, or expand relations and links.
       tags:
       - Work Items
       parameters:
@@ -96,9 +92,7 @@ paths:
     post:
       operationId: workItems_create
       summary: Azure DevOps Create a work item
-      description: 'Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.
-
-        '
+      description: Creates a new work item of the specified type. The request body must be a JSON Patch document describing the fields to set on the new work item. Common types include Bug, Task, User Story, Feature, and Epic.
       tags:
       - Work Items
       parameters:
@@ -161,9 +155,7 @@ paths:
     get:
       operationId: workItems_get
       summary: Azure DevOps Get a work item by ID
-      description: 'Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.
-
-        '
+      description: Returns a single work item by its numeric ID. Optionally filter the fields returned, specify a point-in-time with asOf, or expand relations and links.
       tags:
       - Work Items
       parameters:
@@ -216,9 +208,7 @@ paths:
     patch:
       operationId: workItems_update
       summary: Azure DevOps Update a work item
-      description: 'Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.
-
-        '
+      description: Updates an existing work item by applying a JSON Patch document. Supports updating fields, adding relations, and modifying links. Use the add, replace, remove, and test operations to make changes.
       tags:
       - Work Items
       parameters:
@@ -281,9 +271,7 @@ paths:
     delete:
       operationId: workItems_delete
       summary: Azure DevOps Delete a work item
-      description: 'Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.
-
-        '
+      description: Moves a work item to the recycle bin. The work item can be recovered from the recycle bin or permanently deleted. Deletion requires appropriate permissions.
       tags:
       - Work Items
       parameters:
@@ -309,10 +297,396 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+  /{project}/_apis/wit/workitems/{id}:
+    get:
+      operationId: getWorkItem
+      summary: Get Work Item by Id
+      description: Returns a single work item by its numeric ID. Supports field selection and expansion of related entities.
+      tags:
+      - Work Items
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        description: Project name or ID
+        schema:
+          type: string
+        example: example_value
+      - name: id
+        in: path
+        required: true
+        description: Work item ID
+        schema:
+          type: integer
+        example: abc123
+      - name: $expand
+        in: query
+        description: Expand related entities (all, fields, relations, links, none)
+        schema:
+          type: string
+          enum:
+          - all
+          - fields
+          - relations
+          - links
+          - none
+        example: all
+      - name: $select
+        in: query
+        description: Comma-separated list of fields to return
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.3
+        example: example_value
+      responses:
+        '200':
+          description: Work item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+              examples:
+                Getworkitem200Example:
+                  summary: Default getWorkItem 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    rev: 10
+                    fields:
+                      System.Id: '500123'
+                      System.Title: example_value
+                      System.WorkItemType: example_value
+                      System.State: example_value
+                      System.Reason: example_value
+                      System.AssignedTo:
+                        displayName: example_value
+                        id: abc123
+                        uniqueName: example_value
+                      System.CreatedDate: '2026-01-15T10:30:00Z'
+                      System.CreatedBy:
+                        displayName: example_value
+                      System.ChangedDate: '2026-01-15T10:30:00Z'
+                      System.TeamProject: example_value
+                      System.AreaPath: example_value
+                      System.IterationPath: example_value
+                      System.Description: example_value
+                      System.Tags: example_value
+                      Microsoft.VSTS.Common.Priority: 10
+                      Microsoft.VSTS.Common.Severity: example_value
+                    relations:
+                    - rel: example_value
+                      url: https://www.example.com
+                      attributes: {}
+                    url: https://www.example.com
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateWorkItem
+      summary: Update Work Item
+      description: Updates a work item using JSON Patch operations. Supports updating fields, adding/removing links, and attaching files.
+      tags:
+      - Work Items
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: abc123
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.3
+        example: example_value
+      - name: suppressNotifications
+        in: query
+        schema:
+          type: boolean
+        example: true
+      requestBody:
+        required: true
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              UpdateworkitemRequestExample:
+                summary: Default updateWorkItem request
+                x-microcks-default: true
+                value:
+                - op: add
+                  path: example_value
+                  value: example_value
+                  from: example_value
+      responses:
+        '200':
+          description: Updated work item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+              examples:
+                Updateworkitem200Example:
+                  summary: Default updateWorkItem 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    rev: 10
+                    fields:
+                      System.Id: '500123'
+                      System.Title: example_value
+                      System.WorkItemType: example_value
+                      System.State: example_value
+                      System.Reason: example_value
+                      System.AssignedTo:
+                        displayName: example_value
+                        id: abc123
+                        uniqueName: example_value
+                      System.CreatedDate: '2026-01-15T10:30:00Z'
+                      System.CreatedBy:
+                        displayName: example_value
+                      System.ChangedDate: '2026-01-15T10:30:00Z'
+                      System.TeamProject: example_value
+                      System.AreaPath: example_value
+                      System.IterationPath: example_value
+                      System.Description: example_value
+                      System.Tags: example_value
+                      Microsoft.VSTS.Common.Priority: 10
+                      Microsoft.VSTS.Common.Severity: example_value
+                    relations:
+                    - rel: example_value
+                      url: https://www.example.com
+                      attributes: {}
+                    url: https://www.example.com
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /{project}/_apis/wit/workitems/${type}:
+    post:
+      operationId: createWorkItem
+      summary: Create a New Work Item
+      description: Creates a new work item of the specified type. Uses JSON Patch to set field values.
+      tags:
+      - Work Items
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: type
+        in: path
+        required: true
+        description: Work item type (e.g., Bug, Task, User Story, Epic, Feature)
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.3
+        example: example_value
+      requestBody:
+        required: true
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/JsonPatchOperation'
+            examples:
+              createBug:
+                summary: Create a Bug work item
+                value:
+                - op: add
+                  path: /fields/System.Title
+                  value: Fix login button on mobile
+                - op: add
+                  path: /fields/Microsoft.VSTS.TCM.ReproSteps
+                  value: '1. Open app on mobile
+
+                    2. Tap login button
+
+                    3. Nothing happens'
+                - op: add
+                  path: /fields/System.AreaPath
+                  value: MyProject\Frontend
+      responses:
+        '200':
+          description: Created work item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkItem'
+              examples:
+                Createworkitem200Example:
+                  summary: Default createWorkItem 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    rev: 10
+                    fields:
+                      System.Id: '500123'
+                      System.Title: example_value
+                      System.WorkItemType: example_value
+                      System.State: example_value
+                      System.Reason: example_value
+                      System.AssignedTo:
+                        displayName: example_value
+                        id: abc123
+                        uniqueName: example_value
+                      System.CreatedDate: '2026-01-15T10:30:00Z'
+                      System.CreatedBy:
+                        displayName: example_value
+                      System.ChangedDate: '2026-01-15T10:30:00Z'
+                      System.TeamProject: example_value
+                      System.AreaPath: example_value
+                      System.IterationPath: example_value
+                      System.Description: example_value
+                      System.Tags: example_value
+                      Microsoft.VSTS.Common.Priority: 10
+                      Microsoft.VSTS.Common.Severity: example_value
+                    relations:
+                    - rel: example_value
+                      url: https://www.example.com
+                      attributes: {}
+                    url: https://www.example.com
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /{project}/_apis/wit/workitems:
+    get:
+      operationId: getWorkItemsBatch
+      summary: Get Work Items by Ids
+      description: Returns multiple work items by a list of IDs.
+      tags:
+      - Work Items
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: ids
+        in: query
+        required: true
+        description: Comma-separated list of work item IDs (max 200)
+        schema:
+          type: string
+        example: example_value
+      - name: $expand
+        in: query
+        schema:
+          type: string
+        example: example_value
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.3
+        example: example_value
+      responses:
+        '200':
+          description: List of work items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkItem'
+              examples:
+                Getworkitemsbatch200Example:
+                  summary: Default getWorkItemsBatch 200 response
+                  x-microcks-default: true
+                  value:
+                    count: 10
+                    value:
+                    - id: abc123
+                      rev: 10
+                      fields:
+                        System.Id: '500123'
+                        System.Title: example_value
+                        System.WorkItemType: example_value
+                        System.State: example_value
+                        System.Reason: example_value
+                        System.AssignedTo: {}
+                        System.CreatedDate: '2026-01-15T10:30:00Z'
+                        System.CreatedBy: {}
+                        System.ChangedDate: '2026-01-15T10:30:00Z'
+                        System.TeamProject: example_value
+                        System.AreaPath: example_value
+                        System.IterationPath: example_value
+                        System.Description: example_value
+                        System.Tags: example_value
+                        Microsoft.VSTS.Common.Priority: 10
+                        Microsoft.VSTS.Common.Severity: example_value
+                      relations:
+                      - {}
+                      url: https://www.example.com
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -323,19 +697,61 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
+    WorkItemRelation:
+      type: object
+      description: A relation between a work item and another resource
+      properties:
+        rel:
+          type: string
+          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
+          example: System.LinkTypes.Hierarchy-Reverse
+        url:
+          type: string
+          format: uri
+          description: URL of the related resource
+        attributes:
+          type: object
+          description: Additional attributes for the relation (e.g., comment, isLocked)
+          additionalProperties: true
+    JsonPatchOperation:
+      type: object
+      description: A single operation in a JSON Patch document (RFC 6902)
+      required:
+      - op
+      - path
+      properties:
+        op:
+          type: string
+          description: Operation type
+          enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+        path:
+          type: string
+          description: JSON Pointer path (RFC 6901) to the target location
+          example: /fields/System.Title
+        from:
+          type: string
+          description: Source path for move and copy operations
+        value:
+          description: Value to apply (for add, replace, test operations)
     WorkItem:
       type: object
       description: An Azure DevOps work item (Bug, Task, User Story, etc.)
@@ -408,48 +824,30 @@ components:
         eventId:
           type: integer
           description: Event ID for logging and tracing
-    WorkItemRelation:
+    Error:
       type: object
-      description: A relation between a work item and another resource
       properties:
-        rel:
+        id:
           type: string
-          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
-          example: System.LinkTypes.Hierarchy-Reverse
-        url:
-          type: string
-          format: uri
-          description: URL of the related resource
-        attributes:
+          example: abc123
+        innerException:
           type: object
-          description: Additional attributes for the relation (e.g., comment, isLocked)
-          additionalProperties: true
-    JsonPatchOperation:
-      type: object
-      description: A single operation in a JSON Patch document (RFC 6902)
-      required:
-      - op
-      - path
-      properties:
-        op:
+          example: example_value
+        message:
           type: string
-          description: Operation type
-          enum:
-          - add
-          - remove
-          - replace
-          - move
-          - copy
-          - test
-        path:
+          example: example_value
+        typeName:
           type: string
-          description: JSON Pointer path (RFC 6901) to the target location
-          example: /fields/System.Title
-        from:
+          example: example_value
+        typeKey:
           type: string
-          description: Source path for move and copy operations
-        value:
-          description: Value to apply (for add, replace, test operations)
+          example: example_value
+        errorCode:
+          type: integer
+          example: 10
+        eventId:
+          type: integer
+          example: '500123'
   parameters:
     ApiVersion:
       name: api-version
@@ -472,3 +870,16 @@ components:
       type: http
       scheme: basic
       description: Basic authentication using a Personal Access Token (PAT). Use any string as the username and the PAT as the password, then base64-encode the result.
+    personalAccessToken:
+      type: http
+      scheme: basic
+      description: Use empty username and PAT as password (Basic base64(":PAT"))
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.work: Read work items
+            vso.work_write: Read and write work items

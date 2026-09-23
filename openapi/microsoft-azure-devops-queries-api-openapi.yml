@@ -1,0 +1,159 @@
+openapi: 3.2.0
+info:
+  title: Azure DevOps Work Item Tracking Queries API
+  description: The Azure DevOps Work Item Tracking API provides REST endpoints for creating, updating, querying, and managing work items including bugs, tasks, user stories, epics, and features across Azure Boards. Supports custom fields, area paths, iteration paths, and link types for Agile, Scrum, and CMMI process templates.
+  version: '7.2'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/
+servers:
+- url: https://dev.azure.com/{organization}
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: Azure DevOps organization name
+      default: my-org
+security:
+- personalAccessToken: []
+- oauth2: []
+tags:
+- name: Queries
+  description: Work item query execution
+paths:
+  /{project}/_apis/wit/wiql:
+    post:
+      operationId: queryWorkItemsByWiql
+      summary: Query Work Items Using Wiql
+      description: Executes a Work Item Query Language (WIQL) query to find work items matching the specified criteria.
+      tags:
+      - Queries
+      parameters:
+      - name: organization
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: project
+        in: path
+        required: true
+        schema:
+          type: string
+        example: example_value
+      - name: $top
+        in: query
+        description: Maximum number of results to return
+        schema:
+          type: integer
+          maximum: 20000
+        example: 10
+      - name: api-version
+        in: query
+        required: true
+        schema:
+          type: string
+          default: 7.2-preview.2
+        example: example_value
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  description: WIQL query string
+                  example: SELECT [System.Id], [System.Title] FROM WorkItems WHERE [System.TeamProject] = @project AND [System.State] = 'Active' ORDER BY [System.CreatedDate] DESC
+            examples:
+              QueryworkitemsbywiqlRequestExample:
+                summary: Default queryWorkItemsByWiql request
+                x-microcks-default: true
+                value:
+                  query: example_value
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WiqlResult'
+              examples:
+                Queryworkitemsbywiql200Example:
+                  summary: Default queryWorkItemsByWiql 200 response
+                  x-microcks-default: true
+                  value:
+                    queryType: flat
+                    asOf: '2026-01-15T10:30:00Z'
+                    workItems:
+                    - id: abc123
+                      url: https://www.example.com
+                    workItemRelations:
+                    - source:
+                        id: abc123
+                      target:
+                        id: abc123
+                      rel: example_value
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    WiqlResult:
+      type: object
+      properties:
+        queryType:
+          type: string
+          enum:
+          - flat
+          - tree
+          - oneHop
+          example: flat
+        asOf:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        workItems:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              url:
+                type: string
+          example: []
+        workItemRelations:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: object
+                properties:
+                  id:
+                    type: integer
+              target:
+                type: object
+                properties:
+                  id:
+                    type: integer
+              rel:
+                type: string
+          example: []
+  securitySchemes:
+    personalAccessToken:
+      type: http
+      scheme: basic
+      description: Use empty username and PAT as password (Basic base64(":PAT"))
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.work: Read work items
+            vso.work_write: Read and write work items

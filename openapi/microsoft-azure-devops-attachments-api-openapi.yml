@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Azure DevOps Work Items Attachments API
-  description: 'REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
-
-    '
+  description: REST API for managing work items, work item types, fields, queries, attachments, and comments in Azure Boards. Enables programmatic access to agile planning and tracking resources across sprints, backlogs, and boards.
   version: '7.1'
   contact:
     name: Microsoft Azure DevOps
@@ -32,9 +30,7 @@ paths:
     get:
       operationId: attachments_get
       summary: Azure DevOps Get attachment info
-      description: 'Returns metadata about an attachment by its GUID identifier. The response includes the attachment URL, file name, size, and creation date. Use the URL in the response to download the actual attachment content.
-
-        '
+      description: Returns metadata about an attachment by its GUID identifier. The response includes the attachment URL, file name, size, and creation date. Use the URL in the response to download the actual attachment content.
       tags:
       - Attachments
       parameters:
@@ -63,9 +59,7 @@ paths:
     post:
       operationId: attachments_upload
       summary: Azure DevOps Upload an attachment
-      description: 'Uploads a new attachment and returns the attachment reference including the ID and URL. After uploading, attach the file to a work item using the work item update operation with a relation of type AttachedFile.
-
-        '
+      description: Uploads a new attachment and returns the attachment reference including the ID and URL. After uploading, attach the file to a work item using the work item update operation with a relation of type AttachedFile.
       tags:
       - Attachments
       parameters:
@@ -108,8 +102,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
@@ -120,18 +114,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   schemas:
     ApiError:
       type: object
@@ -172,19 +179,6 @@ components:
           type: string
           format: uri
           description: URL to download or reference the attachment
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http
