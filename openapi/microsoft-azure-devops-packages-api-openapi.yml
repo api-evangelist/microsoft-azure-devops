@@ -185,26 +185,98 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
+    Package:
+      type: object
+      description: A package in an Azure Artifacts feed
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique GUID identifier of the package
+        name:
+          type: string
+          description: Display name of the package
+          example: MyCompany.MyLibrary
+        normalizedName:
+          type: string
+          description: Normalized (lowercase) version of the package name
+          example: mycompany.mylibrary
+        protocolType:
+          type: string
+          description: Package manager protocol type
+          enum:
+          - nuget
+          - npm
+          - maven
+          - pypi
+          - upack
+          - cargo
+          - swift
+        versions:
+          type: array
+          description: List of available versions (if requested)
+          items:
+            $ref: '#/components/schemas/PackageVersion'
+        url:
+          type: string
+          format: uri
+          description: URL to access this package via the REST API
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    FeedView:
+      type: object
+      description: A view of a feed (e.g., @local, @prerelease, @release)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: View ID
+        name:
+          type: string
+          description: View name (e.g., '@local', '@release')
+          example: '@release'
+        type:
+          type: string
+          description: View type
+          enum:
+          - none
+          - release
+          - implicit
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
     PackageVersion:
       type: object
       description: A specific version of a package
@@ -264,97 +336,6 @@ components:
         url:
           type: string
           format: uri
-    FeedView:
-      type: object
-      description: A view of a feed (e.g., @local, @prerelease, @release)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: View ID
-        name:
-          type: string
-          description: View name (e.g., '@local', '@release')
-          example: '@release'
-        type:
-          type: string
-          description: View type
-          enum:
-          - none
-          - release
-          - implicit
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Package:
-      type: object
-      description: A package in an Azure Artifacts feed
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique GUID identifier of the package
-        name:
-          type: string
-          description: Display name of the package
-          example: MyCompany.MyLibrary
-        normalizedName:
-          type: string
-          description: Normalized (lowercase) version of the package name
-          example: mycompany.mylibrary
-        protocolType:
-          type: string
-          description: Package manager protocol type
-          enum:
-          - nuget
-          - npm
-          - maven
-          - pypi
-          - upack
-          - cargo
-          - swift
-        versions:
-          type: array
-          description: List of available versions (if requested)
-          items:
-            $ref: '#/components/schemas/PackageVersion'
-        url:
-          type: string
-          format: uri
-          description: URL to access this package via the REST API
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
   parameters:
     ApiVersion:
       name: api-version
@@ -375,6 +356,25 @@ components:
       description: Feed GUID or feed name
       schema:
         type: string
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

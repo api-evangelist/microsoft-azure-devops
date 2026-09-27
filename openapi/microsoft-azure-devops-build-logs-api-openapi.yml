@@ -90,39 +90,49 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    Timeline:
+      type: object
+      description: Build timeline showing all records (phases, jobs, tasks)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Timeline ID
+        changeId:
+          type: integer
+          description: Change ID for real-time timeline updates
+        lastChangedBy:
+          type: string
+          format: uuid
+        lastChangedOn:
+          type: string
+          format: date-time
+        records:
+          type: array
+          description: List of timeline records (phases, jobs, tasks)
+          items:
+            $ref: '#/components/schemas/TimelineRecord'
+        url:
+          type: string
+          format: uri
     TimelineRecord:
       type: object
       description: A single record in the build timeline
@@ -212,48 +222,6 @@ components:
               data:
                 type: object
                 additionalProperties: true
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Timeline:
-      type: object
-      description: Build timeline showing all records (phases, jobs, tasks)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Timeline ID
-        changeId:
-          type: integer
-          description: Change ID for real-time timeline updates
-        lastChangedBy:
-          type: string
-          format: uuid
-        lastChangedOn:
-          type: string
-          format: date-time
-        records:
-          type: array
-          description: List of timeline records (phases, jobs, tasks)
-          items:
-            $ref: '#/components/schemas/TimelineRecord'
-        url:
-          type: string
-          format: uri
     BuildLog:
       type: object
       description: Metadata about a single build log
@@ -277,6 +245,38 @@ components:
         lineCount:
           type: integer
           description: Number of log lines
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

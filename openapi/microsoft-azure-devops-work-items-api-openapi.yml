@@ -684,74 +684,34 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    WorkItemRelation:
+    ApiError:
       type: object
-      description: A relation between a work item and another resource
+      description: Error response from the Azure DevOps API
       properties:
-        rel:
+        id:
           type: string
-          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
-          example: System.LinkTypes.Hierarchy-Reverse
-        url:
-          type: string
-          format: uri
-          description: URL of the related resource
-        attributes:
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
           type: object
-          description: Additional attributes for the relation (e.g., comment, isLocked)
-          additionalProperties: true
-    JsonPatchOperation:
-      type: object
-      description: A single operation in a JSON Patch document (RFC 6902)
-      required:
-      - op
-      - path
-      properties:
-        op:
+          nullable: true
+          description: Inner exception details if applicable
+        message:
           type: string
-          description: Operation type
-          enum:
-          - add
-          - remove
-          - replace
-          - move
-          - copy
-          - test
-        path:
+          description: Human-readable error message
+        typeName:
           type: string
-          description: JSON Pointer path (RFC 6901) to the target location
-          example: /fields/System.Title
-        from:
+          description: Type name of the exception
+        typeKey:
           type: string
-          description: Source path for move and copy operations
-        value:
-          description: Value to apply (for add, replace, test operations)
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
     WorkItem:
       type: object
       description: An Azure DevOps work item (Bug, Task, User Story, etc.)
@@ -797,33 +757,48 @@ components:
           format: uri
           description: URL to access this work item via the REST API
           example: https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42
-    ApiError:
+    JsonPatchOperation:
       type: object
-      description: Error response from the Azure DevOps API
+      description: A single operation in a JSON Patch document (RFC 6902)
+      required:
+      - op
+      - path
       properties:
-        id:
+        op:
           type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
+          description: Operation type
+          enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+        path:
+          type: string
+          description: JSON Pointer path (RFC 6901) to the target location
+          example: /fields/System.Title
+        from:
+          type: string
+          description: Source path for move and copy operations
+        value:
+          description: Value to apply (for add, replace, test operations)
+    WorkItemRelation:
+      type: object
+      description: A relation between a work item and another resource
+      properties:
+        rel:
+          type: string
+          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
+          example: System.LinkTypes.Hierarchy-Reverse
+        url:
+          type: string
+          format: uri
+          description: URL of the related resource
+        attributes:
           type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
-          type: string
-          description: Human-readable error message
-        typeName:
-          type: string
-          description: Type name of the exception
-        typeKey:
-          type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
+          description: Additional attributes for the relation (e.g., comment, isLocked)
+          additionalProperties: true
     Error:
       type: object
       properties:
@@ -861,6 +836,31 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

@@ -403,58 +403,69 @@ paths:
           description: Azure DevOps organization name
           default: my-org
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound_2:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    PipelineId:
-      name: pipelineId
-      in: path
-      required: true
-      description: Numeric ID of the pipeline
-      schema:
-        type: integer
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    PipelineConfiguration:
+      type: object
+      description: Configuration details for a pipeline
+      properties:
+        type:
+          type: string
+          description: Pipeline configuration type
+          enum:
+          - unknown
+          - yaml
+          - designerJson
+          - justInTime
+          - designerHyphenJson
+        path:
+          type: string
+          description: Path to the YAML pipeline file in the repository
+          example: /azure-pipelines.yml
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+    BuildRepository:
+      type: object
+      description: Repository configuration for a pipeline
+      properties:
+        id:
+          type: string
+          description: Repository ID
+        name:
+          type: string
+          description: Repository name
+        type:
+          type: string
+          description: Repository type
+          enum:
+          - TfsGit
+          - TfsVersionControl
+          - GitHub
+          - Bitbucket
+          - GitHubEnterprise
+        url:
+          type: string
+          format: uri
+        defaultBranch:
+          type: string
+          description: Default branch for this repository
+          example: refs/heads/main
     Pipeline:
       type: object
       description: An Azure DevOps pipeline definition
@@ -496,68 +507,6 @@ components:
                   format: uri
         configuration:
           $ref: '#/components/schemas/PipelineConfiguration'
-    PipelineConfiguration:
-      type: object
-      description: Configuration details for a pipeline
-      properties:
-        type:
-          type: string
-          description: Pipeline configuration type
-          enum:
-          - unknown
-          - yaml
-          - designerJson
-          - justInTime
-          - designerHyphenJson
-        path:
-          type: string
-          description: Path to the YAML pipeline file in the repository
-          example: /azure-pipelines.yml
-        repository:
-          $ref: '#/components/schemas/BuildRepository'
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    BuildRepository:
-      type: object
-      description: Repository configuration for a pipeline
-      properties:
-        id:
-          type: string
-          description: Repository ID
-        name:
-          type: string
-          description: Repository name
-        type:
-          type: string
-          description: Repository type
-          enum:
-          - TfsGit
-          - TfsVersionControl
-          - GitHub
-          - Bitbucket
-          - GitHubEnterprise
-        url:
-          type: string
-          format: uri
-        defaultBranch:
-          type: string
-          description: Default branch for this repository
-          example: refs/heads/main
     CreatePipelineParameters:
       type: object
       description: Parameters for creating a new pipeline
@@ -615,15 +564,6 @@ components:
                 name:
                   type: string
                   description: Repository name (for GitHub repositories)
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          example: example_value
-        errorCode:
-          type: integer
-          example: 10
     CreatePipelineRequest:
       type: object
       required:
@@ -664,6 +604,15 @@ components:
                   - azureReposGit
                   - gitHub
           example: example_value
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: example_value
+        errorCode:
+          type: integer
+          example: 10
     Pipeline_2:
       type: object
       properties:
@@ -709,6 +658,57 @@ components:
         links:
           type: object
           example: example_value
+  parameters:
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      description: Numeric ID of the pipeline
+      schema:
+        type: integer
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound_2:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

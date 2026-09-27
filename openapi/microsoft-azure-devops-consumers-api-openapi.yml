@@ -52,37 +52,44 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    Consumer:
+    ApiError:
       type: object
-      description: A consumer that can receive service hook notifications
+      description: Error response from the Azure DevOps API
       properties:
         id:
           type: string
-          description: Unique identifier of the consumer
-          example: webHooks
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    ConsumerAction:
+      type: object
+      description: An action available in a consumer
+      properties:
+        id:
+          type: string
+          description: Action identifier
+          example: httpRequest
         name:
           type: string
-          description: Display name of the consumer
-          example: Web Hooks
+          description: Action display name
+          example: Send a generic HTTP request with a JSON payload
         description:
           type: string
-          description: Description of this consumer type
-        imageUrl:
+          description: Description of what this action does
+        consumerId:
           type: string
-          format: uri
-          description: URL to the consumer's icon
-        informationUrl:
-          type: string
-          format: uri
-          description: Documentation URL for this consumer
-        actions:
-          type: array
-          description: Available actions for this consumer
-          items:
-            $ref: '#/components/schemas/ConsumerAction'
+          description: Parent consumer ID
         inputs:
           type: array
-          description: Configuration inputs for this consumer
+          description: Input parameters required for this action
           items:
             $ref: '#/components/schemas/InputDescriptor'
         url:
@@ -157,62 +164,42 @@ components:
               type: integer
             maxLength:
               type: integer
-    ApiError:
+    Consumer:
       type: object
-      description: Error response from the Azure DevOps API
+      description: A consumer that can receive service hook notifications
       properties:
         id:
           type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    ConsumerAction:
-      type: object
-      description: An action available in a consumer
-      properties:
-        id:
-          type: string
-          description: Action identifier
-          example: httpRequest
+          description: Unique identifier of the consumer
+          example: webHooks
         name:
           type: string
-          description: Action display name
-          example: Send a generic HTTP request with a JSON payload
+          description: Display name of the consumer
+          example: Web Hooks
         description:
           type: string
-          description: Description of what this action does
-        consumerId:
+          description: Description of this consumer type
+        imageUrl:
           type: string
-          description: Parent consumer ID
+          format: uri
+          description: URL to the consumer's icon
+        informationUrl:
+          type: string
+          format: uri
+          description: Documentation URL for this consumer
+        actions:
+          type: array
+          description: Available actions for this consumer
+          items:
+            $ref: '#/components/schemas/ConsumerAction'
         inputs:
           type: array
-          description: Input parameters required for this action
+          description: Configuration inputs for this consumer
           items:
             $ref: '#/components/schemas/InputDescriptor'
         url:
           type: string
           format: uri
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version
@@ -226,6 +213,19 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

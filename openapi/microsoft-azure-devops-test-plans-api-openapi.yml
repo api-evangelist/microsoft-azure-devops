@@ -195,68 +195,71 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    TestPlanUpdateParams:
+    ApiError:
       type: object
-      description: Parameters for updating an existing test plan
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestPlanCreateParams:
+      type: object
+      description: Parameters for creating a new test plan
+      required:
+      - name
       properties:
         name:
           type: string
-          description: New name for the test plan
+          description: Name for the new test plan
         description:
           type: string
-          description: New description for the test plan
+          description: Description of the test plan
         areaPath:
           type: string
-          description: Updated area path
+          description: Area path to associate with the test plan
         iteration:
           type: string
-          description: Updated iteration path
+          description: Iteration path (sprint) to associate with the test plan
         startDate:
           type: string
           format: date-time
-          description: Updated start date
+          description: Start date of the test plan
         endDate:
           type: string
           format: date-time
-          description: Updated end date
+          description: End date of the test plan
         owner:
           $ref: '#/components/schemas/IdentityRef'
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
         buildDefinition:
           type: object
+          description: Build definition to associate for automated testing
           properties:
             id:
               type: integer
         buildId:
           type: integer
-        revision:
-          type: integer
-          description: Current revision number (required for update to prevent conflicts)
-    IdentityRef:
+          description: Specific build ID to test against
+    TestSuiteReference:
       type: object
-      description: Reference to an Azure DevOps user identity
+      description: Minimal reference to a test suite
       properties:
         id:
+          type: integer
+        name:
           type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
         url:
           type: string
           format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
     TestPlan:
       type: object
       description: A test plan in Azure Test Plans
@@ -343,96 +346,68 @@ components:
               href:
                 type: string
                 format: uri
-    TestPlanCreateParams:
+    IdentityRef:
       type: object
-      description: Parameters for creating a new test plan
-      required:
-      - name
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    TestPlanUpdateParams:
+      type: object
+      description: Parameters for updating an existing test plan
       properties:
         name:
           type: string
-          description: Name for the new test plan
+          description: New name for the test plan
         description:
           type: string
-          description: Description of the test plan
+          description: New description for the test plan
         areaPath:
           type: string
-          description: Area path to associate with the test plan
+          description: Updated area path
         iteration:
           type: string
-          description: Iteration path (sprint) to associate with the test plan
+          description: Updated iteration path
         startDate:
           type: string
           format: date-time
-          description: Start date of the test plan
+          description: Updated start date
         endDate:
           type: string
           format: date-time
-          description: End date of the test plan
+          description: Updated end date
         owner:
           $ref: '#/components/schemas/IdentityRef'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
         buildDefinition:
           type: object
-          description: Build definition to associate for automated testing
           properties:
             id:
               type: integer
         buildId:
           type: integer
-          description: Specific build ID to test against
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
+        revision:
           type: integer
-        eventId:
-          type: integer
-    TestSuiteReference:
-      type: object
-      description: Minimal reference to a test suite
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+          description: Current revision number (required for update to prevent conflicts)
   parameters:
     ApiVersion:
       name: api-version
@@ -453,6 +428,31 @@ components:
       description: Numeric ID of the test plan
       schema:
         type: integer
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

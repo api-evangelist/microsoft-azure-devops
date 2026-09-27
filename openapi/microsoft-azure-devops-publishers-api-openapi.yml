@@ -88,6 +88,92 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    EventType:
+      type: object
+      description: An event type that a publisher can produce
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the event type
+          example: workitem.created
+        name:
+          type: string
+          description: Display name of the event type
+          example: Work item created
+        description:
+          type: string
+          description: Detailed description of when this event fires
+        publisherId:
+          type: string
+          description: ID of the publisher that produces this event
+        supportedResourceVersions:
+          type: array
+          description: Supported versions of the event resource schema
+          items:
+            type: string
+        fields:
+          type: object
+          description: Fields available in the event payload
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              fieldType:
+                type: string
+              isFilterable:
+                type: boolean
+              isQueryable:
+                type: boolean
+    Publisher:
+      type: object
+      description: An event publisher (source) that can produce service hook events
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the publisher
+          example: tfs
+        name:
+          type: string
+          description: Display name of the publisher
+          example: Azure DevOps
+        description:
+          type: string
+          description: Description of the publisher and the events it produces
+        supportedEvents:
+          type: array
+          description: List of event types this publisher supports
+          items:
+            $ref: '#/components/schemas/EventTypeReference'
+        inputs:
+          type: array
+          description: Input parameters for filtering publisher events
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
     InputDescriptor:
       type: object
       description: Descriptor for a configurable input parameter
@@ -157,47 +243,6 @@ components:
               type: integer
             maxLength:
               type: integer
-    EventType:
-      type: object
-      description: An event type that a publisher can produce
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the event type
-          example: workitem.created
-        name:
-          type: string
-          description: Display name of the event type
-          example: Work item created
-        description:
-          type: string
-          description: Detailed description of when this event fires
-        publisherId:
-          type: string
-          description: ID of the publisher that produces this event
-        supportedResourceVersions:
-          type: array
-          description: Supported versions of the event resource schema
-          items:
-            type: string
-        fields:
-          type: object
-          description: Fields available in the event payload
-          additionalProperties:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              description:
-                type: string
-              fieldType:
-                type: string
-              isFilterable:
-                type: boolean
-              isQueryable:
-                type: boolean
     EventTypeReference:
       type: object
       description: Minimal reference to an event type
@@ -208,70 +253,6 @@ components:
         name:
           type: string
           description: Event type display name
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Publisher:
-      type: object
-      description: An event publisher (source) that can produce service hook events
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the publisher
-          example: tfs
-        name:
-          type: string
-          description: Display name of the publisher
-          example: Azure DevOps
-        description:
-          type: string
-          description: Description of the publisher and the events it produces
-        supportedEvents:
-          type: array
-          description: List of event types this publisher supports
-          items:
-            $ref: '#/components/schemas/EventTypeReference'
-        inputs:
-          type: array
-          description: Input parameters for filtering publisher events
-          items:
-            $ref: '#/components/schemas/InputDescriptor'
-        url:
-          type: string
-          format: uri
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version
@@ -285,6 +266,25 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+  responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

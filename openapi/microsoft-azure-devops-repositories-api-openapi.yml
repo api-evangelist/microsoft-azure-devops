@@ -297,32 +297,79 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitItem:
+      type: object
+      description: A file or folder in a Git repository
+      properties:
+        objectId:
+          type: string
+          description: Git blob or tree SHA
+        gitObjectType:
+          type: string
+          description: Git object type
+          enum:
+          - bad
+          - commit
+          - tree
+          - blob
+          - tag
+          - ext2
+          - offsetDelta
+          - refDelta
+        commitId:
+          type: string
+          description: SHA of the commit this item belongs to
+        path:
+          type: string
+          description: Path to the item within the repository
+          example: /src/main.ts
+        isFolder:
+          type: boolean
+          description: Whether this item is a folder (tree)
+        isSymLink:
+          type: boolean
+          description: Whether this item is a symbolic link
+        url:
+          type: string
+          format: uri
+        content:
+          type: string
+          description: File content (if requested and item is a file)
+        contentMetadata:
+          type: object
+          description: Metadata about the file content
+          properties:
+            encoding:
+              type: integer
+              description: Text encoding (code page)
+            extension:
+              type: string
+            fileName:
+              type: string
+            isBinary:
+              type: boolean
+            isImage:
+              type: boolean
+        latestProcessedChange:
+          $ref: '#/components/schemas/GitCommitRef'
     TeamProjectReference:
       type: object
       description: Reference to an Azure DevOps project
@@ -353,23 +400,6 @@ components:
           - private
           - public
         revision:
-          type: integer
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
           type: integer
     GitCommitRef:
       type: object
@@ -411,6 +441,26 @@ components:
               type: integer
             Delete:
               type: integer
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -476,81 +526,6 @@ components:
               href:
                 type: string
                 format: uri
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
-          example: John Doe
-        email:
-          type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
-          type: string
-          format: uri
-    GitItem:
-      type: object
-      description: A file or folder in a Git repository
-      properties:
-        objectId:
-          type: string
-          description: Git blob or tree SHA
-        gitObjectType:
-          type: string
-          description: Git object type
-          enum:
-          - bad
-          - commit
-          - tree
-          - blob
-          - tag
-          - ext2
-          - offsetDelta
-          - refDelta
-        commitId:
-          type: string
-          description: SHA of the commit this item belongs to
-        path:
-          type: string
-          description: Path to the item within the repository
-          example: /src/main.ts
-        isFolder:
-          type: boolean
-          description: Whether this item is a folder (tree)
-        isSymLink:
-          type: boolean
-          description: Whether this item is a symbolic link
-        url:
-          type: string
-          format: uri
-        content:
-          type: string
-          description: File content (if requested and item is a file)
-        contentMetadata:
-          type: object
-          description: Metadata about the file content
-          properties:
-            encoding:
-              type: integer
-              description: Text encoding (code page)
-            extension:
-              type: string
-            fileName:
-              type: string
-            isBinary:
-              type: boolean
-            isImage:
-              type: boolean
-        latestProcessedChange:
-          $ref: '#/components/schemas/GitCommitRef'
   parameters:
     ApiVersion:
       name: api-version
@@ -571,6 +546,31 @@ components:
       description: GUID or name of the repository
       schema:
         type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

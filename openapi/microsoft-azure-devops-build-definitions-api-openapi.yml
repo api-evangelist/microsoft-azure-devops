@@ -238,60 +238,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-    TeamProjectReference:
-      type: object
-      description: Reference to an Azure DevOps project
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Project ID
-        name:
-          type: string
-          description: Project name
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -416,6 +362,100 @@ components:
             type:
               type: integer
               description: 1 = designer, 2 = YAML
+    BuildRepository:
+      type: object
+      description: Repository configuration for a build
+      properties:
+        id:
+          type: string
+          description: Repository ID (GUID for Git, name for TFVC)
+        name:
+          type: string
+          description: Repository name
+        type:
+          type: string
+          description: Repository type
+          enum:
+          - TfsGit
+          - TfsVersionControl
+          - GitHub
+          - Bitbucket
+          - GitHubEnterprise
+        url:
+          type: string
+          format: uri
+          description: URL of the repository
+        defaultBranch:
+          type: string
+          description: Default branch for this repository
+          example: refs/heads/main
+        checkoutSubmodules:
+          type: boolean
+          description: Whether to checkout Git submodules
+        clean:
+          type: string
+          description: Whether to clean the working directory before each build
+          enum:
+          - 'true'
+          - 'false'
+          - null
+        properties:
+          type: object
+          additionalProperties: true
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Project ID
+        name:
+          type: string
+          description: Project name
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
     BuildDefinitionCreateRequest:
       type: object
       description: Request to create a new build definition
@@ -466,71 +506,6 @@ components:
           type: array
           items:
             type: object
-    BuildRepository:
-      type: object
-      description: Repository configuration for a build
-      properties:
-        id:
-          type: string
-          description: Repository ID (GUID for Git, name for TFVC)
-        name:
-          type: string
-          description: Repository name
-        type:
-          type: string
-          description: Repository type
-          enum:
-          - TfsGit
-          - TfsVersionControl
-          - GitHub
-          - Bitbucket
-          - GitHubEnterprise
-        url:
-          type: string
-          format: uri
-          description: URL of the repository
-        defaultBranch:
-          type: string
-          description: Default branch for this repository
-          example: refs/heads/main
-        checkoutSubmodules:
-          type: boolean
-          description: Whether to checkout Git submodules
-        clean:
-          type: string
-          description: Whether to clean the working directory before each build
-          enum:
-          - 'true'
-          - 'false'
-          - null
-        properties:
-          type: object
-          additionalProperties: true
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version
@@ -544,6 +519,31 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

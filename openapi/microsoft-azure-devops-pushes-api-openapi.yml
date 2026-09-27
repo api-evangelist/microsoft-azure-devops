@@ -128,6 +128,39 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    GitRefUpdate:
+      type: object
+      description: A ref update in a push
+      properties:
+        name:
+          type: string
+          description: The ref name (e.g., refs/heads/main)
+        oldObjectId:
+          type: string
+          description: Previous SHA the ref pointed to (zeros for new ref)
+        newObjectId:
+          type: string
+          description: New SHA the ref now points to (zeros to delete)
+        repositoryId:
+          type: string
+          format: uuid
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     IdentityRef:
       type: object
       description: Reference to an Azure DevOps user identity
@@ -149,22 +182,60 @@ components:
           format: uri
         descriptor:
           type: string
-    GitRefUpdate:
+    GitPushCreateRequest:
       type: object
-      description: A ref update in a push
+      description: Request to create a push with new commits
+      required:
+      - refUpdates
+      - commits
       properties:
-        name:
-          type: string
-          description: The ref name (e.g., refs/heads/main)
-        oldObjectId:
-          type: string
-          description: Previous SHA the ref pointed to (zeros for new ref)
-        newObjectId:
-          type: string
-          description: New SHA the ref now points to (zeros to delete)
-        repositoryId:
-          type: string
-          format: uuid
+        refUpdates:
+          type: array
+          description: Branch updates to apply in this push
+          items:
+            $ref: '#/components/schemas/GitRefUpdate'
+        commits:
+          type: array
+          description: Commits to push
+          items:
+            type: object
+            required:
+            - comment
+            - changes
+            properties:
+              comment:
+                type: string
+                description: Commit message
+              changes:
+                type: array
+                description: File changes in this commit
+                items:
+                  type: object
+                  properties:
+                    changeType:
+                      type: string
+                      enum:
+                      - add
+                      - edit
+                      - delete
+                      - rename
+                      - sourceRename
+                      - targetRename
+                    item:
+                      type: object
+                      properties:
+                        path:
+                          type: string
+                    newContent:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                        contentType:
+                          type: string
+                          enum:
+                          - rawText
+                          - base64Encoded
     TeamProjectReference:
       type: object
       description: Reference to an Azure DevOps project
@@ -195,51 +266,6 @@ components:
           - private
           - public
         revision:
-          type: integer
-    GitPush:
-      type: object
-      description: A push to a Git repository
-      properties:
-        pushId:
-          type: integer
-          description: Unique numeric push ID
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the push
-        pushedBy:
-          $ref: '#/components/schemas/IdentityRef'
-        commits:
-          type: array
-          description: Commits included in this push
-          items:
-            $ref: '#/components/schemas/GitCommitRef'
-        refUpdates:
-          type: array
-          description: Ref updates (branch changes) in this push
-          items:
-            $ref: '#/components/schemas/GitRefUpdate'
-        repository:
-          $ref: '#/components/schemas/GitRepository'
-        url:
-          type: string
-          format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
           type: integer
     GitCommitRef:
       type: object
@@ -281,6 +307,54 @@ components:
               type: integer
             Delete:
               type: integer
+    GitPush:
+      type: object
+      description: A push to a Git repository
+      properties:
+        pushId:
+          type: integer
+          description: Unique numeric push ID
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the push
+        pushedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        commits:
+          type: array
+          description: Commits included in this push
+          items:
+            $ref: '#/components/schemas/GitCommitRef'
+        refUpdates:
+          type: array
+          description: Ref updates (branch changes) in this push
+          items:
+            $ref: '#/components/schemas/GitRefUpdate'
+        repository:
+          $ref: '#/components/schemas/GitRepository'
+        url:
+          type: string
+          format: uri
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -346,105 +420,6 @@ components:
               href:
                 type: string
                 format: uri
-    GitPushCreateRequest:
-      type: object
-      description: Request to create a push with new commits
-      required:
-      - refUpdates
-      - commits
-      properties:
-        refUpdates:
-          type: array
-          description: Branch updates to apply in this push
-          items:
-            $ref: '#/components/schemas/GitRefUpdate'
-        commits:
-          type: array
-          description: Commits to push
-          items:
-            type: object
-            required:
-            - comment
-            - changes
-            properties:
-              comment:
-                type: string
-                description: Commit message
-              changes:
-                type: array
-                description: File changes in this commit
-                items:
-                  type: object
-                  properties:
-                    changeType:
-                      type: string
-                      enum:
-                      - add
-                      - edit
-                      - delete
-                      - rename
-                      - sourceRename
-                      - targetRename
-                    item:
-                      type: object
-                      properties:
-                        path:
-                          type: string
-                    newContent:
-                      type: object
-                      properties:
-                        content:
-                          type: string
-                        contentType:
-                          type: string
-                          enum:
-                          - rawText
-                          - base64Encoded
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
-          example: John Doe
-        email:
-          type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
-          type: string
-          format: uri
-  responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   parameters:
     ApiVersion:
       name: api-version
@@ -465,6 +440,31 @@ components:
       description: GUID or name of the repository
       schema:
         type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http
