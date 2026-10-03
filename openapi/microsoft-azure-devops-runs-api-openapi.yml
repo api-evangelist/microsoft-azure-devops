@@ -237,40 +237,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    RunPipelineRequest:
-      type: object
-      properties:
-        resources:
-          type: object
-          properties:
-            repositories:
-              type: object
-              properties:
-                self:
-                  type: object
-                  properties:
-                    refName:
-                      type: string
-          example: example_value
-        variables:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              value:
-                type: string
-              isSecret:
-                type: boolean
-          example: example_value
-        templateParameters:
-          type: object
-          additionalProperties: true
-          example: example_value
-        stagesToSkip:
-          type: array
-          items:
-            type: string
-          example: []
     PipelineRun:
       type: object
       properties:
@@ -340,6 +306,40 @@ components:
         url:
           type: string
           example: https://www.example.com
+    RunPipelineRequest:
+      type: object
+      properties:
+        resources:
+          type: object
+          properties:
+            repositories:
+              type: object
+              properties:
+                self:
+                  type: object
+                  properties:
+                    refName:
+                      type: string
+          example: example_value
+        variables:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+              isSecret:
+                type: boolean
+          example: example_value
+        templateParameters:
+          type: object
+          additionalProperties: true
+          example: example_value
+        stagesToSkip:
+          type: array
+          items:
+            type: string
+          example: []
   securitySchemes:
     personalAccessToken:
       type: http

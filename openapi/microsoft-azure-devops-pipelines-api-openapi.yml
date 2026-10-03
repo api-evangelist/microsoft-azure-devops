@@ -404,42 +404,6 @@ paths:
           default: my-org
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    PipelineConfiguration:
-      type: object
-      description: Configuration details for a pipeline
-      properties:
-        type:
-          type: string
-          description: Pipeline configuration type
-          enum:
-          - unknown
-          - yaml
-          - designerJson
-          - justInTime
-          - designerHyphenJson
-        path:
-          type: string
-          description: Path to the YAML pipeline file in the repository
-          example: /azure-pipelines.yml
-        repository:
-          $ref: '#/components/schemas/BuildRepository'
     BuildRepository:
       type: object
       description: Repository configuration for a pipeline
@@ -466,47 +430,23 @@ components:
           type: string
           description: Default branch for this repository
           example: refs/heads/main
-    Pipeline:
+    ApiError:
       type: object
-      description: An Azure DevOps pipeline definition
+      description: Error response from the Azure DevOps API
       properties:
         id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
           type: integer
-          description: Unique numeric identifier of the pipeline
-          example: 15
-        name:
-          type: string
-          description: Display name of the pipeline
-          example: CI Pipeline
-        folder:
-          type: string
-          description: Folder path for organizing pipelines
-          example: \CI
-        revision:
+        eventId:
           type: integer
-          description: Current revision number of the pipeline
-        url:
-          type: string
-          format: uri
-          description: URL to access this pipeline via the REST API
-        _links:
-          type: object
-          description: HAL links for related resources
-          properties:
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-                  format: uri
-            web:
-              type: object
-              properties:
-                href:
-                  type: string
-                  format: uri
-        configuration:
-          $ref: '#/components/schemas/PipelineConfiguration'
     CreatePipelineParameters:
       type: object
       description: Parameters for creating a new pipeline
@@ -564,6 +504,66 @@ components:
                 name:
                   type: string
                   description: Repository name (for GitHub repositories)
+    PipelineConfiguration:
+      type: object
+      description: Configuration details for a pipeline
+      properties:
+        type:
+          type: string
+          description: Pipeline configuration type
+          enum:
+          - unknown
+          - yaml
+          - designerJson
+          - justInTime
+          - designerHyphenJson
+        path:
+          type: string
+          description: Path to the YAML pipeline file in the repository
+          example: /azure-pipelines.yml
+        repository:
+          $ref: '#/components/schemas/BuildRepository'
+    Pipeline:
+      type: object
+      description: An Azure DevOps pipeline definition
+      properties:
+        id:
+          type: integer
+          description: Unique numeric identifier of the pipeline
+          example: 15
+        name:
+          type: string
+          description: Display name of the pipeline
+          example: CI Pipeline
+        folder:
+          type: string
+          description: Folder path for organizing pipelines
+          example: \CI
+        revision:
+          type: integer
+          description: Current revision number of the pipeline
+        url:
+          type: string
+          format: uri
+          description: URL to access this pipeline via the REST API
+        _links:
+          type: object
+          description: HAL links for related resources
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+            web:
+              type: object
+              properties:
+                href:
+                  type: string
+                  format: uri
+        configuration:
+          $ref: '#/components/schemas/PipelineConfiguration'
     CreatePipelineRequest:
       type: object
       required:
@@ -604,15 +604,6 @@ components:
                   - azureReposGit
                   - gitHub
           example: example_value
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-          example: example_value
-        errorCode:
-          type: integer
-          example: 10
     Pipeline_2:
       type: object
       properties:
@@ -658,6 +649,46 @@ components:
         links:
           type: object
           example: example_value
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: example_value
+        errorCode:
+          type: integer
+          example: 10
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound_2:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     PipelineId:
       name: pipelineId
@@ -678,37 +709,6 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound_2:
-      description: Not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

@@ -173,23 +173,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     WikiCreateParametersV2:
       type: object
       description: Parameters for creating a new wiki
@@ -228,6 +211,23 @@ components:
               type: string
               description: Branch name
               example: main
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     WikiV2:
       type: object
       description: An Azure DevOps wiki
@@ -297,26 +297,6 @@ components:
               version:
                 type: string
                 description: Branch name
-  parameters:
-    WikiIdentifier:
-      name: wikiIdentifier
-      in: path
-      required: true
-      description: Wiki GUID or wiki name
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
@@ -330,18 +310,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     NotFound:
       description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    WikiIdentifier:
+      name: wikiIdentifier
+      in: path
+      required: true
+      description: Wiki GUID or wiki name
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

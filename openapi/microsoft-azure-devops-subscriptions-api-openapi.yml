@@ -230,6 +230,69 @@ components:
           type: integer
         eventId:
           type: integer
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+      - publisherId
+      - eventType
+      - consumerId
+      - consumerActionId
+      - publisherInputs
+      - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: tfs
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: workitem.created
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: webHooks
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: httpRequest
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
     Subscription:
       type: object
       description: A service hook subscription that delivers event notifications to a consumer
@@ -308,91 +371,9 @@ components:
               href:
                 type: string
                 format: uri
-    SubscriptionCreateRequest:
-      type: object
-      description: Request body for creating or updating a service hook subscription
-      required:
-      - publisherId
-      - eventType
-      - consumerId
-      - consumerActionId
-      - publisherInputs
-      - consumerInputs
-      properties:
-        publisherId:
-          type: string
-          description: Publisher ID for the event source
-          example: tfs
-        eventType:
-          type: string
-          description: Event type to subscribe to
-          example: workitem.created
-        resourceVersion:
-          type: string
-          description: Version of the event resource schema to use
-          example: '1.0'
-          default: '1.0'
-        consumerId:
-          type: string
-          description: Consumer ID for the notification target
-          example: webHooks
-        consumerActionId:
-          type: string
-          description: Action ID within the consumer
-          example: httpRequest
-        publisherInputs:
-          type: object
-          description: Filter inputs controlling which events trigger a notification
-          additionalProperties:
-            type: string
-        consumerInputs:
-          type: object
-          description: Configuration for the consumer endpoint
-          additionalProperties:
-            type: string
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -409,6 +390,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

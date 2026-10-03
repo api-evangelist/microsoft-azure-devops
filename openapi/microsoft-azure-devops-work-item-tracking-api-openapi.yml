@@ -78,33 +78,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
-          type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
-          type: string
-          description: Human-readable error message
-        typeName:
-          type: string
-          description: Type name of the exception
-        typeKey:
-          type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
     WorkItemQueryResult:
       type: object
       description: Results from a WIQL query execution
@@ -150,19 +123,33 @@ components:
               url:
                 type: string
                 format: uri
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
@@ -182,6 +169,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

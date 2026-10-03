@@ -175,48 +175,6 @@ components:
           type: integer
         eventId:
           type: integer
-    ReleaseDefinitionShallowReference:
-      type: object
-      description: A minimal reference to a release definition
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        path:
-          type: string
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
     Deployment:
       type: object
       description: A deployment of a release to an environment
@@ -333,19 +291,48 @@ components:
         url:
           type: string
           format: uri
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
   responses:
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
@@ -359,6 +346,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

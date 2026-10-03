@@ -128,60 +128,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    GitRefUpdate:
-      type: object
-      description: A ref update in a push
-      properties:
-        name:
-          type: string
-          description: The ref name (e.g., refs/heads/main)
-        oldObjectId:
-          type: string
-          description: Previous SHA the ref pointed to (zeros for new ref)
-        newObjectId:
-          type: string
-          description: New SHA the ref now points to (zeros to delete)
-        repositoryId:
-          type: string
-          format: uuid
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
     GitPushCreateRequest:
       type: object
       description: Request to create a push with new commits
@@ -236,37 +182,39 @@ components:
                           enum:
                           - rawText
                           - base64Encoded
-    TeamProjectReference:
+    ApiError:
       type: object
-      description: Reference to an Azure DevOps project
+      description: Error response from the Azure DevOps API
       properties:
         id:
           type: string
           format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitRefUpdate:
+      type: object
+      description: A ref update in a push
+      properties:
         name:
           type: string
-        description:
+          description: The ref name (e.g., refs/heads/main)
+        oldObjectId:
           type: string
-        url:
+          description: Previous SHA the ref pointed to (zeros for new ref)
+        newObjectId:
           type: string
-          format: uri
-        state:
+          description: New SHA the ref now points to (zeros to delete)
+        repositoryId:
           type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
+          format: uuid
     GitCommitRef:
       type: object
       description: A reference to a Git commit
@@ -307,6 +255,37 @@ components:
               type: integer
             Delete:
               type: integer
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
     GitPush:
       type: object
       description: A push to a Git repository
@@ -355,6 +334,27 @@ components:
         imageUrl:
           type: string
           format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -447,12 +447,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
       content:
@@ -461,6 +455,12 @@ components:
             $ref: '#/components/schemas/ApiError'
     NotFound:
       description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:

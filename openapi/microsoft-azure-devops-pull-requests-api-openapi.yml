@@ -381,6 +381,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   schemas:
     ApiError:
       type: object
@@ -399,43 +419,6 @@ components:
           type: integer
         eventId:
           type: integer
-    Comment:
-      type: object
-      description: A comment in a pull request thread
-      properties:
-        id:
-          type: integer
-        parentCommentId:
-          type: integer
-        content:
-          type: string
-        publishedDate:
-          type: string
-          format: date-time
-        lastUpdatedDate:
-          type: string
-          format: date-time
-        lastContentUpdatedDate:
-          type: string
-          format: date-time
-        commentType:
-          type: string
-          enum:
-          - unknown
-          - text
-          - codeChange
-          - system
-        author:
-          $ref: '#/components/schemas/IdentityRef'
-        isDeleted:
-          type: boolean
-        usersLiked:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentityRef'
-        url:
-          type: string
-          format: uri
     GitPullRequestCommentThread:
       type: object
       description: A comment thread on a pull request
@@ -493,27 +476,37 @@ components:
         url:
           type: string
           format: uri
-    IdentityRef:
+    TeamProjectReference:
       type: object
-      description: Reference to an Azure DevOps user identity
+      description: Reference to an Azure DevOps project
       properties:
         id:
           type: string
           format: uuid
-        displayName:
+        name:
           type: string
-          example: John Doe
-        uniqueName:
+        description:
           type: string
-          example: john.doe@example.com
         url:
           type: string
           format: uri
-        imageUrl:
+        state:
           type: string
-          format: uri
-        descriptor:
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
           type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
     GitPullRequestCommentThreadCreateRequest:
       type: object
       description: Request to create a new pull request comment thread
@@ -571,37 +564,107 @@ components:
                   type: integer
                 offset:
                   type: integer
-    TeamProjectReference:
+    GitPullRequestCreateRequest:
       type: object
-      description: Reference to an Azure DevOps project
+      description: Request to create a new pull request
+      required:
+      - title
+      - sourceRefName
+      - targetRefName
+      properties:
+        title:
+          type: string
+          description: Title for the pull request
+        description:
+          type: string
+          description: Description of the changes
+        sourceRefName:
+          type: string
+          description: Source branch containing the changes
+          example: refs/heads/feature/my-feature
+        targetRefName:
+          type: string
+          description: Target branch for the merge
+          example: refs/heads/main
+        reviewers:
+          type: array
+          description: Initial reviewers to assign
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+        isDraft:
+          type: boolean
+          description: Whether to create as a draft pull request
+          default: false
+        workItemRefs:
+          type: array
+          description: Work items to associate with this pull request
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+        labels:
+          type: array
+          description: Labels to attach to this pull request
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+    IdentityRefWithVote:
+      type: object
+      description: A reviewer identity with their vote on a pull request
+      allOf:
+      - $ref: '#/components/schemas/IdentityRef'
+      properties:
+        vote:
+          type: integer
+          description: 'Vote value: 10 = approved, 5 = approved with suggestions, 0 = no vote, -5 = waiting for author, -10 = rejected
+
+            '
+          enum:
+          - 10
+          - 5
+          - 0
+          - -5
+          - -10
+        hasDeclined:
+          type: boolean
+          description: Whether the reviewer has declined
+        isFlagged:
+          type: boolean
+          description: Whether the reviewer has flagged the PR
+        isRequired:
+          type: boolean
+          description: Whether this reviewer's approval is required
+        reviewerUrl:
+          type: string
+          format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
       properties:
         id:
           type: string
           format: uuid
-        name:
+        displayName:
           type: string
-        description:
+          example: John Doe
+        uniqueName:
           type: string
+          example: john.doe@example.com
         url:
           type: string
           format: uri
-        state:
+        imageUrl:
           type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
+          format: uri
+        descriptor:
           type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
     GitPullRequest:
       type: object
       description: An Azure DevOps Git pull request
@@ -749,57 +812,43 @@ components:
               href:
                 type: string
                 format: uri
-    GitPullRequestCreateRequest:
+    Comment:
       type: object
-      description: Request to create a new pull request
-      required:
-      - title
-      - sourceRefName
-      - targetRefName
+      description: A comment in a pull request thread
       properties:
-        title:
+        id:
+          type: integer
+        parentCommentId:
+          type: integer
+        content:
           type: string
-          description: Title for the pull request
-        description:
+        publishedDate:
           type: string
-          description: Description of the changes
-        sourceRefName:
+          format: date-time
+        lastUpdatedDate:
           type: string
-          description: Source branch containing the changes
-          example: refs/heads/feature/my-feature
-        targetRefName:
+          format: date-time
+        lastContentUpdatedDate:
           type: string
-          description: Target branch for the merge
-          example: refs/heads/main
-        reviewers:
-          type: array
-          description: Initial reviewers to assign
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                format: uuid
-        isDraft:
+          format: date-time
+        commentType:
+          type: string
+          enum:
+          - unknown
+          - text
+          - codeChange
+          - system
+        author:
+          $ref: '#/components/schemas/IdentityRef'
+        isDeleted:
           type: boolean
-          description: Whether to create as a draft pull request
-          default: false
-        workItemRefs:
+        usersLiked:
           type: array
-          description: Work items to associate with this pull request
           items:
-            type: object
-            properties:
-              id:
-                type: string
-        labels:
-          type: array
-          description: Labels to attach to this pull request
-          items:
-            type: object
-            properties:
-              name:
-                type: string
+            $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -865,64 +914,9 @@ components:
               href:
                 type: string
                 format: uri
-    IdentityRefWithVote:
-      type: object
-      description: A reviewer identity with their vote on a pull request
-      allOf:
-      - $ref: '#/components/schemas/IdentityRef'
-      properties:
-        vote:
-          type: integer
-          description: 'Vote value: 10 = approved, 5 = approved with suggestions, 0 = no vote, -5 = waiting for author, -10 = rejected
-
-            '
-          enum:
-          - 10
-          - 5
-          - 0
-          - -5
-          - -10
-        hasDeclined:
-          type: boolean
-          description: Whether the reviewer has declined
-        isFlagged:
-          type: boolean
-          description: Whether the reviewer has flagged the PR
-        isRequired:
-          type: boolean
-          description: Whether this reviewer's approval is required
-        reviewerUrl:
-          type: string
-          format: uri
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -935,6 +929,12 @@ components:
             $ref: '#/components/schemas/ApiError'
     NotFound:
       description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
