@@ -213,65 +213,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    SubscriptionCreateRequest:
-      type: object
-      description: Request body for creating or updating a service hook subscription
-      required:
-      - publisherId
-      - eventType
-      - consumerId
-      - consumerActionId
-      - publisherInputs
-      - consumerInputs
-      properties:
-        publisherId:
-          type: string
-          description: Publisher ID for the event source
-          example: tfs
-        eventType:
-          type: string
-          description: Event type to subscribe to
-          example: workitem.created
-        resourceVersion:
-          type: string
-          description: Version of the event resource schema to use
-          example: '1.0'
-          default: '1.0'
-        consumerId:
-          type: string
-          description: Consumer ID for the notification target
-          example: webHooks
-        consumerActionId:
-          type: string
-          description: Action ID within the consumer
-          example: httpRequest
-        publisherInputs:
-          type: object
-          description: Filter inputs controlling which events trigger a notification
-          additionalProperties:
-            type: string
-        consumerInputs:
-          type: object
-          description: Configuration for the consumer endpoint
-          additionalProperties:
-            type: string
     IdentityRef:
       type: object
       description: Reference to an Azure DevOps user identity
@@ -371,6 +312,65 @@ components:
               href:
                 type: string
                 format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    SubscriptionCreateRequest:
+      type: object
+      description: Request body for creating or updating a service hook subscription
+      required:
+      - publisherId
+      - eventType
+      - consumerId
+      - consumerActionId
+      - publisherInputs
+      - consumerInputs
+      properties:
+        publisherId:
+          type: string
+          description: Publisher ID for the event source
+          example: tfs
+        eventType:
+          type: string
+          description: Event type to subscribe to
+          example: workitem.created
+        resourceVersion:
+          type: string
+          description: Version of the event resource schema to use
+          example: '1.0'
+          default: '1.0'
+        consumerId:
+          type: string
+          description: Consumer ID for the notification target
+          example: webHooks
+        consumerActionId:
+          type: string
+          description: Action ID within the consumer
+          example: httpRequest
+        publisherInputs:
+          type: object
+          description: Filter inputs controlling which events trigger a notification
+          additionalProperties:
+            type: string
+        consumerInputs:
+          type: object
+          description: Configuration for the consumer endpoint
+          additionalProperties:
+            type: string
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
@@ -378,8 +378,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -390,8 +390,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:

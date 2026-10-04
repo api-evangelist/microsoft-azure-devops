@@ -148,82 +148,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    RunPipelineParameters:
-      type: object
-      description: Parameters for running a pipeline
-      properties:
-        stagesToSkip:
-          type: array
-          description: Stages to skip in this run
-          items:
-            type: string
-        resources:
-          type: object
-          description: Resource versions to use for this run
-          properties:
-            repositories:
-              type: object
-              description: Repository resource versions (keyed by repository alias)
-              additionalProperties:
-                type: object
-                properties:
-                  refName:
-                    type: string
-                    description: Branch or tag to check out
-                    example: refs/heads/feature/my-feature
-                  version:
-                    type: string
-                    description: Specific commit SHA to use
-            pipelines:
-              type: object
-              description: Pipeline resource versions (keyed by pipeline alias)
-              additionalProperties:
-                type: object
-                properties:
-                  version:
-                    type: string
-            builds:
-              type: object
-              description: Build resource versions
-              additionalProperties:
-                type: object
-        variables:
-          type: object
-          description: Variable overrides for this run (keyed by variable name)
-          additionalProperties:
-            type: object
-            properties:
-              value:
-                type: string
-                description: Variable value override
-              isSecret:
-                type: boolean
-                description: Whether this variable value should be treated as secret
-        templateParameters:
-          type: object
-          description: Template parameter overrides for YAML pipelines
-          additionalProperties:
-            type: string
-          example:
-            environment: production
-            deployRegion: eastus
     Run:
       type: object
       description: A pipeline run (execution instance)
@@ -344,21 +268,85 @@ components:
                 href:
                   type: string
                   format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    RunPipelineParameters:
+      type: object
+      description: Parameters for running a pipeline
+      properties:
+        stagesToSkip:
+          type: array
+          description: Stages to skip in this run
+          items:
+            type: string
+        resources:
+          type: object
+          description: Resource versions to use for this run
+          properties:
+            repositories:
+              type: object
+              description: Repository resource versions (keyed by repository alias)
+              additionalProperties:
+                type: object
+                properties:
+                  refName:
+                    type: string
+                    description: Branch or tag to check out
+                    example: refs/heads/feature/my-feature
+                  version:
+                    type: string
+                    description: Specific commit SHA to use
+            pipelines:
+              type: object
+              description: Pipeline resource versions (keyed by pipeline alias)
+              additionalProperties:
+                type: object
+                properties:
+                  version:
+                    type: string
+            builds:
+              type: object
+              description: Build resource versions
+              additionalProperties:
+                type: object
+        variables:
+          type: object
+          description: Variable overrides for this run (keyed by variable name)
+          additionalProperties:
+            type: object
+            properties:
+              value:
+                type: string
+                description: Variable value override
+              isSecret:
+                type: boolean
+                description: Whether this variable value should be treated as secret
+        templateParameters:
+          type: object
+          description: Template parameter overrides for YAML pipelines
+          additionalProperties:
+            type: string
+          example:
+            environment: production
+            deployRegion: eastus
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
@@ -369,14 +357,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
-    PipelineId:
-      name: pipelineId
-      in: path
-      required: true
-      description: Numeric ID of the pipeline
-      schema:
-        type: integer
     ApiVersion:
       name: api-version
       in: query
@@ -389,6 +382,13 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      description: Numeric ID of the pipeline
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

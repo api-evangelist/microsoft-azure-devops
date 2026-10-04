@@ -173,44 +173,19 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    WikiCreateParametersV2:
+    WikiUpdateParameters:
       type: object
-      description: Parameters for creating a new wiki
-      required:
-      - name
-      - type
-      - projectId
+      description: Parameters for updating a wiki
       properties:
-        name:
-          type: string
-          description: Name of the wiki
-          example: Project Wiki
-        type:
-          type: string
-          description: Type of wiki to create
-          enum:
-          - projectWiki
-          - codeWiki
-        projectId:
-          type: string
-          format: uuid
-          description: ID of the project to create the wiki in
-        repositoryId:
-          type: string
-          format: uuid
-          description: ID of the repository to back the wiki (required for codeWiki)
-        mappedPath:
-          type: string
-          description: Root folder in the repository to use as wiki content (for codeWiki)
-          example: /docs
-        version:
-          type: object
-          description: Branch to use for the wiki
-          properties:
-            version:
-              type: string
-              description: Branch name
-              example: main
+        versions:
+          type: array
+          description: Updated branch list for this wiki
+          items:
+            type: object
+            properties:
+              version:
+                type: string
+                description: Branch name
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -284,45 +259,52 @@ components:
               href:
                 type: string
                 format: uri
-    WikiUpdateParameters:
+    WikiCreateParametersV2:
       type: object
-      description: Parameters for updating a wiki
+      description: Parameters for creating a new wiki
+      required:
+      - name
+      - type
+      - projectId
       properties:
-        versions:
-          type: array
-          description: Updated branch list for this wiki
-          items:
-            type: object
-            properties:
-              version:
-                type: string
-                description: Branch name
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+        name:
+          type: string
+          description: Name of the wiki
+          example: Project Wiki
+        type:
+          type: string
+          description: Type of wiki to create
+          enum:
+          - projectWiki
+          - codeWiki
+        projectId:
+          type: string
+          format: uuid
+          description: ID of the project to create the wiki in
+        repositoryId:
+          type: string
+          format: uuid
+          description: ID of the repository to back the wiki (required for codeWiki)
+        mappedPath:
+          type: string
+          description: Root folder in the repository to use as wiki content (for codeWiki)
+          example: /docs
+        version:
+          type: object
+          description: Branch to use for the wiki
+          properties:
+            version:
+              type: string
+              description: Branch name
+              example: main
   parameters:
+    WikiIdentifier:
+      name: wikiIdentifier
+      in: path
+      required: true
+      description: Wiki GUID or wiki name
+      schema:
+        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -335,13 +317,31 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
-    WikiIdentifier:
-      name: wikiIdentifier
-      in: path
-      required: true
-      description: Wiki GUID or wiki name
-      schema:
-        type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   securitySchemes:
     bearerAuth:
       type: http

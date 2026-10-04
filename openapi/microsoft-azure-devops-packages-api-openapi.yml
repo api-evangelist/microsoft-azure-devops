@@ -185,74 +185,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    FeedId:
-      name: feedId
-      in: path
-      required: true
-      description: Feed GUID or feed name
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    FeedView:
-      type: object
-      description: A view of a feed (e.g., @local, @prerelease, @release)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: View ID
-        name:
-          type: string
-          description: View name (e.g., '@local', '@release')
-          example: '@release'
-        type:
-          type: string
-          description: View type
-          enum:
-          - none
-          - release
-          - implicit
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
     PackageVersion:
       type: object
       description: A specific version of a package
@@ -312,6 +245,53 @@ components:
         url:
           type: string
           format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    FeedView:
+      type: object
+      description: A view of a feed (e.g., @local, @prerelease, @release)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: View ID
+        name:
+          type: string
+          description: View name (e.g., '@local', '@release')
+          example: '@release'
+        type:
+          type: string
+          description: View type
+          enum:
+          - none
+          - release
+          - implicit
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
     Package:
       type: object
       description: A package in an Azure Artifacts feed
@@ -357,8 +337,8 @@ components:
                 type: string
                 format: uri
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -369,12 +349,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    FeedId:
+      name: feedId
+      in: path
+      required: true
+      description: Feed GUID or feed name
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

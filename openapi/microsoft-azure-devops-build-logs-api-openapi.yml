@@ -91,23 +91,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     Timeline:
       type: object
       description: Build timeline showing all records (phases, jobs, tasks)
@@ -133,6 +116,46 @@ components:
         url:
           type: string
           format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    BuildLog:
+      type: object
+      description: Metadata about a single build log
+      properties:
+        id:
+          type: integer
+          description: Log entry ID
+        type:
+          type: string
+          description: Storage type of the log
+        url:
+          type: string
+          format: uri
+          description: URL to retrieve the log content
+        createdOn:
+          type: string
+          format: date-time
+        lastChangedOn:
+          type: string
+          format: date-time
+        lineCount:
+          type: integer
+          description: Number of log lines
     TimelineRecord:
       type: object
       description: A single record in the build timeline
@@ -222,32 +245,9 @@ components:
               data:
                 type: object
                 additionalProperties: true
-    BuildLog:
-      type: object
-      description: Metadata about a single build log
-      properties:
-        id:
-          type: integer
-          description: Log entry ID
-        type:
-          type: string
-          description: Storage type of the log
-        url:
-          type: string
-          format: uri
-          description: URL to retrieve the log content
-        createdOn:
-          type: string
-          format: date-time
-        lastChangedOn:
-          type: string
-          format: date-time
-        lineCount:
-          type: integer
-          description: Number of log lines
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -258,8 +258,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:

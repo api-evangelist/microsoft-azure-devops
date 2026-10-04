@@ -267,103 +267,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Artifact:
-      type: object
-      description: An artifact used in a release
-      properties:
-        alias:
-          type: string
-          description: Alias for the artifact within the release definition
-          example: _MyBuild
-        type:
-          type: string
-          description: Artifact type
-          enum:
-          - build
-          - jenkins
-          - github
-          - nuget
-          - team
-          - externaltfsbuild
-          - git
-          - tfvc
-        definitionReference:
-          type: object
-          description: Reference to the artifact source definition
-          additionalProperties:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-        isPrimary:
-          type: boolean
-          description: Whether this is the primary artifact
-        isRetained:
-          type: boolean
-          description: Whether this artifact is retained
-        sourceId:
-          type: string
-          description: Source identifier for the artifact
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    ReleaseDefinitionEnvironment:
-      type: object
-      description: An environment definition within a release pipeline
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-          description: Name of the environment
-          example: Production
-        rank:
-          type: integer
-          description: Sequence order of the environment in the pipeline
-        deployPhases:
-          type: array
-          description: Deployment phases in this environment
-          items:
-            type: object
-        conditions:
-          type: array
-          description: Conditions that must be met before deploying to this environment
-          items:
-            type: object
-        preDeployApprovals:
-          type: object
-          description: Pre-deployment approval configuration
-        postDeployApprovals:
-          type: object
-          description: Post-deployment approval configuration
-        environmentOptions:
-          type: object
-          description: Environment-level options
-        variables:
-          type: object
-          description: Environment-level variables
-          additionalProperties:
-            $ref: '#/components/schemas/ConfigurationVariableValue'
-        demands:
-          type: array
-          items:
-            type: object
     IdentityRef:
       type: object
       description: Reference to an Azure DevOps user identity
@@ -385,6 +288,19 @@ components:
           format: uri
         descriptor:
           type: string
+    ConfigurationVariableValue:
+      type: object
+      description: A variable value in a release definition or release
+      properties:
+        value:
+          type: string
+          description: The variable value
+        isSecret:
+          type: boolean
+          description: Whether the value is treated as a secret
+        allowOverride:
+          type: boolean
+          description: Whether the value can be overridden when creating a release
     ReleaseDefinition:
       type: object
       description: A release pipeline definition
@@ -462,19 +378,103 @@ components:
               href:
                 type: string
                 format: uri
-    ConfigurationVariableValue:
+    ApiError:
       type: object
-      description: A variable value in a release definition or release
+      description: Error response from the Azure DevOps API
       properties:
-        value:
+        id:
           type: string
-          description: The variable value
-        isSecret:
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    ReleaseDefinitionEnvironment:
+      type: object
+      description: An environment definition within a release pipeline
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: Name of the environment
+          example: Production
+        rank:
+          type: integer
+          description: Sequence order of the environment in the pipeline
+        deployPhases:
+          type: array
+          description: Deployment phases in this environment
+          items:
+            type: object
+        conditions:
+          type: array
+          description: Conditions that must be met before deploying to this environment
+          items:
+            type: object
+        preDeployApprovals:
+          type: object
+          description: Pre-deployment approval configuration
+        postDeployApprovals:
+          type: object
+          description: Post-deployment approval configuration
+        environmentOptions:
+          type: object
+          description: Environment-level options
+        variables:
+          type: object
+          description: Environment-level variables
+          additionalProperties:
+            $ref: '#/components/schemas/ConfigurationVariableValue'
+        demands:
+          type: array
+          items:
+            type: object
+    Artifact:
+      type: object
+      description: An artifact used in a release
+      properties:
+        alias:
+          type: string
+          description: Alias for the artifact within the release definition
+          example: _MyBuild
+        type:
+          type: string
+          description: Artifact type
+          enum:
+          - build
+          - jenkins
+          - github
+          - nuget
+          - team
+          - externaltfsbuild
+          - git
+          - tfvc
+        definitionReference:
+          type: object
+          description: Reference to the artifact source definition
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        isPrimary:
           type: boolean
-          description: Whether the value is treated as a secret
-        allowOverride:
+          description: Whether this is the primary artifact
+        isRetained:
           type: boolean
-          description: Whether the value can be overridden when creating a release
+          description: Whether this artifact is retained
+        sourceId:
+          type: string
+          description: Source identifier for the artifact
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
@@ -482,8 +482,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -494,8 +494,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:

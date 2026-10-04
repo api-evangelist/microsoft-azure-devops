@@ -684,20 +684,33 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
   schemas:
+    JsonPatchOperation:
+      type: object
+      description: A single operation in a JSON Patch document (RFC 6902)
+      required:
+      - op
+      - path
+      properties:
+        op:
+          type: string
+          description: Operation type
+          enum:
+          - add
+          - remove
+          - replace
+          - move
+          - copy
+          - test
+        path:
+          type: string
+          description: JSON Pointer path (RFC 6901) to the target location
+          example: /fields/System.Title
+        from:
+          type: string
+          description: Source path for move and copy operations
+        value:
+          description: Value to apply (for add, replace, test operations)
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -725,48 +738,6 @@ components:
         eventId:
           type: integer
           description: Event ID for logging and tracing
-    WorkItemRelation:
-      type: object
-      description: A relation between a work item and another resource
-      properties:
-        rel:
-          type: string
-          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
-          example: System.LinkTypes.Hierarchy-Reverse
-        url:
-          type: string
-          format: uri
-          description: URL of the related resource
-        attributes:
-          type: object
-          description: Additional attributes for the relation (e.g., comment, isLocked)
-          additionalProperties: true
-    JsonPatchOperation:
-      type: object
-      description: A single operation in a JSON Patch document (RFC 6902)
-      required:
-      - op
-      - path
-      properties:
-        op:
-          type: string
-          description: Operation type
-          enum:
-          - add
-          - remove
-          - replace
-          - move
-          - copy
-          - test
-        path:
-          type: string
-          description: JSON Pointer path (RFC 6901) to the target location
-          example: /fields/System.Title
-        from:
-          type: string
-          description: Source path for move and copy operations
-        value:
-          description: Value to apply (for add, replace, test operations)
     WorkItem:
       type: object
       description: An Azure DevOps work item (Bug, Task, User Story, etc.)
@@ -812,6 +783,22 @@ components:
           format: uri
           description: URL to access this work item via the REST API
           example: https://dev.azure.com/myorg/myproject/_apis/wit/workItems/42
+    WorkItemRelation:
+      type: object
+      description: A relation between a work item and another resource
+      properties:
+        rel:
+          type: string
+          description: Relation type (e.g., System.LinkTypes.Hierarchy-Reverse, AttachedFile)
+          example: System.LinkTypes.Hierarchy-Reverse
+        url:
+          type: string
+          format: uri
+          description: URL of the related resource
+        attributes:
+          type: object
+          description: Additional attributes for the relation (e.g., comment, isLocked)
+          additionalProperties: true
     Error:
       type: object
       properties:
@@ -843,8 +830,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -855,12 +842,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
   securitySchemes:
     bearerAuth:
       type: http

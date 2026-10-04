@@ -88,6 +88,47 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    EventType:
+      type: object
+      description: An event type that a publisher can produce
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the event type
+          example: workitem.created
+        name:
+          type: string
+          description: Display name of the event type
+          example: Work item created
+        description:
+          type: string
+          description: Detailed description of when this event fires
+        publisherId:
+          type: string
+          description: ID of the publisher that produces this event
+        supportedResourceVersions:
+          type: array
+          description: Supported versions of the event resource schema
+          items:
+            type: string
+        fields:
+          type: object
+          description: Fields available in the event payload
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              fieldType:
+                type: string
+              isFilterable:
+                type: boolean
+              isQueryable:
+                type: boolean
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -105,6 +146,44 @@ components:
           type: integer
         eventId:
           type: integer
+    EventTypeReference:
+      type: object
+      description: Minimal reference to an event type
+      properties:
+        id:
+          type: string
+          description: Event type identifier
+        name:
+          type: string
+          description: Event type display name
+    Publisher:
+      type: object
+      description: An event publisher (source) that can produce service hook events
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the publisher
+          example: tfs
+        name:
+          type: string
+          description: Display name of the publisher
+          example: Azure DevOps
+        description:
+          type: string
+          description: Description of the publisher and the events it produces
+        supportedEvents:
+          type: array
+          description: List of event types this publisher supports
+          items:
+            $ref: '#/components/schemas/EventTypeReference'
+        inputs:
+          type: array
+          description: Input parameters for filtering publisher events
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
     InputDescriptor:
       type: object
       description: Descriptor for a configurable input parameter
@@ -174,88 +253,9 @@ components:
               type: integer
             maxLength:
               type: integer
-    EventType:
-      type: object
-      description: An event type that a publisher can produce
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the event type
-          example: workitem.created
-        name:
-          type: string
-          description: Display name of the event type
-          example: Work item created
-        description:
-          type: string
-          description: Detailed description of when this event fires
-        publisherId:
-          type: string
-          description: ID of the publisher that produces this event
-        supportedResourceVersions:
-          type: array
-          description: Supported versions of the event resource schema
-          items:
-            type: string
-        fields:
-          type: object
-          description: Fields available in the event payload
-          additionalProperties:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              description:
-                type: string
-              fieldType:
-                type: string
-              isFilterable:
-                type: boolean
-              isQueryable:
-                type: boolean
-    EventTypeReference:
-      type: object
-      description: Minimal reference to an event type
-      properties:
-        id:
-          type: string
-          description: Event type identifier
-        name:
-          type: string
-          description: Event type display name
-    Publisher:
-      type: object
-      description: An event publisher (source) that can produce service hook events
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the publisher
-          example: tfs
-        name:
-          type: string
-          description: Display name of the publisher
-          example: Azure DevOps
-        description:
-          type: string
-          description: Description of the publisher and the events it produces
-        supportedEvents:
-          type: array
-          description: List of event types this publisher supports
-          items:
-            $ref: '#/components/schemas/EventTypeReference'
-        inputs:
-          type: array
-          description: Input parameters for filtering publisher events
-          items:
-            $ref: '#/components/schemas/InputDescriptor'
-        url:
-          type: string
-          format: uri
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -266,8 +266,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:

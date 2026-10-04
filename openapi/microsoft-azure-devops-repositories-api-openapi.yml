@@ -298,23 +298,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     GitItem:
       type: object
       description: A file or folder in a Git repository
@@ -370,77 +353,6 @@ components:
               type: boolean
         latestProcessedChange:
           $ref: '#/components/schemas/GitCommitRef'
-    TeamProjectReference:
-      type: object
-      description: Reference to an Azure DevOps project
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-          format: uri
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-        revision:
-          type: integer
-    GitCommitRef:
-      type: object
-      description: A reference to a Git commit
-      properties:
-        commitId:
-          type: string
-          description: Full SHA hash of the commit
-          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
-        comment:
-          type: string
-          description: Commit message
-          example: Fix login button alignment
-        commentTruncated:
-          type: boolean
-          description: Whether the comment has been truncated
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        parents:
-          type: array
-          description: Parent commit SHAs
-          items:
-            type: string
-        url:
-          type: string
-          format: uri
-        remoteUrl:
-          type: string
-          format: uri
-        changeCounts:
-          type: object
-          description: Number of files changed (Add, Edit, Delete)
-          properties:
-            Add:
-              type: integer
-            Edit:
-              type: integer
-            Delete:
-              type: integer
     GitUserDate:
       type: object
       description: Git user and date information
@@ -526,21 +438,97 @@ components:
               href:
                 type: string
                 format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TeamProjectReference:
+      type: object
+      description: Reference to an Azure DevOps project
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+        revision:
+          type: integer
+    GitCommitRef:
+      type: object
+      description: A reference to a Git commit
+      properties:
+        commitId:
+          type: string
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
+          type: string
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
+          type: boolean
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
+        url:
+          type: string
+          format: uri
+        remoteUrl:
+          type: string
+          format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
   responses:
     BadRequest:
       description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
       content:
         application/json:
           schema:
@@ -551,14 +539,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -571,6 +564,13 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

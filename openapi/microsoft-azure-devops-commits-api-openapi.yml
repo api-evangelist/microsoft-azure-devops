@@ -101,27 +101,27 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
   schemas:
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
     ApiError:
       type: object
       description: Error response from the Azure DevOps API
@@ -179,29 +179,9 @@ components:
               type: integer
             Delete:
               type: integer
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
-          example: John Doe
-        email:
-          type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
-          type: string
-          format: uri
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -212,12 +192,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

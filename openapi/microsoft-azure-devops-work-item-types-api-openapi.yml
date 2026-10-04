@@ -121,33 +121,69 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    ApiError:
+    WorkItemField:
       type: object
-      description: Error response from the Azure DevOps API
+      description: Definition of a work item field
       properties:
-        id:
+        name:
           type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
-          type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
+          description: Display name of the field
+          example: Assigned To
+        referenceName:
           type: string
-          description: Human-readable error message
-        typeName:
+          description: Reference name used in WIQL and API (e.g., System.AssignedTo)
+          example: System.AssignedTo
+        description:
           type: string
-          description: Type name of the exception
-        typeKey:
+          description: Description of what the field stores
+        type:
           type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
+          description: Data type of the field
+          enum:
+          - string
+          - integer
+          - dateTime
+          - plainText
+          - html
+          - treePath
+          - history
+          - double
+          - guid
+          - boolean
+          - identity
+          - picklistString
+          - picklistInteger
+          - picklistDouble
+        usage:
+          type: string
+          description: Whether the field is used for work items or work item links
+          enum:
+          - none
+          - workItem
+          - workItemLink
+          - tree
+          - workItemTypeExtension
+        readOnly:
+          type: boolean
+          description: Whether the field is read-only
+        canSortBy:
+          type: boolean
+          description: Whether work items can be sorted by this field
+        isQueryable:
+          type: boolean
+          description: Whether this field can be used in WIQL queries
+        isIdentity:
+          type: boolean
+          description: Whether this field stores an identity (user) value
+        isPicklist:
+          type: boolean
+          description: Whether this field has a picklist of allowed values
+        isPicklistSuggested:
+          type: boolean
+          description: Whether the picklist values are suggested (non-exclusive)
+        url:
+          type: string
+          format: uri
     WorkItemType:
       type: object
       description: Definition of a work item type
@@ -220,6 +256,33 @@ components:
         url:
           type: string
           format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
     WorkItemTypeFieldInstance:
       type: object
       description: A field instance within a work item type
@@ -253,72 +316,9 @@ components:
           type: boolean
         readOnly:
           type: boolean
-    WorkItemField:
-      type: object
-      description: Definition of a work item field
-      properties:
-        name:
-          type: string
-          description: Display name of the field
-          example: Assigned To
-        referenceName:
-          type: string
-          description: Reference name used in WIQL and API (e.g., System.AssignedTo)
-          example: System.AssignedTo
-        description:
-          type: string
-          description: Description of what the field stores
-        type:
-          type: string
-          description: Data type of the field
-          enum:
-          - string
-          - integer
-          - dateTime
-          - plainText
-          - html
-          - treePath
-          - history
-          - double
-          - guid
-          - boolean
-          - identity
-          - picklistString
-          - picklistInteger
-          - picklistDouble
-        usage:
-          type: string
-          description: Whether the field is used for work items or work item links
-          enum:
-          - none
-          - workItem
-          - workItemLink
-          - tree
-          - workItemTypeExtension
-        readOnly:
-          type: boolean
-          description: Whether the field is read-only
-        canSortBy:
-          type: boolean
-          description: Whether work items can be sorted by this field
-        isQueryable:
-          type: boolean
-          description: Whether this field can be used in WIQL queries
-        isIdentity:
-          type: boolean
-          description: Whether this field stores an identity (user) value
-        isPicklist:
-          type: boolean
-          description: Whether this field has a picklist of allowed values
-        isPicklistSuggested:
-          type: boolean
-          description: Whether the picklist values are suggested (non-exclusive)
-        url:
-          type: string
-          format: uri
   responses:
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
       content:
         application/json:
           schema:
@@ -329,8 +329,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
       content:
         application/json:
           schema:
