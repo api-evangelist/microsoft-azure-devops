@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 20
+edge_count: 21
 edges:
 - tag: Pull Requests
   spec_file: microsoft-azure-devops-pull-requests-api-openapi.yml
@@ -176,6 +176,17 @@ edges:
   evidence: GET /git/repositories/{repositoryId}/refs  refs_list  Azure DevOps List branches and refs
   reason: Branch/ref listing is source-control (branching) practice within software construction; single
     read-only operation so slightly lower confidence.
+- tag: Runs
+  spec_file: microsoft-azure-devops-runs-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.8
+  evidence: POST /{project}/_apis/pipelines/{pipelineId}/runs runPipeline "Run a Pipeline"; "managing
+    CI/CD build and release pipelines"
+  reason: Triggering and retrieving pipeline/build runs is continuous integration pipeline execution.
+    L2 CI chosen over Deployment Orchestration since the operations are about running and reading build
+    pipelines; some ambiguity remains because the same pipelines also drive release/deployment.
 - tag: Build Logs
   spec_file: microsoft-azure-devops-build-logs-api-openapi.yml
   capability_id: BC-4210.10
