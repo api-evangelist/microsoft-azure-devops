@@ -1878,6 +1878,8 @@ apis:
   - type: OpenAPI
     url: openapi/microsoft-azure-devops-runs-api-openapi.yml
 common:
+- type: FinOps
+  url: finops/microsoft-azure-devops-finops.yml
 - type: RateLimits
   url: rate-limits/microsoft-azure-devops-rate-limits.yml
 - type: Plans
