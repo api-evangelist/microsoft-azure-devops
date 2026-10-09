@@ -70,6 +70,7 @@ front_door_ai:
   - microsoft-exchange
   - microsoft-fabric
   - microsoft-forms
+  - microsoft-graph
   - microsoft-intune
   - microsoft-loop
   - microsoft-office
@@ -109,8 +110,11 @@ front_door_ai:
   - sharepoint
   - visio
   inherited_from: null
+  alias_of: null
   verdict: scored
   score: null
+  band: null
+  band_label: null
   host_score: 36
   density: null
   words: 983

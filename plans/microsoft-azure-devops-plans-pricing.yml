@@ -76,3 +76,70 @@ rate_limit_statements:
   per month
 - Each Azure DevOps organization gets one parallel job with 1,800 minutes (30 hours) of build time every
   month using Microsoft-hosted agents.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - seat
+  - subscription
+  units:
+  - data
+  - seat
+  plans:
+  - name: Azure Pipelines – Microsoft-hosted parallel job
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Azure Pipelines – Self-hosted parallel job
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Azure Artifacts
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - data
+    periods:
+    - month
+  - name: GitHub Advanced Security for Azure DevOps – Code Security
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: GitHub Advanced Security for Azure DevOps – Secret Protection
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Basic Plan
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Basic + Test Plans
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month

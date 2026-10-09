@@ -1,27 +1,40 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/azure-devops-artifacts-api-openapi.yml, openapi/azure-devops-builds-api-openapi.yml,
-  openapi/azure-devops-git-api-openapi.yml, openapi/azure-devops-pipelines-api-openapi.yml,
-  openapi/azure-devops-releases-api-openapi.yml, openapi/azure-devops-service-hooks-api-openapi.yml,
-  openapi/azure-devops-test-plans-api-openapi.yml, openapi/azure-devops-wiki-api-openapi.yml,
-  openapi/azure-devops-work-items-api-openapi.yml
+source: openapi/microsoft-azure-devops-attachments-api-openapi.yml, openapi/microsoft-azure-devops-build-artifacts-api-openapi.yml,
+  openapi/microsoft-azure-devops-build-definitions-api-openapi.yml, openapi/microsoft-azure-devops-build-logs-api-openapi.yml,
+  openapi/microsoft-azure-devops-builds-api-openapi.yml, openapi/microsoft-azure-devops-comments-api-openapi.yml,
+  openapi/microsoft-azure-devops-commits-api-openapi.yml, openapi/microsoft-azure-devops-consumers-api-openapi.yml,
+  openapi/microsoft-azure-devops-deployments-api-openapi.yml, openapi/microsoft-azure-devops-feeds-api-openapi.yml,
+  openapi/microsoft-azure-devops-fields-api-openapi.yml, openapi/microsoft-azure-devops-notifications-api-openapi.yml,
+  openapi/microsoft-azure-devops-package-versions-api-openapi.yml, openapi/microsoft-azure-devops-packages-api-openapi.yml,
+  openapi/microsoft-azure-devops-pipeline-artifacts-api-openapi.yml, openapi/microsoft-azure-devops-pipeline-runs-api-openapi.yml,
+  openapi/microsoft-azure-devops-pipelines-api-openapi.yml, openapi/microsoft-azure-devops-publishers-api-openapi.yml,
+  openapi/microsoft-azure-devops-pull-requests-api-openapi.yml, openapi/microsoft-azure-devops-pushes-api-openapi.yml,
+  openapi/microsoft-azure-devops-queries-api-openapi.yml, openapi/microsoft-azure-devops-refs-api-openapi.yml,
+  openapi/microsoft-azure-devops-release-definitions-api-openapi.yml, openapi/microsoft-azure-devops-releases-api-openapi.yml,
+  openapi/microsoft-azure-devops-repositories-api-openapi.yml, openapi/microsoft-azure-devops-runs-api-openapi.yml,
+  openapi/microsoft-azure-devops-subscriptions-api-openapi.yml, openapi/microsoft-azure-devops-test-cases-api-openapi.yml,
+  openapi/microsoft-azure-devops-test-plans-api-openapi.yml, openapi/microsoft-azure-devops-test-suites-api-openapi.yml,
+  openapi/microsoft-azure-devops-wiki-pages-api-openapi.yml, openapi/microsoft-azure-devops-wikis-api-openapi.yml,
+  openapi/microsoft-azure-devops-work-item-tracking-api-openapi.yml, openapi/microsoft-azure-devops-work-item-types-api-openapi.yml,
+  openapi/microsoft-azure-devops-work-items-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 93
+  operations: 105
   by_action_class:
-    connected: 50
-    acting: 43
+    connected: 58
+    acting: 47
   by_consequence:
-    read: 50
-    write: 42
+    read: 58
+    write: 46
     physical: 1
   human_in_the_loop_required: 0
 operations:
-- path: /packaging/feeds
+- path: /wit/attachments/{id}
   method: get
-  operationId: feeds_list
+  operationId: attachments_get
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -29,9 +42,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /packaging/feeds
+- path: /wit/attachments
   method: post
-  operationId: feeds_create
+  operationId: attachments_upload
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -45,156 +58,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /packaging/feeds/{feedId}
-  method: get
-  operationId: feeds_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /packaging/feeds/{feedId}
-  method: patch
-  operationId: feeds_update
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /packaging/feeds/{feedId}
-  method: delete
-  operationId: feeds_delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /packaging/feeds/{feedId}/packages
-  method: get
-  operationId: packages_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /packaging/feeds/{feedId}/packages/{packageId}
-  method: get
-  operationId: packages_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /packaging/feeds/{feedId}/packages/{packageId}/versions/{packageVersionId}
-  method: delete
-  operationId: packageVersions_delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /build/builds
-  method: get
-  operationId: builds_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /build/builds
-  method: post
-  operationId: builds_queue
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /build/builds/{buildId}
-  method: get
-  operationId: builds_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /build/builds/{buildId}
-  method: delete
-  operationId: builds_delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /build/builds/{buildId}/logs
-  method: get
-  operationId: builds_getLogs
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /build/builds/{buildId}/timeline
-  method: get
-  operationId: builds_getTimeline
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /build/builds/{buildId}/artifacts
   method: get
   operationId: builds_listArtifacts
@@ -273,9 +136,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /git/repositories
+- path: /build/builds/{buildId}/logs
   method: get
-  operationId: repositories_list
+  operationId: builds_getLogs
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -283,9 +146,29 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /git/repositories
+- path: /build/builds/{buildId}/timeline
+  method: get
+  operationId: builds_getTimeline
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /build/builds
+  method: get
+  operationId: builds_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /build/builds
   method: post
-  operationId: repositories_create
+  operationId: builds_queue
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -299,9 +182,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /git/repositories/{repositoryId}
+- path: /build/builds/{buildId}
   method: get
-  operationId: repositories_get
+  operationId: builds_get
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -309,25 +192,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /git/repositories/{repositoryId}
-  method: patch
-  operationId: repositories_update
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /git/repositories/{repositoryId}
+- path: /build/builds/{buildId}
   method: delete
-  operationId: repositories_delete
+  operationId: builds_delete
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -341,9 +208,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /git/repositories/{repositoryId}/refs
+- path: /wit/workitems/{id}/comments
   method: get
-  operationId: refs_list
+  operationId: workItems_listComments
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -351,6 +218,22 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /wit/workitems/{id}/comments
+  method: post
+  operationId: workItems_addComment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /git/repositories/{repositoryId}/commits
   method: get
   operationId: commits_list
@@ -361,9 +244,289 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /git/repositories/{repositoryId}/items
+- path: /hooks/consumers
   method: get
-  operationId: items_list
+  operationId: consumers_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /release/deployments
+  method: get
+  operationId: deployments_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /packaging/feeds
+  method: get
+  operationId: feeds_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /packaging/feeds
+  method: post
+  operationId: feeds_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /packaging/feeds/{feedId}
+  method: get
+  operationId: feeds_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /packaging/feeds/{feedId}
+  method: patch
+  operationId: feeds_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /packaging/feeds/{feedId}
+  method: delete
+  operationId: feeds_delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /{project}/_apis/wit/fields
+  method: get
+  operationId: listWorkItemFields
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /hooks/testnotifications
+  method: post
+  operationId: notifications_sendTest
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /packaging/feeds/{feedId}/packages/{packageId}/versions/{packageVersionId}
+  method: delete
+  operationId: packageVersions_delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /packaging/feeds/{feedId}/packages
+  method: get
+  operationId: packages_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /packaging/feeds/{feedId}/packages/{packageId}
+  method: get
+  operationId: packages_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pipelines/{pipelineId}/runs/{runId}/artifacts
+  method: get
+  operationId: artifacts_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pipelines/{pipelineId}/runs
+  method: get
+  operationId: runs_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pipelines/{pipelineId}/runs
+  method: post
+  operationId: runs_run
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /pipelines/{pipelineId}/runs/{runId}
+  method: get
+  operationId: runs_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pipelines
+  method: get
+  operationId: pipelines_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pipelines
+  method: post
+  operationId: pipelines_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /pipelines/{pipelineId}
+  method: get
+  operationId: pipelines_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{project}/_apis/pipelines
+  method: get
+  operationId: listPipelines
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{project}/_apis/pipelines
+  method: post
+  operationId: createPipeline
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /{project}/_apis/pipelines/{pipelineId}
+  method: get
+  operationId: getPipeline
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /hooks/publishers
+  method: get
+  operationId: publishers_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /hooks/publishers/{publisherId}/eventTypes
+  method: get
+  operationId: publishers_listEventTypes
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -475,35 +638,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /pipelines
-  method: get
-  operationId: pipelines_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /pipelines
+- path: /{project}/_apis/wit/wiql
   method: post
-  operationId: pipelines_create
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /pipelines/{pipelineId}
-  method: get
-  operationId: pipelines_get
+  operationId: queryWorkItemsByWiql
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -511,9 +648,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /pipelines/{pipelineId}/runs
+- path: /git/repositories/{repositoryId}/refs
   method: get
-  operationId: runs_list
+  operationId: refs_list
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -521,94 +658,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /pipelines/{pipelineId}/runs
-  method: post
-  operationId: runs_run
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /pipelines/{pipelineId}/runs/{runId}
-  method: get
-  operationId: runs_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /pipelines/{pipelineId}/runs/{runId}/artifacts
-  method: get
-  operationId: artifacts_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /release/releases
-  method: get
-  operationId: releases_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /release/releases
-  method: post
-  operationId: releases_create
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /release/releases/{releaseId}
-  method: get
-  operationId: releases_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /release/releases/{releaseId}
-  method: put
-  operationId: releases_update
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /release/definitions
   method: get
   operationId: releaseDefinitions_list
@@ -677,9 +726,165 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /release/deployments
+- path: /release/releases
   method: get
-  operationId: deployments_list
+  operationId: releases_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /release/releases
+  method: post
+  operationId: releases_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /release/releases/{releaseId}
+  method: get
+  operationId: releases_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /release/releases/{releaseId}
+  method: put
+  operationId: releases_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories
+  method: get
+  operationId: repositories_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories
+  method: post
+  operationId: repositories_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}
+  method: get
+  operationId: repositories_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}
+  method: patch
+  operationId: repositories_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}
+  method: delete
+  operationId: repositories_delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/items
+  method: get
+  operationId: items_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{project}/_apis/pipelines/{pipelineId}/runs
+  method: get
+  operationId: listPipelineRuns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{project}/_apis/pipelines/{pipelineId}/runs
+  method: post
+  operationId: runPipeline
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /{project}/_apis/pipelines/{pipelineId}/runs/{runId}
+  method: get
+  operationId: getPipelineRun
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -755,9 +960,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /hooks/publishers
+- path: /testplan/plans/{planId}/suites/{suiteId}/testcases
   method: get
-  operationId: publishers_list
+  operationId: testCases_list
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -765,38 +970,16 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /hooks/publishers/{publisherId}/eventTypes
-  method: get
-  operationId: publishers_listEventTypes
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /hooks/consumers
-  method: get
-  operationId: consumers_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /hooks/testnotifications
+- path: /testplan/plans/{planId}/suites/{suiteId}/testcases
   method: post
-  operationId: notifications_sendTest
+  operationId: testCases_add
   x-agentic-access:
     action-class: acting
-    consequence: physical
+    consequence: write
     subject: required
     audience: null
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
+      max-ttl: 900
     escalation:
       human-in-the-loop: conditional
       triggers:
@@ -907,9 +1090,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /testplan/plans/{planId}/suites/{suiteId}/testcases
+- path: /wiki/wikis/{wikiIdentifier}/pages
   method: get
-  operationId: testCases_list
+  operationId: pages_get
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -917,9 +1100,25 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /testplan/plans/{planId}/suites/{suiteId}/testcases
-  method: post
-  operationId: testCases_add
+- path: /wiki/wikis/{wikiIdentifier}/pages
+  method: put
+  operationId: pages_createOrUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /wiki/wikis/{wikiIdentifier}/pages
+  method: delete
+  operationId: pages_delete
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1001,9 +1200,25 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /wiki/wikis/{wikiIdentifier}/pages
+- path: /wit/wiql
+  method: post
+  operationId: workItems_queryByWiql
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /wit/workitemtypes
   method: get
-  operationId: pages_get
+  operationId: workItemTypes_list
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1011,38 +1226,26 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /wiki/wikis/{wikiIdentifier}/pages
-  method: put
-  operationId: pages_createOrUpdate
+- path: /wit/workitemtypes/{type}
+  method: get
+  operationId: workItemTypes_get
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /wiki/wikis/{wikiIdentifier}/pages
-  method: delete
-  operationId: pages_delete
+      max-ttl: 3600
+    audit: none
+- path: /wit/fields
+  method: get
+  operationId: fields_list
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /wit/workitems
   method: get
   operationId: workItems_list
@@ -1111,9 +1314,19 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /wit/wiql
-  method: post
-  operationId: workItems_queryByWiql
+- path: /{project}/_apis/wit/workitems/{id}
+  method: get
+  operationId: getWorkItem
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /{project}/_apis/wit/workitems/{id}
+  method: patch
+  operationId: updateWorkItem
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1127,49 +1340,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /wit/workitemtypes
-  method: get
-  operationId: workItemTypes_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /wit/workitemtypes/{type}
-  method: get
-  operationId: workItemTypes_get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /wit/fields
-  method: get
-  operationId: fields_list
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /wit/workitems/{id}/comments
-  method: get
-  operationId: workItems_listComments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /wit/workitems/{id}/comments
+- path: /{project}/_apis/wit/workitems/${type}
   method: post
-  operationId: workItems_addComment
+  operationId: createWorkItem
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1183,9 +1356,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /wit/attachments/{id}
+- path: /{project}/_apis/wit/workitems
   method: get
-  operationId: attachments_get
+  operationId: getWorkItemsBatch
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -1193,19 +1366,3 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /wit/attachments
-  method: post
-  operationId: attachments_upload
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
