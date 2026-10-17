@@ -184,6 +184,66 @@ components:
         url:
           type: string
           format: uri
+    WorkItemTypeFieldInstance:
+      type: object
+      description: A field instance within a work item type
+      properties:
+        fieldName:
+          type: string
+          description: Display name of the field
+        field:
+          type: object
+          properties:
+            name:
+              type: string
+            referenceName:
+              type: string
+            url:
+              type: string
+              format: uri
+        referenceName:
+          type: string
+          description: Reference name (e.g., System.Title)
+        defaultValue:
+          description: Default value for the field
+        allowedValues:
+          type: array
+          items:
+            type: string
+          description: Allowed values for fields with a restricted set of values
+        helpText:
+          type: string
+        alwaysRequired:
+          type: boolean
+        readOnly:
+          type: boolean
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the error instance
+        innerException:
+          type: object
+          nullable: true
+          description: Inner exception details if applicable
+        message:
+          type: string
+          description: Human-readable error message
+        typeName:
+          type: string
+          description: Type name of the exception
+        typeKey:
+          type: string
+          description: Short type key for the error
+        errorCode:
+          type: integer
+          description: Numeric error code
+        eventId:
+          type: integer
+          description: Event ID for logging and tracing
     WorkItemType:
       type: object
       description: Definition of a work item type
@@ -256,66 +316,6 @@ components:
         url:
           type: string
           format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the error instance
-        innerException:
-          type: object
-          nullable: true
-          description: Inner exception details if applicable
-        message:
-          type: string
-          description: Human-readable error message
-        typeName:
-          type: string
-          description: Type name of the exception
-        typeKey:
-          type: string
-          description: Short type key for the error
-        errorCode:
-          type: integer
-          description: Numeric error code
-        eventId:
-          type: integer
-          description: Event ID for logging and tracing
-    WorkItemTypeFieldInstance:
-      type: object
-      description: A field instance within a work item type
-      properties:
-        fieldName:
-          type: string
-          description: Display name of the field
-        field:
-          type: object
-          properties:
-            name:
-              type: string
-            referenceName:
-              type: string
-            url:
-              type: string
-              format: uri
-        referenceName:
-          type: string
-          description: Reference name (e.g., System.Title)
-        defaultValue:
-          description: Default value for the field
-        allowedValues:
-          type: array
-          items:
-            type: string
-          description: Allowed values for fields with a restricted set of values
-        helpText:
-          type: string
-        alwaysRequired:
-          type: boolean
-        readOnly:
-          type: boolean
   responses:
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials

@@ -102,43 +102,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
-          example: John Doe
-        email:
-          type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
-          type: string
-          format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     GitCommitRef:
       type: object
       description: A reference to a Git commit
@@ -179,6 +142,43 @@ components:
               type: integer
             Delete:
               type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    GitUserDate:
+      type: object
+      description: Git user and date information
+      properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
   responses:
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
@@ -199,6 +199,13 @@ components:
           schema:
             $ref: '#/components/schemas/ApiError'
   parameters:
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -211,13 +218,6 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

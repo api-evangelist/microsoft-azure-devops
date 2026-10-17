@@ -52,59 +52,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
 components:
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    Consumer:
-      type: object
-      description: A consumer that can receive service hook notifications
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the consumer
-          example: webHooks
-        name:
-          type: string
-          description: Display name of the consumer
-          example: Web Hooks
-        description:
-          type: string
-          description: Description of this consumer type
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the consumer's icon
-        informationUrl:
-          type: string
-          format: uri
-          description: Documentation URL for this consumer
-        actions:
-          type: array
-          description: Available actions for this consumer
-          items:
-            $ref: '#/components/schemas/ConsumerAction'
-        inputs:
-          type: array
-          description: Configuration inputs for this consumer
-          items:
-            $ref: '#/components/schemas/InputDescriptor'
-        url:
-          type: string
-          format: uri
     ConsumerAction:
       type: object
       description: An action available in a consumer
@@ -131,6 +78,23 @@ components:
         url:
           type: string
           format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     InputDescriptor:
       type: object
       description: Descriptor for a configurable input parameter
@@ -200,6 +164,42 @@ components:
               type: integer
             maxLength:
               type: integer
+    Consumer:
+      type: object
+      description: A consumer that can receive service hook notifications
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the consumer
+          example: webHooks
+        name:
+          type: string
+          description: Display name of the consumer
+          example: Web Hooks
+        description:
+          type: string
+          description: Description of this consumer type
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the consumer's icon
+        informationUrl:
+          type: string
+          format: uri
+          description: Documentation URL for this consumer
+        actions:
+          type: array
+          description: Available actions for this consumer
+          items:
+            $ref: '#/components/schemas/ConsumerAction'
+        inputs:
+          type: array
+          description: Configuration inputs for this consumer
+          items:
+            $ref: '#/components/schemas/InputDescriptor'
+        url:
+          type: string
+          format: uri
   responses:
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials

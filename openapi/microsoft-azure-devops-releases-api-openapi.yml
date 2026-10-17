@@ -257,27 +257,69 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    IdentityRef:
+    ReleaseApproval:
       type: object
-      description: Reference to an Azure DevOps user identity
+      description: An approval record for a release environment
+      properties:
+        id:
+          type: integer
+        revision:
+          type: integer
+        approvalType:
+          type: string
+          enum:
+          - undefined
+          - preDeploy
+          - postDeploy
+          - all
+        createdOn:
+          type: string
+          format: date-time
+        modifiedOn:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - undefined
+          - pending
+          - approved
+          - rejected
+          - reassigned
+          - canceled
+          - skipped
+        comments:
+          type: string
+        isAutomated:
+          type: boolean
+        approver:
+          $ref: '#/components/schemas/IdentityRef'
+        approvedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        attempt:
+          type: integer
+        rank:
+          type: integer
+        url:
+          type: string
+          format: uri
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
       properties:
         id:
           type: string
           format: uuid
-        displayName:
+        message:
           type: string
-          example: John Doe
-        uniqueName:
+        typeName:
           type: string
-          example: john.doe@example.com
-        url:
+        typeKey:
           type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     Release:
       type: object
       description: An Azure DevOps release instance
@@ -369,19 +411,6 @@ components:
           description: Tags associated with this release
           items:
             type: string
-    ConfigurationVariableValue:
-      type: object
-      description: A variable value in a release definition or release
-      properties:
-        value:
-          type: string
-          description: The variable value
-        isSecret:
-          type: boolean
-          description: Whether the value is treated as a secret
-        allowOverride:
-          type: boolean
-          description: Whether the value can be overridden when creating a release
     ReleaseEnvironment:
       type: object
       description: An environment (deployment stage) within a release
@@ -443,129 +472,19 @@ components:
         url:
           type: string
           format: uri
-    ApiError:
+    ConfigurationVariableValue:
       type: object
-      description: Error response from the Azure DevOps API
+      description: A variable value in a release definition or release
       properties:
-        id:
+        value:
           type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    ReleaseApproval:
-      type: object
-      description: An approval record for a release environment
-      properties:
-        id:
-          type: integer
-        revision:
-          type: integer
-        approvalType:
-          type: string
-          enum:
-          - undefined
-          - preDeploy
-          - postDeploy
-          - all
-        createdOn:
-          type: string
-          format: date-time
-        modifiedOn:
-          type: string
-          format: date-time
-        status:
-          type: string
-          enum:
-          - undefined
-          - pending
-          - approved
-          - rejected
-          - reassigned
-          - canceled
-          - skipped
-        comments:
-          type: string
-        isAutomated:
+          description: The variable value
+        isSecret:
           type: boolean
-        approver:
-          $ref: '#/components/schemas/IdentityRef'
-        approvedBy:
-          $ref: '#/components/schemas/IdentityRef'
-        attempt:
-          type: integer
-        rank:
-          type: integer
-        url:
-          type: string
-          format: uri
-    Artifact:
-      type: object
-      description: An artifact used in a release
-      properties:
-        alias:
-          type: string
-          description: Alias for the artifact within the release definition
-          example: _MyBuild
-        type:
-          type: string
-          description: Artifact type
-          enum:
-          - build
-          - jenkins
-          - github
-          - nuget
-          - team
-          - externaltfsbuild
-          - git
-          - tfvc
-        definitionReference:
-          type: object
-          description: Reference to the artifact source definition
-          additionalProperties:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-        isPrimary:
+          description: Whether the value is treated as a secret
+        allowOverride:
           type: boolean
-          description: Whether this is the primary artifact
-        isRetained:
-          type: boolean
-          description: Whether this artifact is retained
-        sourceId:
-          type: string
-          description: Source identifier for the artifact
-    ReleaseDefinitionShallowReference:
-      type: object
-      description: A minimal reference to a release definition
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        path:
-          type: string
-        url:
-          type: string
-          format: uri
-        _links:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              href:
-                type: string
-                format: uri
+          description: Whether the value can be overridden when creating a release
     ReleaseCreateRequest:
       type: object
       description: Request to create a new release
@@ -619,13 +538,88 @@ components:
           type: object
           description: Additional release properties
           additionalProperties: true
+    ReleaseDefinitionShallowReference:
+      type: object
+      description: A minimal reference to a release definition
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        url:
+          type: string
+          format: uri
+        _links:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              href:
+                type: string
+                format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps user identity
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          example: John Doe
+        uniqueName:
+          type: string
+          example: john.doe@example.com
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
+    Artifact:
+      type: object
+      description: An artifact used in a release
+      properties:
+        alias:
+          type: string
+          description: Alias for the artifact within the release definition
+          example: _MyBuild
+        type:
+          type: string
+          description: Artifact type
+          enum:
+          - build
+          - jenkins
+          - github
+          - nuget
+          - team
+          - externaltfsbuild
+          - git
+          - tfvc
+        definitionReference:
+          type: object
+          description: Reference to the artifact source definition
+          additionalProperties:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        isPrimary:
+          type: boolean
+          description: Whether this is the primary artifact
+        isRetained:
+          type: boolean
+          description: Whether this artifact is retained
+        sourceId:
+          type: string
+          description: Source identifier for the artifact
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
@@ -640,6 +634,12 @@ components:
             $ref: '#/components/schemas/ApiError'
     Forbidden:
       description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
       content:
         application/json:
           schema:

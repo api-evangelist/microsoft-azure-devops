@@ -298,81 +298,63 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    GitItem:
+    GitCommitRef:
       type: object
-      description: A file or folder in a Git repository
+      description: A reference to a Git commit
       properties:
-        objectId:
-          type: string
-          description: Git blob or tree SHA
-        gitObjectType:
-          type: string
-          description: Git object type
-          enum:
-          - bad
-          - commit
-          - tree
-          - blob
-          - tag
-          - ext2
-          - offsetDelta
-          - refDelta
         commitId:
           type: string
-          description: SHA of the commit this item belongs to
-        path:
+          description: Full SHA hash of the commit
+          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
+        comment:
           type: string
-          description: Path to the item within the repository
-          example: /src/main.ts
-        isFolder:
+          description: Commit message
+          example: Fix login button alignment
+        commentTruncated:
           type: boolean
-          description: Whether this item is a folder (tree)
-        isSymLink:
-          type: boolean
-          description: Whether this item is a symbolic link
+          description: Whether the comment has been truncated
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        parents:
+          type: array
+          description: Parent commit SHAs
+          items:
+            type: string
         url:
           type: string
           format: uri
-        content:
-          type: string
-          description: File content (if requested and item is a file)
-        contentMetadata:
-          type: object
-          description: Metadata about the file content
-          properties:
-            encoding:
-              type: integer
-              description: Text encoding (code page)
-            extension:
-              type: string
-            fileName:
-              type: string
-            isBinary:
-              type: boolean
-            isImage:
-              type: boolean
-        latestProcessedChange:
-          $ref: '#/components/schemas/GitCommitRef'
-    GitUserDate:
-      type: object
-      description: Git user and date information
-      properties:
-        name:
-          type: string
-          description: User display name
-          example: John Doe
-        email:
-          type: string
-          format: email
-          description: User email address
-          example: john.doe@example.com
-        date:
-          type: string
-          format: date-time
-          description: Date and time of the action
-        imageUrl:
+        remoteUrl:
           type: string
           format: uri
+        changeCounts:
+          type: object
+          description: Number of files changed (Add, Edit, Delete)
+          properties:
+            Add:
+              type: integer
+            Edit:
+              type: integer
+            Delete:
+              type: integer
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     GitRepository:
       type: object
       description: An Azure DevOps Git repository
@@ -438,23 +420,6 @@ components:
               href:
                 type: string
                 format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     TeamProjectReference:
       type: object
       description: Reference to an Azure DevOps project
@@ -486,53 +451,82 @@ components:
           - public
         revision:
           type: integer
-    GitCommitRef:
+    GitUserDate:
       type: object
-      description: A reference to a Git commit
+      description: Git user and date information
       properties:
+        name:
+          type: string
+          description: User display name
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: john.doe@example.com
+        date:
+          type: string
+          format: date-time
+          description: Date and time of the action
+        imageUrl:
+          type: string
+          format: uri
+    GitItem:
+      type: object
+      description: A file or folder in a Git repository
+      properties:
+        objectId:
+          type: string
+          description: Git blob or tree SHA
+        gitObjectType:
+          type: string
+          description: Git object type
+          enum:
+          - bad
+          - commit
+          - tree
+          - blob
+          - tag
+          - ext2
+          - offsetDelta
+          - refDelta
         commitId:
           type: string
-          description: Full SHA hash of the commit
-          example: a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2
-        comment:
+          description: SHA of the commit this item belongs to
+        path:
           type: string
-          description: Commit message
-          example: Fix login button alignment
-        commentTruncated:
+          description: Path to the item within the repository
+          example: /src/main.ts
+        isFolder:
           type: boolean
-          description: Whether the comment has been truncated
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        parents:
-          type: array
-          description: Parent commit SHAs
-          items:
-            type: string
+          description: Whether this item is a folder (tree)
+        isSymLink:
+          type: boolean
+          description: Whether this item is a symbolic link
         url:
           type: string
           format: uri
-        remoteUrl:
+        content:
           type: string
-          format: uri
-        changeCounts:
+          description: File content (if requested and item is a file)
+        contentMetadata:
           type: object
-          description: Number of files changed (Add, Edit, Delete)
+          description: Metadata about the file content
           properties:
-            Add:
+            encoding:
               type: integer
-            Edit:
-              type: integer
-            Delete:
-              type: integer
+              description: Text encoding (code page)
+            extension:
+              type: string
+            fileName:
+              type: string
+            isBinary:
+              type: boolean
+            isImage:
+              type: boolean
+        latestProcessedChange:
+          $ref: '#/components/schemas/GitCommitRef'
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
     Unauthorized:
       description: Unauthorized - missing or invalid authentication credentials
       content:
@@ -551,7 +545,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   parameters:
+    RepositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: GUID or name of the repository
+      schema:
+        type: string
     ApiVersion:
       name: api-version
       in: query
@@ -564,13 +571,6 @@ components:
         - '7.1'
         - '7.0'
         - '6.0'
-    RepositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: GUID or name of the repository
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

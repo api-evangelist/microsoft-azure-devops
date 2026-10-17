@@ -194,28 +194,32 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps user identity
-      properties:
-        id:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          example: John Doe
-        uniqueName:
-          type: string
-          example: john.doe@example.com
-        url:
-          type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
     TestSuiteReference:
       type: object
       description: Minimal reference to a test suite
@@ -281,47 +285,27 @@ components:
         buildId:
           type: integer
           description: Specific build ID to test against
-    TestPlanUpdateParams:
+    IdentityRef:
       type: object
-      description: Parameters for updating an existing test plan
+      description: Reference to an Azure DevOps user identity
       properties:
-        name:
+        id:
           type: string
-          description: New name for the test plan
-        description:
+          format: uuid
+        displayName:
           type: string
-          description: New description for the test plan
-        areaPath:
+          example: John Doe
+        uniqueName:
           type: string
-          description: Updated area path
-        iteration:
+          example: john.doe@example.com
+        url:
           type: string
-          description: Updated iteration path
-        startDate:
+          format: uri
+        imageUrl:
           type: string
-          format: date-time
-          description: Updated start date
-        endDate:
+          format: uri
+        descriptor:
           type: string
-          format: date-time
-          description: Updated end date
-        owner:
-          $ref: '#/components/schemas/IdentityRef'
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        buildDefinition:
-          type: object
-          properties:
-            id:
-              type: integer
-        buildId:
-          type: integer
-        revision:
-          type: integer
-          description: Current revision number (required for update to prevent conflicts)
     TestPlan:
       type: object
       description: A test plan in Azure Test Plans
@@ -408,31 +392,47 @@ components:
               href:
                 type: string
                 format: uri
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+    TestPlanUpdateParams:
+      type: object
+      description: Parameters for updating an existing test plan
+      properties:
+        name:
+          type: string
+          description: New name for the test plan
+        description:
+          type: string
+          description: New description for the test plan
+        areaPath:
+          type: string
+          description: Updated area path
+        iteration:
+          type: string
+          description: Updated iteration path
+        startDate:
+          type: string
+          format: date-time
+          description: Updated start date
+        endDate:
+          type: string
+          format: date-time
+          description: Updated end date
+        owner:
+          $ref: '#/components/schemas/IdentityRef'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        buildDefinition:
+          type: object
+          properties:
+            id:
+              type: integer
+        buildId:
+          type: integer
+        revision:
+          type: integer
+          description: Current revision number (required for update to prevent conflicts)
   parameters:
     PlanId:
       name: planId

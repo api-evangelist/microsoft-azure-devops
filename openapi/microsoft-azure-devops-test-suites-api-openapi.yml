@@ -154,7 +154,60 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
+    ApiError:
+      type: object
+      description: Error response from the Azure DevOps API
+      properties:
+        id:
+          type: string
+          format: uuid
+        message:
+          type: string
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
+    TestSuiteReference:
+      type: object
+      description: Minimal reference to a test suite
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
     IdentityRef:
       type: object
       description: Reference to an Azure DevOps user identity
@@ -176,73 +229,6 @@ components:
           format: uri
         descriptor:
           type: string
-    TestSuiteReference:
-      type: object
-      description: Minimal reference to a test suite
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-    TestSuiteCreateParams:
-      type: object
-      description: Parameters for creating a new test suite
-      required:
-      - name
-      - suiteType
-      - parentSuite
-      properties:
-        name:
-          type: string
-          description: Name of the new test suite
-        suiteType:
-          type: string
-          description: Type of test suite to create
-          enum:
-          - none
-          - dynamicTestSuite
-          - staticTestSuite
-          - requirementTestSuite
-        parentSuite:
-          type: object
-          description: Parent suite to nest this suite under
-          required:
-          - id
-          properties:
-            id:
-              type: integer
-              description: ID of the parent suite
-        requirementId:
-          type: integer
-          description: Work item ID to link (for requirementTestSuite type)
-        queryString:
-          type: string
-          description: WIQL query string (for dynamicTestSuite type)
-        defaultTesters:
-          type: array
-          description: Default testers for test cases in this suite
-          items:
-            $ref: '#/components/schemas/IdentityRef'
     TestSuite:
       type: object
       description: A test suite within a test plan
@@ -320,31 +306,45 @@ components:
               href:
                 type: string
                 format: uri
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+    TestSuiteCreateParams:
+      type: object
+      description: Parameters for creating a new test suite
+      required:
+      - name
+      - suiteType
+      - parentSuite
+      properties:
+        name:
+          type: string
+          description: Name of the new test suite
+        suiteType:
+          type: string
+          description: Type of test suite to create
+          enum:
+          - none
+          - dynamicTestSuite
+          - staticTestSuite
+          - requirementTestSuite
+        parentSuite:
+          type: object
+          description: Parent suite to nest this suite under
+          required:
+          - id
+          properties:
+            id:
+              type: integer
+              description: ID of the parent suite
+        requirementId:
+          type: integer
+          description: Work item ID to link (for requirementTestSuite type)
+        queryString:
+          type: string
+          description: WIQL query string (for dynamicTestSuite type)
+        defaultTesters:
+          type: array
+          description: Default testers for test cases in this suite
+          items:
+            $ref: '#/components/schemas/IdentityRef'
   parameters:
     PlanId:
       name: planId

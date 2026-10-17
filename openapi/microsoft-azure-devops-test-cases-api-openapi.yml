@@ -197,28 +197,49 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
   schemas:
-    IdentityRef:
+    ApiError:
       type: object
-      description: Reference to an Azure DevOps user identity
+      description: Error response from the Azure DevOps API
       properties:
         id:
           type: string
           format: uuid
-        displayName:
+        message:
           type: string
-          example: John Doe
-        uniqueName:
+        typeName:
           type: string
-          example: john.doe@example.com
-        url:
+        typeKey:
           type: string
-          format: uri
-        imageUrl:
-          type: string
-          format: uri
-        descriptor:
-          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     TestCase:
       type: object
       description: A test case within a test suite
@@ -269,48 +290,27 @@ components:
               href:
                 type: string
                 format: uri
-    ApiError:
+    IdentityRef:
       type: object
-      description: Error response from the Azure DevOps API
+      description: Reference to an Azure DevOps user identity
       properties:
         id:
           type: string
           format: uuid
-        message:
+        displayName:
           type: string
-        typeName:
+          example: John Doe
+        uniqueName:
           type: string
-        typeKey:
+          example: john.doe@example.com
+        url:
           type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        descriptor:
+          type: string
   parameters:
     PlanId:
       name: planId

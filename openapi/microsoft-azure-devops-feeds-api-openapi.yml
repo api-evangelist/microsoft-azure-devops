@@ -195,69 +195,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    FeedId:
-      name: feedId
-      in: path
-      required: true
-      description: Feed GUID or feed name
-      schema:
-        type: string
-    ApiVersion:
-      name: api-version
-      in: query
-      required: true
-      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
-      schema:
-        type: string
-        default: '7.1'
-        enum:
-        - '7.1'
-        - '7.0'
-        - '6.0'
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or request body
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    NotFound:
-      description: Not found - the requested resource does not exist
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
-    Forbidden:
-      description: Forbidden - insufficient permissions to perform this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ApiError'
   schemas:
-    ApiError:
-      type: object
-      description: Error response from the Azure DevOps API
-      properties:
-        id:
-          type: string
-          format: uuid
-        message:
-          type: string
-        typeName:
-          type: string
-        typeKey:
-          type: string
-        errorCode:
-          type: integer
-        eventId:
-          type: integer
     Feed:
       type: object
       description: An Azure Artifacts package feed
@@ -322,6 +260,30 @@ components:
               href:
                 type: string
                 format: uri
+    FeedUpdateRequest:
+      type: object
+      description: Parameters for updating a feed
+      properties:
+        name:
+          type: string
+          description: New name for the feed
+        description:
+          type: string
+          description: Updated description
+        upstreamEnabled:
+          type: boolean
+          description: Whether to enable/disable upstream sources
+        upstreamSources:
+          type: array
+          description: Updated list of upstream sources
+          items:
+            $ref: '#/components/schemas/UpstreamSource'
+        hideDeletedPackageVersions:
+          type: boolean
+          description: Whether to hide deleted versions
+        badgesEnabled:
+          type: boolean
+          description: Whether to enable package badges
     FeedView:
       type: object
       description: A view of a feed (e.g., @local, @prerelease, @release)
@@ -395,30 +357,23 @@ components:
           type: string
           format: date-time
           nullable: true
-    FeedUpdateRequest:
+    ApiError:
       type: object
-      description: Parameters for updating a feed
+      description: Error response from the Azure DevOps API
       properties:
-        name:
+        id:
           type: string
-          description: New name for the feed
-        description:
+          format: uuid
+        message:
           type: string
-          description: Updated description
-        upstreamEnabled:
-          type: boolean
-          description: Whether to enable/disable upstream sources
-        upstreamSources:
-          type: array
-          description: Updated list of upstream sources
-          items:
-            $ref: '#/components/schemas/UpstreamSource'
-        hideDeletedPackageVersions:
-          type: boolean
-          description: Whether to hide deleted versions
-        badgesEnabled:
-          type: boolean
-          description: Whether to enable package badges
+        typeName:
+          type: string
+        typeKey:
+          type: string
+        errorCode:
+          type: integer
+        eventId:
+          type: integer
     FeedCreateRequest:
       type: object
       description: Parameters for creating a new feed
@@ -449,6 +404,51 @@ components:
           type: boolean
           description: Whether to enable package badges
           default: false
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    NotFound:
+      description: Not found - the requested resource does not exist
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Forbidden - insufficient permissions to perform this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Bad request - invalid parameters or request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+  parameters:
+    ApiVersion:
+      name: api-version
+      in: query
+      required: true
+      description: Azure DevOps REST API version. Use 7.1 for the latest stable version.
+      schema:
+        type: string
+        default: '7.1'
+        enum:
+        - '7.1'
+        - '7.0'
+        - '6.0'
+    FeedId:
+      name: feedId
+      in: path
+      required: true
+      description: Feed GUID or feed name
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
