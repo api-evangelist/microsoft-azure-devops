@@ -224,6 +224,9 @@ apis:
   humanURL: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/tfvc
   tags:
+  - Version Control
+  - TFVC
+  tags_raw:
   - Source Control
   - TFVC
   - Version Control
@@ -1797,7 +1800,7 @@ apis:
   name: Azure DevOps Artifacts API
   tags:
   - Artifacts
-  - Azure
+  - Microsoft Azure
   - CI/CD
   - DevOps
   - npm
@@ -1827,6 +1830,12 @@ apis:
 - aid: azure-devops:azure-devops-release-api
   name: Azure DevOps Release API
   tags:
+  - Microsoft Azure
+  - CI/CD
+  - Deployment
+  - DevOps
+  - Release Management
+  tags_raw:
   - Azure
   - CI/CD
   - Deployment
