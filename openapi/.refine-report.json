@@ -10,6 +10,7 @@
     "_original/azure-devops-test-plans-api-openapi.yml",
     "_original/azure-devops-wiki-api-openapi.yml",
     "_original/azure-devops-work-items-api-openapi.yml",
+    "_original/microsoft-azure-devops-openapi.json",
     "_original/microsoft-azure-devops-pipelines-openapi.yml",
     "_original/microsoft-azure-devops-work-items-openapi.yml"
   ],
@@ -46,6 +47,7 @@
     "microsoft-azure-devops-work-item-tracking-api-openapi.yml",
     "microsoft-azure-devops-work-item-types-api-openapi.yml",
     "microsoft-azure-devops-work-items-api-openapi.yml",
+    "microsoft-azure-devops-webapps-api-openapi.yml",
     "microsoft-azure-devops-runs-api-openapi.yml",
     "microsoft-azure-devops-fields-api-openapi.yml",
     "microsoft-azure-devops-queries-api-openapi.yml",
@@ -55,7 +57,7 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "sourced from openapi/_original/ (11 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (12 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "azure-devops-artifacts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-builds-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-git-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
@@ -65,10 +67,12 @@
     "azure-devops-test-plans-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-wiki-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "azure-devops-work-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "microsoft-azure-devops-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-azure-devops-openapi.json: declared missing tag: WebApps",
     "microsoft-azure-devops-pipelines-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "microsoft-azure-devops-work-items-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "tag 'Pipelines' spans 2 source specs (azure-devops-pipelines-api-openapi.yml, microsoft-azure-devops-pipelines-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+1 apis, 68 total)"
+    "apis.yml register: written (+2 apis, 69 total)"
   ],
   "skipped": [
     "microsoft-azure-devops-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
