@@ -1,4 +1,4 @@
-# Azure DevOps (microsoft-azure-devops)
+# Azure DevOps
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,1329 +66,388 @@
 
 Azure DevOps provides developer services for support teams to plan work, collaborate on code development, and build and deploy applications.
 
-**APIs.json:** [https://dev.azure.com](https://dev.azure.com)
+**Areas:** Agile · CI/CD · Developer Tools · DevOps · Project Management · Version Control
+
+## Azure DevOps on APIs.io
+
+Everything profiled for Azure DevOps is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/microsoft-azure-devops/](https://apis.io/providers/microsoft-azure-devops/)** — or go straight to one of the APIs or properties below.
+
+### APIs (67)
+
+- [Azure DevOps Graph API](https://apis.io/apis/microsoft-azure-devops/azure-devops-graph-api/) — API for managing users, groups, and memberships within an Azure DevOps organization. Enables programmatic administration of identities and group membership.
+- [Azure DevOps Core API](https://apis.io/apis/microsoft-azure-devops/azure-devops-core-api/) — API for managing Azure DevOps projects, teams, and team members. Provides foundational access to the organizational structure of an Azure DevOps organization.
+- [Azure DevOps Security API](https://apis.io/apis/microsoft-azure-devops/azure-devops-security-api/) — API for managing security namespaces, access control lists, and access control entries in Azure DevOps. Used to programmatically set and evaluate…
+- [Azure DevOps Notifications API](https://apis.io/apis/microsoft-azure-devops/azure-devops-notifications-api/) — API for managing notification subscriptions for users and teams. Enables programmatic creation and management of email and other notification channels for…
+- [Azure DevOps Audit API](https://apis.io/apis/microsoft-azure-devops/azure-devops-audit-api/) — API for querying and downloading the Azure DevOps audit log. Provides access to auditable events within an organization for security reviews and compliance…
+- [Azure DevOps Search API](https://apis.io/apis/microsoft-azure-devops/azure-devops-search-api/) — API for searching code, work items, and wiki pages across all projects and repositories within an Azure DevOps organization. Supports full-text and filtered…
+- [Azure DevOps Policy API](https://apis.io/apis/microsoft-azure-devops/azure-devops-policy-api/) — API for managing code policy configurations and policy types in Azure Repos. Used to define and enforce branch policies such as required reviewers, status…
+- [Azure DevOps Distributed Task API](https://apis.io/apis/microsoft-azure-devops/azure-devops-distributed-task-api/) — API for managing the pipeline agent infrastructure including agent pools, queues, agents, environments, deployment groups, and task groups. Provides…
+- [Azure DevOps Analytics OData API](https://apis.io/apis/microsoft-azure-devops/azure-devops-analytics-odata-api/) — OData-based API providing access to the Azure DevOps Analytics service for reporting and querying historical and real-time project data. Supports queries…
+- [Azure DevOps Extension Management API](https://apis.io/apis/microsoft-azure-devops/azure-devops-extension-management-api/) — API for managing extensions installed in an Azure DevOps organization. Enables programmatic listing, installing, updating, and removing of Marketplace…
+- [Azure DevOps Service Endpoint API](https://apis.io/apis/microsoft-azure-devops/azure-devops-service-endpoint-api/) — API for managing service connections that connect Azure DevOps pipelines to external services such as GitHub, Docker, Azure, and other third-party…
+- [Azure DevOps TFVC API](https://apis.io/apis/microsoft-azure-devops/azure-devops-tfvc-api/) — API for accessing Team Foundation Version Control (TFVC) repositories within Azure DevOps. Provides programmatic access to TFVC items, changesets,…
+- [Azure DevOps Token Administration API](https://apis.io/apis/microsoft-azure-devops/azure-devops-token-administration-api/) — API for organization administrators to retrieve and revoke OAuth authorizations including personal access tokens and session tokens for users in their…
+- [Azure DevOps Accounts API](https://apis.io/apis/microsoft-azure-devops/azure-devops-accounts-api/) — API for listing the Azure DevOps organizations that the authenticated user has access to. Each person using Azure DevOps Services has access to one or more…
+- [Azure DevOps Approvals and Checks API](https://apis.io/apis/microsoft-azure-devops/azure-devops-approvals-and-checks-api/) — API for managing pipeline approvals and checks on resources such as environments, service connections, agent pools, variable groups, and secure files.…
+- [Azure DevOps Artifacts Package Types API](https://apis.io/apis/microsoft-azure-devops/azure-devops-artifacts-package-types-api/) — API for managing specific package types within Azure Artifacts feeds including NuGet, npm, Maven, Python, and Universal Packages. Provides…
+- [Azure DevOps Dashboard API](https://apis.io/apis/microsoft-azure-devops/azure-devops-dashboard-api/) — API for creating and managing team dashboards and widgets in Azure DevOps. Each team can have one or more dashboards, and each dashboard contains a set of…
+- [Azure DevOps Favorites API](https://apis.io/apis/microsoft-azure-devops/azure-devops-favorites-api/) — API for managing user favorites in Azure DevOps. Enables programmatic creation, retrieval, and deletion of favorite items such as queries, builds,…
+- [Azure DevOps Identities API](https://apis.io/apis/microsoft-azure-devops/azure-devops-identities-api/) — API for finding legacy identity descriptors for users and groups in Azure DevOps. Identities can be searched by name, email, ID, identity descriptor, and…
+- [Azure DevOps Member Entitlement Management API](https://apis.io/apis/microsoft-azure-devops/azure-devops-member-entitlement-management-api/) — API for managing member entitlements in Azure DevOps organizations. A member is a user or group added to an account. Enables programmatic management of…
+- [Azure DevOps Permissions Report API](https://apis.io/apis/microsoft-azure-devops/azure-devops-permissions-report-api/) — API for generating and downloading permissions reports that help administrators determine the effective permissions of users and groups on securable…
+- [Azure DevOps Profile API](https://apis.io/apis/microsoft-azure-devops/azure-devops-profile-api/) — API for retrieving the authenticated user's profile information in Azure DevOps. Each person using Azure DevOps Services has a profile containing their…
+- [Azure DevOps Security Roles API](https://apis.io/apis/microsoft-azure-devops/azure-devops-security-roles-api/) — API for managing security role definitions and role assignments on Azure DevOps resources. Enables listing role definitions, assigning roles to identities…
+- [Azure DevOps Status API](https://apis.io/apis/microsoft-azure-devops/azure-devops-status-api/) — API for querying the health and status of Azure DevOps services. Provides the ability to query status information for Azure DevOps all-up, or scoped to a…
+- [Azure DevOps Symbol API](https://apis.io/apis/microsoft-azure-devops/azure-devops-symbol-api/) — API for working with the Azure DevOps managed Symbol Service. Supports creating and managing symbol requests, updating debug entries, querying symbols via…
+- [Azure DevOps Test Plan API](https://apis.io/apis/microsoft-azure-devops/azure-devops-test-plan-api/) — API for managing modern test plans, test suites, test cases, test points, and test configurations in Azure DevOps. Provides programmatic access to test plan…
+- [Azure DevOps Test Results API](https://apis.io/apis/microsoft-azure-devops/azure-devops-test-results-api/) — API for managing test results, code coverage data, test run logs, and test result metrics in Azure DevOps. Supports publishing test result documents,…
+- [Azure DevOps Token Lifecycle Management API](https://apis.io/apis/microsoft-azure-devops/azure-devops-token-lifecycle-management-api/) — API for users to manage the lifecycle of their own personal access tokens (PATs) in Azure DevOps. Supports creating, listing, updating, and revoking PATs…
+- [Azure DevOps Work API](https://apis.io/apis/microsoft-azure-devops/azure-devops-work-api/) — API for managing board configurations, team settings, iterations, capacities, and process configuration in Azure Boards. Provides programmatic access to…
+- [Azure DevOps Work Item Tracking Process API](https://apis.io/apis/microsoft-azure-devops/azure-devops-work-item-tracking-process-api/) — API for managing work item tracking process customizations in Azure DevOps. Enables programmatic management of inherited processes, work item types, fields,…
+- [Azure DevOps Attachments API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-attachments-api/) — Operations for work item attachments
+- [Azure DevOps Build Artifacts API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-build-artifacts-api/) — Operations for accessing build artifacts
+- [Azure DevOps Build Definitions API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-build-definitions-api/) — Operations for managing build pipeline definitions
+- [Azure DevOps Build Logs API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-build-logs-api/) — Operations for accessing build logs and timelines
+- [Azure DevOps Builds API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-builds-api/) — Operations for managing and queuing builds
+- [Azure DevOps Comments API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-comments-api/) — Operations for work item comments
+- [Azure DevOps Commits API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-commits-api/) — Operations for accessing commits and commit history
+- [Azure DevOps Consumers API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-consumers-api/) — Operations for listing consumers (webhook, service bus, etc.)
+- [Azure DevOps Deployments API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-deployments-api/) — Operations for managing and monitoring deployments to environments
+- [Azure DevOps Feeds API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-feeds-api/) — Operations for managing artifact feeds
+- [Azure DevOps Notifications API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-notifications-api/) — Operations for sending test notifications
+- [Azure DevOps Package Versions API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-package-versions-api/) — Operations for managing specific package versions
+- [Azure DevOps Packages API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-packages-api/) — Operations for listing and managing packages within feeds
+- [Azure DevOps Pipeline Artifacts API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-pipeline-artifacts-api/) — Operations for accessing artifacts from pipeline runs
+- [Azure DevOps Pipeline Runs API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-pipeline-runs-api/) — Operations for triggering and monitoring pipeline runs
+- [Azure DevOps Pipelines API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-pipelines-api/) — Operations for managing pipeline definitions
+- [Azure DevOps Publishers API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-publishers-api/) — Operations for listing event publishers and their event types
+- [Azure DevOps Pull Requests API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-pull-requests-api/) — Operations for creating and managing pull requests
+- [Azure DevOps Pushes API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-pushes-api/) — Operations for managing pushes and commits
+- [Azure DevOps Refs API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-refs-api/) — Operations for managing branches and tags (refs)
+- [Azure DevOps Release Definitions API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-release-definitions-api/) — Operations for managing release pipeline definitions
+- [Azure DevOps Releases API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-releases-api/) — Operations for managing release instances
+- [Azure DevOps Repositories API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-repositories-api/) — Operations for managing Git repositories
+- [Azure DevOps Subscriptions API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-subscriptions-api/) — Operations for managing service hook subscriptions
+- [Azure DevOps Test Cases API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-test-cases-api/) — Operations for managing test cases within test suites
+- [Azure DevOps Test Plans API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-test-plans-api/) — Operations for managing test plans
+- [Azure DevOps Test Suites API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-test-suites-api/) — Operations for managing test suites within test plans
+- [Azure DevOps Wiki Pages API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-wiki-pages-api/) — Operations for managing wiki page content
+- [Azure DevOps Wikis API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-wikis-api/) — Operations for managing wiki instances
+- [Azure DevOps Work Item Tracking API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-work-item-tracking-api/) — Operations for querying and tracking work items using WIQL
+- [Azure DevOps Work Item Types API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-work-item-types-api/) — Operations for work item type definitions and fields
+- [Azure DevOps Work Items API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-work-items-api/) — Operations for managing work items (Bugs, Tasks, User Stories, etc.)
+- [Azure DevOps Artifacts API](https://apis.io/apis/microsoft-azure-devops/azure-devops-artifacts-api/) — The Azure DevOps Artifacts API provides REST endpoints for managing package feeds including NuGet, npm, Maven, Python, and Universal Packages. APIs support…
+- [Azure DevOps Release API](https://apis.io/apis/microsoft-azure-devops/azure-devops-release-api/) — The Azure DevOps Release API provides REST endpoints for managing release pipelines, deployments, and environments. APIs support release definition…
+- [Azure DevOps Fields API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-fields-api/) — Work item field definitions
+- [Azure DevOps Queries API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-queries-api/) — Work item query execution
+- [Azure DevOps Runs API](https://apis.io/apis/microsoft-azure-devops/microsoft-azure-devops-runs-api/) — Pipeline run execution and monitoring
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (18)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Azure DevOps Board Bug Acknowledgement](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-board-bug-comment-workflow/)
+- [Azure DevOps Retrieve Artifacts of the Latest Successful Build](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-build-artifacts-retrieval-workflow/)
+- [Azure DevOps Provision a Build Definition and Run It](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-build-definition-provision-workflow/)
+- [Azure DevOps Queue and Monitor a Build](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-build-queue-monitor-workflow/)
+- [Azure DevOps Commit a File via a Git Push](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-git-push-commit-workflow/)
+- [Azure DevOps Create a YAML Pipeline and Start Its First Run](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-pipeline-create-run-workflow/)
+- [Azure DevOps Run and Monitor a Pipeline](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-pipeline-run-monitor-workflow/)
+- [Azure DevOps Project Repository Inventory](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-project-repository-inventory-workflow/)
+- [Azure DevOps Complete a Pull Request](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-pull-request-complete-workflow/)
+- [Azure DevOps Open a Pull Request and Start a Review Thread](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-pull-request-create-comment-workflow/)
+- [Azure DevOps Review the Oldest Active Pull Request](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-pull-request-review-cycle-workflow/)
+- [Azure DevOps Create and Monitor a Release](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-release-create-monitor-workflow/)
+- [Azure DevOps Provision a Release Definition and Cut a Release](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-release-definition-provision-workflow/)
+- [Azure DevOps Inspect a Release Definition and Cut a Release](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-release-from-definition-workflow/)
+- [Azure DevOps Provision and Inspect a Git Repository](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-repository-provision-init-workflow/)
+- [Azure DevOps Bug Triage by WIQL Query](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-work-item-bug-triage-workflow/)
+- [Azure DevOps Create a Parent and Linked Child Work Item](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-work-item-create-linked-child-workflow/)
+- [Azure DevOps Create, Update, and Comment on a Work Item](https://apis.io/arazzos/microsoft-azure-devops/microsoft-azure-devops-work-item-create-update-comment-workflow/)
 
-## Tags
+#### AsyncAPI (1)
 
-- Agile
-- CI/CD
-- DevOps
-- Project Management
-- Version Control
+Event-driven and webhook contracts.
 
-## Timestamps
+- [Azure DevOps Service Hooks AsyncAPI](https://apis.io/asyncapis/microsoft-azure-devops/azure-devops-service-hooks-asyncapi/)
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+#### Event channels (12)
+
+Individual events and webhooks the provider emits.
 
-## APIs
-
-### Azure DevOps Services REST API
-
-REST API for Azure DevOps Services providing programmatic access to work items, builds, releases, repositories, and more.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/](https://learn.microsoft.com/en-us/rest/api/azure/devops/)
-- **Base URL:** `https://dev.azure.com/{organization}`
-
-#### Tags
-
-- DevOps
-- REST
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/)
-- [OpenAPI](https://learn.microsoft.com/en-us/rest/api/azure/devops/) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance)
-- [Client  Libraries](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Boards API
-
-API for managing work items, boards, backlogs, sprints, and queries in Azure Boards. Enables programmatic access to agile planning and tracking resources.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/](https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/wit`
-
-#### Tags
-
-- Agile
-- Boards
-- Work Items
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/)
-- [OpenAPI](openapi/azure-devops-work-items-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Repos API
-
-API for managing Git repositories, pull requests, commits, branches, and pushes in Azure Repos. Supports full programmatic control over source code hosted in Azure DevOps.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/git/](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/git`
-
-#### Tags
-
-- Git
-- Repositories
-- Source Control
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/git/)
-- [OpenAPI](openapi/azure-devops-git-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Pipelines API
-
-API for managing build and release pipelines, pipeline runs, and pipeline artifacts. Provides programmatic access to create, trigger, and monitor CI/CD pipelines.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/pipelines`
-
-#### Tags
-
-- Builds
-- CI/CD
-- Releases
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/pipelines/)
-- [OpenAPI](openapi/azure-devops-pipelines-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Build API
-
-API for managing build definitions, queuing builds, and accessing build results and logs. Supports the full lifecycle of continuous integration builds in Azure DevOps.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/build/](https://learn.microsoft.com/en-us/rest/api/azure/devops/build/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/build`
-
-#### Tags
-
-- Automation
-- Build
-- CI
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/build/)
-- [OpenAPI](openapi/azure-devops-builds-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Release API
-
-API for managing release definitions, deployments, and approvals in Azure Pipelines. Enables programmatic control over continuous delivery and release orchestration.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/release/](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/)
-- **Base URL:** `https://vsrm.dev.azure.com/{organization}/{project}/_apis/release`
-
-#### Tags
-
-- CD
-- Deployment
-- Release
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/release/)
-- [OpenAPI](openapi/azure-devops-releases-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Test Plans API
-
-API for managing test plans, test suites, test cases, and test runs in Azure Test Plans. Provides programmatic access to quality assurance and testing workflows.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/test/](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/test`
-
-#### Tags
-
-- QA
-- Test Plans
-- Testing
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/test/)
-- [OpenAPI](openapi/azure-devops-test-plans-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Artifacts API
-
-API for managing packages, feeds, and artifact dependencies in Azure Artifacts. Supports NuGet, npm, Maven, Python, and Universal packages in private or public feeds.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/](https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/)
-- **Base URL:** `https://feeds.dev.azure.com/{organization}/_apis/packaging`
-
-#### Tags
-
-- Artifacts
-- Dependencies
-- Packages
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/artifacts/)
-- [OpenAPI](openapi/azure-devops-artifacts-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Graph API
-
-API for managing users, groups, and memberships within an Azure DevOps organization. Enables programmatic administration of identities and group membership.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/](https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/)
-- **Base URL:** `https://vssps.dev.azure.com/{organization}/_apis/graph`
-
-#### Tags
-
-- Groups
-- Permissions
-- Users
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/graph/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Core API
-
-API for managing Azure DevOps projects, teams, and team members. Provides foundational access to the organizational structure of an Azure DevOps organization.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/core/](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis`
-
-#### Tags
-
-- Organization
-- Projects
-- Teams
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/core/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Security API
-
-API for managing security namespaces, access control lists, and access control entries in Azure DevOps. Used to programmatically set and evaluate permissions on resources.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/security/](https://learn.microsoft.com/en-us/rest/api/azure/devops/security/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/accesscontrollists`
-
-#### Tags
-
-- Access Control
-- Permissions
-- Security
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/security/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Service Hooks API
-
-API for managing service hook subscriptions, publishers, and consumers. Enables event-driven integrations by configuring webhooks and other notification mechanisms when Azure DevOps events occur.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/](https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/hooks`
-
-#### Tags
-
-- Events
-- Integrations
-- Webhooks
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/hooks/)
-- [Reference](https://learn.microsoft.com/en-us/azure/devops/service-hooks/overview?view=azure-devops)
-- [OpenAPI](openapi/azure-devops-service-hooks-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/azure-devops-service-hooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-
-### Azure DevOps Notifications API
-
-API for managing notification subscriptions for users and teams. Enables programmatic creation and management of email and other notification channels for Azure DevOps events such as work item changes, build results, and pull requests.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/](https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/notification`
-
-#### Tags
-
-- Alerts
-- Notifications
-- Subscriptions
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/notification/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Audit API
-
-API for querying and downloading the Azure DevOps audit log. Provides access to auditable events within an organization for security reviews and compliance reporting.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/audit/](https://learn.microsoft.com/en-us/rest/api/azure/devops/audit/)
-- **Base URL:** `https://auditservice.dev.azure.com/{organization}/_apis/audit`
-
-#### Tags
-
-- Audit
-- Compliance
-- Security
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/audit/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Search API
-
-API for searching code, work items, and wiki pages across all projects and repositories within an Azure DevOps organization. Supports full-text and filtered search results.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/search/](https://learn.microsoft.com/en-us/rest/api/azure/devops/search/)
-- **Base URL:** `https://almsearch.dev.azure.com/{organization}/_apis/search`
-
-#### Tags
-
-- Code
-- Search
-- Work Items
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/search/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Policy API
-
-API for managing code policy configurations and policy types in Azure Repos. Used to define and enforce branch policies such as required reviewers, status checks, and merge strategies.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/](https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/policy`
-
-#### Tags
-
-- Branch Protection
-- Code Review
-- Policy
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Distributed Task API
-
-API for managing the pipeline agent infrastructure including agent pools, queues, agents, environments, deployment groups, and task groups. Provides programmatic control over the compute resources used to run pipelines.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/](https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/distributedtask`
-
-#### Tags
-
-- Agents
-- Pipelines
-- Pools
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/distributedtask/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Analytics OData API
-
-OData-based API providing access to the Azure DevOps Analytics service for reporting and querying historical and real-time project data. Supports queries across work items, pipelines, and test plans for Power BI and custom reporting scenarios.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/quick-ref?view=azure-devops](https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/quick-ref?view=azure-devops)
-- **Base URL:** `https://analytics.dev.azure.com/{organization}/{project}/_odata`
-
-#### Tags
-
-- Analytics
-- OData
-- Reporting
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/quick-ref?view=azure-devops)
-- [Reference](https://learn.microsoft.com/en-us/azure/devops/report/extend-analytics/odata-api-version?view=azure-devops)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Wiki API
-
-API for creating and managing wikis and wiki pages within Azure DevOps projects. Every wiki is backed by a Git repository and supports creating, reading, updating, and deleting wikis and pages programmatically.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/](https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/wiki`
-
-#### Tags
-
-- Documentation
-- Pages
-- Wiki
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/wiki/)
-- [OpenAPI](openapi/azure-devops-wiki-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Extension Management API
-
-API for managing extensions installed in an Azure DevOps organization. Enables programmatic listing, installing, updating, and removing of Marketplace extensions, as well as reading extension data and settings.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/](https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/)
-- **Base URL:** `https://extmgmt.dev.azure.com/{organization}/_apis/extensionmanagement`
-
-#### Tags
-
-- Extensions
-- Marketplace
-- Plugins
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/extensionmanagement/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Service Endpoint API
-
-API for managing service connections that connect Azure DevOps pipelines to external services such as GitHub, Docker, Azure, and other third-party providers. Supports creating, updating, and sharing service endpoints across projects.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/](https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint`
-
-#### Tags
-
-- Integrations
-- Pipelines
-- Service Connections
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps TFVC API
-
-API for accessing Team Foundation Version Control (TFVC) repositories within Azure DevOps. Provides programmatic access to TFVC items, changesets, shelvesets, labels, and branches for organizations using centralized version control.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/](https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/tfvc`
-
-#### Tags
-
-- Source Control
-- TFVC
-- Version Control
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Token Administration API
-
-API for organization administrators to retrieve and revoke OAuth authorizations including personal access tokens and session tokens for users in their organizations. Enables centralized token governance and security oversight.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/](https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/)
-- **Base URL:** `https://vssps.dev.azure.com/{organization}/_apis/tokenadmin`
-
-#### Tags
-
-- Access Control
-- Security
-- Token Administration
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/tokenadmin/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Accounts API
-
-API for listing the Azure DevOps organizations that the authenticated user has access to. Each person using Azure DevOps Services has access to one or more organization accounts.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/account/](https://learn.microsoft.com/en-us/rest/api/azure/devops/account/)
-- **Base URL:** `https://app.vssps.visualstudio.com/_apis/accounts`
-
-#### Tags
-
-- Accounts
-- Administration
-- Organizations
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/account/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Approvals and Checks API
-
-API for managing pipeline approvals and checks on resources such as environments, service connections, agent pools, variable groups, and secure files. Enables programmatic creation and modification of checks, management of approvals, and querying of check evaluation details.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/approvalsandchecks/](https://learn.microsoft.com/en-us/rest/api/azure/devops/approvalsandchecks/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/pipelines/checks`
-
-#### Tags
-
-- Approvals
-- Checks
-- Pipelines
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/approvalsandchecks/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Artifacts Package Types API
-
-API for managing specific package types within Azure Artifacts feeds including NuGet, npm, Maven, Python, and Universal Packages. Provides package-type-specific operations beyond the general Artifacts feed management API.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/](https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/)
-- **Base URL:** `https://pkgs.dev.azure.com/{organization}/_apis/packaging`
-
-#### Tags
-
-- Maven
-- Npm
-- NuGet
-- Packages
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/artifactspackagetypes/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Dashboard API
-
-API for creating and managing team dashboards and widgets in Azure DevOps. Each team can have one or more dashboards, and each dashboard contains a set of configurable widgets with multi-user concurrency support via eTag versioning.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/dashboard/](https://learn.microsoft.com/en-us/rest/api/azure/devops/dashboard/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/{team}/_apis/dashboard`
-
-#### Tags
-
-- Dashboards
-- Reporting
-- Widgets
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/dashboard/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Favorites API
-
-API for managing user favorites in Azure DevOps. Enables programmatic creation, retrieval, and deletion of favorite items such as queries, builds, repositories, and other artifacts scoped to individual users or teams.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/favorite/](https://learn.microsoft.com/en-us/rest/api/azure/devops/favorite/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/favorite`
-
-#### Tags
-
-- Bookmarks
-- Favorites
-- User Preferences
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/favorite/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Identities API
-
-API for finding legacy identity descriptors for users and groups in Azure DevOps. Identities can be searched by name, email, ID, identity descriptor, and subject descriptor. Legacy identity descriptors are used by systems that rely on the identity management service, such as the security APIs for permissions management.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/](https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/)
-- **Base URL:** `https://vssps.dev.azure.com/{organization}/_apis/identities`
-
-#### Tags
-
-- Groups
-- Identities
-- Users
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/ims/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Member Entitlement Management API
-
-API for managing member entitlements in Azure DevOps organizations. A member is a user or group added to an account. Enables programmatic management of licenses, extensions, and project or team memberships for users and groups.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/)
-- **Base URL:** `https://vsaex.dev.azure.com/{organization}/_apis/userentitlements`
-
-#### Tags
-
-- Entitlements
-- Licensing
-- User Management
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/memberentitlementmanagement/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Permissions Report API
-
-API for generating and downloading permissions reports that help administrators determine the effective permissions of users and groups on securable resources in Azure DevOps. Reports list effective permissions for each user and group in the organization, accounting for directly assigned, group hierarchy inherited, and resource hierarchy inherited permissions.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/permissionsreport/](https://learn.microsoft.com/en-us/rest/api/azure/devops/permissionsreport/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/permissionsreport`
-
-#### Tags
-
-- Compliance
-- Permissions
-- Reports
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/permissionsreport/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Profile API
-
-API for retrieving the authenticated user's profile information in Azure DevOps. Each person using Azure DevOps Services has a profile containing their identity and preference data.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/](https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/)
-- **Base URL:** `https://app.vssps.visualstudio.com/_apis/profile/profiles`
-
-#### Tags
-
-- Identity
-- Profile
-- Users
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/profile/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Security Roles API
-
-API for managing security role definitions and role assignments on Azure DevOps resources. Enables listing role definitions, assigning roles to identities on specific resources, removing role assignments, and managing permission inheritance.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/](https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/securityroles`
-
-#### Tags
-
-- Access Control
-- Role Assignments
-- Security Roles
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/securityroles/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Status API
-
-API for querying the health and status of Azure DevOps services. Provides the ability to query status information for Azure DevOps all-up, or scoped to a specific service and geography. Results are cached for 60 seconds.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/status/](https://learn.microsoft.com/en-us/rest/api/azure/devops/status/)
-- **Base URL:** `https://status.dev.azure.com/_apis/status`
-
-#### Tags
-
-- Health
-- Monitoring
-- Status
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/status/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Symbol API
-
-API for working with the Azure DevOps managed Symbol Service. Supports creating and managing symbol requests, updating debug entries, querying symbols via the Microsoft SymSrv protocol, and checking service availability. Used to publish and consume debug symbols for builds.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/symbol/](https://learn.microsoft.com/en-us/rest/api/azure/devops/symbol/)
-- **Base URL:** `https://artifacts.dev.azure.com/{organization}/_apis/symbol`
-
-#### Tags
-
-- Artifacts
-- Debugging
-- Symbols
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/symbol/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Test Plan API
-
-API for managing modern test plans, test suites, test cases, test points, and test configurations in Azure DevOps. Provides programmatic access to test plan management operations including cloning, recycle bin operations, and test suite organization.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/](https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/_apis/testplan`
-
-#### Tags
-
-- Test Cases
-- Test Plans
-- Test Suites
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/testplan/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Test Results API
-
-API for managing test results, code coverage data, test run logs, and test result metrics in Azure DevOps. Supports publishing test result documents, querying results by build or pipeline, and retrieving detailed test result group information.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/testresults/](https://learn.microsoft.com/en-us/rest/api/azure/devops/testresults/)
-- **Base URL:** `https://vstmr.dev.azure.com/{organization}/{project}/_apis/testresults`
-
-#### Tags
-
-- Code Coverage
-- Test Results
-- Test Runs
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/testresults/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Token Lifecycle Management API
-
-API for users to manage the lifecycle of their own personal access tokens (PATs) in Azure DevOps. Supports creating, listing, updating, and revoking PATs programmatically. Requires authorization with Microsoft Entra ID access tokens.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/](https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/)
-- **Base URL:** `https://vssps.dev.azure.com/{organization}/_apis/tokens`
-
-#### Tags
-
-- Authentication
-- Personal Access Tokens
-- Tokens
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Work API
-
-API for managing board configurations, team settings, iterations, capacities, and process configuration in Azure Boards. Provides programmatic access to board columns, rows, card styling rules, chart settings, team field values, backlog settings, and sprint capacity planning.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/work/](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/)
-- **Base URL:** `https://dev.azure.com/{organization}/{project}/{team}/_apis/work`
-
-#### Tags
-
-- Boards
-- Capacity
-- Sprints
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/work/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Azure DevOps Work Item Tracking Process API
-
-API for managing work item tracking process customizations in Azure DevOps. Enables programmatic management of inherited processes, work item types, fields, states, rules, behaviors, layouts, and picklist values for customizing Azure Boards experiences.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/](https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/)
-- **Base URL:** `https://dev.azure.com/{organization}/_apis/work/processes`
-
-#### Tags
-
-- Customization
-- Processes
-- Work Item Types
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/)
-- [Postman Collection](collections/azure-devops-artifacts-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-artifacts-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-builds-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-builds-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-git-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-git-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-pipelines-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-pipelines-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-releases-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-releases-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-service-hooks-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-service-hooks-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-test-plans-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-test-plans-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-wiki-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-wiki-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/azure-devops-work-items-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/azure-devops-work-items-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [Portal](https://dev.azure.com)
+- [build/complete](https://apis.io/channels/microsoft-azure-devops/build-complete/)
+- [git/pullrequest/created](https://apis.io/channels/microsoft-azure-devops/git-pullrequest-created/)
+- [git/pullrequest/merged](https://apis.io/channels/microsoft-azure-devops/git-pullrequest-merged/)
+- [git/pullrequest/updated](https://apis.io/channels/microsoft-azure-devops/git-pullrequest-updated/)
+- [git/push](https://apis.io/channels/microsoft-azure-devops/git-push/)
+- [ms.vss-release.deployment-approval-pending-event](https://apis.io/channels/microsoft-azure-devops/ms-vss-release-deployment-approval-pending-event/)
+- [ms.vss-release.deployment-completed-event](https://apis.io/channels/microsoft-azure-devops/ms-vss-release-deployment-completed-event/)
+- [ms.vss-release.release-created-event](https://apis.io/channels/microsoft-azure-devops/ms-vss-release-release-created-event/)
+- [workitem/commented](https://apis.io/channels/microsoft-azure-devops/workitem-commented/)
+- [workitem/created](https://apis.io/channels/microsoft-azure-devops/workitem-created/)
+- [workitem/deleted](https://apis.io/channels/microsoft-azure-devops/workitem-deleted/)
+- [workitem/updated](https://apis.io/channels/microsoft-azure-devops/workitem-updated/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [MCP Server](https://apis.io/servers/microsoft-azure-devops/mcp-server/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Microsoft Azure Devops Agentic Access](https://apis.io/agentic-access/microsoft-azure-devops/microsoft-azure-devops-agentic-access/)
+
+#### JSON Schema (80)
+
+The data models the API reads and writes.
+
+- [Azure DevOps Pipeline Run](https://apis.io/schemas/microsoft-azure-devops/azure-devops-pipeline-run/)
+- [Azure DevOps Work Item](https://apis.io/schemas/microsoft-azure-devops/azure-devops-work-item/)
+- [ApiError](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-apierror/)
+- [Artifact](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-artifact/)
+- [AttachmentReference](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-attachmentreference/)
+- [Build](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-build/)
+- [BuildArtifact](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-buildartifact/)
+- [BuildDefinition](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-builddefinition/)
+- [BuildDefinitionCreateRequest](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-builddefinitioncreaterequest/)
+- [BuildDefinitionReference](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-builddefinitionreference/)
+- [BuildLog](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-buildlog/)
+- [BuildQueueRequest](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-buildqueuerequest/)
+- [BuildRepository](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-buildrepository/)
+- [Comment](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-comment/)
+- [ConfigurationVariableValue](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-configurationvariablevalue/)
+- [Consumer](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-consumer/)
+- [ConsumerAction](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-consumeraction/)
+- [CreatePipelineParameters](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-createpipelineparameters/)
+- [Deployment](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-deployment/)
+- [EventType](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-eventtype/)
+- [EventTypeReference](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-eventtypereference/)
+- [Feed](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-feed/)
+- [FeedCreateRequest](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-feedcreaterequest/)
+- [FeedUpdateRequest](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-feedupdaterequest/)
+- [FeedView](https://apis.io/schemas/microsoft-azure-devops/microsoft-azure-devops-feedview/)
+- …and 55 more published on APIs.io
+
+#### JSON Structure (1)
+
+Data models expressed in JSON Structure.
+
+- [Microsoft Azure Devops Structure](https://apis.io/json-structure/microsoft-azure-devops/microsoft-azure-devops-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Azure Devops Context](https://apis.io/jsonld/microsoft-azure-devops/azure-devops-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Azure DevOps Domain Vocabulary](https://apis.io/vocabularies/microsoft-azure-devops/microsoft-azure-devops-vocabulary/)
+
+#### Examples (19)
+
+Example requests and responses.
+
+- [Microsoft Azure Devops Builds Queue Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-builds-queue-example/)
+- [Microsoft Azure Devops Feeds Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-feeds-create-example/)
+- [Microsoft Azure Devops Notifications Sendtest Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-notifications-sendtest-example/)
+- [Microsoft Azure Devops Pages Createorupdate Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-pages-createorupdate-example/)
+- [Microsoft Azure Devops Pipelines Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-pipelines-create-example/)
+- [Microsoft Azure Devops Pullrequests Addcomment Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-pullrequests-addcomment-example/)
+- [Microsoft Azure Devops Pullrequests Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-pullrequests-create-example/)
+- [Microsoft Azure Devops Releases Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-releases-create-example/)
+- [Microsoft Azure Devops Runs Run Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-runs-run-example/)
+- [Microsoft Azure Devops Subscriptions Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-subscriptions-create-example/)
+- [Microsoft Azure Devops Testcases Add Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-testcases-add-example/)
+- [Microsoft Azure Devops Testplans Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-testplans-create-example/)
+- [Microsoft Azure Devops Testsuites Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-testsuites-create-example/)
+- [Microsoft Azure Devops Wikis Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-wikis-create-example/)
+- [Microsoft Azure Devops Wikis Update Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-wikis-update-example/)
+- [Microsoft Azure Devops Workitems Addcomment Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-workitems-addcomment-example/)
+- [Microsoft Azure Devops Workitems Create Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-workitems-create-example/)
+- [Microsoft Azure Devops Workitems Querybywiql Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-workitems-querybywiql-example/)
+- [Microsoft Azure Devops Workitems Update Example](https://apis.io/examples/microsoft-azure-devops/microsoft-azure-devops-workitems-update-example/)
+
+#### Collections (50)
+
+Postman and Open Collection request collections.
+
+- [Azure DevOps Artifacts API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-artifacts-api/)
+- [Azure DevOps Builds API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-builds-api/)
+- [Azure DevOps Git Repositories API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-git-api/)
+- [Azure DevOps Pipelines API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-pipelines-api/)
+- [Azure DevOps Releases API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-releases-api/)
+- [Azure DevOps Service Hooks API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-service-hooks-api/)
+- [Azure DevOps Test Plans API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-test-plans-api/)
+- [Azure DevOps Wiki API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-wiki-api/)
+- [Azure DevOps Work Items API](https://apis.io/collections/microsoft-azure-devops/open-azure-devops-work-items-api/)
+- [Azure DevOps Artifacts Attachments API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-attachments-api/)
+- [Azure DevOps Artifacts Attachments Build Artifacts API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-build-artifacts-api/)
+- [Azure DevOps Artifacts Attachments Build Definitions API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-build-definitions-api/)
+- [Azure DevOps Artifacts Attachments Build Logs API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-build-logs-api/)
+- [Azure DevOps Artifacts Attachments Builds API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-builds-api/)
+- [Azure DevOps Artifacts Attachments Comments API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-comments-api/)
+- [Azure DevOps Artifacts Attachments Commits API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-commits-api/)
+- [Azure DevOps Artifacts Attachments Consumers API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-consumers-api/)
+- [Azure DevOps Artifacts Attachments Deployments API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-deployments-api/)
+- [Azure DevOps Artifacts Attachments Feeds API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-feeds-api/)
+- [Azure DevOps Artifacts Attachments Notifications API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-notifications-api/)
+- [Azure DevOps Artifacts Attachments Package Versions API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-package-versions-api/)
+- [Azure DevOps Artifacts Attachments Packages API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-packages-api/)
+- [Azure DevOps Artifacts Attachments Pipeline Artifacts API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-pipeline-artifacts-api/)
+- [Azure DevOps Artifacts Attachments Pipeline Runs API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-pipeline-runs-api/)
+- [Azure DevOps Artifacts Attachments Pipelines API](https://apis.io/collections/microsoft-azure-devops/open-microsoft-azure-devops-pipelines-api/)
+- …and 25 more published on APIs.io
+
+#### Overlays (35)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Microsoft Azure Devops Attachments Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-attachments-api-phrasing-overlay/)
+- [Microsoft Azure Devops Build Artifacts Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-build-artifacts-api-phrasing-overlay/)
+- [Microsoft Azure Devops Build Definitions Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-build-definitions-api-phrasing-overlay/)
+- [Microsoft Azure Devops Build Logs Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-build-logs-api-phrasing-overlay/)
+- [Microsoft Azure Devops Builds Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-builds-api-phrasing-overlay/)
+- [Microsoft Azure Devops Comments Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-comments-api-phrasing-overlay/)
+- [Microsoft Azure Devops Commits Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-commits-api-phrasing-overlay/)
+- [Microsoft Azure Devops Consumers Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-consumers-api-phrasing-overlay/)
+- [Microsoft Azure Devops Deployments Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-deployments-api-phrasing-overlay/)
+- [Microsoft Azure Devops Feeds Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-feeds-api-phrasing-overlay/)
+- [Microsoft Azure Devops Fields Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-fields-api-phrasing-overlay/)
+- [Microsoft Azure Devops Notifications Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-notifications-api-phrasing-overlay/)
+- [Microsoft Azure Devops Package Versions Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-package-versions-api-phrasing-overlay/)
+- [Microsoft Azure Devops Packages Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-packages-api-phrasing-overlay/)
+- [Microsoft Azure Devops Pipeline Artifacts Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-pipeline-artifacts-api-phrasing-overlay/)
+- [Microsoft Azure Devops Pipeline Runs Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-pipeline-runs-api-phrasing-overlay/)
+- [Microsoft Azure Devops Pipelines Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-pipelines-api-phrasing-overlay/)
+- [Microsoft Azure Devops Publishers Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-publishers-api-phrasing-overlay/)
+- [Microsoft Azure Devops Pull Requests Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-pull-requests-api-phrasing-overlay/)
+- [Microsoft Azure Devops Pushes Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-pushes-api-phrasing-overlay/)
+- [Microsoft Azure Devops Queries Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-queries-api-phrasing-overlay/)
+- [Microsoft Azure Devops Refs Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-refs-api-phrasing-overlay/)
+- [Microsoft Azure Devops Release Definitions Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-release-definitions-api-phrasing-overlay/)
+- [Microsoft Azure Devops Releases Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-releases-api-phrasing-overlay/)
+- [Microsoft Azure Devops Repositories Api Phrasing Overlay](https://apis.io/overlays/microsoft-azure-devops/microsoft-azure-devops-repositories-api-phrasing-overlay/)
+- …and 10 more published on APIs.io
+
+#### Governance rules (3)
+
+Spectral rulesets for the provider's contracts.
+
+- [Azure DevOps — asyncapi rules](https://apis.io/rules/microsoft-azure-devops/microsoft-azure-devops-asyncapi-spectral-rules/)
+- [Azure DevOps — jsonschema rules](https://apis.io/rules/microsoft-azure-devops/microsoft-azure-devops-jsonschema-spectral-rules/)
+- [Azure DevOps API Rules](https://apis.io/rules/microsoft-azure-devops/microsoft-azure-devops-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Microsoft Azure Devops Authentication](https://apis.io/security/microsoft-azure-devops/microsoft-azure-devops-authentication/)
+- [Microsoft Azure Devops Domain Security](https://apis.io/security/microsoft-azure-devops/microsoft-azure-devops-domain-security/)
+- [Microsoft Azure Devops Vulnerability Disclosure](https://apis.io/security/microsoft-azure-devops/microsoft-azure-devops-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Microsoft Azure Devops Scopes](https://apis.io/scopes/microsoft-azure-devops/microsoft-azure-devops-scopes/)
+
+#### Plans and pricing (2)
+
+Published plans, tiers and prices.
+
+- [Microsoft Azure Devops Plans Pricing](https://apis.io/plans/microsoft-azure-devops/microsoft-azure-devops-plans-pricing/)
+- [Microsoft Azure Devops Price Estimates](https://apis.io/plans/microsoft-azure-devops/microsoft-azure-devops-price-estimates/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Microsoft Azure Devops Rate Limits](https://apis.io/rate-limits/microsoft-azure-devops/microsoft-azure-devops-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Microsoft Azure Devops Finops](https://apis.io/finops/microsoft-azure-devops/microsoft-azure-devops-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.microsoft.com/)
 - [Documentation](https://learn.microsoft.com/en-us/azure/devops/?view=azure-devops)
-- [Getting Started](https://learn.microsoft.com/en-us/azure/devops/integrate/)
-- [Authentication](https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance)
-- [Client  Libraries](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops)
-- [Rate Limits](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits)
-- [Status Page](https://status.dev.azure.com/)
-- [Support](https://azure.microsoft.com/en-us/support/devops/)
-- [Blog](https://devblogs.microsoft.com/devops/)
-- [Terms of Service](https://azure.microsoft.com/en-us/support/legal/)
-- [Privacy Policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [Getting started](https://learn.microsoft.com/en-us/azure/devops/integrate/)
+- [API reference](https://learn.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-7.2)
 - [Pricing](https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/)
-- [Sign Up](https://azure.microsoft.com/en-us/services/devops/)
-- [Community](https://developercommunity.visualstudio.com/AzureDevOps)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-devops)
+- [Support](https://azure.microsoft.com/en-us/support/devops/)
 - [Changelog](https://learn.microsoft.com/en-us/azure/devops/release-notes/)
-- [Marketplace](https://marketplace.visualstudio.com/azuredevops)
-- [Extensions](https://learn.microsoft.com/en-us/azure/devops/extend/overview?view=azure-devops)
-- [C L I](https://learn.microsoft.com/en-us/azure/devops/cli/?view=azure-devops)
-- [Versioning](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rest-api-versioning?view=azure-devops)
-- [Samples](https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/rest/samples?view=azure-devops)
-- [Best  Practices](https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/integration-bestpractices?view=azure-devops)
-- [GitHub Organization](https://github.com/microsoft)
-- [GitHub Repository](https://github.com/microsoft/azure-devops-python-api)
-- [GitHub Repository](https://github.com/microsoft/azure-devops-node-api)
-- [GitHub Repository](https://github.com/microsoft/azure-devops-extension-sdk)
-- [JSON Schema](json-schema/azure-devops-work-item-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/azure-devops-pipeline-run-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/azure-devops-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [M C P Server](https://github.com/microsoft/azure-devops-mcp)
+- [Blog](https://devblogs.microsoft.com/devops/)
+- [Terms of service](https://azure.microsoft.com/en-us/support/legal/)
+- [Privacy policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [GitHub](https://github.com/microsoft)
+- [Status](https://status.dev.azure.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 75.4** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 71.5 |
+| Contract governance | 27.3 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 82.1 |
+| Access clarity | 76.3 |
+
+**Agent readiness 31.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/microsoft-azure-devops/](https://apis.io/providers/microsoft-azure-devops/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Azure DevOps: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/microsoft-azure-devops/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
